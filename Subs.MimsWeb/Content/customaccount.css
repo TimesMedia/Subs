@@ -1,0 +1,44 @@
+/* Mobile first queries */
+/* applies to ALL widths */
+
+
+/* Larger than mobile */
+/* applies to all widths 400px and greater */
+@media (min-width: 400px) {
+ 
+}
+
+/* Larger than phablet */
+/* applies to all widths 550px and greater */
+@media (min-width: 550px) {
+  .header {
+    padding: 40px 0 50px 0;
+  }
+  
+  .nav .button {
+    width: auto;
+  }
+  h1 {
+    font-size: 5rem;
+  }
+  h2 {
+    font-size: 4.2rem;
+  }
+}
+
+/* Larger than tablet */
+/* applies to all widths 750px and greater */
+@media (min-width: 750px) {
+}
+
+/* Larger than desktop */
+/* applies to all widths 100px and greater */
+@media (min-width: 1000px) {
+  
+}
+
+/* Larger than Desktop HD */
+/* applies to 1200px and greater */
+@media (min-width: 1200px) {
+
+}

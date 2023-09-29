@@ -1,0 +1,39 @@
+﻿@model Subs.MimsWeb.Models.PayUAmount
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>IndexOwnAmount</title>
+    <style>
+        .editor-field input {
+            text-align: right;
+        }
+       
+    </style>
+ 
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm())
+        {
+            <p style="font-family: Arial; margin:2em 0em 2em 1em; color:red;">
+                @Html.ViewBag.Message
+            </p>
+            <br />
+            <div class="editor-field">
+               @Html.LabelFor(x => x.Amount)
+               @Html.EditorFor(x => x.Amount)
+            </div>
+            <div>
+                <br />
+                <button type="submit">Submit</button>
+            </div>
+        }
+    </div>
+</body>
+</html>
