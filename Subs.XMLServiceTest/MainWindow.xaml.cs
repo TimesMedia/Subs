@@ -13,10 +13,6 @@ namespace Subs.XMLServiceTest
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        //private CustomerData3 gCustomerDataShallow;
-        //private ServiceReference1.DeliveryAddressData2 gDeliveryAddressDataShallow;
-
         public MainWindow()
         {
             InitializeComponent();

@@ -5,7 +5,8 @@ using System.Data;
 namespace Subs.Data
 {
     //So, I make a test change to test the efficacy of push.
-     public static class AdministrationData2
+    //So, I make a test change to test the efficacy of push.
+    public static class AdministrationData2
     {
         // This class is used only to display data. It does not cater for updating the database.
 
