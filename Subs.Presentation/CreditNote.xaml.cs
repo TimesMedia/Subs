@@ -181,14 +181,14 @@ namespace Subs.Presentation
                 Content7.Content = lReduction.ToString("R ###########0.00");
 
 
-                if (File.Exists(Settings.DirectoryPath + "\\" + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf"))
+                if (File.Exists(Settings.DirectoryPath + "\\" + CreditNoteNumber + " " + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf"))
                 {
-                    File.Delete(Settings.DirectoryPath + "\\" + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf");
+                    File.Delete(Settings.DirectoryPath + "\\" + CreditNoteNumber + " " + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf");
                 }
 
                 byte[] lBuffer = FlowDocumentConverter.XpsConverter.ConverterDoc(this.gFlowDocument);
                 MemoryStream lXpsStream = new MemoryStream(lBuffer);
-                FileStream lPdfStream = File.OpenWrite(Settings.DirectoryPath + "\\" + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf");
+                FileStream lPdfStream = File.OpenWrite(Settings.DirectoryPath + "\\" + CreditNoteNumber + " " + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf");
                 PdfSharp.Xps.XpsConverter.Convert(lXpsStream, lPdfStream, false);
                 lPdfStream.Position = 0;
                 lPdfStream.Flush();
