@@ -13,47 +13,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" href="/Content/normalise.css">
     <link rel="stylesheet" href="/Content/Styles.css">
+    <link rel="stylesheet" href="~/Content/login.css" />
 
     <title>@ViewBag.Title</title>
 
-    <style>
-        .myButton {
-            display: block;
-            padding: 3px 7px 1px 7px;
-            border-radius: 10px;
-            border-color: dodgerblue;
-            text-decoration: none;
-            font-family: Titillium, Arial, sans-serif;
-            font-weight: 700;
-            color: white;
-            font-size: 0.8em;
-            letter-spacing: .1em;
-            background-color: dodgerblue;
-        }
-    </style>
+    <!-- Google Tag Manager -->
+    <script>
+    (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MRQP4B3F');</script>
+    <!-- End Google Tag Manager -->
 </head>
 <body>
-    <div>
-        @using (Html.BeginForm())
-        {
-            <p style="margin:2em 0em 2em 1em; color:red;font-family:Arial;">
-                @Html.ViewBag.Message
-            </p>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRQP4B3F"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="login-wrap p-4 p-md-5">
 
-            <table>
-                <tr height="50">
-                    <td> Please enter your email address: </td>
-                </tr>
+                        @*<h3 class="text-center mb-4">Sign Up</h3>*@
+                        <div class="MimsImage">
+                            <img src="~/Content/img/logos/mims-small.png" width="150" />
+                        </div>
+                        @using (Html.BeginForm())
+                        {
+                            <p style="margin:2em 0em 2em 1em; color:red;font-family:Arial;">
+                                @Html.ViewBag.Message
+                            </p>
+                            <br />
+                            <div class="form-group text-center">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.LabelFor(x => x.Email) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.EditorFor(x => x.Email)
+                            </div>
+                            <br />
 
-                <tr>
-                    <td> @Html.TextBoxFor(x => x.Email)</td>
-                </tr>
+                            <div class="form-group">
+                                <button type="submit" id="signin" class=" form-control btn btn-primary rounded submit px-3">Register</button>
+                            </div>
+                            <div class="w-50 text-secondary">
+                                <p>Already a member? &nbsp;<a href="~/Home/Login">Login </a></p>
+                            </div>
+                        }
+                    </div>
 
-                <tr height="50">
-                    <td><input class="myButton" type="submit" value="Submit" /></td>
-                </tr>
-            </table>
-       }
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="js/jquery.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

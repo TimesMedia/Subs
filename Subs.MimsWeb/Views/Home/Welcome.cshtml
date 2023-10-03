@@ -10,8 +10,16 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/Content/normalise.css">
     <link rel="stylesheet" href="/Content/Styles.css">
+    <link rel="stylesheet" href="~/Content/navbar.css" />
     <title>Welcome</title>
-
+    <!-- Google Tag Manager -->
+    <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MRQP4B3F');</script>
+    <!-- End Google Tag Manager -->
     <style>
         p {
             padding: 1em 1em 1em 1em;
@@ -22,21 +30,83 @@
         }
     </style>
 </head>
-<body>
+<body style="padding-top:5em;padding-bottom:3em;position:page">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRQP4B3F"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <p>
         @Html.ViewBag.Message
     </p>
+    <div class="pic">
+
+        <img src="~/Images/WelcomeWide.jpg" style="width:100%; " />
+
+    </div>
+    <section id="service" class="section pt-0" style="padding-bottom:1em">
+        <div class="container">
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-5 mb-md-0">
+                        <div class="card-body">
+
+                            @*<h5 class="card-title mt-3">SILDENAFIL</h5>*@
+                            <p class="mb-0"><a href="~/Promotion/GetProducts"><img src="~/Images/MDR.jpg" class="brands"></a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-5 mb-md-0">
+                        <div class="card-body">
+
+                            @*<h5 class="card-title mt-3">COLLODIAL NASAL SPRAY</h5>*@
+                            <p class="mb-0"><a href="~/Promotion/GetProducts"><img src="~/Images/CVS Dictionary 2023.jpg" class="brands"></a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-5 mb-md-0">
+                        <div class="card-body">
+
+                            @*<h5 class="card-title mt-3">COLLODIAL NASAL SPRAY</h5>*@
+                            <p class="mb-0"><a href="~/Promotion/GetProducts"><img src="~/Images/IVS Vol61 No2 - 2023.jpg" class="brands"></a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
     @*<p>
-        @if(Model.Amount > 0.05M)
-        { 
-        @Html.ActionLink("Goto payment menu", "Pay", "Promotion",
-        new
+            @if(Model.Amount > 0.05M)
             {
-                onclick = "return window.confirm('You have R" + @Model.Amount.ToString("######0.00") + " outstanding on INV" +
-                @Model.InvoiceId.ToString() + " Do you want to pay it now?"
-            });
-        }
-    </p>*@
+            @Html.ActionLink("Goto payment menu", "Pay", "Promotion",
+            new
+                {
+                    onclick = "return window.confirm('You have R" + @Model.Amount.ToString("######0.00") + " outstanding on INV" +
+                    @Model.InvoiceId.ToString() + " Do you want to pay it now?"
+                });
+            }
+        </p>*@
+    @*<footer style="border: solid 1px black; color: #fff; background-color: dodgerblue;
+                text-align:center; align-content:center">
+            <label>
+
+                <a href="https://sacoronavirus.co.za/" target="_blank" text-decoration:underline; style="color: #fff; background-color: dodgerblue">Online CoronaVirus News</a>
+                <label><a href="~/Content/TermsConditions.html" target="_blank" style="font-size:0.9em; color: white;background-color:dodgerblue;">Terms and conditions</a></label>
+            </label>
+            <br />
+
+            <label style="text-align:center; font-size:0.9em">Copyright &copy; @DateTime.Now.Year  MIMS. All Rights Reserved.</label>
+
+
+
+        </footer>*@
+
 
 </body>
 </html>

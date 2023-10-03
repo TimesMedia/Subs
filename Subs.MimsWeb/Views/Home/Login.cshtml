@@ -1,46 +1,39 @@
 ﻿@model Subs.MimsWeb.Models.LoginRequest
 
-@{
-    ViewBag.Title = "Login";
-}
 
 <!DOCTYPE html>
 <html>
 <head>
+
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
-    <link rel="stylesheet" href="/Content/Styles.css">
+
+
     <script src="/Scripts/jquery-3.4.1.js"></script>
     <script src="/Scripts/jquery-ui.js"></script>
-    <link href="/Content/jquery-ui.css" rel="stylesheet"/>
+    <link href="/Content/jquery-ui.css" rel="stylesheet" />
     <script src="/Scripts/Default.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="~/Content/login.css" />
+    <link rel="stylesheet" href="/Content/normalise.css">
+    <link rel="stylesheet" href="/Content/Styles.css">
 
-     <title>@ViewBag.Title</title>
-
-    <style>
-        .LoginStyle {
-            padding: 0px 7px 1px 7px;
-            border-radius: 10px;
-            text-decoration: none;
-            text-shadow: none;
-            font-weight: 700;
-            color: white;
-            text-transform: capitalize;
-            font-size: 1.2em;
-            letter-spacing: .1em;
-            background-color: dodgerblue;
-            height: 2em;
-            column-span: all;
-        }
-
-       .editor-field input {
-            width: 1em;
-          
-        }
-    </style>
-
-    <script >
+    <title>Mims Login</title>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MRQP4B3F');</script>
+    <!-- End Google Tag Manager -->
+    <script>
         $(document).ready(function () {
             $('#CustomerLookup').click(function () {
                 $('#dialog').dialog("open");
@@ -60,106 +53,133 @@
         });
     </script>
 </head>
+
+
 <body>
-    <div style="margin-left: 1em">
-        @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { id = "SubmitForm" }))
-        {
-            <p style="font-family: Arial; margin:2em 0em 2em 1em; color:red;">
-                @Html.ViewBag.Message
-            </p>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRQP4B3F"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <section class="ftco-section">
+        <div class="container">
 
-            <p>
-                @Html.CheckBoxFor(x => x.ResetFlag, new { id = "ResetFlag", style = "visibility:hidden" })
-            </p>
-   
-            <p>
-                <input id="Email" name="Email" type="hidden" value="">
-            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="login-wrap p-4 p-md-5">
 
-            <div id="dialog">
-                <label>Email address</label>
-                <input type="text" id="EmailAddress"/>
+                        @*<h3 class="text-center mb-4">Sign In</h3>*@
+                        <div class="MimsImage">
+                            <img src="~/Content/img/logos/mims-small.png" width="150" />
+                        </div>
+                        @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { id = "SubmitForm" }))
+                        {
+                            <p style="font-family: Arial; margin:2em 0em 2em 1em; color:red;">
+                                @Html.ViewBag.Message
+                            </p>
+
+                            <p>
+                                @Html.CheckBoxFor(x => x.ResetFlag, new { id = "ResetFlag", style = "visibility:hidden" })
+                            </p>
+
+                            <p>
+                                <input id="Email" name="Email" type="hidden" value="">
+                            </p>
+
+                            <div id="dialog">
+                                <label>Email address</label>
+                                <input type="text" id="EmailAddress" />
+                            </div>
+                            <div class="form-group text-center">
+                                @Html.LabelFor(x => x.CustomerId) &nbsp; &nbsp;
+                                @Html.EditorFor(x => x.CustomerId)
+                            </div>
+                            <div class="form-group  text-center">
+                                @Html.LabelFor(x => x.Password) &nbsp;   &nbsp;&nbsp;&nbsp;
+                                @Html.EditorFor(x => x.Password)
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <button type="submit" id="signin" class="form-control btn btn-primary rounded submit px-3">Login</button>
+                            </div>
+                            <div class="form-group d-md-flex">
+                                <div class="w-50">
+
+                                    <a href="#" class="LoginStyle" id="CustomerLookup">Forgot customerID</a>
+
+                                </div>
+
+                                <div class="w-50 ">
+                                    &nbsp;&nbsp;&nbsp; <a href="~/Home/RegisterEmail">Register</a>
+                                </div>
+
+                                <div class="w-50 ">
+                                    <a href="#" class="LoginStyle" onclick="ResetPassword()">Forgot password</a>
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+                </div>
             </div>
+        </div>
+    </section>
 
+    <script>
+        function UsePassword() {
+            try {
+                document.getElementById("ResetFlag").checked = false;
+                document.forms["SubmitForm"].submit();
+            }
+            catch (message) {
+                alert(message);
+            }
 
-            <table>
-                <tr height="50">
-                     <td><label>Customer number</label></td>
-                     <td>@Html.EditorFor(x => x.CustomerId)</td>
-                </tr>
-
-                <tr height="50">
-                    <td>@Html.LabelFor(x => x.Password)</td>
-                    <td>@Html.PasswordFor(x => x.Password) </td>
-                </tr>
-
-                <tr height="50">
-                    <td>
-                        <label class="LoginStyle" id="CustomerLookup">Forgot MIMS customer number</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label class="LoginStyle" onclick="ResetPassword()">Forgot your MIMS password</label>
-                    </td>
-                </tr>
-
-                <tr height="50">
-                    <td>
-                        <label class="LoginStyle" onclick="UsePassword()">Login</label>
-                    </td>
-
-                </tr>
-            </table>
-
-            <script>
-                function UsePassword() {
-                    try {
-                        document.getElementById("ResetFlag").checked = false;
-                        document.forms["SubmitForm"].submit();
-                    }
-                    catch (message) {
-                        window.alert(message);
-                    }
-
-                }
-
-                function CustomerLookup() {
-                    try {
-
-                        window.alert("Under construction.");
-                        // Do an Ajax call to find all customers numbers on this email address, plus their names.
-
-                        // Display them in a list where one could be selected.
-
-                        //document.getElementById("ResetFlag").checked = false;
-                        //window.alert("Under construction.");
-
-
-                        //window.alert(document.getElementsByName('Email').values[0]);
-                        //document.forms["SubmitForm"].submit();
-
-                    }
-                    catch (message) {
-                        window.alert(message);
-                    }
-
-                }
-
-                function ResetPassword() {
-
-                    try {
-
-                        document.getElementById("ResetFlag").checked = true;
-                        document.forms["SubmitForm"].submit();
-                    }
-                    catch (message) {
-                        window.alert(message);
-                    }
-
-                }
-            </script>
         }
-    </div>
- </body >
-</html >
+
+        function CustomerLookup() {
+            try {
+
+                window.alert("Under construction.");
+                // Do an Ajax call to find all customers numbers on this email address, plus their names.
+
+                // Display them in a list where one could be selected.
+
+                //document.getElementById("ResetFlag").checked = false;
+                //window.alert("Under construction.");
+
+
+                //window.alert(document.getElementsByName('Email').values[0]);
+                //document.forms["SubmitForm"].submit();
+
+            }
+            catch (message) {
+                window.alert(message);
+            }
+
+        }
+
+        function ResetPassword() {
+
+            try {
+
+                document.getElementById("ResetFlag").checked = true;
+                document.forms["SubmitForm"].submit();
+            }
+            catch (message) {
+                window.alert(message);
+            }
+
+        }
+
+    </script>
+
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>

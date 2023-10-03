@@ -8,16 +8,29 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <!-- Google Tag Manager -->
+    <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MRQP4B3F');</script>
+    <!-- End Google Tag Manager -->
     <title>IndexOwnAmount</title>
     <style>
         .editor-field input {
             text-align: right;
         }
-       
     </style>
- 
+
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRQP4B3F"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div>
         @using (Html.BeginForm())
         {
@@ -26,8 +39,8 @@
             </p>
             <br />
             <div class="editor-field">
-               @Html.LabelFor(x => x.Amount)
-               @Html.EditorFor(x => x.Amount)
+                @Html.LabelFor(x => x.Amount)
+                @Html.EditorFor(x => x.Amount)
             </div>
             <div>
                 <br />

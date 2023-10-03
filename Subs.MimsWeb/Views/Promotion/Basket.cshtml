@@ -19,6 +19,17 @@
     <link rel="stylesheet" href="/Content/Styles.css">
     <script src="/Scripts/jquery-3.4.1.js"></script>
     <script src="/Scripts/Default.js"></script>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MRQP4B3F');</script>
+    <!-- End Google Tag Manager -->
 
     <title>Cart</title>
     <style>
@@ -29,8 +40,8 @@
 
         th, td {
             padding: 1em 1em 1em 0.5em;
-            text-anchor:start;
-            text-align:left;
+            text-anchor: start;
+            text-align: left;
         }
 
         .myButtons button {
@@ -73,28 +84,33 @@
 
 
         .NumberStyle {
-            text-align:right;
+            text-align: right;
         }
-
     </style>
 </head>
 <body>
-     <p>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRQP4B3F"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <p>
         @Html.ViewBag.Message
     </p>
 
-     <p id="gMessage" style="visibility: hidden;">
-     </p>
+    <p id="gMessage" style="visibility: hidden;">
+    </p>
 
     @using (Html.BeginForm("BasketModification", "Promotion", FormMethod.Post, new { id = "SubmitForm" }))
     {
         <div class="myButtons" margin-left="0.5em">
             @Html.ActionLink("Finalise Your Order", "Submit", "Promotion",
                     new { onclick = "return window.confirm('Are you sure that you want to submit these subscriptions ?')" })
-            @Html.ActionLink("Continue shopping", "List", "Promotion", new { display = "inline"}) 
+            @Html.ActionLink("Continue shopping", "List", "Promotion", new { display = "inline" })
 
         </div>
-     
+
         <table>
             <tr>
                 <th>Remove</th>
@@ -118,29 +134,29 @@
                 {
                     lUnitsPerIssue = "[" + i + "].UnitsPerIssue";
                     lDropBox = "[" + i + "].Drop";
-                        <tr>
-                            <td>@Html.CheckBox(@lDropBox, false, new { onchange = "ModificationHandler()"})</td>
-                            <td>@p.ProductName </td>
-                            <td style="width:3em">
-                                <input class="NumberStyle" onchange="ModificationHandler()" type="number" name=@lUnitsPerIssue value=@p.Subscription.UnitsPerIssue
-                                       min="1" max="10000" step="1" />
-                            </td>
-  
-                            <td style="text-align:right;width:3em">@p.Subscription.NumberOfIssues </td>
-                            <td>
-                                @Html.DropDownList("[" + i + "].DeliveryMethod", new SelectList(p.DeliveryOptions, "Key", "Value", p.Subscription.DeliveryMethodInt),
-                                                    new Dictionary<string, object> { { "selected", p.Subscription.DeliveryMethodInt }, { "onchange", "ModificationHandler()" } })
-                            </td>
+                    <tr>
+                        <td>@Html.CheckBox(@lDropBox, false, new { onchange = "ModificationHandler()" })</td>
+                        <td>@p.ProductName </td>
+                        <td style="width:3em">
+                            <input class="NumberStyle" onchange="ModificationHandler()" type="number" name=@lUnitsPerIssue value=@p.Subscription.UnitsPerIssue
+                                   min="1" max="10000" step="1" />
+                        </td>
 
-                            <td style="text-align:right">@p.Subscription.DeliveryCost.ToString("####0.00") </td>
+                        <td style="text-align:right;width:3em">@p.Subscription.NumberOfIssues </td>
+                        <td>
+                            @Html.DropDownList("[" + i + "].DeliveryMethod", new SelectList(p.DeliveryOptions, "Key", "Value", p.Subscription.DeliveryMethodInt),
+                                                new Dictionary<string, object> { { "selected", p.Subscription.DeliveryMethodInt }, { "onchange", "ModificationHandler()" } })
+                        </td>
 
-                            <td style="text-align:right">@p.Subscription.Vat.ToString("####0.00") </td>
+                        <td style="text-align:right">@p.Subscription.DeliveryCost.ToString("####0.00") </td>
 
-                            <td style="text-align:right">@p.Price.ToString("####0.00") </td>
-                            <td style="text-align:right">@p.Discount.ToString("####0.00") </td>
-                            <td style="text-align:right">@p.DiscountedPrice.ToString("######0.00") </td>
-                            <td style="text-align:right;color:red">@p.Warning</td>
-                        </tr>
+                        <td style="text-align:right">@p.Subscription.Vat.ToString("####0.00") </td>
+
+                        <td style="text-align:right">@p.Price.ToString("####0.00") </td>
+                        <td style="text-align:right">@p.Discount.ToString("####0.00") </td>
+                        <td style="text-align:right">@p.DiscountedPrice.ToString("######0.00") </td>
+                        <td style="text-align:right;color:red">@p.Warning</td>
+                    </tr>
                     i++;
 
                 }
@@ -175,5 +191,5 @@
         </script>
     } @*end of form*@
 
-</body> 
+</body>
 </html>
