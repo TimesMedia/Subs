@@ -234,7 +234,7 @@ namespace Subs.Presentation
                         }
                     }
 
-                }
+                } // End of foreach loop. One iteration per statement.
 
                 // Rename the XML file, so that it does not get picked up again.
 

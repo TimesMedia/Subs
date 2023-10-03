@@ -168,7 +168,7 @@ namespace Subs.Presentation
                 string[] Lines = new string[8];
                 int lNextIndex = 0;
 
-                lCustomerData = new CustomerData3(pCustomerId);
+                //lCustomerData = new CustomerData3(pCustomerId);
 
                 if (!String.IsNullOrWhiteSpace(lCustomerData.CompanyName) && lCustomerData.CompanyName != lCustomerData.FullName)
                 {

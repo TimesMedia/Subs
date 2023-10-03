@@ -430,4 +430,8 @@
     <Parameter Name="PayerId" Parameter="payerId" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID18" />
   </Function>
+  <Function Name="dbo.[MIMS.DataContext.InvoicesAndPayments2]" Method="MIMS_DataContext_InvoicesAndPayments2">
+    <Parameter Name="PayerId" Parameter="payerId" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID18" />
+  </Function>
 </Database>

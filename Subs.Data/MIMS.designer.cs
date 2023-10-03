@@ -512,6 +512,13 @@ namespace Subs.Data
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), payerId);
 			return ((ISingleResult<InvoicesAndPayments>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.[MIMS.DataContext.InvoicesAndPayments2]")]
+		public ISingleResult<InvoicesAndPayments> MIMS_DataContext_InvoicesAndPayments2([global::System.Data.Linq.Mapping.ParameterAttribute(Name="PayerId", DbType="Int")] System.Nullable<int> payerId)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), payerId);
+			return ((ISingleResult<InvoicesAndPayments>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]

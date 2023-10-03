@@ -1952,7 +1952,7 @@ namespace Subs.Data
 
             {
                 MIMSDataContext lContext = new MIMSDataContext(Settings.ConnectionString);
-                pAllInvoicesAndPayments = lContext.MIMS_DataContext_InvoicesAndPayments(pPayerId).ToList();
+                pAllInvoicesAndPayments = lContext.MIMS_DataContext_InvoicesAndPayments2(pPayerId).ToList();
 
                 if (pAllInvoicesAndPayments.Count == 0)
                 {
