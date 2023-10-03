@@ -21,18 +21,30 @@
 
     <title>@ViewBag.Title</title>
 
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MRQP4B3F');</script>
+    <!-- End Google Tag Manager -->
     <style type="text/css">
         .dataElem {
             margin: 0.5em 0.5em 0.5em 1em;
         }
 
-        .dataElem input {
-            float: right;
-        }
+            .dataElem input {
+                float: right;
+            }
 
-        .dataElem select {
-            float: right;
-        }
+            .dataElem select {
+                float: right;
+            }
 
         .validation-summary-errors li {
             font-family: Arial;
@@ -94,7 +106,7 @@
         }
 
         .DescriptionStyle {
-            display:  none;
+            display: none;
             width: 300px;
             background-color: white;
             color: #000;
@@ -108,9 +120,8 @@
             left: 20%;
             right: 20%;
             width: 60%;
-            z-index:100;
+            z-index: 100;
         }
-
     </style>
 
 
@@ -143,6 +154,12 @@
 
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRQP4B3F"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div style="margin-top:2em;">
         @using (Html.BeginForm())
         {
@@ -248,7 +265,7 @@
 
                         <fieldset style="margin: 1em 0em 0em 0.6em;">
                             <legend>Physical address for invoice</legend>
-  
+
                             <div class="dataElem">
                                 @Html.LabelFor(x => x.Province)
                                 @Html.EditorFor(x => x.Province)
@@ -320,44 +337,43 @@
     </div>
 
     <script>
-       function SetCategory2(p)
-       {
-           $('#ClassificationId2').empty();
-           $.ajax({
-               url: '/home/classifications',
-               data: { "ParentClassificationId": p.value },
-               type: 'get',
-               dataType: 'json',
-               success: function (data) {
-                   $('#ClassificationId2').append(new Option("Please select a profession", "", true, true));
-                   $.each(data, function (index, value) {
-                      $('#ClassificationId2').append(new Option(value.Value, value.Key, false, false));
-                   });
-               }
-           });
-       }
+        function SetCategory2(p) {
+            $('#ClassificationId2').empty();
+            $.ajax({
+                url: '/home/classifications',
+                data: { "ParentClassificationId": p.value },
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    $('#ClassificationId2').append(new Option("Please select a profession", "", true, true));
+                    $.each(data, function (index, value) {
+                        $('#ClassificationId2').append(new Option(value.Value, value.Key, false, false));
+                    });
+                }
+            });
+        }
 
-       function HintExtension() {
-           var Target = document.getElementById("gExtension");
-           Target.style.display = 'block';
-           
-       }
+        function HintExtension() {
+            var Target = document.getElementById("gExtension");
+            Target.style.display = 'block';
 
-       function UnHintExtension() {
-           var Target = document.getElementById("gExtension");
-           Target.style.display = 'none';
-       }
+        }
 
-       function HintSuffix() {
-           var Target = document.getElementById('gSuffix');
-           Target.style.display = 'block';
-       }
+        function UnHintExtension() {
+            var Target = document.getElementById("gExtension");
+            Target.style.display = 'none';
+        }
 
-       function UnHintSuffix() {
-           var Target = document.getElementById('gSuffix');
-           Target.style.display = 'none';
-       }
+        function HintSuffix() {
+            var Target = document.getElementById('gSuffix');
+            Target.style.display = 'block';
+        }
 
-   </script>
+        function UnHintSuffix() {
+            var Target = document.getElementById('gSuffix');
+            Target.style.display = 'none';
+        }
+
+    </script>
 </body>
 </html>

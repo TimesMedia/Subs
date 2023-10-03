@@ -1,9 +1,8 @@
 ﻿@using System.Collections.ObjectModel;
 @using Subs.MimsWeb.Models;
 @using Subs.Data;
-
 @{
-    ViewBag.Title = "Pay";
+    ViewBag.Title = "PayEFT";
 }
 
 <!DOCTYPE html>
@@ -13,9 +12,20 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/Content/normalise.css">
     <link rel="stylesheet" href="/Content/Styles.css">
-    <title>Pay</title>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MRQP4B3F');</script>
+    <!-- End Google Tag Manager -->
+    <title>PayEFT</title>
 
-    @*<style>
+    <style>
         label {
             display: inline-block;
             width: 200px;
@@ -25,20 +35,74 @@
         .dataElem {
             margin: 0.5em 0.5em 0.5em 1em;
         }
-    </style>*@
+    </style>
 </head>
 
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRQP4B3F"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <p style="font-family: Arial; margin:2em 0em 2em 1em; color:red; ">
         @Html.ViewBag.Message
-        @TempData["Message"]
     </p>
-    <p style="font-size:large; font-weight:800">You can now select your preferred method of payment</p>
-    <br />
-    <p> @Html.ActionLink("Pay via EFT", "PayEFT", "Promotion") </p>
-    <br />
-    <p> @Html.ActionLink("Pay previous invoice via credit or debit card", "Index", "PayU") </p>
-    <br />
-    <p> @Html.ActionLink("Pay amount due via credit or debit card", "IndexOwnAmount", "PayU")</p>
+
+
+    <h1 style="margin:1em 0em 0em 2em">EFT Bank Account</h1>
+
+
+    <table style="margin: 1em 0em 1em 2em; font-family:Arial">
+        <tr>
+            <td>Account Name</td>
+            <td>ARENA HOLDINGS - MEDIA MIMS</td>
+        </tr>
+        <tr>
+            <td>Bank</td>
+            <td>Rand Merchant Bank</td>
+        </tr>
+        <tr>
+            <td>Branch Name</td>
+            <td>RMB Corporate Banking Johannesburg</td>
+        </tr>
+        <tr>
+            <td>Branch Code</td>
+            <td>255005</td>
+        </tr>
+        <tr>
+            <td>Account No</td>
+            <td>62793076326</td>
+        </tr>
+
+        <tr>
+            <td>SWIFT Code</td>
+            <td>FIRNZAJJ</td>
+        </tr>
+        @{
+            LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+            Basket lBasket = SessionHelper.GetBasket(Session);
+
+
+            <tr>
+                <td>Full amount</td>
+                <td>@lBasket.TotalDiscountedPrice.ToString("########0.00")</td>
+            </tr>
+            <tr>
+                <td>Bank reference</td>
+                <td>@lLoginRequest.CustomerId.ToString()</td>
+            </tr>
+        }
+
+    </table>
+
+    <p style="font-family: Arial; margin:2em 0em 0em 1em; color:red; ">
+        The subscriptions will be activated as soon as payment is confirmed.
+    </p>
+
+    <table style="margin-left:2em;border-bottom: 3px solid blue;width:950px">
+        <tr></tr>
+    </table>
+
 </body>
 </html>
