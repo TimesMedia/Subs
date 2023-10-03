@@ -4,12 +4,38 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=yes">
     <link rel="stylesheet" href="/Content/Styles.css">
+    <link rel="stylesheet" href="~/Content/navbar.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
- 
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MRQP4B3F');</script>
+    <!-- End Google Tag Manager -->
+    <!--Sticky Navbar Javascript-->
+    <script type="text/javascript">
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        //Add the Sticky class to the navbar
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
+            }
+    </script>
+
     <style>
 
         .Hamburger {
@@ -25,30 +51,37 @@
             font-family: 'Montserrat', sans-serif;
             text-decoration: none;
             color: black;
-            font-weight:bold;
-            
+            font-weight: bold;
+        }
+
+        #img {
+            font-family: 'Montserrat', sans-serif;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            position: fixed;
         }
 
         #MenuDiv a:hover {
-            font-size: 1.2em;
-            background-color: aqua;
+            font-size: 1em;
+            /* background-color: cornflowerblue;*/
         }
-     
+
 
         #MenuDiv div {
             flex: 1;
         }
 
         .MimsImage {
-            display:flex;
+            display: flex;
             justify-content: center;
-            margin-bottom: 1em;
+            margin-bottom: 0.5em;
         }
 
         .MenuContainer {
             display: flex;
             flex-flow: row wrap;
-            margin-left:1em;
+            margin-left: 1em;
         }
 
         @@media (max-width: 480px) {
@@ -57,7 +90,6 @@
                 flex-flow: column wrap;
             }
         }
-  
     </style>
 
     <script>
@@ -81,18 +113,22 @@
     </script>
 
 </head>
-<body>
+<body style="padding-top:1.5em">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRQP4B3F"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     <img src="~/Images/HamburgerOn.gif" id="HamburgerOn" class="Hamburger" onclick="MenuFunction()" />
     <img src="~/Images/HamburgerOff.gif" id="HamburgerOff" class="Hamburger" onclick="MenuFunction()" />
 
-    <div class="MimsImage">
-        <img src="~/Content/img/logos/mims-small.png"  width="300" />
-    </div>
-
-
     <div id="MenuDiv" class="MenuContainer">
 
+        <div>
+            <img src="~/Content/img/logos/mims-small.png" width="110" />
+        </div>
 
         <div>@Html.ActionLink("HOME", "Index", "Home")</div>
 
@@ -104,10 +140,10 @@
 
         <div>@Html.ActionLink("PROMOTIONS", "Promotions", "Promotion")</div>
 
-        @*<div> <a style="color: grey" ; href="http://www.mobimims.co.za/">mobiMIMS</a></div>
-        <div> <a style="color: grey" ; href="https://www.emims.co.za/emims">eMIMS</a></div>*@
 
-        <div>@Html.ActionLink("CONTACT", "Contact", "Home", new { target = "Contacts" })</div>
+        <div><a href="http://www.generic.co.za/">GENERICS</a></div>
+
+        @*<div>@Html.ActionLink("CONTACT", "Contact", "Home", new { target = "Contacts" })</div>*@
 
         @{ LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
             if (lLoginRequest.CustomerId == null)
@@ -119,17 +155,17 @@
             else
             {
                 <div>@Html.ActionLink("PAY", "Pay", "Promotion")</div>
-                <div>@Html.ActionLink("LOGOUT", "Logout", "Home")</div>
+                <div>@Html.ActionLink("LOGOUT", "Thanks", "Home")</div>
                 <div>@Html.ActionLink("PROFILE", "Account", "Home")</div>
 
             }
         }
 
-
-        @*<div>@Html.ActionLink("Test", "Test", "Home")</div>*@
     </div>
 
-    <br />
+    <hr style="background-color:dodgerblue;padding-top:10px " class="MenuContainer" />
     @RenderBody()
+
+
 </body>
 </html>

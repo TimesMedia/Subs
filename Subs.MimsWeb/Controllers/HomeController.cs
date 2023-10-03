@@ -1157,5 +1157,32 @@ namespace Subs.MimsWeb.Controllers
         {
             Session.Abandon();
         }
+
+        [HttpGet]
+        public ActionResult Thanks()
+        {
+            try
+            {
+                Session.Abandon();
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Thanks", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+
+                return View();
+            }
+        }
     }
 }
