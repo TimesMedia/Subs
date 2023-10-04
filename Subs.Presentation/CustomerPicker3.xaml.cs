@@ -1618,6 +1618,12 @@ namespace Subs.Presentation
 
         private void ButtonAllocate_Click(object sender, RoutedEventArgs e)
         {
+            if (!gCurrentCustomer.AutomaticPaymentAllocation)
+            {
+                MessageBox.Show("I cannot do automatic payment allocation for this customer. You will have to do it manually.");
+                return;
+            }
+
             AutomaticAllocate();
             MessageBox.Show("Done!");
         }
