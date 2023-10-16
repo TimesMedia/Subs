@@ -2494,7 +2494,7 @@ namespace Subs.Presentation
             {
                 this.Cursor = Cursors.Wait;
                 InvoicesAndPayments lInvoice = (InvoicesAndPayments)gInvoiceViewSource.View.CurrentItem;
-                if (lInvoice.OperationId != (int)Operation.Init_Sub)
+                if (lInvoice.OperationId != (int)Operation.CreditNote)
                 {
                     MessageBox.Show("Sorry, I respond only to invoice lines");
                     return;

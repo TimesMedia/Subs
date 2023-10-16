@@ -1443,7 +1443,26 @@ namespace Subs.Data
         {
             get
             {
-                return Deliverable - Liability;
+                try
+                {
+                    return (decimal)gCustomerAdapter.Due(CustomerId);
+                }
+                catch (Exception Ex)
+                {
+                    //Display all the exceptions
+
+                    Exception CurrentException = Ex;
+                    int ExceptionLevel = 0;
+                    do
+                    {
+                        ExceptionLevel++;
+                        ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Due", "CustomerId = " + CustomerId.ToString());
+                        CurrentException = CurrentException.InnerException;
+                    } while (CurrentException != null);
+
+                    throw Ex;
+                }
+
             }
         }
 
