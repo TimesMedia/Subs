@@ -2496,7 +2496,7 @@ namespace Subs.Presentation
                 InvoicesAndPayments lInvoice = (InvoicesAndPayments)gInvoiceViewSource.View.CurrentItem;
                 if (lInvoice.OperationId != (int)Operation.CreditNote)
                 {
-                    MessageBox.Show("Sorry, I respond only to invoice lines");
+                    MessageBox.Show("Sorry, I respond only to creditnote lines");
                     return;
                 }
 

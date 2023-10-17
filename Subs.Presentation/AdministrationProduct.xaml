@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:Subs.Presentation"
         xmlns:Data="clr-namespace:Subs.Data;assembly=Subs.Data" x:Class="Subs.Presentation.AdministrationProduct"
         mc:Ignorable="d" SizeChanged="Window_SizeChanged"
-        Title="AdministrationProduct" MinHeight="700" MinWidth="900" WindowStartupLocation="Manual" Height="700" >
+        Title="AdministrationProduct" MinHeight="700" MinWidth="1500" WindowStartupLocation="Manual" Height="700" >
     <Window.Resources>
         <Data:ProductDoc x:Key="productDoc"/>
         <local:DeliveryOptionsToDictionary x:Key="lDeliveryOptionsToDictionary"/>
@@ -75,7 +75,7 @@
         <TabItem x:Name="ProductTab" Header="Product" DataContext="{StaticResource product2ViewSource}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="108*"/>
+                    <ColumnDefinition Width="308*"/>
                     <ColumnDefinition Width="144*"/>
                     <ColumnDefinition Width="251*"/>
                     <ColumnDefinition Width="251*"/>
@@ -105,6 +105,7 @@
                     </DataGrid.RowHeaderStyle>
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="Auto" Header="Status" Binding="{Binding Status, Mode=OneTime}" CanUserSort="False" IsReadOnly="True"/>
+                        <DataGridTextColumn Width="Auto" Header="ProductId" Binding="{Binding ProductId, Mode=OneTime}" CanUserSort="False" IsReadOnly="True"/>
                         <DataGridTemplateColumn Header="Product name" Width="290" CanUserSort="True" CanUserReorder="False" SortMemberPath="ProductName" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -245,7 +246,8 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="24" />
+                    <ColumnDefinition Width="11.455" />
+                    <ColumnDefinition Width="12.545"/>
                     <ColumnDefinition Width="98"/>
                     <ColumnDefinition Width="7"/>
                     <ColumnDefinition Width="607"/>
@@ -253,7 +255,7 @@
                 </Grid.ColumnDefinitions>
                 <DataGrid x:Name="issueDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch" ItemsSource="{Binding}"
                             RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Stretch" Width="Auto"  DataContext="{StaticResource issueViewSource}" 
-                            CanUserDeleteRows="True" CanUserAddRows="False" SelectionUnit="CellOrRowHeader" IsSynchronizedWithCurrentItem="True" Grid.ColumnSpan="5">
+                            CanUserDeleteRows="True" CanUserAddRows="False" SelectionUnit="CellOrRowHeader" IsSynchronizedWithCurrentItem="True" Grid.ColumnSpan="6">
                     <DataGrid.RowHeaderStyle>
                         <Style TargetType="{x:Type DataGridRowHeader}">
                             <Setter Property="Background"  Value="Yellow"/>
@@ -317,7 +319,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <Grid Grid.Row="1" Grid.Column="0" Margin="0,10,0,0" Grid.ColumnSpan="4" >
+                <Grid Grid.Row="1" Grid.Column="0" Margin="0,10,0,0" Grid.ColumnSpan="5" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
