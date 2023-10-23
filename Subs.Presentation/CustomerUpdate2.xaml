@@ -284,7 +284,7 @@
             <TextBox x:Name="textAddressLine1"  MaxLength="50" Width="193" Text="{Binding Address1}" HorizontalAlignment="Left"/>
             <TextBox x:Name="textAddressLine2"  MaxLength="50" Width="193" Text="{Binding Address2}" HorizontalAlignment="Left"/>
             <TextBox x:Name="textAddressLine3"  MaxLength="50" Width="193" Text="{Binding Address3}" HorizontalAlignment="Left"/>
-            <TextBox x:Name="textAddressLine4"  MaxLength="50" Width="193" Text="{Binding Address3}" HorizontalAlignment="Left"/>
+            <TextBox x:Name="textAddressLine4"  MaxLength="50" Width="193" Text="{Binding Address4}" HorizontalAlignment="Left"/>
             <TextBox x:Name="textPostCode" MaxLength="50" Width="193" Text="{Binding Address5}" HorizontalAlignment="Left"/>
         </StackPanel>
   
