@@ -862,7 +862,59 @@ namespace Subs.Data
 
         #region Static Methods
 
-        public static bool RegisterListDelivery(int pSubscriptionId, int pIssueId)
+
+        public static int Surplus(int pReceiverId, int pProductId )
+        { 
+            try
+            {
+                List<CustomerData3> lCustomers = new List<CustomerData3>();
+                List<int> lCustomerIds = new List<int>();
+
+                SqlConnection lConnection = new SqlConnection();
+                SqlCommand Command = new SqlCommand();
+                SqlDataAdapter Adaptor = new SqlDataAdapter();
+                lConnection.ConnectionString = Settings.ConnectionString;
+                lConnection.Open();
+                Command.Connection = lConnection;
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = "[dbo].[MIMS.SubscriptionData.Surplus]";
+
+                SqlParameter lParameter1 = Command.CreateParameter();
+                lParameter1.ParameterName = "@ReceiverId";
+                lParameter1.DbType = DbType.Int32;
+                lParameter1.Value = pReceiverId;
+                Command.Parameters.Add(lParameter1);
+
+
+                SqlParameter lParameter2 = Command.CreateParameter();
+                lParameter2.ParameterName = "@ProductId";
+                lParameter2.DbType = DbType.Int32;
+                lParameter2.Value = pProductId;
+                Command.Parameters.Add(lParameter2);
+
+                SqlDataReader lReader = Command.ExecuteReader();
+
+                lReader.Read();
+                return lReader.GetInt32(0);
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "SubscriptionData", "Surplus", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
+            }
+        }
+
+public static bool RegisterListDelivery(int pSubscriptionId, int pIssueId)
         {
             try
             { 

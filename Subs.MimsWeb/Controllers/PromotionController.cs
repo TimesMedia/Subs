@@ -88,7 +88,7 @@ namespace Subs.MimsWeb.Controllers
 
 
         [HttpGet]
-        public ViewResult List()
+        public ViewResult List(string pMessage = "")
         {
 
             //Silke insisted that the page where you query what category to select from and the view where you display the products, be the same page.
@@ -96,7 +96,7 @@ namespace Subs.MimsWeb.Controllers
 
             try
             {
-
+                ViewBag.Message = pMessage;
                 WebProducts lPreviousSelection = SessionHelper.GetWebProducts(Session);
 
                 //22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
@@ -180,15 +180,17 @@ namespace Subs.MimsWeb.Controllers
                     lBasket = new Basket();
                 }
 
-                // If there is one already, add to units per issue
+
+                // Prevent adding the same item more than once
 
                 bool lFound = false;
                 foreach (BasketItem item in lBasket.BasketItems)
                 {
                     if (item.Subscription.ProductId == ProductId)
                     {
-                            lFound = true;
-                        item.Subscription.UnitsPerIssue++;
+                        lFound = true;
+                        TempData["Message"] = "You cannot add the same item more than once. Request denied.";
+                        return RedirectToAction("List", "Promotion");
                     }
                 }
 
@@ -199,6 +201,13 @@ namespace Subs.MimsWeb.Controllers
                     // create a new BasketItem
                     LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
 
+                    // Filter out subscriptions that are in surplus already
+
+                    if (SubscriptionData3.Surplus((int)lLoginRequest.CustomerId, ProductId) > 0)
+                    {
+                        TempData["Message"] = "You already have a surplus subscription on this product. Request denied.";                        
+                        return RedirectToAction("List", "Promotion");
+                    }
 
                     SubscriptionData3 lSubscription = new SubscriptionData3();
 
@@ -327,6 +336,7 @@ namespace Subs.MimsWeb.Controllers
                 foreach (BasketItem item in lToBeRemoved)
                 {
                     lBasket.BasketItems.Remove(item);
+                    SubscriptionBiz.Cancel(item.Subscription, "overlapping subscription");
                 }
                 lToBeRemoved.Clear();
 
@@ -437,6 +447,8 @@ namespace Subs.MimsWeb.Controllers
             Basket lBasket = SessionHelper.GetBasket(Session);
             LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
             StringBuilder lPositiveResult = new StringBuilder();
+            MimsValidationResult lValidationResult;
+
 
             if (lBasket.BasketItems.Count() == 0)
             {
@@ -445,28 +457,18 @@ namespace Subs.MimsWeb.Controllers
             }
 
             try 
-            { 
-                // Validate all the subscriptions
+            {
+                //Validate all the subscriptions
 
                 foreach (BasketItem lBasketItem in lBasket.BasketItems)
                 {
-                    Subs.Data.MimsValidationResult lValidationResult = SubscriptionBiz.Validate(lBasketItem.Subscription);
+                    lValidationResult = SubscriptionBiz.Validate(lBasketItem.Subscription);
 
                     if (lValidationResult.Message != "OK")
                     {
                         lBasketItem.Subscription.gReadyToSubmit = false;
 
                         if (lValidationResult.Prompt)
-                        {
-                            if (lValidationResult.Message.Contains("overlaps"))
-                            {
-                                lBasketItem.Warning = "Subscription will overlap with an existing one. Please remove it from the cart. Overlapping subscriptions have to be ordered telephonically.";
-                                ExceptionData.WriteException(1, lValidationResult.Message, this.ToString(), "Submit", "Receiver = " + lBasketItem.Subscription.ReceiverId.ToString() 
-                                    + "StartIssue = " + lBasketItem.Subscription.ProposedStartIssue + "LastIssue = " + lBasketItem.Subscription.ProposedLastIssue);
-                                return View("Basket", lBasket);
-                            }
-                        }
-                        else
                         {
                             ExceptionData.WriteException(1, lValidationResult.Message, this.ToString(), "Submit", "Receiver = " + lBasketItem.Subscription.ReceiverId.ToString());
                             ViewBag.Message = lValidationResult.Message;

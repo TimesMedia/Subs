@@ -223,7 +223,8 @@ namespace Subs.Business
 
         public static string NextDate(int pReceiverId, int pProductId, out DateTime pNextDate)
         {
-         
+            try
+            { 
             Data.SubscriptionDoc3TableAdapters.SubscriptionIssueTableAdapter lAdapter = new Data.SubscriptionDoc3TableAdapters.SubscriptionIssueTableAdapter();
             lAdapter.AttachConnection();
 
@@ -237,9 +238,25 @@ namespace Subs.Business
            
             pNextDate = lNextDate;
             return "OK";
-        }
+            }
 
-          
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "SubscriptionBizStatic", "NextDate", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
+            }
+        }
+         
 
         private static string NullifyWithCreditNote(ref SqlTransaction pTransaction, Subs.Data.SubscriptionData3 pSubscriptionData, string pReason)
         {

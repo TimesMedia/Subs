@@ -217,9 +217,8 @@
 
         <p style="color: red; margin:0em 1em 1em 1em">
             @Html.ViewBag.Message
+            @TempData["Message"]
         </p>
-
-
 
         if (Model == null)
         {
