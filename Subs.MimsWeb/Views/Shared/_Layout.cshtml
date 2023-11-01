@@ -146,6 +146,12 @@
                 <div>@Html.ActionLink("LOGOUT", "Thanks", "Home")</div>
                 <div>@Html.ActionLink("PROFILE", "Account", "Home")</div>
 
+                if (lLoginRequest.CustomerId == 120072 || lLoginRequest.CustomerId == 120311)
+                {
+                    <div>@Html.ActionLink("NewCPD", "Index", "CPD")</div>
+                }
+
+
             }
         }
 

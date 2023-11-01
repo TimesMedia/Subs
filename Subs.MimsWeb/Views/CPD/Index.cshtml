@@ -1,0 +1,87 @@
+﻿@using CPD.Data;
+@model List<History>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Home</title>
+</head>
+<body>
+    <div>
+
+
+        @ViewBag.Message
+    </div>
+
+
+    @{
+        ViewData["Title"] = "Home Page";
+    }
+
+    <style>
+
+        .container {
+            display: flex;
+            margin-left: 12px;
+            flex-flow: nowrap;
+        }
+
+            .container div:nth-of-type(1n+2) {
+                margin-left: 5px;
+            }
+
+            .container div {
+                margin-bottom: 10px
+            }
+
+
+        .col1 {
+            flex: 0 1 80px;
+        }
+
+        .col2 {
+            flex: 1 1 120px;
+        }
+
+        .col3 {
+            flex: 0 1 120px;
+        }
+
+        /* .heading {
+            flex: 1 1 140px;
+            color: blue;
+        }*/
+
+        .heading {
+            position: fixed;
+            left: auto;
+            right: auto;
+            top: auto;
+        }
+    </style>
+
+    <h1>Welcome</h1>
+
+    <p>@ViewBag.Message</p>
+
+    <p>Tests in progress.</p>
+
+
+    @{
+        if (Model != null)
+        {
+            foreach (CPD.Data.History item in @Model)
+            {
+
+            }
+        }
+
+    }
+
+</body>
+</html>

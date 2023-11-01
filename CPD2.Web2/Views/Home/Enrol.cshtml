@@ -1,0 +1,59 @@
+﻿@using CPD2.Data
+@model List<AvailableSurvey>
+@{
+    ViewData["Title"] = "Enrol";
+}
+
+<style>
+ 
+    .container {
+        display: flex;
+        margin-left: 12px;
+        flex-flow: nowrap;
+    }
+
+    .container div:nth-of-type(1n+2){
+        margin-left:5px;
+    }
+
+    .container div{
+        margin-bottom: 10px
+    }
+
+
+    .col1{
+        flex: 0 1 20px;
+    }
+
+    .col2 {
+        flex: 1 1 120px;
+    }
+
+    .col3 {
+        flex: 0 1 120px;
+    }
+
+    .heading{
+        flex: 1 1 140px;
+        color: blue;
+    }
+
+</style>
+
+<div>
+    <div class="container">
+        <h1 class="heading">Catalogue of availible publications</h1>
+        <p class="col3">Expire</p>
+    </div>
+
+        <div>
+            @foreach (CPD2.Data.AvailableSurvey item in @Model)
+            {
+                <div class="container">
+                    <div class="col1"><a asp-controller="Test" asp-action="EnrolModule" asp-route-id="@item.SurveyId">Enrol</a></div>
+                    <div class="col2">@item.Publication</div>
+                    <div class="col3">@item.ExpirationDate</div>
+                </div>
+            }
+    </div>
+</div>
