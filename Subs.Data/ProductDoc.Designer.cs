@@ -1032,11 +1032,14 @@ namespace Subs.Data {
                 base.Columns.Add(this.columnSellOption);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnIssueId}, true));
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint2", new global::System.Data.DataColumn[] {
+                                this.columnIssueDescription}, false));
                 this.columnIssueId.AutoIncrement = true;
                 this.columnIssueId.AllowDBNull = false;
                 this.columnIssueId.ReadOnly = true;
                 this.columnIssueId.Unique = true;
                 this.columnIssueDescription.AllowDBNull = false;
+                this.columnIssueDescription.Unique = true;
                 this.columnIssueDescription.DefaultValue = ((string)(""));
                 this.columnIssueDescription.MaxLength = 50;
                 this.columnYear.AllowDBNull = false;

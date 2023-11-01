@@ -468,7 +468,7 @@ SELECT ProductId, ProductName, Type, Medium, Category1, Picture, Heading, Produc
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Product2" msprop:Generator_TableClassName="Product2DataTable" msprop:Generator_TableVarName="tableProduct2" msprop:Generator_RowChangedName="Product2RowChanged" msprop:Generator_TablePropName="Product2" msprop:Generator_RowDeletingName="Product2RowDeleting" msprop:Generator_RowChangingName="Product2RowChanging" msprop:Generator_RowEvHandlerName="Product2RowChangeEventHandler" msprop:Generator_RowDeletedName="Product2RowDeleted" msprop:Generator_RowClassName="Product2Row" msprop:Generator_UserTableName="Product2" msprop:Generator_RowEvArgName="Product2RowChangeEvent">
+        <xs:element name="Product2" msprop:Generator_TableClassName="Product2DataTable" msprop:Generator_TableVarName="tableProduct2" msprop:Generator_TablePropName="Product2" msprop:Generator_RowDeletingName="Product2RowDeleting" msprop:Generator_RowChangingName="Product2RowChanging" msprop:Generator_RowEvHandlerName="Product2RowChangeEventHandler" msprop:Generator_RowDeletedName="Product2RowDeleted" msprop:Generator_UserTableName="Product2" msprop:Generator_RowChangedName="Product2RowChanged" msprop:Generator_RowEvArgName="Product2RowChangeEvent" msprop:Generator_RowClassName="Product2Row">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ProductId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnProductId" msprop:Generator_ColumnPropNameInRow="ProductId" msprop:Generator_ColumnPropNameInTable="ProductIdColumn" msprop:Generator_UserColumnName="ProductId" type="xs:int" />
@@ -525,22 +525,26 @@ SELECT ProductId, ProductName, Type, Medium, Category1, Picture, Heading, Produc
       <xs:selector xpath=".//mstns:Issue" />
       <xs:field xpath="mstns:IssueId" />
     </xs:unique>
+    <xs:unique name="Constraint2">
+      <xs:selector xpath=".//mstns:Issue" />
+      <xs:field xpath="mstns:IssueDescription" />
+    </xs:unique>
     <xs:unique name="Product2_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:Product2" />
       <xs:field xpath="mstns:ProductId" />
     </xs:unique>
-    <xs:unique name="Constraint2">
+    <xs:unique name="Product2_Constraint2" msdata:ConstraintName="Constraint2">
       <xs:selector xpath=".//mstns:Product2" />
       <xs:field xpath="mstns:ProductName" />
     </xs:unique>
-    <xs:keyref name="Product2_Issue" refer="Product2_Constraint1" msprop:rel_Generator_UserChildTable="Issue" msprop:rel_Generator_ChildPropName="GetIssueRows" msprop:rel_Generator_UserRelationName="Product2_Issue" msprop:rel_Generator_RelationVarName="relationProduct2_Issue" msprop:rel_Generator_UserParentTable="Product2" msprop:rel_Generator_ParentPropName="Product2Row" msdata:UpdateRule="None" msdata:DeleteRule="None">
+    <xs:keyref name="Product2_Issue" refer="Product2_Constraint1" msprop:rel_Generator_UserChildTable="Issue" msprop:rel_Generator_ChildPropName="GetIssueRows" msprop:rel_Generator_UserRelationName="Product2_Issue" msprop:rel_Generator_ParentPropName="Product2Row" msprop:rel_Generator_RelationVarName="relationProduct2_Issue" msprop:rel_Generator_UserParentTable="Product2" msdata:UpdateRule="None" msdata:DeleteRule="None">
       <xs:selector xpath=".//mstns:Issue" />
       <xs:field xpath="mstns:ProductId" />
     </xs:keyref>
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="Product2_BaseRate" msdata:parent="Product2" msdata:child="BaseRate" msdata:parentkey="ProductId" msdata:childkey="ProductID" msprop:Generator_UserChildTable="BaseRate" msprop:Generator_ChildPropName="GetBaseRateRows" msprop:Generator_UserRelationName="Product2_BaseRate" msprop:Generator_ParentPropName="Product2Row" msprop:Generator_RelationVarName="relationProduct2_BaseRate" msprop:Generator_UserParentTable="Product2" />
+      <msdata:Relationship name="Product2_BaseRate" msdata:parent="Product2" msdata:child="BaseRate" msdata:parentkey="ProductId" msdata:childkey="ProductID" msprop:Generator_UserChildTable="BaseRate" msprop:Generator_ChildPropName="GetBaseRateRows" msprop:Generator_UserRelationName="Product2_BaseRate" msprop:Generator_RelationVarName="relationProduct2_BaseRate" msprop:Generator_UserParentTable="Product2" msprop:Generator_ParentPropName="Product2Row" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>
