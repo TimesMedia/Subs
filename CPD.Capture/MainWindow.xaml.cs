@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.IO;
 using System.Data;
+using Subs.Data;
 using CPD.Data;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -29,8 +30,7 @@ namespace CPD.Capture
             {
             InitializeComponent();
 
-            Settings.MIMSConnectionString = global::CPD.Capture.Properties.Settings.Default.MIMSConnectionString;
-
+            Settings.ConnectionString = global::CPD.Capture.Properties.Settings.Default.MIMSConnectionString;
             Settings.CPDConnectionString = global::CPD.Capture.Properties.Settings.Default.CPDConnectionString;
 
             gModuleContext = new ModuleDataContext(Settings.CPDConnectionString);
@@ -84,7 +84,7 @@ namespace CPD.Capture
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "MainWindow", lStage);
+                    CPD.Data.ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "MainWindow", lStage);
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
@@ -113,7 +113,7 @@ namespace CPD.Capture
                     do
                     {
                         ExceptionLevel++;
-                        ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Window_Loaded", "");
+                    CPD.Data.ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Window_Loaded", "");
                         CurrentException = CurrentException.InnerException;
                     } while (CurrentException != null);
 
@@ -148,7 +148,7 @@ namespace CPD.Capture
                     do
                     {
                         ExceptionLevel++;
-                        ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButtonAddSurvey_Click", "");
+                        CPD.Data.ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButtonAddSurvey_Click", "");
                         CurrentException = CurrentException.InnerException;
                     } while (CurrentException != null);
 
@@ -187,7 +187,7 @@ namespace CPD.Capture
                     do
                     {
                         ExceptionLevel++;
-                        ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButtonUpdateSurvey_Click", "");
+                        CPD.Data.ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButtonUpdateSurvey_Click", "");
                         CurrentException = CurrentException.InnerException;
                     } while (CurrentException != null);
 
@@ -226,7 +226,7 @@ namespace CPD.Capture
                     do
                     {
                         ExceptionLevel++;
-                        ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "SurveyDataGrid_SelectionChanged", "");
+                        CPD.Data.ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "SurveyDataGrid_SelectionChanged", "");
                         CurrentException = CurrentException.InnerException;
                     } while (CurrentException != null);
 
@@ -284,7 +284,7 @@ namespace CPD.Capture
                     do
                     {
                         ExceptionLevel++;
-                        ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Consolidate", "");
+                        CPD.Data.ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Consolidate", "");
                         CurrentException = CurrentException.InnerException;
                     } while (CurrentException != null);
 

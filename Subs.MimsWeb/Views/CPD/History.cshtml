@@ -1,61 +1,58 @@
 ﻿@using CPD.Data;
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
+    Layout = "_CPDLayout.cshtml";
 }
 
-<style>
 
-    .container {
-        display: flex;
-        margin-left: 12px;
-        flex-flow: nowrap;
-        margin-bottom: 10px;
+    <style>
+
+            .container {
+                display: flex;
+                margin-left: 12px;
+                flex-flow: nowrap;
+                margin-bottom: 10px;
+            }
+
+            /* .container div:nth-of-type(1n+2) {
+                    margin-left: 5px;
+                }*/
+
+            /*  .container div {
+                    margin-bottom: 10px
+                }
+        */
+
+            .col1 {
+                flex: 1 1 80px;
+            }
+
+            .col2 {
+                flex: 1 1 220px;
+            }
+
+            .heading {
+                flex: 1 1 140px;
+                color: blue;
+            }
+
+
+            .scrollable {
+                /* margin: 4px, 4px;
+                padding: 4px;*/
+                width: auto;
+                height: 450px;
+                overflow-y: auto;
+                /*text-align: justify;*/
+            }
+    </style>
+
+    @*<div class="container">
+        <h1 class="heading">Test History</h1>
+    </div>*@
+
+    @{
+        string lCurrentPublication = "";
     }
-
-       /* .container div:nth-of-type(1n+2) {
-            margin-left: 5px;
-        }*/
-
-      /*  .container div {
-            margin-bottom: 10px
-        }
-*/
-
-    .col1 {
-        flex: 1 1 80px;
-    }
-
-    .col2 {
-        flex: 1 1 120px;
-    }
- 
-     .heading {
-            flex: 1 1 140px;
-            color: blue;
-        }
-   
-
-    .scrollable {
-       /* margin: 4px, 4px;
-        padding: 4px;*/
-        width: auto;
-        height: 450px;
-        overflow-y: auto;
-        /*text-align: justify;*/
-    }
-
-
-</style>
-
-<div class="container">
-    <h1 class="heading">Test History</h1>
-</div>
-
-@{
-    string lCurrentPublication = "";
-}
 
 <div class="scrollable">
     @if (@Model != null)
@@ -66,7 +63,7 @@
             {
                 lCurrentPublication = @item.Publication;
 
-                <p style="color:black; margin-left: 12px;">@item.Publication</p>
+                <p style="color:red; margin-left: 12px;">@item.Publication</p>
                 <div class="container" style="color:blue;">
                     <div class="col1">Command</div>
                     <div class="col2">Module</div>
@@ -78,18 +75,24 @@
                 </div>
 
             }
-           
+
             <div class="container">
-                <div class="col1"><a asp-controller="Test" asp-action="EnrolModule" asp-route-id="@item.ResultId">Reissue</a></div>
+                <div class="col1">
+                    @*<a asp-controller="Test" asp-action="EnrolModule" asp-route-id="@item.ResultId">Reissue</a>*@
+
+                @Html.ActionLink("Reissue", "Reissue", "CPD")
+
+                </div>
                 <div class="col2">@item.Module</div>
-                <div class="col1">@item.Datum?.ToString("yyyy MM dd")</div>
+                <div class="col1">@item.Datum.ToString("yyyy MM dd")</div>
                 <div class="col1">@item.Score</div>
                 <div class="col1">@item.Verdict</div>
-                <div class="col1">@item.NormalPoints?.ToString("#0.0")</div>
-                <div class="col1">@item.EthicsPoints?.ToString("#0.0")</div>
+                <div class="col1">@item.NormalPoints.ToString("#0.0")</div>
+                <div class="col1">@item.EthicsPoints.ToString("#0.0")</div>
             </div>
+            <br />
+            <br />
         }
+
     }
-
-
 </div>

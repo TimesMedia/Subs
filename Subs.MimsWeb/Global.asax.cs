@@ -19,18 +19,12 @@ namespace Subs.MimsWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            string lConnectionString = global::MimsWeb.Properties.Settings.Default.ConnectionString;
-
-            if (lConnectionString == "")
-            {
-                throw new Exception("No connection string has been set.");
-            }
-            else
-            {
-                Settings.ConnectionString = lConnectionString;
+           
+                Settings.ConnectionString = global::MimsWeb.Properties.Settings.Default.ConnectionString; ;
+                Settings.CPDConnectionString = global::MimsWeb.Properties.Settings.Default.CPDConnectionString;
                 Settings.DirectoryPath = global::MimsWeb.Properties.Settings.Default.DirectoryPath;
-                //Settings.EMailHostIp = global::MimsWeb.Properties.Settings.Default.EMailHostIp;
-            }
+                
+
             }
             catch (Exception ex)
             {

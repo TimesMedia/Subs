@@ -43,5 +43,17 @@ namespace MimsWeb.Properties {
                 return ((string)(this["ConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PKLWEBDB01\\mssql2016std;Initial Catalog=CPD2;User ID=MIMSWebServiceUs" +
+            "er;Password=akkedis;Enlist=False;Pooling=True;Max Pool Size=10;Connect Timeout=1" +
+            "00")]
+        public string CPDConnectionString {
+            get {
+                return ((string)(this["CPDConnectionString"]));
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ namespace Subs.Data
     public class Settings
     {
         public static string ConnectionString;
+        public static string CPDConnectionString { get; set; }
         public static string SUBSDWConnectionString;
         public static CustomerDoc2.CustomerDataTable gCustomerTable = new CustomerDoc2.CustomerDataTable();
         public static int CurrentCustomerId = 0;

@@ -1,15 +1,9 @@
-﻿
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
-
 <head>
-    <meta charset="utf-8" />
-    <title>CPDLayout</title>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/site.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,28 +90,27 @@
         <img src="/images//HamburgerOff.gif" Title="Hamburger off" id="HamburgerOff" class="Hamburger" onclick="MenuFunction()" />
 
         <div class="CPDImageContainer">
-            <img src="/images/CPDLogo1.jpg" Title="Logo" />
+            <img src="/images/CPDLogo1.jpg" Title="Logo" width="110" />
         </div>
 
 
         <div id="MenuDiv" class="MenuContainer">
 
-
             <div class="text-center">
-                <a asp-controller="Home" asp-action="Index">CPD HOME</a>
+                @Html.ActionLink("CPDHOME","Index", "CPD")
             </div>
 
-           
-            <div class="text-center">
-                <a asp-controller="Home" asp-action="History">HISTORY</a>
-            </div>
 
             <div class="text-center">
-                <a asp-controller="Home" asp-action="Enrol">ENROL</a>
+                 @Html.ActionLink("HISTORY", "History", "CPD")
             </div>
 
             <div class="text-center">
-                <a asp-controller="Home" asp-action="Read">READING MATERIAL</a>
+                <a asp-controller="CPD" asp-action="Enrol">ENROL</a>
+            </div>
+
+            <div class="text-center">
+                <a asp-controller="CPD" asp-action="Read">READING MATERIAL</a>
             </div>
 
             <div class="text-center">
@@ -127,6 +120,6 @@
         </div>
     </div>
     <br />
-    @*@RenderBody()*@
+    @RenderBody()
 </body>
 </html>

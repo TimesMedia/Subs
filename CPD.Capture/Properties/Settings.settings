@@ -12,9 +12,9 @@
     <Setting Name="MIMSConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=PKLWEBDB01\mssql2016std;Initial Catalog=MIMS3;Integrated Security=True;Enlist=False;Pooling=True;Max Pool Size=20;Connect Timeout=100&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=PKLWEBDB01\mssql2016std;Initial Catalog=CPD2;Integrated Security=True;Enlist=False;Pooling=True;Max Pool Size=20;Connect Timeout=100&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=PKLWEBDB01\mssql2016std;Initial Catalog=MIMS3;Integrated Security=True;Enlist=False;Pooling=True;Max Pool Size=20;Connect Timeout=100</Value>
+      <Value Profile="(Default)">Data Source=PKLWEBDB01\mssql2016std;Initial Catalog=CPD2;Integrated Security=True;Enlist=False;Pooling=True;Max Pool Size=20;Connect Timeout=100</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -309,6 +309,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\CPDLogo1.jpg" />
     <Content Include="Images\HamburgerOff.gif" />
     <Content Include="Images\HamburgerOn.gif" />
     <Content Include="Images\Medicine comparison.jpg" />
@@ -394,7 +395,7 @@
     <Content Include="Views\CPD\Read.cshtml" />
     <Content Include="Views\Test\EnrolModule.cshtml" />
     <Content Include="Views\Test\Test.cshtml" />
-    <Content Include="Views\CPD\CPDLayout.cshtml" />
+    <Content Include="Views\CPD\_CPDLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

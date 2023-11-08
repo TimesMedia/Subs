@@ -37,8 +37,8 @@ namespace CPD.Capture.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PKLWEBDB01\\mssql2016std;Initial Catalog=MIMS3;Integrated Security=Tru" +
-            "e;Enlist=False;Pooling=True;Max Pool Size=20;Connect Timeout=100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PKLWEBDB01\\mssql2016std;Initial Catalog=CPD2;Integrated Security=True" +
+            ";Enlist=False;Pooling=True;Max Pool Size=20;Connect Timeout=100")]
         public string MIMSConnectionString {
             get {
                 return ((string)(this["MIMSConnectionString"]));

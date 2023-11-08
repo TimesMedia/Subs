@@ -13,15 +13,17 @@ namespace MimsWeb.Controllers
         // GET: CPD
         public ActionResult Index()
         {
-              
+
              LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);
-     
 
-            ViewBag.Message = lLoginRequest.Email + " " + lLoginRequest.CustomerId.ToString();
 
-            return View("CPDLayout");
+            //ViewBag.Message = lLoginRequest.Email + " " + lLoginRequest.CustomerId.ToString();
+
+            List<History> lHistory = ResultData.GetHistory("History", (int)lLoginRequest.CustomerId);
+
+
+            return View("Index", lHistory);
         }
-
 
         public ActionResult History()
         {
@@ -29,14 +31,16 @@ namespace MimsWeb.Controllers
             return View(lHistory);
         }
 
+        public ActionResult Reissue(int pIssueId)
+        {
+            return View(pIssueId);
+        }
 
         public ActionResult Read()
         {
             List<AvailableSurvey> lSurveys = ModuleData.GetAvailableRead(108244);
             return View(lSurveys);
         }
-
-
 
 
         public ActionResult Enrol()

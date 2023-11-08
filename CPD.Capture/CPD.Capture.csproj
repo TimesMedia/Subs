@@ -101,6 +101,10 @@
       <Project>{2df0b0f0-351e-4dbb-b0f2-562315c0c252}</Project>
       <Name>CPD.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Subs.Data\Subs.Data.csproj">
+      <Project>{f501278f-2ae1-4eae-8ddc-6029ece74eed}</Project>
+      <Name>Subs.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
