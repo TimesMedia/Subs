@@ -20,9 +20,9 @@ namespace Subs.MimsWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
            
-                Settings.ConnectionString = global::MimsWeb.Properties.Settings.Default.ConnectionString; ;
-                Settings.CPDConnectionString = global::MimsWeb.Properties.Settings.Default.CPDConnectionString;
-                Settings.DirectoryPath = global::MimsWeb.Properties.Settings.Default.DirectoryPath;
+            Settings.ConnectionString = global::MimsWeb.Properties.Settings.Default.ConnectionString; ;
+            Settings.CPDConnectionString = global::MimsWeb.Properties.Settings.Default.CPDConnectionString;
+            Settings.DirectoryPath = global::MimsWeb.Properties.Settings.Default.DirectoryPath;
                 
 
             }

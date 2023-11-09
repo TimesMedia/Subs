@@ -10,30 +10,33 @@ namespace MimsWeb.Controllers
 {
     public class CPDController : Controller
     {
+        public CPDController()
+        {
+            
+        }
+
         // GET: CPD
         public ActionResult Index()
         {
-
-             LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);
-
-
-            //ViewBag.Message = lLoginRequest.Email + " " + lLoginRequest.CustomerId.ToString();
+            LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);
+            ViewBag.Message = lLoginRequest.Email + " " + lLoginRequest.CustomerId.ToString();
 
             List<History> lHistory = ResultData.GetHistory("History", (int)lLoginRequest.CustomerId);
 
 
-            return View("Index", lHistory);
+            return View("Index");
         }
 
         public ActionResult History()
         {
-            List<History> lHistory = ResultData.GetHistory("History", 108244);
-            return View(lHistory);
+            LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);
+            List<History> lHistory = ResultData.GetHistory("History", (int)lLoginRequest.CustomerId);
+            return View("History", lHistory);
         }
 
-        public ActionResult Reissue(int pIssueId)
+        public ActionResult Reissue(int pResultId)
         {
-            return View(pIssueId);
+            return View(pResultId);
         }
 
         public ActionResult Read()

@@ -217,7 +217,7 @@ namespace CPD.Data
                 throw;
             }
         }
-     
+
 
         //public static List<History> GetHistory(int pCustomerId)
         //{
@@ -310,76 +310,76 @@ namespace CPD.Data
         //    }
         //  }
 
-        //public static int Initialise(int CustomerId, int ModuleId)
-        //{    
-        //    DataSet1TableAdapters.ResultTableAdapter lResultAdapter = new DataSet1TableAdapters.ResultTableAdapter();
-        //    DataSet1TableAdapters.ResultDetailTableAdapter lResultDetailAdapter = new DataSet1TableAdapters.ResultDetailTableAdapter();
-        //    //QuestionareDocTableAdapters.ArticleTableAdapter lArticleAdapter = new QuestionareDocTableAdapters.ArticleTableAdapter();
-        //    DataSet1TableAdapters.QuestionTableAdapter lQuestionAdapter = new DataSet1TableAdapters.QuestionTableAdapter();
-        //    lResultAdapter.AttachConnection();
-        //    lResultDetailAdapter.AttachConnection();
-        //    //lArticleAdapter.AttachConnection();
-        //    lQuestionAdapter.AttachConnection();
-        //    try
-        //    {
-        //        // Local objects
+        public static int Initialise(int CustomerId, int ModuleId)
+        {
+            DataSet1TableAdapters.ResultTableAdapter lResultAdapter = new DataSet1TableAdapters.ResultTableAdapter();
+            DataSet1TableAdapters.ResultDetailTableAdapter lResultDetailAdapter = new DataSet1TableAdapters.ResultDetailTableAdapter();
+            //QuestionareDocTableAdapters.ArticleTableAdapter lArticleAdapter = new QuestionareDocTableAdapters.ArticleTableAdapter();
+            DataSet1TableAdapters.QuestionTableAdapter lQuestionAdapter = new DataSet1TableAdapters.QuestionTableAdapter();
+            lResultAdapter.AttachConnection();
+            lResultDetailAdapter.AttachConnection();
+            //lArticleAdapter.AttachConnection();
+            lQuestionAdapter.AttachConnection();
+            try
+            {
+                // Local objects
 
-        //        DataSet1 lDataSet1 = new DataSet1();
+                DataSet1 lDataSet1 = new DataSet1();
 
-        //        short CurrentAttempt = (short)GetAttempt(CustomerId, ModuleId);
+                short CurrentAttempt = (short)GetAttempt(CustomerId, ModuleId);
 
-        //        // Exit if you are too far
+                // Exit if you are too far
 
-        //        if (CurrentAttempt == 2)
-        //        {
-        //            throw new Exception("You cannot initialise more than one attempt.");
-        //        }
+                if (CurrentAttempt == 2)
+                {
+                    throw new Exception("You cannot initialise more than one attempt.");
+                }
 
-        //        // Create a single Result row
+                // Create a single Result row
 
-        //        DataSet1.ResultRow lResultRow = lDataSet1.Result.NewResultRow();
-        //        lResultRow.CustomerId = CustomerId;
-        //        lResultRow.ModuleId = ModuleId;
-        //        lResultRow.Datum = DateTime.Now;
-        //        lResultRow.Attempt = CurrentAttempt;
-        //        lResultRow.Attempt++;
-        //        lResultRow.Pass = false;
-        //        lDataSet1.Result.AddResultRow(lResultRow);
-        //        lResultAdapter.Update(lResultRow);
-        //        lDataSet1.Result.AcceptChanges();
+                DataSet1.ResultRow lResultRow = lDataSet1.Result.NewResultRow();
+                lResultRow.CustomerId = CustomerId;
+                lResultRow.ModuleId = ModuleId;
+                lResultRow.Datum = DateTime.Now;
+                lResultRow.Attempt = CurrentAttempt;
+                lResultRow.Attempt++;
+                lResultRow.Pass = false;
+                lDataSet1.Result.AddResultRow(lResultRow);
+                lResultAdapter.Update(lResultRow);
+                lDataSet1.Result.AcceptChanges();
 
-        //        // Create the child ResultDetail rows
-        //        //lArticleAdapter.FillBy(lQuestionareDoc.Article, ModuleId);
-        //        lQuestionAdapter.FillBy(lDataSet1.Question, ModuleId);
+                // Create the child ResultDetail rows
+                //lArticleAdapter.FillBy(lQuestionareDoc.Article, ModuleId);
+                lQuestionAdapter.FillBy(lDataSet1.Question, ModuleId);
 
-        //        foreach (DataSet1.QuestionRow lQuestionRow in lDataSet1.Question)
-        //        {
-        //            DataSet1.ResultDetailRow lResultDetailRow = lDataSet1.ResultDetail.NewResultDetailRow();
-        //            lResultDetailRow.ResultId = lResultRow.ResultId;
-        //            lResultDetailRow.QuestionId = lQuestionRow.QuestionId;
-        //            lResultDetailRow.Datum = DateTime.Now;
-        //            lResultDetailRow.Answer = 0;
-        //            lDataSet1.ResultDetail.AddResultDetailRow(lResultDetailRow);
-        //        }
+                foreach (DataSet1.QuestionRow lQuestionRow in lDataSet1.Question)
+                {
+                    DataSet1.ResultDetailRow lResultDetailRow = lDataSet1.ResultDetail.NewResultDetailRow();
+                    lResultDetailRow.ResultId = lResultRow.ResultId;
+                    lResultDetailRow.QuestionId = lQuestionRow.QuestionId;
+                    lResultDetailRow.Datum = DateTime.Now;
+                    lResultDetailRow.Answer = 0;
+                    lDataSet1.ResultDetail.AddResultDetailRow(lResultDetailRow);
+                }
 
-        //        lResultDetailAdapter.Update(lDataSet1.ResultDetail);
-        //        lDataSet1.ResultDetail.AcceptChanges();
+                lResultDetailAdapter.Update(lDataSet1.ResultDetail);
+                lDataSet1.ResultDetail.AcceptChanges();
 
-        //        return lResultRow.ResultId;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.InnerException == null)
-        //        {
-        //            ExceptionData.WriteException(typeof(WarningException) == ex.GetType() ? 3 : 1, ex.Message, "static ResultData", "Initialise", "");
-        //            throw new Exception("static ResultData" + " : " + "Initialise" + " : ", ex);
-        //        }
-        //        else
-        //        {
-        //            throw ex; // Just bubble it up
-        //        }
-        //    }
-        //}
+                return lResultRow.ResultId;
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    ExceptionData.WriteException(typeof(WarningException) == ex.GetType() ? 3 : 1, ex.Message, "static ResultData", "Initialise", "");
+                    throw new Exception("static ResultData" + " : " + "Initialise" + " : ", ex);
+                }
+                else
+                {
+                    throw ex; // Just bubble it up
+                }
+            }
+        }
 
 
         //private static int GetCorrectAnswersByQuestion(int QuestionId)

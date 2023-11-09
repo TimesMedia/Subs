@@ -80,7 +80,7 @@
                 <div class="col1">
                     @*<a asp-controller="Test" asp-action="EnrolModule" asp-route-id="@item.ResultId">Reissue</a>*@
 
-                @Html.ActionLink("Reissue", "Reissue", "CPD")
+                @Html.ActionLink("Reissue", "Reissue", "CPD", new { pResultId = item.ResultId } )
 
                 </div>
                 <div class="col2">@item.Module</div>
@@ -90,8 +90,6 @@
                 <div class="col1">@item.NormalPoints.ToString("#0.0")</div>
                 <div class="col1">@item.EthicsPoints.ToString("#0.0")</div>
             </div>
-            <br />
-            <br />
         }
 
     }

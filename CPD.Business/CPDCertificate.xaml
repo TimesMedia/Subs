@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="CPD.Business.CPDCertificate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CPD.Business"
+             mc:Ignorable="d" d:DesignWidth="800" Height="1200">
+
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Label}" >
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style x:Key="Module"  TargetType="{x:Type TextBlock}" >
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+        </Style>
+
+
+    </UserControl.Resources>
+    
+        <FlowDocumentScrollViewer x:Name="Viewer2" Margin="0,0,0,0" Width="793" Height="1122">
+            <FlowDocument x:Name="gFlowDocument" PageWidth="793" ColumnWidth="793" PageHeight="1122" PagePadding="50">
+            
+                <BlockUIContainer>
+                    <GroupBox BorderBrush="Black" BorderThickness="2" Height="1020" Width="680" VerticalAlignment="Center">
+                        <GroupBox BorderBrush="DarkBlue" BorderThickness="5" Height="1000" Width="660" VerticalAlignment="Center">
+                            <GroupBox BorderBrush="Red" BorderThickness="2" Height="980" Width="640" VerticalAlignment="Center">
+                                <StackPanel VerticalAlignment="Center">
+
+                                    <Image Source=".\images\MIMS logo.jpg" Width="200" Height="100" Margin="0,20,0,10"></Image>
+
+                                    <Label FontWeight="Black" FontSize="40" Height="104" >Certificate of Achievement</Label>
+
+                                    <Label FontFamily="Arial Unicode MS">This certificate has been awarded to:</Label>
+
+                                <Label x:Name="Naam" FontWeight="Black" FontSize="30" Foreground="Black"  Height="70"></Label>
+
+                                    <StackPanel x:Name="CouncilPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Label>COUNCIL NUMBER:</Label>
+                                        <Label x:Name="CouncilNumber"></Label>
+                                    </StackPanel>
+
+
+                                    <Label>who has successfully completed the programme:</Label>
+
+                                <TextBlock x:Name="Module" Style="{StaticResource Module}"></TextBlock>
+                                    <Label>Based on the CPD publication:</Label>
+                                    <Label x:Name="Publication"></Label>
+
+                                    <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Label>Date:</Label>
+                                        <Label x:Name="Date"></Label>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Label>CPD ACCREDITATION NUMBER:</Label>
+                                        <Label x:Name="Accreditation"></Label>
+                                    </StackPanel>
+
+                                    <Label x:Name="CPDPoints"></Label>
+
+                                    <Label x:Name="EthicsPoints"></Label>
+
+                                    <Image Source=".\images\Silke.jpg" Width="100" Height="50" Margin="0,10,0,0"></Image>
+
+                                    <Label>Silke Friedrich (Business Manager)</Label>
+
+                                    <Image Source=".\images\ARENA_LOGO.jpg" Width="200" Height="auto" Margin="0,10,0,0"></Image>
+                                </StackPanel>
+                            </GroupBox>
+                        </GroupBox>
+                    </GroupBox>
+                </BlockUIContainer>
+            </FlowDocument>
+
+        </FlowDocumentScrollViewer>
+
+
+</UserControl>
