@@ -314,3 +314,14 @@ namespace CPD.Data.DataSet1TableAdapters
         }
     }
 }
+
+
+
+namespace CPD.Data
+{
+
+
+    partial class DataSet1
+    {
+    }
+}

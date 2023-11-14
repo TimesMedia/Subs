@@ -1093,9 +1093,11 @@ namespace Subs.MimsWeb.Controllers
                 {
                     return false;
                 }
-            
-
-                string lBody = "As requested, your password is: " + lGeneratedPassword + "   Once logged in, you can change it to something of closer to your preference. \nIn order to avoid typing errors, it is a good idea to cut and paste the password.";
+ 
+                string lBody = "As requested, your password is: " + lGeneratedPassword + "   Once logged in as customer "  +
+                    pCustomerData.CustomerId.ToString() +
+                    ", you can change it to something of closer to your preference. " +
+                    "\nIn order to avoid typing errors, it is a good idea to cut and paste the password.";
                 if (CustomerBiz.SendEmail("", pCustomerData.EmailAddress, "Mims", lBody) != "OK")
                 {
                     return false;

@@ -392,10 +392,10 @@
     <Content Include="Views\CPD\Enrol.cshtml" />
     <Content Include="Views\CPD\History.cshtml" />
     <Content Include="Views\CPD\Privacy.cshtml" />
-    <Content Include="Views\CPD\Read.cshtml" />
     <Content Include="Views\Test\EnrolModule.cshtml" />
     <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\CPD\_CPDLayout.cshtml" />
+    <Content Include="Views\CPD\Read.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

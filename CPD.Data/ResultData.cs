@@ -77,34 +77,34 @@ namespace CPD.Data
          }
 
 
-        // public static void Quit(int ResultId)
-        // {   
-        //    DataSet1TableAdapters.ResultTableAdapter lResultAdapter = new DataSet1TableAdapters.ResultTableAdapter();
-        //    lResultAdapter.AttachConnection();
-        //    try
-        //     {
+        public static void Quit(int ResultId)
+        {
+            DataSet1TableAdapters.ResultTableAdapter lResultAdapter = new DataSet1TableAdapters.ResultTableAdapter();
+            lResultAdapter.AttachConnection();
+            try
+            {
 
-        //         lResultAdapter.Quit(ResultId);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         if (ex.InnerException == null)
-        //         {
-        //             ExceptionData.WriteException(1, ex.Message, "static ResultData", "Quit", "");
-        //             throw new Exception("static ResultData" + " : " + "Quit" + " : ", ex);
-        //         }
-        //         else
-        //         {
-        //             throw ex; // Just bubble it up
-        //         }
-        //     }
+                lResultAdapter.Quit(ResultId);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    ExceptionData.WriteException(1, ex.Message, "static ResultData", "Quit", "");
+                    throw new Exception("static ResultData" + " : " + "Quit" + " : ", ex);
+                }
+                else
+                {
+                    throw ex; // Just bubble it up
+                }
+            }
 
-        // }
+        }
 
 
         //public static bool BuzyWithTest(int CustomerId)
         //{
-        //    DataSet1.HistoryDataTable lHistory = new DataSet1.HistoryDataTable();
+        //    DataSet1. lHistory = new DataSet1.HistoryDataTable();
         //    GetCurrentTest(CustomerId, ref lHistory);
         //    if (lHistory.Count == 0)
         //    {
@@ -117,6 +117,60 @@ namespace CPD.Data
         //        return true;
         //    }
         //}
+
+
+        //public static bool GetCurrentTest(int CustomerId, ref List<History> pHistory)
+        //{
+        //    List<History> lResults = new List<History>();
+
+        //    try
+        //    {
+        //        using (SqlConnection lConnection = new SqlConnection())
+        //        {
+        //            SqlCommand Command = new SqlCommand();
+        //            SqlDataAdapter Adaptor = new SqlDataAdapter();
+        //            lConnection.ConnectionString = Settings.CPDConnectionString;
+        //            lConnection.Open();
+        //            Command.Connection = lConnection;
+        //            Command.CommandType = CommandType.StoredProcedure;
+        //            Command.CommandText = "[ResultData.History.FillBy]";
+        //            SqlCommandBuilder.DeriveParameters(Command);
+        //            Command.Parameters["@By"].Value = "CurrentTest";
+        //            Command.Parameters["@Id"].Value = CustomerId;
+
+        //            Adaptor.SelectCommand = Command;
+        //            pHistory.Clear();
+        //            Adaptor.Fill(pHistory);
+        //            if (pHistory.Count == 1)
+        //            {
+        //                return true;
+        //            }
+        //            else
+        //            {
+        //                //ExceptionData.WriteException(5, "Current test count for customer " + CustomerId.ToString() + " = " + pHistory.Count.ToString(), "static ResultData", "GetCurrentTest", "");
+        //                return false;
+        //            }
+        //        }
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
+
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static ResultData", "GetCurrentTest", "");
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
+
+        //        return false;
+        //    }
+        //}
+
+
 
         public static List<History> GetHistory(string pBy, int pId, DateTime? pDateId = null )
         {
@@ -218,107 +272,102 @@ namespace CPD.Data
             }
         }
 
+        public static List<History> GetByResultId(int pResultId)
+        {
+            try
+            {
+               List<History> lResults = new List<History>();
 
-        //public static List<History> GetHistory(int pCustomerId)
-        //{
-        //    try
-        //    {
-        //        DbProviderFactory factory = SqlClientFactory.Instance;
+                // Now get the connection object.
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = Settings.CPDConnectionString;
+                    connection.Open();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+                    command.CommandText = "[DataSet1.History.FillBy]";
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //        // Now get the connection object.
-        //        using (DbConnection connection = factory.CreateConnection())
-        //        {
-        //            connection.ConnectionString = Settings.CPDConnectionString;
-        //            connection.Open();
-        //            DbCommand command = factory.CreateCommand();
-        //            command.Connection = connection;
-        //            command.CommandText = "[DataSet1.History.FillBy]";
-        //            command.CommandType = CommandType.StoredProcedure;
+                    DbParameter lParameter1 = command.CreateParameter();
+                    lParameter1.ParameterName = "By";
+                    lParameter1.DbType = DbType.String;
+                    lParameter1.Value = "ResultId";
+                    command.Parameters.Add(lParameter1);
 
-        //            DbParameter lParameter1 = command.CreateParameter();
-        //            lParameter1.ParameterName = "By";
-        //            lParameter1.DbType = DbType.String;
-        //            lParameter1.Value = "History";
-        //            command.Parameters.Add(lParameter1);
+                    DbParameter lParameter2 = command.CreateParameter();
+                    lParameter2.ParameterName = "Id";
+                    lParameter2.DbType = DbType.Int32;
+                    lParameter2.Value = pResultId;
+                    command.Parameters.Add(lParameter2);
 
-        //            DbParameter lParameter2 = command.CreateParameter();
-        //            lParameter2.ParameterName = "Id";
-        //            lParameter2.DbType = DbType.Int32;
-        //            lParameter2.Value = pCustomerId;
-        //            command.Parameters.Add(lParameter2);
+                    DbDataReader lReader = command.ExecuteReader();
+                    if (lReader.Read())
+                    {
+                        History lHistory = new History();
 
-        //            return HistoryReader(ref command);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.InnerException == null)
-        //        {
-        //            ExceptionData.WriteException(1, ex.Message, "static ResultData", "GetHistory", "");
-        //            throw new Exception("static ResultData" + " : " + "GetHistory" + " : ", ex);
-        //        }
-        //        else
-        //        {
-        //            throw ex; // Just bubble it up
-        //        }
-        //    }
-        //}
+                        lHistory.ResultId = (int)lReader[nameof(History.ResultId)];
+                        lHistory.ModuleId = (int)lReader[nameof(History.ModuleId)];
+                        lHistory.Publication = (string)lReader[nameof(History.Publication)];
+                        lHistory.Issue = (string)lReader[nameof(History.Issue)];
+                        lHistory.Module = (string)lReader[nameof(History.Module)];
+                        lHistory.Attempt = (Int16)lReader[nameof(History.Attempt)];
+
+                        if (lReader[nameof(History.URL)] != System.DBNull.Value)
+                        {
+                            lHistory.URL = (string)lReader[nameof(History.URL)];
+                        }
+
+                        if (lReader[nameof(History.Datum)] != System.DBNull.Value)
+                        {
+                            lHistory.Datum = (DateTime)lReader[nameof(History.Datum)];
+                        }
 
 
-        //public static List<History> GetByResultId(int pResultId)
-        //{
-        //    try
-        //    {
-        //        DbProviderFactory factory = SqlClientFactory.Instance;
+                        if (lReader[nameof(History.Score)] != System.DBNull.Value)
+                        {
+                            lHistory.Score = (int)lReader[nameof(History.Score)];
+                        }
 
-        //        // Now get the connection object.
-        //        using (DbConnection connection = factory.CreateConnection())
-        //        {
-        //            connection.ConnectionString = Settings.CPDConnectionString;
-        //            connection.Open();
-        //            DbCommand command = factory.CreateCommand();
-        //            command.Connection = connection;
-        //            command.CommandText = "[DataSet1.History.FillBy]";
-        //            command.CommandType = CommandType.StoredProcedure;
+                        lHistory.Verdict = (string)lReader[nameof(History.Verdict)];
 
-        //            DbParameter lParameter1 = command.CreateParameter();
-        //            lParameter1.ParameterName = "By";
-        //            lParameter1.DbType = DbType.String;
-        //            lParameter1.Value = "ResultId";
-        //            command.Parameters.Add(lParameter1);
+                        if (lReader[nameof(History.DateIssued)] != System.DBNull.Value)
+                        {
+                            lHistory.DateIssued = (DateTime)lReader[nameof(History.DateIssued)];
+                        }
 
-        //            DbParameter lParameter2 = command.CreateParameter();
-        //            lParameter2.ParameterName = "Id";
-        //            lParameter2.DbType = DbType.Int32;
-        //            lParameter2.Value = pResultId;
-        //            command.Parameters.Add(lParameter2);
+                        lHistory.NormalPoints = (decimal)lReader[nameof(History.NormalPoints)];
+                        lHistory.EthicsPoints = (decimal)lReader[nameof(History.EthicsPoints)];
+                        lHistory.CustomerId = (int)lReader[nameof(History.CustomerId)];
+                        lHistory.Surname = (string)lReader[nameof(History.Surname)];
 
-        //            return HistoryReader(ref command);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.InnerException == null)
-        //        {
-        //            ExceptionData.WriteException(1, ex.Message, "static ResultData", "GetByResultId", "");
-        //            throw new Exception("static ResultData" + " : " + "GetByResultId" + " : ", ex);
-        //        }
-        //        else
-        //        {
-        //            throw ex; // Just bubble it up
-        //        }
-        //    }
-        //  }
+                        lResults.Add(lHistory);
+                    }
+
+                    return lResults;
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    ExceptionData.WriteException(1, ex.Message, "static ResultData", "GetByResultId", "");
+                    throw new Exception("static ResultData" + " : " + "GetByResultId" + " : ", ex);
+                }
+                else
+                {
+                    throw ex; // Just bubble it up
+                }
+            }
+        }
 
         public static int Initialise(int CustomerId, int ModuleId)
         {
             DataSet1TableAdapters.ResultTableAdapter lResultAdapter = new DataSet1TableAdapters.ResultTableAdapter();
             DataSet1TableAdapters.ResultDetailTableAdapter lResultDetailAdapter = new DataSet1TableAdapters.ResultDetailTableAdapter();
-            //QuestionareDocTableAdapters.ArticleTableAdapter lArticleAdapter = new QuestionareDocTableAdapters.ArticleTableAdapter();
             DataSet1TableAdapters.QuestionTableAdapter lQuestionAdapter = new DataSet1TableAdapters.QuestionTableAdapter();
             lResultAdapter.AttachConnection();
             lResultDetailAdapter.AttachConnection();
-            //lArticleAdapter.AttachConnection();
             lQuestionAdapter.AttachConnection();
             try
             {
@@ -349,7 +398,7 @@ namespace CPD.Data
                 lDataSet1.Result.AcceptChanges();
 
                 // Create the child ResultDetail rows
-                //lArticleAdapter.FillBy(lQuestionareDoc.Article, ModuleId);
+               
                 lQuestionAdapter.FillBy(lDataSet1.Question, ModuleId);
 
                 foreach (DataSet1.QuestionRow lQuestionRow in lDataSet1.Question)
@@ -381,193 +430,184 @@ namespace CPD.Data
             }
         }
 
+        private static int GetCorrectAnswersByQuestion(int QuestionId)
+        {
+            CPD.Data.DataSet1TableAdapters.AnswerTableAdapter lAnswerAdapter = new DataSet1TableAdapters.AnswerTableAdapter();
+            lAnswerAdapter.AttachConnection();
+            try
+            {
+                DataSet1.AnswerDataTable lAnswer = new DataSet1.AnswerDataTable();
 
-        //private static int GetCorrectAnswersByQuestion(int QuestionId)
-        //{
-        //    CPD2.Data.DataSet1TableAdapters.AnswerTableAdapter lAnswerAdapter = new DataSet1TableAdapters.AnswerTableAdapter();
-        //    lAnswerAdapter.AttachConnection();
-        //    try
-        //    {
-        //        DataSet1.AnswerDataTable lAnswer = new DataSet1.AnswerDataTable();
-
-        //        lAnswerAdapter.FillBy(lAnswer, "QuestionId", QuestionId);
-
-
-        //        if (lAnswer.Count == 0)
-        //        {
-        //            throw new Exception("There are no answers for question with id = " + QuestionId.ToString());
-        //        }
-
-        //        int Answer = 0;
-        //        int i = 0;
-
-        //        foreach (DataSet1.AnswerRow lAnswerRow in lAnswer)
-        //        {
-        //            if (lAnswerRow.Correct)
-        //            {
-        //                Answer = Answer + (int)Math.Pow(2, i);
-        //            }
-        //            i++;
-        //        }
-
-        //        return Answer;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.InnerException == null)
-        //        {
-        //            ExceptionData.WriteException(typeof(WarningException) == ex.GetType() ? 3 : 1, ex.Message, "static ResultData", "GetCorrectAnswersByQuestion", "");
-        //            throw new Exception("static ResultData" + " : " + "GetCorrectAnswersByQuestion" + " : ", ex);
-        //        }
-        //        else
-        //        {
-        //            throw ex; // Just bubble it up
-        //        }
-        //    }
-        //}
+                lAnswerAdapter.FillBy(lAnswer, "QuestionId", QuestionId);
 
 
-        //public static void SetCorrectAnswerBySurvey(int SurveyId)
-        //{
-        //    DataSet1TableAdapters.QuestionTableAdapter lQuestionAdapter = new DataSet1TableAdapters.QuestionTableAdapter();
-        //    lQuestionAdapter.AttachConnection();
-        //    try
-        //    {
-        //        //Get all the relevant questions
+                if (lAnswer.Count == 0)
+                {
+                    throw new Exception("There are no answers for question with id = " + QuestionId.ToString());
+                }
+
+                int Answer = 0;
+                int i = 0;
+
+                foreach (DataSet1.AnswerRow lAnswerRow in lAnswer)
+                {
+                    if (lAnswerRow.Correct)
+                    {
+                        Answer = Answer + (int)Math.Pow(2, i);
+                    }
+                    i++;
+                }
+
+                return Answer;
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    ExceptionData.WriteException(typeof(WarningException) == ex.GetType() ? 3 : 1, ex.Message, "static ResultData", "GetCorrectAnswersByQuestion", "");
+                    throw new Exception("static ResultData" + " : " + "GetCorrectAnswersByQuestion" + " : ", ex);
+                }
+                else
+                {
+                    throw ex; // Just bubble it up
+                }
+            }
+        }
 
 
-        //        DataSet1.QuestionDataTable lQuestion = lQuestionAdapter.GetBy("SurveyId", SurveyId);
+        public static void SetCorrectAnswerBySurvey(int SurveyId)
+        {
+            DataSet1TableAdapters.QuestionTableAdapter lQuestionAdapter = new DataSet1TableAdapters.QuestionTableAdapter();
+            lQuestionAdapter.AttachConnection();
+            try
+            {
+                //Get all the relevant questions
 
-        //        if (lQuestion.Count == 0)
-        //        {
-        //            throw new Exception("There are no questions for survey with id = " + SurveyId.ToString());
-        //        }
+                DataSet1.QuestionDataTable lQuestion = new DataSet1.QuestionDataTable();
+                    
+                lQuestionAdapter.FillBy1(lQuestion, "SurveyId", SurveyId);
 
-        //        foreach (DataSet1.QuestionRow lQuestionRow in lQuestion)
-        //        {
-        //            lQuestionRow.CorrectAnswer = GetCorrectAnswersByQuestion(lQuestionRow.QuestionId);
-        //        }
+                if (lQuestion.Count == 0)
+                {
+                    throw new Exception("There are no questions for survey with id = " + SurveyId.ToString());
+                }
 
-        //        lQuestionAdapter.Update(lQuestion);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.InnerException == null)
-        //        {
-        //            ExceptionData.WriteException(typeof(WarningException) == ex.GetType() ? 3 : 1, ex.Message, "static ResultData", "SetCorrectAnswerBySurvey", "");
-        //            throw new Exception("static ResultData" + " : " + "SetCorrectAnswerBySurvey" + " : ", ex);
-        //        }
-        //        else
-        //        {
-        //            throw ex; // Just bubble it up
-        //        }
-        //    }
-        //}
+                foreach (DataSet1.QuestionRow lQuestionRow in lQuestion)
+                {
+                    lQuestionRow.CorrectAnswer = GetCorrectAnswersByQuestion(lQuestionRow.QuestionId);
+                }
 
-
-        //public static DataSet1.AnswerDataTable GetAnswer(int CustomerId, int QuestionId)
-        //{
-        //    DataSet1TableAdapters.AnswerTableAdapter lAnswerAdapter = new DataSet1TableAdapters.AnswerTableAdapter();
-        //    lAnswerAdapter.AttachConnection();
-        //    try
-        //    {
-        //        // Read in the potential answers options
-
-        //        DataSet1.AnswerDataTable lAnswer = new DataSet1.AnswerDataTable();
-        //        DataSet1.HistoryDataTable lHistory = new DataSet1.HistoryDataTable();
-
-        //        lAnswerAdapter.FillBy(lAnswer, "QuestionId", QuestionId);
-
-        //        // Apply the actual answers and pass that on
-
-        //        DataSet1TableAdapters.ResultDetailTableAdapter lDetailAdapter = new DataSet1TableAdapters.ResultDetailTableAdapter();
-
-        //        if (!GetCurrentTest(CustomerId, ref lHistory))
-        //        {
-        //            return lAnswer;
-        //        }
-
-        //        int Number = 0;
-        //        try
-        //        {
-        //            Number = (int)lDetailAdapter.GetAnswer("QuestionId", lHistory[0].ResultId, QuestionId);
-        //        }
-        //        catch
-        //        {
-
-        //        }
-
-        //        for (int i = lAnswer.Count - 1; i >= 0; i--)
-        //        {
-        //            if (Number >= (int)Math.Pow(2, i))
-        //            {
-        //                lAnswer[i].Correct = true;
-        //                Number = Number - (int)Math.Pow(2, i);
-        //            }
-        //            else
-        //            {
-        //                lAnswer[i].Correct = false;
-        //            }
-        //        }
-
-        //        return lAnswer;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.InnerException == null)
-        //        {
-        //            ExceptionData.WriteException(1, ex.Message, "static ResultData", "GetAnswer", "");
-        //            throw new Exception("static ResultData" + " : " + "GetAnswer" + " : ", ex);
-        //        }
-        //        else
-        //        {
-        //            throw ex; // Just bubble it up
-        //        }
-        //    }
-        //    finally
-        //    {
-        //        lAnswerAdapter.Connection.Close();
-        //    }
-        //}
+                lQuestionAdapter.Update(lQuestion);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    ExceptionData.WriteException(typeof(WarningException) == ex.GetType() ? 3 : 1, ex.Message, "static ResultData", "SetCorrectAnswerBySurvey", "");
+                    throw new Exception("static ResultData" + " : " + "SetCorrectAnswerBySurvey" + " : ", ex);
+                }
+                else
+                {
+                    throw ex; // Just bubble it up
+                }
+            }
+        }
 
 
-        //public static void SetAnswer(int CustomerId, int QuestionId, int Answer)
-        //{
-        //    try
-        //    {
-        //        // Get all the answers
+     
+        public static DataSet1.AnswerDataTable GetAnswer(int CustomerId, int QuestionId)
+        {
+            DataSet1TableAdapters.AnswerTableAdapter lAnswerAdapter = new DataSet1TableAdapters.AnswerTableAdapter();
+            lAnswerAdapter.AttachConnection();
+            try
+            {
+                // Read in the potential answers options
 
-        //        DataSet1.HistoryDataTable lHistory = new DataSet1.HistoryDataTable();
-        //        if (GetCurrentTest(CustomerId, ref lHistory))
-        //        {
-        //            DataSet1TableAdapters.ResultDetailTableAdapter lDetailAdapter = new DataSet1TableAdapters.ResultDetailTableAdapter();
-        //            lDetailAdapter.AttachConnection();
-        //            lDetailAdapter.SetAnswer(lHistory[0].ResultId, QuestionId, Answer);
-        //            lDetailAdapter.Connection.Close();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.InnerException == null)
-        //        {
-        //            ExceptionData.WriteException(typeof(WarningException) == ex.GetType() ? 3 : 1, ex.Message, "static ResultData", "SetAnswer", "");
-        //            throw new Exception("static ResultData" + " : " + "SetAnswer" + " : ", ex);
-        //        }
-        //        else
-        //        {
-        //            throw ex; // Just bubble it up
-        //        }
-        //    }
-        //}
+                DataSet1.AnswerDataTable lAnswerTable = new DataSet1.AnswerDataTable();
+                
+                lAnswerAdapter.FillBy(lAnswerTable, "QuestionId", QuestionId);
 
-        //public static int Mark(int ResultId)
-        //{
-        //    DataSet1TableAdapters.ResultTableAdapter lResultAdapter = new DataSet1TableAdapters.ResultTableAdapter();
-        //    lResultAdapter.AttachConnection();
 
-        //    int Test = (int)lResultAdapter.Mark(ResultId);
-        //    //lResultAdapter.Connection.Close();
-        //    return Test;
-        //}
+                // Apply the actual answers and pass that on
+
+                List<History> lHistoryList = new List<History>();
+                DataSet1TableAdapters.ResultDetailTableAdapter lDetailAdapter = new DataSet1TableAdapters.ResultDetailTableAdapter();
+
+                lHistoryList = GetHistory("CurrentTest", CustomerId );
+
+                int lCustomerAnswer = 0;
+                lCustomerAnswer = (int)lDetailAdapter.GetAnswer("QuestionId", lHistoryList[0].ResultId, QuestionId);
+                               
+                for (int i = lAnswerTable.Count - 1; i >= 0; i--)
+                {
+                    if (lCustomerAnswer >= (int)Math.Pow(2, i))
+                    {
+                        lAnswerTable[i].Correct = true;
+                        lCustomerAnswer = lCustomerAnswer - (int)Math.Pow(2, i);
+                    }
+                    else
+                    {
+                        lAnswerTable[i].Correct = false;
+                    }
+                }
+
+                return lAnswerTable;
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    ExceptionData.WriteException(1, ex.Message, "static ResultData", "GetAnswer", "");
+                    throw new Exception("static ResultData" + " : " + "GetAnswer" + " : ", ex);
+                }
+                else
+                {
+                    throw ex; // Just bubble it up
+                }
+            }
+            finally
+            {
+                lAnswerAdapter.Connection.Close();
+            }
+        }
+
+
+        public static void SetAnswer(int CustomerId, int QuestionId, int Answer)
+        {
+            try
+            {
+                // Get all the answers
+
+                List<History> lHistoryList = GetHistory("CurrentTest", CustomerId);
+               
+                DataSet1TableAdapters.ResultDetailTableAdapter lDetailAdapter = new DataSet1TableAdapters.ResultDetailTableAdapter();
+                lDetailAdapter.AttachConnection();
+                lDetailAdapter.SetAnswer(lHistoryList[0].ResultId, QuestionId, Answer);
+                lDetailAdapter.Connection.Close();
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    ExceptionData.WriteException(typeof(WarningException) == ex.GetType() ? 3 : 1, ex.Message, "static ResultData", "SetAnswer", "");
+                    throw new Exception("static ResultData" + " : " + "SetAnswer" + " : ", ex);
+                }
+                else
+                {
+                    throw ex; // Just bubble it up
+                }
+            }
+        }
+
+        public static int Mark(int ResultId)
+        {
+            DataSet1TableAdapters.ResultTableAdapter lResultAdapter = new DataSet1TableAdapters.ResultTableAdapter();
+            lResultAdapter.AttachConnection();
+
+            int Test = (int)lResultAdapter.Mark(ResultId);
+            //lResultAdapter.Connection.Close();
+            return Test;
+        }
     }
 }

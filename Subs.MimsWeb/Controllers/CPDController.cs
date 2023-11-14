@@ -41,9 +41,30 @@ namespace MimsWeb.Controllers
 
         public ActionResult Read()
         {
-            List<AvailableSurvey> lSurveys = ModuleData.GetAvailableRead(108244);
-            return View(lSurveys);
+            LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);
+            if (lLoginRequest == null)
+            {
+                ViewBag.Message = "You have to log in first.";
+            }
+
+            List<AvailableSurvey> lSurveys = ModuleData.GetAvailableRead((int)lLoginRequest.CustomerId);
+            return View("Read",lSurveys);
         }
+
+        public ActionResult SelectRead()
+        {
+            LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);
+            if (lLoginRequest == null)
+            {
+                ViewBag.Message = "You have to log in first.";
+            }
+
+            // Display PDF.
+
+            //List<AvailableSurvey> lSurveys = ModuleData.GetAvailableRead((int)lLoginRequest.CustomerId);
+            return View();
+        }
+
 
 
         public ActionResult Enrol()

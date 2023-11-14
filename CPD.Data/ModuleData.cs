@@ -11,6 +11,7 @@ using System.IO;
 using System.Reflection;
 using Subs.Data;
 
+
 namespace CPD.Data
 {
     public struct AvailableSurvey
@@ -209,7 +210,7 @@ namespace CPD.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, nameof(ModuleData), nameof(GetAvailableRead), "");
+                    CPD.Data.ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, nameof(ModuleData), nameof(GetAvailableRead), "");
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
@@ -220,28 +221,28 @@ namespace CPD.Data
 
 
 
-        //public static int GetIssueId(int ModuleId)
-        //{
-        //    try
-        //    {
-        //        // Get the corresponding IssueIdQuestionareDoc
+        public static int GetIssueId(int ModuleId)
+        {
+            try
+            {
+                // Get the corresponding IssueIdQuestionareDoc
 
-        //        DataSet1TableAdapters.ModuleTableAdapter lModuleAdapter = new DataSet1TableAdapters.ModuleTableAdapter();
-        //        return (int)lModuleAdapter.GetIssueId(ModuleId);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.InnerException == null)
-        //        {
-        //            ExceptionData.WriteException(1, ex.Message, "static ResultData", "GetIssueId", "");
-        //            throw new Exception("static ResultData" + " : " + "GetIssueId" + " : ", ex);
-        //        }
-        //        else
-        //        {
-        //            throw ex; // Just bubble it up
-        //        }
-        //    }
-        //}
+                DataSet1TableAdapters.ModuleTableAdapter lModuleAdapter = new DataSet1TableAdapters.ModuleTableAdapter();
+                return (int)lModuleAdapter.GetIssueId(ModuleId);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    ExceptionData.WriteException(1, ex.Message, "static ResultData", "GetIssueId", "");
+                    throw new Exception("static ResultData" + " : " + "GetIssueId" + " : ", ex);
+                }
+                else
+                {
+                    throw ex; // Just bubble it up
+                }
+            }
+        }
 
         public static string GetQuestions(int pModuleId)
         {
