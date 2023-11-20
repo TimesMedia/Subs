@@ -23,6 +23,8 @@ namespace CPD.Business
         public CPDCertificate()
         {
             InitializeComponent();
+
+            //Now I want to test the pull request
         }
 
         public string Render(int pResultId)
