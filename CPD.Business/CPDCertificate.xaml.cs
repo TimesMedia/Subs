@@ -28,20 +28,10 @@ namespace CPD.Business
         public string Render(int pResultId)
         {
             string lCertificateFile = gCertificatePrefix + pResultId.ToString() + ".pdf";
-            CPD.Data.Certificate lCertificate = CPD.Data.CertificateData.GetCertificate(pResultId);
+            Certificate lCertificate = CertificateData.GetCertificate(pResultId);
+
             try
             {
-                var lContext = new MimsDataContext(Settings.MIMSConnectionString);  // This is the live MIMS database.
-
-                var lCustomerInfoQuery = from lValues in lContext.MIMS_DataContext_CustomerInfo(lCertificate.CustomerId)
-                                         select lValues;
-                MIMS_DataContext_CustomerInfoResult lCustomerInfo = lCustomerInfoQuery.Single();
-
-                if (lCustomerInfo.FullName.Length == 0)
-                {
-                    throw new Exception("I could not find a customer with id = " + lCertificate.ToString());
-                }
-
                 // Assign values to the variable parts
 
                 Naam.Content = lCertificate.Customer;
@@ -134,7 +124,7 @@ namespace CPD.Business
                     return lResult;
                 }
                
-                CertificateData.RecordEmailSuccess(pResultId);
+                CertificateData.IssueOfCertificate(pResultId, DateTime.Now);
 
                 return "OK";
             }
