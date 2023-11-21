@@ -405,6 +405,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CPD.Business\CPD.Business.csproj">
+      <Project>{0adbb33d-2910-4e74-9e53-ba432276f154}</Project>
+      <Name>CPD.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CPD.Data\CPD.Data.csproj">
       <Project>{2df0b0f0-351e-4dbb-b0f2-562315c0c252}</Project>
       <Name>CPD.Data</Name>
@@ -421,6 +425,9 @@
       <Project>{438301ab-3926-4249-9a34-3289ff0571de}</Project>
       <Name>Subs.Presentation</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

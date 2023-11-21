@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Threading;
 using Subs.MimsWeb.Models;
 using CPD.Data;
+using CPD.Business;
 
 namespace MimsWeb.Controllers
 {
@@ -34,44 +35,35 @@ namespace MimsWeb.Controllers
             return View("History", lHistory);
         }
 
-        public ActionResult Reissue(int Id)
+        public ActionResult Reissue(int ResultId = 0)
         {
             try
             {
-                //// Take precautions in case the session has expired. 
-                //if (Session["CustomerId"] == null)
-                //{
-                //    Session["NextPage"] = "Enrol";
-                //    return RedirectToAction("Index");
-                //    //Response.Redirect("./Login2.aspx", false);
-                //}
+                // Take precautions in case the session has expired. 
+                if (Session["CustomerId"] == null)
+                {
+                    Session["NextPage"] = "Reissue";
+                    return RedirectToAction("Index");
+                    
+                }
+                    List<History> lResult = ResultData.GetByResultId(ResultId);
 
-                //// Ensure that a module has been selected
+                    if (lResult[0].Verdict == "Failed")
+                    {
+                        ViewBag.Message = "According to my records you did not pass this test. If you think you have a case, please contact MIMS at 011 280 5533";
+                        return View("History"); 
+                    }
 
-                //if (this.GridViewHistory.SelectedIndex < 0)
-                //{
-                //    ViewBag.Message = "Please select a test that you have passed first";
-                //    return RedirectToAction("History");
+                    Thread lWorkerThread = new Thread(ProcessCertificate);
+                    lWorkerThread.SetApartmentState(ApartmentState.STA);
+                    object pState = ResultId;  // Box it
+                    lWorkerThread.Start(pState);
+                    lWorkerThread.Join();
 
-                //int lResultId = (int)this.GridViewHistory.SelectedValue;
-                //ResultDoc.HistoryDataTable lResult = ResultData.GetByResultId(lResultId);
+                    ViewBag.Message = "Certificate sucessfully reissued.";
 
-                //if (lResult[0].Verdict == "Failed")
-                //{
-                //    ViewBag.Message = "According to my records you did not pass this test. If you think you have a case, please contact MIMS at 011 280 5533";
-                //    return RedirectToAction("History"); ;
-                //}
-                
-                //Thread lWorkerThread = new Thread(ProcessCertificate);
-                //lWorkerThread.SetApartmentState(ApartmentState.STA);
-                //object pState = lResultId;  // Box it
-                //lWorkerThread.Start(pState);
-                //lWorkerThread.Join();
-   
-                //ViewBag.Message = "Certificate sucessfully reissued.";
-
-                ViewBag.Message = Id.ToString();
-                return RedirectToAction("History");
+                    ViewBag.Message = ResultId.ToString();
+                return View("History");
             
             }
             catch (Exception ex)
@@ -91,47 +83,46 @@ namespace MimsWeb.Controllers
 
         }
 
-        //private void ProcessCertificate(object pState)
+        private void ProcessCertificate(object pState)
 
-        //{
-        //    try
-        //    {
-        //        CPD.Business.CPDCertificate lCertificate = new Business.CPDCertificate();
+        {
+            try
+            {
+                CPD.Business.CPDCertificate lCertificate = new CPD.Business.CPDCertificate();
 
-        //        {
-        //            string lResult;
-        //            if ((lResult = lCertificate.Render((int)pState)) != "OK")
-        //            {
-        //                LabelResponse.Text = "Error rendering certificate " + lResult;
-        //            }
-        //        }
+                {
+                    string lResult;
+                    if ((lResult = lCertificate.Render((int)pState)) != "OK")
+                    {
+                        throw new Exception("Error rendering certificate " + lResult);
+                    }
+                }
 
-        //        {
-        //            string lResult;
-        //            if ((lResult = lCertificate.EmailCertificate((int)pState)) != "OK")
-        //            {
-        //                LabelResponse.Text = "Error emailing certificate " + lResult;
-        //                return;
-        //            }
-        //        }
-        //        LabelResponse.Text = "Certificate sucessfully reissued.";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
+                {
+                    string lResult;
+                    if ((lResult = lCertificate.EmailCertificate((int)pState)) != "OK")
+                    {
+                        throw new Exception("Error rendering certificate " + lResult);
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
 
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ProcessCertificate", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-        //    }
-        //}
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ProcessCertificate", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+            }
+        }
 
-
+        [HttpGet]
         public ActionResult Read()
         {
             LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);
@@ -144,6 +135,12 @@ namespace MimsWeb.Controllers
             return View("Read",lSurveys);
         }
 
+
+        [HttpPost]
+        public ActionResult Read(int pIssueId)
+        {
+            return("DisplayReading");
+        }
         public ActionResult SelectRead()
         {
             LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);

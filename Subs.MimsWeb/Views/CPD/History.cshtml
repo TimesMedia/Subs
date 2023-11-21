@@ -3,95 +3,100 @@
 @{
     Layout = "_CPDLayout.cshtml";
 }
+@model List<History> 
 
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
 
-<style>
+        .container {
+            display: flex;
+            margin-left: 12px;
+            flex-flow: nowrap;
+            margin-bottom: 10px;
+        }
 
-    .container {
-        display: flex;
-        margin-left: 12px;
-        flex-flow: nowrap;
-        margin-bottom: 10px;
-    }
-
-    /* .container div:nth-of-type(1n+2) {
+        /* .container div:nth-of-type(1n+2) {
                     margin-left: 5px;
                 }*/
 
-    /*  .container div {
+        /*  .container div {
                     margin-bottom: 10px
                 }
         */
 
-    .col1 {
-        flex: 1 1 80px;
-    }
-
-    .col2 {
-        flex: 1 1 220px;
-    }
-
-    .heading {
-        flex: 1 1 140px;
-        color: blue;
-    }
-
-
-    .scrollable {
-        /* margin: 4px, 4px;
-                padding: 4px;*/
-        width: auto;
-        height: 450px;
-        overflow-y: auto;
-        /*text-align: justify;*/
-    }
-</style>
-
-@*<div class="container">
-        <h1 class="heading">Test History</h1>
-    </div>*@
-
-@{
-    string lCurrentPublication = "";
-}
-
-<div class="scrollable">
-    @if (@Model != null)
-    {
-        foreach (CPD.Data.History item in @Model)
-        {
-            if (lCurrentPublication != item.Publication)
-            {
-                lCurrentPublication = @item.Publication;
-
-                <p style="color:red; margin-left: 12px;">@item.Publication</p>
-                <div class="container" style="color:blue;">
-                    <div class="col1">Command</div>
-                    <div class="col2">Module</div>
-                    <div class="col1">Date</div>
-                    <div class="col1">% Score</div>
-                    <div class="col1">Verdict</div>
-                    <div class="col1">Normal points</div>
-                    <div class="col1">Ethics points</div>
-                </div>
-
-            }
-
-            <div class="container">
-                <div class="col1">
-                    @*<a asp-controller="Test" asp-action="EnrolModule" asp-route-id="@item.ResultId">Reissue</a>*@
-
-                    @Html.ActionLink("Reissue", "Reissue", "CPD", new { Id = item.ResultId })
-
-                </div>
-                <div class="col2">@item.Module</div>
-                <div class="col1">@item.Datum.ToString("yyyy MM dd")</div>
-                <div class="col1">@item.Score</div>
-                <div class="col1">@item.Verdict</div>
-                <div class="col1">@item.NormalPoints.ToString("#0.0")</div>
-                <div class="col1">@item.EthicsPoints.ToString("#0.0")</div>
-            </div>
+        .col1 {
+            flex: 1 1 80px;
         }
 
+        .col2 {
+            flex: 1 1 220px;
+        }
+
+        .heading {
+            flex: 1 1 140px;
+            color: blue;
+        }
+
+
+        .scrollable {
+            /* margin: 4px, 4px;
+                padding: 4px;*/
+            width: auto;
+            height: 450px;
+            overflow-y: auto;
+            /*text-align: justify;*/
+        }
+    </style>
+
+
+    </head>
+<body>
+    @{
+        string lCurrentPublication = "";
     }
-</div>
+
+    @Html.ViewBag.Message
+
+    <div class="scrollable">
+        @if (@Model != null)
+        {
+            foreach (CPD.Data.History item in @Model)
+            {
+                if (lCurrentPublication != item.Publication)
+                {
+                    lCurrentPublication = @item.Publication;
+
+                    <p style="color:red; margin-left: 12px;">@item.Publication</p>
+                    <div class="container" style="color:blue;">
+                        <div class="col1">Command</div>
+                        <div class="col2">Module</div>
+                        <div class="col1">Date</div>
+                        <div class="col1">% Score</div>
+                        <div class="col1">Verdict</div>
+                        <div class="col1">Normal points</div>
+                        <div class="col1">Ethics points</div>
+                    </div>
+                }
+
+                <div class="container">
+                    <div class="col1">
+                        @*<a asp-controller="Test" asp-action="EnrolModule" asp-route-id="@item.ResultId">Reissue</a>*@
+
+                        @Html.ActionLink("Reissue", "Reissue", new {ResultId = @item.ResultId })
+
+                    </div>
+                    <div class="col2">@item.Module</div>
+                    <div class="col1">@item.Datum.ToString("yyyy MM dd")</div>
+                    <div class="col1">@item.Score</div>
+                    <div class="col1">@item.Verdict</div>
+                    <div class="col1">@item.NormalPoints.ToString("#0.0")</div>
+                    <div class="col1">@item.EthicsPoints.ToString("#0.0")</div>
+                </div>
+            }
+
+        }
+    </div>
+</body>
+</html>
