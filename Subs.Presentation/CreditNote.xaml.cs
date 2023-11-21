@@ -15,7 +15,7 @@ namespace Subs.Presentation
     public partial class CreditNote : Window
     {
         #region Globals
-        //private LedgerDoc2 gLedgerDoc = new LedgerDoc2();
+        private string gCreditNoteNumber = "";
         private CustomerData3 gCustomerData;
         private IEnumerable<MIMS_LedgerDoc_CreditNoteBatch_LoadResult> gListing;
         private int gInvoiceId = 0;
@@ -82,6 +82,7 @@ namespace Subs.Presentation
             try 
             { 
             MIMS_LedgerDoc_CreditNoteBatch_LoadResult lResult = (MIMS_LedgerDoc_CreditNoteBatch_LoadResult)DataGridListing.SelectedItem;
+            gCreditNoteNumber = lResult.CreditnoteNumber;
             Load(lResult);
             TabControl.SelectedIndex = 1;
             }
@@ -136,7 +137,7 @@ namespace Subs.Presentation
                 }
                     gCustomerData = new CustomerData3(pDetail.PayerId);
 
-                CreditNoteNumber.Content = pDetail.CreditnoteNumber;
+                CreditNoteNumber.Content = gCreditNoteNumber;
                 InvoiceNumber.Content = pDetail.InvoiceNumber;
                 PPhoneNumber.Content = gCustomerData.PhoneNumber;
                 PEmail.Content = gCustomerData.EmailAddress;
@@ -181,14 +182,14 @@ namespace Subs.Presentation
                 Content7.Content = lReduction.ToString("R ###########0.00");
 
 
-                if (File.Exists(Settings.DirectoryPath + "\\" + CreditNoteNumber + " " + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf"))
+                if (File.Exists(Settings.DirectoryPath + "\\" + gCreditNoteNumber + "_" + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf"))
                 {
-                    File.Delete(Settings.DirectoryPath + "\\" + CreditNoteNumber + " " + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf");
+                    File.Delete(Settings.DirectoryPath + "\\" + gCreditNoteNumber + "_" + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf");
                 }
 
                 byte[] lBuffer = FlowDocumentConverter.XpsConverter.ConverterDoc(this.gFlowDocument);
                 MemoryStream lXpsStream = new MemoryStream(lBuffer);
-                FileStream lPdfStream = File.OpenWrite(Settings.DirectoryPath + "\\" + CreditNoteNumber + " " + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf");
+                FileStream lPdfStream = File.OpenWrite(Settings.DirectoryPath + "\\" + gCreditNoteNumber + "_" + gCustomerData.CustomerId.ToString() + "_CreditNote.pdf");
                 PdfSharp.Xps.XpsConverter.Convert(lXpsStream, lPdfStream, false);
                 lPdfStream.Position = 0;
                 lPdfStream.Flush();
@@ -226,15 +227,12 @@ namespace Subs.Presentation
                 lPrintDialog.UserPageRangeEnabled = true;
                 lPrintDialog.PrintTicket.PageOrientation = System.Printing.PageOrientation.Landscape;
 
-
                 if (lPrintDialog.ShowDialog() == true)
                 {
                     lPrintDialog.PrintDocument(
                          ((IDocumentPaginatorSource)gFlowDocument).DocumentPaginator, "Creditnote");
                 }
-
                 MessageBox.Show("Print job submitted");
-
             }
 
             catch (Exception ex)
@@ -252,7 +250,7 @@ namespace Subs.Presentation
             }
         }
 
-        public static string SendEmailBatch(int pCustomerId)
+        public string SendEmail(int pCustomerId)
         {
             try
             {
@@ -284,7 +282,7 @@ namespace Subs.Presentation
                 {
                     string lResult;
 
-                    if ((lResult = CustomerBiz.SendEmail(Settings.DirectoryPath + "\\" + pCustomerId.ToString() + "_CreditNote.pdf",
+                    if ((lResult = CustomerBiz.SendEmail(Settings.DirectoryPath + "\\" + gCreditNoteNumber + "_" + pCustomerId.ToString() + "_CreditNote.pdf",
                     lEmailAddress, "Credit note for customer " + pCustomerId.ToString(), lBody)) != "OK")
                     {
                        return lResult;
@@ -313,7 +311,7 @@ namespace Subs.Presentation
             {
                 string lResult;
 
-                if ((lResult = SendEmailBatch(gCustomerData.CustomerId)) != "OK")
+                if ((lResult = SendEmail(gCustomerData.CustomerId)) != "OK")
                 {
                     MessageBox.Show(lResult);
                     return;
