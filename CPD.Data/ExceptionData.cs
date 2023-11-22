@@ -12,11 +12,11 @@ namespace CPD.Data
 	/// </summary>
 	public static class ExceptionData
 	{
-		private static SqlConnection Connection = new SqlConnection();
+		private static SqlConnection gConnection = new SqlConnection();
 
         static ExceptionData()
         {
-            Connection.ConnectionString = Settings.CPDConnectionString;
+            gConnection.ConnectionString = Settings.CPDConnectionString;
 
 		}
 
@@ -44,10 +44,10 @@ namespace CPD.Data
 				SqlCommand Command = new SqlCommand(); 
 				SqlDataAdapter Adaptor = new SqlDataAdapter(); 
 				
-                Connection.Open();
-				Command.Connection = Connection;
+                gConnection.Open();
+				Command.Connection = gConnection;
 				Command.CommandType = CommandType.StoredProcedure;
-				Command.CommandText = "MExceptionData001";
+				Command.CommandText = "[dbo].[MExceptionData001]";
 				SqlCommandBuilder.DeriveParameters(Command);
 
 				Command.Parameters["@Severity"].Value = Severity;
@@ -61,7 +61,7 @@ namespace CPD.Data
 			}
 			finally
 			{
-				Connection.Close();
+				gConnection.Close();
 			}
 
 		}

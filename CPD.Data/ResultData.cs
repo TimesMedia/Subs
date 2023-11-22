@@ -285,22 +285,22 @@ namespace CPD.Data
                     connection.Open();
                     SqlCommand command = new SqlCommand();
                     command.Connection = connection;
-                    command.CommandText = "[DataSet1.History.FillBy]";
+                    command.CommandText = "[dbo].[ResultData.History.FillBy]";
                     command.CommandType = CommandType.StoredProcedure;
 
-                    DbParameter lParameter1 = command.CreateParameter();
-                    lParameter1.ParameterName = "By";
+                    SqlParameter lParameter1 = command.CreateParameter();
+                    lParameter1.ParameterName = "@By";
                     lParameter1.DbType = DbType.String;
                     lParameter1.Value = "ResultId";
                     command.Parameters.Add(lParameter1);
 
-                    DbParameter lParameter2 = command.CreateParameter();
-                    lParameter2.ParameterName = "Id";
+                    SqlParameter lParameter2 = command.CreateParameter();
+                    lParameter2.ParameterName = "@Id";
                     lParameter2.DbType = DbType.Int32;
                     lParameter2.Value = pResultId;
                     command.Parameters.Add(lParameter2);
 
-                    DbDataReader lReader = command.ExecuteReader();
+                    SqlDataReader lReader = command.ExecuteReader();
                     if (lReader.Read())
                     {
                         History lHistory = new History();

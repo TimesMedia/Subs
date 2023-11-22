@@ -39,30 +39,21 @@ namespace MimsWeb.Controllers
         {
             try
             {
-                // Take precautions in case the session has expired. 
-                if (Session["CustomerId"] == null)
+                List<History> lResult = ResultData.GetByResultId(ResultId);
+
+                if (lResult[0].Verdict == "Unsuccessful")
                 {
-                    Session["NextPage"] = "Reissue";
-                    return RedirectToAction("Index");
-                    
+                    ViewBag.Message = "According to my records you did not pass this test. If you think you have a case, please contact MIMS at 011 280 5533";
+                    return View("History"); 
                 }
-                    List<History> lResult = ResultData.GetByResultId(ResultId);
 
-                    if (lResult[0].Verdict == "Failed")
-                    {
-                        ViewBag.Message = "According to my records you did not pass this test. If you think you have a case, please contact MIMS at 011 280 5533";
-                        return View("History"); 
-                    }
-
-                    Thread lWorkerThread = new Thread(ProcessCertificate);
-                    lWorkerThread.SetApartmentState(ApartmentState.STA);
-                    object pState = ResultId;  // Box it
-                    lWorkerThread.Start(pState);
-                    lWorkerThread.Join();
-
-                    ViewBag.Message = "Certificate sucessfully reissued.";
-
-                    ViewBag.Message = ResultId.ToString();
+                Thread lWorkerThread = new Thread(ProcessCertificate);
+                lWorkerThread.SetApartmentState(ApartmentState.STA);
+                object pState = ResultId;  // Box it
+                lWorkerThread.Start(pState);
+                lWorkerThread.Join();
+                ViewBag.Message = "Certificate sucessfully reissued.";
+             
                 return View("History");
             
             }
@@ -135,12 +126,7 @@ namespace MimsWeb.Controllers
             return View("Read",lSurveys);
         }
 
-
-        [HttpPost]
-        public ActionResult Read(int pIssueId)
-        {
-            return("DisplayReading");
-        }
+       
         public ActionResult SelectRead()
         {
             LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);
