@@ -16,6 +16,7 @@ namespace CPD.Data
     {
         public int ResultId { get; set;}
         public string Publication { get; set; } = "";
+        public string AccreditationNumber { get; set; } = "";
         public string Issue { get; set; } = "";
         public string Module { get; set; } = "";
         public int ModuleId { get; set; }
@@ -177,24 +178,24 @@ namespace CPD.Data
             try
             {
                 List<History> lResults = new List<History>();
-               
+              
 
                 using (SqlConnection connection = new SqlConnection())
                 {
                     connection.ConnectionString = Settings.CPDConnectionString;
                     connection.Open();
-                    DbCommand command = new SqlCommand();
+                    SqlCommand command = new SqlCommand();
                     command.Connection = connection;
                     command.CommandText = "[dbo].[ResultData.History.FillBy]";
                     command.CommandType = CommandType.StoredProcedure;
 
-                    DbParameter lParameter1 = command.CreateParameter();
+                    SqlParameter lParameter1 = command.CreateParameter();
                     lParameter1.ParameterName = "@By";
                     lParameter1.DbType = DbType.String;
                     lParameter1.Value = pBy;
                     command.Parameters.Add(lParameter1);
 
-                    DbParameter lParameter2 = command.CreateParameter();
+                    SqlParameter lParameter2 = command.CreateParameter();
                     lParameter2.ParameterName = "@Id";
                     lParameter2.DbType = DbType.Int32;
                     lParameter2.Value = pId;
@@ -202,57 +203,15 @@ namespace CPD.Data
 
                     if (pDateId != null)
                     {
-                        DbParameter lParameter3 = command.CreateParameter();
+                        SqlParameter lParameter3 = command.CreateParameter();
                         lParameter3.ParameterName = "@DateId";
                         lParameter3.DbType = DbType.DateTime;
                         lParameter3.Value = pDateId;
                         command.Parameters.Add(lParameter3);
                     }
-                    using (DbDataReader dataReader = command.ExecuteReader())
-                    {
-                        while (dataReader.Read())
-                        {
-                            History lHistory = new History();
-
-                            lHistory.ResultId = (int)dataReader[nameof(History.ResultId)];
-                            lHistory.ModuleId = (int)dataReader[nameof(History.ModuleId)];
-                            lHistory.Publication = (string)dataReader[nameof(History.Publication)];
-                            lHistory.Issue = (string)dataReader[nameof(History.Issue)];
-                            lHistory.Module = (string)dataReader[nameof(History.Module)];
-                            lHistory.Attempt = (Int16)dataReader[nameof(History.Attempt)];
-
-                            if (dataReader[nameof(History.URL)] != System.DBNull.Value)
-                            {
-                                lHistory.URL = (string)dataReader[nameof(History.URL)];
-                            }
-
-                            if (dataReader[nameof(History.Datum)] != System.DBNull.Value)
-                            {
-                                lHistory.Datum = (DateTime)dataReader[nameof(History.Datum)];
-                            }
-
-
-                            if (dataReader[nameof(History.Score)] != System.DBNull.Value)
-                            {
-                                lHistory.Score = (int)dataReader[nameof(History.Score)];
-                            } 
-
-                            lHistory.Verdict = (string)dataReader[nameof(History.Verdict)];
-
-                            if (dataReader[nameof(History.DateIssued)] != System.DBNull.Value)
-                                {
-                                    lHistory.DateIssued = (DateTime)dataReader[nameof(History.DateIssued)];
-                                }
-
-                            lHistory.NormalPoints = (decimal)dataReader[nameof(History.NormalPoints)];
-                            lHistory.EthicsPoints = (decimal)dataReader[nameof(History.EthicsPoints)];
-                            lHistory.CustomerId = (int)dataReader[nameof(History.CustomerId)];
-                            lHistory.Surname = (string)dataReader[nameof(History.Surname)];
-
-                            lResults.Add(lHistory);
-                        }
-                    }
-                    return lResults;
+                    SqlDataReader lReader = command.ExecuteReader();
+                    
+                    return AssignHistory(ref lReader);
                 }
             }
             catch (Exception ex)
@@ -272,12 +231,82 @@ namespace CPD.Data
             }
         }
 
-        public static List<History> GetByResultId(int pResultId)
+
+        private static List<History> AssignHistory(ref SqlDataReader pReader)
+
+        {
+            List<History> lResults = new List<History>();
+
+            try { 
+
+            if (pReader.HasRows)
+            {
+                while (pReader.Read())
+                {
+                    History lHistory = new History();
+                    lHistory.ResultId = (int)pReader[0];
+                    lHistory.Publication = (string)pReader[1];
+
+                    lHistory.Issue = (string)pReader[2];
+                    lHistory.Module = (string)pReader[3];
+                    lHistory.ModuleId = (int)pReader[4];
+                    lHistory.Attempt = (Int16)pReader[5];
+
+                    if (pReader[6] != System.DBNull.Value)
+                    {
+                        lHistory.URL = (string)pReader[6];
+                    }
+
+
+                    if (pReader[7] != System.DBNull.Value)
+                    {
+                        lHistory.Datum = (DateTime)pReader[7];
+                    }
+
+
+                    if (pReader[8] != System.DBNull.Value)
+                    {
+                        lHistory.Score = (int)pReader[8];
+                    }
+
+                    lHistory.Verdict = (string)pReader[9];
+
+                    if (pReader[10] != System.DBNull.Value)
+                    {
+                        lHistory.DateIssued = (DateTime)pReader[10];
+                    }
+
+                    lHistory.NormalPoints = (decimal)pReader[11];
+                    lHistory.EthicsPoints = (decimal)pReader[12];
+                    lHistory.CustomerId = (int)pReader[13];
+                    lHistory.Surname = (string)pReader[14];
+
+                    lResults.Add(lHistory);
+                } // End of while
+            } // End of if  }
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "ResultData", "AssignHistory", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
+            }
+            return lResults;
+}
+
+            public static List<History> GetByResultId(int pResultId)
         {
             try
             {
-               List<History> lResults = new List<History>();
-
                 // Now get the connection object.
                 using (SqlConnection connection = new SqlConnection())
                 {
@@ -301,63 +330,24 @@ namespace CPD.Data
                     command.Parameters.Add(lParameter2);
 
                     SqlDataReader lReader = command.ExecuteReader();
-                    if (lReader.Read())
-                    {
-                        History lHistory = new History();
-
-                        lHistory.ResultId = (int)lReader[nameof(History.ResultId)];
-                        lHistory.ModuleId = (int)lReader[nameof(History.ModuleId)];
-                        lHistory.Publication = (string)lReader[nameof(History.Publication)];
-                        lHistory.Issue = (string)lReader[nameof(History.Issue)];
-                        lHistory.Module = (string)lReader[nameof(History.Module)];
-                        lHistory.Attempt = (Int16)lReader[nameof(History.Attempt)];
-
-                        if (lReader[nameof(History.URL)] != System.DBNull.Value)
-                        {
-                            lHistory.URL = (string)lReader[nameof(History.URL)];
-                        }
-
-                        if (lReader[nameof(History.Datum)] != System.DBNull.Value)
-                        {
-                            lHistory.Datum = (DateTime)lReader[nameof(History.Datum)];
-                        }
-
-
-                        if (lReader[nameof(History.Score)] != System.DBNull.Value)
-                        {
-                            lHistory.Score = (int)lReader[nameof(History.Score)];
-                        }
-
-                        lHistory.Verdict = (string)lReader[nameof(History.Verdict)];
-
-                        if (lReader[nameof(History.DateIssued)] != System.DBNull.Value)
-                        {
-                            lHistory.DateIssued = (DateTime)lReader[nameof(History.DateIssued)];
-                        }
-
-                        lHistory.NormalPoints = (decimal)lReader[nameof(History.NormalPoints)];
-                        lHistory.EthicsPoints = (decimal)lReader[nameof(History.EthicsPoints)];
-                        lHistory.CustomerId = (int)lReader[nameof(History.CustomerId)];
-                        lHistory.Surname = (string)lReader[nameof(History.Surname)];
-
-                        lResults.Add(lHistory);
-                    }
-
-                    return lResults;
                     
+                    return AssignHistory(ref lReader);
                 }
             }
             catch (Exception ex)
             {
-                if (ex.InnerException == null)
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
                 {
-                    ExceptionData.WriteException(1, ex.Message, "static ResultData", "GetByResultId", "");
-                    throw new Exception("static ResultData" + " : " + "GetByResultId" + " : ", ex);
-                }
-                else
-                {
-                    throw ex; // Just bubble it up
-                }
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "ResultData", "GetByResultId", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
             }
         }
 
@@ -418,15 +408,18 @@ namespace CPD.Data
             }
             catch (Exception ex)
             {
-                if (ex.InnerException == null)
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
                 {
-                    ExceptionData.WriteException(typeof(WarningException) == ex.GetType() ? 3 : 1, ex.Message, "static ResultData", "Initialise", "");
-                    throw new Exception("static ResultData" + " : " + "Initialise" + " : ", ex);
-                }
-                else
-                {
-                    throw ex; // Just bubble it up
-                }
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static Initialise", "Initialise", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
             }
         }
 
