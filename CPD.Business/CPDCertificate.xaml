@@ -34,7 +34,7 @@
                             <GroupBox BorderBrush="Red" BorderThickness="2" Height="980" Width="640" VerticalAlignment="Center">
                                 <StackPanel VerticalAlignment="Center">
 
-                                    <Image Source=".\images\MIMS logo.jpg" Width="200" Height="100" Margin="0,20,0,10"></Image>
+                                    <Image Source=".\images\mims logo.jpg" Width="200" Height="100" Margin="0,20,0,10"></Image>
 
                                     <Label FontWeight="Black" FontSize="40" Height="104" >Certificate of Achievement</Label>
 

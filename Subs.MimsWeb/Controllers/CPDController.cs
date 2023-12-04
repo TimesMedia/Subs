@@ -23,7 +23,7 @@ namespace MimsWeb.Controllers
             LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);
             ViewBag.Message = lLoginRequest.Email + " " + lLoginRequest.CustomerId.ToString();
 
-            List<History> lHistory = ResultData.GetHistory("History", (int)lLoginRequest.CustomerId);
+            //List<History> lHistory = ResultData.GetHistory("History", (int)lLoginRequest.CustomerId);
 
             return View("Index");
         }
@@ -31,7 +31,8 @@ namespace MimsWeb.Controllers
         public ActionResult History()
         {
             LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);
-            List<History> lHistory = ResultData.GetHistory("History", (int)lLoginRequest.CustomerId);
+            ResultData lResultData = new ResultData();
+            List<History> lHistory = lResultData.GetHistory("History", (int)lLoginRequest.CustomerId);
             return View("History", lHistory);
         }
 
@@ -39,12 +40,15 @@ namespace MimsWeb.Controllers
         {
             try
             {
-                List<History> lResult = ResultData.GetByResultId(ResultId);
+                ResultData lResultData = new ResultData();
+                List<History> lResult = lResultData.GetByResultId(ResultId);
+                LoginRequest lLoginRequest = Subs.MimsWeb.SessionHelper.GetLoginRequest(Session);
+                List<History> lHistory = lResultData.GetHistory("History", (int)lLoginRequest.CustomerId);
 
                 if (lResult[0].Verdict == "Unsuccessful")
                 {
                     ViewBag.Message = "According to my records you did not pass this test. If you think you have a case, please contact MIMS at 011 280 5533";
-                    return View("History"); 
+                    return View("History", lHistory);
                 }
 
                 Thread lWorkerThread = new Thread(ProcessCertificate);
@@ -53,9 +57,8 @@ namespace MimsWeb.Controllers
                 lWorkerThread.Start(pState);
                 lWorkerThread.Join();
                 ViewBag.Message = "Certificate sucessfully reissued.";
-             
-                return View("History");
-            
+                return View("History", lHistory);
+
             }
             catch (Exception ex)
             {
@@ -66,7 +69,7 @@ namespace MimsWeb.Controllers
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButtonReissue_Click", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Reissue", "");
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
                 throw ex;

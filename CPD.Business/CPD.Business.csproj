@@ -119,7 +119,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\mims logo.JPG" />
+    <Resource Include="images\ARENA_LOGO.jpg" />
+    <Resource Include="images\mims logo.JPG" />
+    <Resource Include="images\Silke.jpg" />
     <Content Include="PdfSharp.SharpZipLib\ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

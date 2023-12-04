@@ -35,6 +35,8 @@ namespace CPD.Data
 
     public class ResultData
     {
+        //private List<History> gHistory = new List<History>();
+
          public static int GetAttempt(int pCustomerId, int pModuleId)
          {
             try
@@ -173,46 +175,51 @@ namespace CPD.Data
 
 
 
-        public static List<History> GetHistory(string pBy, int pId, DateTime? pDateId = null )
+        public List<History> GetHistory(string pBy, int pId, DateTime? pDateId = null )
         {
+            SqlDataReader lReader;
+            List<History> lResults = new List<History>();
+            SqlConnection connection = new SqlConnection();
             try
             {
-                List<History> lResults = new List<History>();
-              
+                
+                connection.ConnectionString = Settings.CPDConnectionString;
+                connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "[dbo].[ResultData.History.FillBy]";
+                command.CommandType = CommandType.StoredProcedure;
 
-                using (SqlConnection connection = new SqlConnection())
+                SqlParameter lParameter1 = command.CreateParameter();
+                lParameter1.ParameterName = "@By";
+                lParameter1.DbType = DbType.String;
+                lParameter1.Value = pBy;
+                command.Parameters.Add(lParameter1);
+
+                SqlParameter lParameter2 = command.CreateParameter();
+                lParameter2.ParameterName = "@Id";
+                lParameter2.DbType = DbType.Int32;
+                lParameter2.Value = pId;
+                command.Parameters.Add(lParameter2);
+
+               
+                SqlParameter lParameter3 = command.CreateParameter();
+                lParameter3.ParameterName = "@DateId";
+                lParameter3.DbType = DbType.DateTime;
+                if (pDateId != null)
                 {
-                    connection.ConnectionString = Settings.CPDConnectionString;
-                    connection.Open();
-                    SqlCommand command = new SqlCommand();
-                    command.Connection = connection;
-                    command.CommandText = "[dbo].[ResultData.History.FillBy]";
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    SqlParameter lParameter1 = command.CreateParameter();
-                    lParameter1.ParameterName = "@By";
-                    lParameter1.DbType = DbType.String;
-                    lParameter1.Value = pBy;
-                    command.Parameters.Add(lParameter1);
-
-                    SqlParameter lParameter2 = command.CreateParameter();
-                    lParameter2.ParameterName = "@Id";
-                    lParameter2.DbType = DbType.Int32;
-                    lParameter2.Value = pId;
-                    command.Parameters.Add(lParameter2);
-
-                    if (pDateId != null)
-                    {
-                        SqlParameter lParameter3 = command.CreateParameter();
-                        lParameter3.ParameterName = "@DateId";
-                        lParameter3.DbType = DbType.DateTime;
-                        lParameter3.Value = pDateId;
-                        command.Parameters.Add(lParameter3);
-                    }
-                    SqlDataReader lReader = command.ExecuteReader();
-                    
-                    return AssignHistory(ref lReader);
+                    lParameter3.Value = pDateId;
                 }
+                command.Parameters.Add(lParameter3);
+  
+                   
+                lReader = command.ExecuteReader();
+
+                if (lReader.HasRows)
+                {
+                   return AssignHistory(lReader);
+                }
+                else throw new Exception("No history found");
             }
             catch (Exception ex)
             {
@@ -232,58 +239,57 @@ namespace CPD.Data
         }
 
 
-        private static List<History> AssignHistory(ref SqlDataReader pReader)
-
+        private List<History> AssignHistory(SqlDataReader pReader)
         {
-            List<History> lResults = new List<History>();
-
-            try { 
-
-            if (pReader.HasRows)
-            {
+            List<History> Results = new List<History>();
+            int lOffset = 0;
+            try 
+            { 
                 while (pReader.Read())
                 {
                     History lHistory = new History();
-                    lHistory.ResultId = (int)pReader[0];
-                    lHistory.Publication = (string)pReader[1];
 
-                    lHistory.Issue = (string)pReader[2];
-                    lHistory.Module = (string)pReader[3];
-                    lHistory.ModuleId = (int)pReader[4];
-                    lHistory.Attempt = (Int16)pReader[5];
+                    lOffset = 0; lHistory.ResultId = (int)pReader[lOffset];
+                    lOffset++; lHistory.Publication = (string)pReader[lOffset];
+                    lOffset++; lHistory.AccreditationNumber = (string)pReader[lOffset];
+                    lOffset++; lHistory.Issue = (string)pReader[lOffset];
+                    lOffset++; lHistory.Module = (string)pReader[lOffset];
+                    lOffset++; lHistory.ModuleId = (int)pReader[lOffset];
+                    lOffset++; lHistory.Attempt = (Int16)pReader[lOffset];
 
-                    if (pReader[6] != System.DBNull.Value)
+                    lOffset++; if (pReader[lOffset] != System.DBNull.Value)
                     {
-                        lHistory.URL = (string)pReader[6];
+                        lHistory.URL = (string)pReader[lOffset];
                     }
 
 
-                    if (pReader[7] != System.DBNull.Value)
+                    lOffset++; if (pReader[lOffset] != System.DBNull.Value)
                     {
-                        lHistory.Datum = (DateTime)pReader[7];
+                        lHistory.Datum = (DateTime)pReader[lOffset];
                     }
 
 
-                    if (pReader[8] != System.DBNull.Value)
+                    lOffset++; if (pReader[lOffset] != System.DBNull.Value)
                     {
-                        lHistory.Score = (int)pReader[8];
+                        lHistory.Score = (int)pReader[lOffset];
                     }
 
-                    lHistory.Verdict = (string)pReader[9];
+                    lOffset++; lHistory.Verdict = (string)pReader[lOffset];
 
-                    if (pReader[10] != System.DBNull.Value)
+                    lOffset++; if (pReader[lOffset] != System.DBNull.Value)
                     {
-                        lHistory.DateIssued = (DateTime)pReader[10];
+                        lHistory.DateIssued = (DateTime)pReader[lOffset];
                     }
 
-                    lHistory.NormalPoints = (decimal)pReader[11];
-                    lHistory.EthicsPoints = (decimal)pReader[12];
-                    lHistory.CustomerId = (int)pReader[13];
-                    lHistory.Surname = (string)pReader[14];
+                    lOffset++; lHistory.NormalPoints = (decimal)pReader[lOffset];
+                    lOffset++; lHistory.EthicsPoints = (decimal)pReader[lOffset];
+                    lOffset++; lHistory.CustomerId = (int)pReader[lOffset];
+                    lOffset++; lHistory.Surname = (string)pReader[lOffset];
 
-                    lResults.Add(lHistory);
+                    Results.Add(lHistory);
                 } // End of while
-            } // End of if  }
+           
+                return Results;
             }
             catch (Exception ex)
             {
@@ -294,45 +300,56 @@ namespace CPD.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "ResultData", "AssignHistory", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "ResultData", "AssignHistory", "Offset = " + lOffset.ToString());
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
-
                 throw ex;
             }
-            return lResults;
-}
 
-            public static List<History> GetByResultId(int pResultId)
+        }
+
+
+        public List<History> GetByResultId(int pResultId)
         {
+            SqlDataReader lReader;
+            List<History> lResults = new List<History>();
+            SqlConnection connection = new SqlConnection();
+
             try
             {
                 // Now get the connection object.
-                using (SqlConnection connection = new SqlConnection())
+            
+                connection.ConnectionString = Settings.CPDConnectionString;
+                connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "[dbo].[ResultData.History.FillBy]";
+                command.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter lParameter1 = command.CreateParameter();
+                lParameter1.ParameterName = "@By";
+                lParameter1.DbType = DbType.String;
+                lParameter1.Value = "ResultId";
+                command.Parameters.Add(lParameter1);
+
+                SqlParameter lParameter2 = command.CreateParameter();
+                lParameter2.ParameterName = "@Id";
+                lParameter2.DbType = DbType.Int32;
+                lParameter2.Value = pResultId;
+                command.Parameters.Add(lParameter2);
+
+                SqlParameter lParameter3 = command.CreateParameter();
+                lParameter3.ParameterName = "@DateId";
+                lParameter3.DbType = DbType.DateTime;
+                command.Parameters.Add(lParameter3);
+
+                lReader = command.ExecuteReader();
+
+                if (lReader.HasRows)
                 {
-                    connection.ConnectionString = Settings.CPDConnectionString;
-                    connection.Open();
-                    SqlCommand command = new SqlCommand();
-                    command.Connection = connection;
-                    command.CommandText = "[dbo].[ResultData.History.FillBy]";
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    SqlParameter lParameter1 = command.CreateParameter();
-                    lParameter1.ParameterName = "@By";
-                    lParameter1.DbType = DbType.String;
-                    lParameter1.Value = "ResultId";
-                    command.Parameters.Add(lParameter1);
-
-                    SqlParameter lParameter2 = command.CreateParameter();
-                    lParameter2.ParameterName = "@Id";
-                    lParameter2.DbType = DbType.Int32;
-                    lParameter2.Value = pResultId;
-                    command.Parameters.Add(lParameter2);
-
-                    SqlDataReader lReader = command.ExecuteReader();
-                    
-                    return AssignHistory(ref lReader);
+                    return AssignHistory(lReader);
                 }
+                else throw new Exception("No history found");
             }
             catch (Exception ex)
             {
@@ -508,90 +525,90 @@ namespace CPD.Data
 
 
      
-        public static DataSet1.AnswerDataTable GetAnswer(int CustomerId, int QuestionId)
-        {
-            DataSet1TableAdapters.AnswerTableAdapter lAnswerAdapter = new DataSet1TableAdapters.AnswerTableAdapter();
-            lAnswerAdapter.AttachConnection();
-            try
-            {
-                // Read in the potential answers options
+        //public static DataSet1.AnswerDataTable GetAnswer(int CustomerId, int QuestionId)
+        //{
+        //    DataSet1TableAdapters.AnswerTableAdapter lAnswerAdapter = new DataSet1TableAdapters.AnswerTableAdapter();
+        //    lAnswerAdapter.AttachConnection();
+        //    try
+        //    {
+        //        // Read in the potential answers options
 
-                DataSet1.AnswerDataTable lAnswerTable = new DataSet1.AnswerDataTable();
+        //        DataSet1.AnswerDataTable lAnswerTable = new DataSet1.AnswerDataTable();
                 
-                lAnswerAdapter.FillBy(lAnswerTable, "QuestionId", QuestionId);
+        //        lAnswerAdapter.FillBy(lAnswerTable, "QuestionId", QuestionId);
 
 
-                // Apply the actual answers and pass that on
+        //        // Apply the actual answers and pass that on
 
-                List<History> lHistoryList = new List<History>();
-                DataSet1TableAdapters.ResultDetailTableAdapter lDetailAdapter = new DataSet1TableAdapters.ResultDetailTableAdapter();
+        //        List<History> lHistoryList = new List<History>();
+        //        DataSet1TableAdapters.ResultDetailTableAdapter lDetailAdapter = new DataSet1TableAdapters.ResultDetailTableAdapter();
 
-                lHistoryList = GetHistory("CurrentTest", CustomerId );
+        //        lHistoryList = GetHistory("CurrentTest", CustomerId );
 
-                int lCustomerAnswer = 0;
-                lCustomerAnswer = (int)lDetailAdapter.GetAnswer("QuestionId", lHistoryList[0].ResultId, QuestionId);
+        //        int lCustomerAnswer = 0;
+        //        lCustomerAnswer = (int)lDetailAdapter.GetAnswer("QuestionId", lHistoryList[0].ResultId, QuestionId);
                                
-                for (int i = lAnswerTable.Count - 1; i >= 0; i--)
-                {
-                    if (lCustomerAnswer >= (int)Math.Pow(2, i))
-                    {
-                        lAnswerTable[i].Correct = true;
-                        lCustomerAnswer = lCustomerAnswer - (int)Math.Pow(2, i);
-                    }
-                    else
-                    {
-                        lAnswerTable[i].Correct = false;
-                    }
-                }
+        //        for (int i = lAnswerTable.Count - 1; i >= 0; i--)
+        //        {
+        //            if (lCustomerAnswer >= (int)Math.Pow(2, i))
+        //            {
+        //                lAnswerTable[i].Correct = true;
+        //                lCustomerAnswer = lCustomerAnswer - (int)Math.Pow(2, i);
+        //            }
+        //            else
+        //            {
+        //                lAnswerTable[i].Correct = false;
+        //            }
+        //        }
 
-                return lAnswerTable;
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException == null)
-                {
-                    ExceptionData.WriteException(1, ex.Message, "static ResultData", "GetAnswer", "");
-                    throw new Exception("static ResultData" + " : " + "GetAnswer" + " : ", ex);
-                }
-                else
-                {
-                    throw ex; // Just bubble it up
-                }
-            }
-            finally
-            {
-                lAnswerAdapter.Connection.Close();
-            }
-        }
+        //        return lAnswerTable;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (ex.InnerException == null)
+        //        {
+        //            ExceptionData.WriteException(1, ex.Message, "static ResultData", "GetAnswer", "");
+        //            throw new Exception("static ResultData" + " : " + "GetAnswer" + " : ", ex);
+        //        }
+        //        else
+        //        {
+        //            throw ex; // Just bubble it up
+        //        }
+        //    }
+        //    finally
+        //    {
+        //        lAnswerAdapter.Connection.Close();
+        //    }
+        //}
 
 
-        public static void SetAnswer(int CustomerId, int QuestionId, int Answer)
-        {
-            try
-            {
-                // Get all the answers
+        //public static void SetAnswer(int CustomerId, int QuestionId, int Answer)
+        //{
+        //    try
+        //    {
+        //        // Get all the answers
 
-                List<History> lHistoryList = GetHistory("CurrentTest", CustomerId);
+        //        List<History> lHistoryList = GetHistory("CurrentTest", CustomerId);
                
-                DataSet1TableAdapters.ResultDetailTableAdapter lDetailAdapter = new DataSet1TableAdapters.ResultDetailTableAdapter();
-                lDetailAdapter.AttachConnection();
-                lDetailAdapter.SetAnswer(lHistoryList[0].ResultId, QuestionId, Answer);
-                lDetailAdapter.Connection.Close();
+        //        DataSet1TableAdapters.ResultDetailTableAdapter lDetailAdapter = new DataSet1TableAdapters.ResultDetailTableAdapter();
+        //        lDetailAdapter.AttachConnection();
+        //        lDetailAdapter.SetAnswer(lHistoryList[0].ResultId, QuestionId, Answer);
+        //        lDetailAdapter.Connection.Close();
 
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException == null)
-                {
-                    ExceptionData.WriteException(typeof(WarningException) == ex.GetType() ? 3 : 1, ex.Message, "static ResultData", "SetAnswer", "");
-                    throw new Exception("static ResultData" + " : " + "SetAnswer" + " : ", ex);
-                }
-                else
-                {
-                    throw ex; // Just bubble it up
-                }
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (ex.InnerException == null)
+        //        {
+        //            ExceptionData.WriteException(typeof(WarningException) == ex.GetType() ? 3 : 1, ex.Message, "static ResultData", "SetAnswer", "");
+        //            throw new Exception("static ResultData" + " : " + "SetAnswer" + " : ", ex);
+        //        }
+        //        else
+        //        {
+        //            throw ex; // Just bubble it up
+        //        }
+        //    }
+        //}
 
  
         public static int Mark(int ResultId)

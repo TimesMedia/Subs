@@ -33,7 +33,9 @@ namespace CPD.Data
             {
                // Get the first part from the CPD database
 
-                History lResult = ResultData.GetByResultId(pResultId)[0];
+                ResultData lResultData = new ResultData();
+
+                History lResult = lResultData.GetByResultId(pResultId)[0];
 
                 if (lResult == null)
                 {
