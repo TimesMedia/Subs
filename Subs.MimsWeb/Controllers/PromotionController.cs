@@ -167,14 +167,166 @@ namespace Subs.MimsWeb.Controllers
             return View("Basket", lBasket);
         }
 
-        public ActionResult AddToBasket(int ProductId)
+        public ActionResult AddMultipleToBasket(int pProductId1 = 0, int pProductId2 = 0)
+        {
+            Basket lBasket = SessionHelper.GetBasket(Session);
+            if (lBasket == null)
+            {
+                lBasket = new Basket();
+            }
+
+            string lStage = "Build basket";
+
+            try
+            { 
+                if (pProductId1 > 0 )
+                {
+                    AddToBasket(ref lBasket, pProductId1);
+                }
+
+
+                if (pProductId2 > 0)
+                {
+                    AddToBasket( ref lBasket, pProductId2);
+                }
+
+                lStage = "Calculate";
+                if (SubscriptionBiz.CalculateBasket(lBasket.BasketItems))
+                {
+                    lBasket.TotalPrice = 0;
+                    lBasket.TotalDiscount = 0;
+                    lBasket.TotalDiscountedPrice = 0;
+
+                    foreach (BasketItem item in lBasket.BasketItems)
+                    {
+                        lBasket.TotalPrice += item.Price;
+                        lBasket.TotalDiscount += item.Discount;
+                    }
+
+                    lBasket.TotalDiscountedPrice = lBasket.TotalPrice - lBasket.TotalDiscount;
+
+                    if (lBasket.BasketItems.Count() == 1)
+                    {
+                        ViewBag.Message = "There is " + lBasket.BasketItems.Count() + " product selected, resulting in a price of " + lBasket.TotalDiscountedPrice.ToString("R #####0.00");
+                    }
+                    else
+                    {
+                        ViewBag.Message = "There are " + lBasket.BasketItems.Count() + " products selected, resulting in a price of " + lBasket.TotalDiscountedPrice.ToString("R #####0.00");
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = "There was a problem calculating the basket value";
+                }
+ 
+                lStage = "Set";
+
+                SessionHelper.Set(Session, SessionKey.Basket, lBasket);
+                return View("Basket", lBasket);
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "AddMultipleToBasket", "Stage = " + lStage, (int)SessionHelper.GetLoginRequest(Session).CustomerId);
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                return View("Basket", lBasket);
+            }
+        }
+
+
+        public ActionResult AddToBasket(ref Basket pBasket, int pProductId)
+        {
+            string lStage = "";
+
+            try
+            { 
+                // Prevent adding the same item more than once
+                foreach (BasketItem item in pBasket.BasketItems)
+                {
+                    if (item.Subscription.ProductId == pProductId)
+                    {
+                        TempData["Message"] = "You cannot add the same item more than once. Request denied.";
+                        return RedirectToAction("List", "Promotion");
+                    }
+                }
+  
+                // create a new BasketItem
+                LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+
+                // Filter out subscriptions that are in surplus already
+
+                if (SubscriptionData3.Surplus((int)lLoginRequest.CustomerId, pProductId) > 0)
+                {
+                    TempData["Message"] = "You already have a surplus subscription on this product. Request denied.";                        
+                    return RedirectToAction("List", "Promotion");
+                }
+
+                //Add First Item ToBasket
+
+                SubscriptionData3 lSubscription = new SubscriptionData3();
+
+                lSubscription.PayerId = (int)lLoginRequest.CustomerId;
+                lSubscription.ReceiverId = (int)lLoginRequest.CustomerId;
+                lSubscription.ProductId = pProductId;
+                DateTime lNextDate;
+
+                { 
+                    string lResult;
+                    if ((lResult = SubscriptionBiz.NextDate((int)lLoginRequest.CustomerId, pProductId, out lNextDate)) != "OK")
+                    {
+                        ViewBag.Message = lResult;
+                        return View("Basket", pBasket);
+                    }
+                }
+
+                {
+                    MimsValidationResult lResult = SubscriptionBiz.SetInitialValues(lSubscription, lNextDate);
+
+                    if (lResult.Message != "OK" && !lResult.Prompt) 
+                    {
+                        ViewBag.Message = lResult.Message;
+                        return View("Basket", pBasket);
+                    }
+                }
+
+                BasketItem lBasketItem = new BasketItem() { Subscription = lSubscription };
+                lBasketItem.ProductName = ProductDataStatic.GetProductName(pProductId);
+                pBasket.BasketItems.Add(lBasketItem);
+                return View("Basket", pBasket);
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "AddToBasket", "Stage = " + lStage, (int)SessionHelper.GetLoginRequest(Session).CustomerId);
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                return View("Basket", pBasket);
+            }
+        }
+
+        public ActionResult AddToBasketOld(int ProductId)
         {
             string lStage = "GetBasket";
 
             Basket lBasket = SessionHelper.GetBasket(Session);
 
             try
-            { 
+            {
                 if (lBasket == null)
                 {
                     lBasket = new Basket();
@@ -196,7 +348,7 @@ namespace Subs.MimsWeb.Controllers
 
                 lStage = "Found?";
 
-                if (!lFound) 
+                if (!lFound)
                 {
                     // create a new BasketItem
                     LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
@@ -205,9 +357,11 @@ namespace Subs.MimsWeb.Controllers
 
                     if (SubscriptionData3.Surplus((int)lLoginRequest.CustomerId, ProductId) > 0)
                     {
-                        TempData["Message"] = "You already have a surplus subscription on this product. Request denied.";                        
+                        TempData["Message"] = "You already have a surplus subscription on this product. Request denied.";
                         return RedirectToAction("List", "Promotion");
                     }
+
+                    //Add First Item ToBasket
 
                     SubscriptionData3 lSubscription = new SubscriptionData3();
 
@@ -216,7 +370,7 @@ namespace Subs.MimsWeb.Controllers
                     lSubscription.ProductId = ProductId;
                     DateTime lNextDate;
 
-                    { 
+                    {
                         string lResult;
                         if ((lResult = SubscriptionBiz.NextDate((int)lLoginRequest.CustomerId, ProductId, out lNextDate)) != "OK")
                         {
@@ -228,17 +382,20 @@ namespace Subs.MimsWeb.Controllers
                     {
                         MimsValidationResult lResult = SubscriptionBiz.SetInitialValues(lSubscription, lNextDate);
 
-                        if (lResult.Message != "OK" && !lResult.Prompt) 
+                        if (lResult.Message != "OK" && !lResult.Prompt)
                         {
-                           ViewBag.Message = lResult.Message;
-                           return View("Basket", lBasket);
+                            ViewBag.Message = lResult.Message;
+                            return View("Basket", lBasket);
                         }
                     }
 
                     BasketItem lBasketItem = new BasketItem() { Subscription = lSubscription };
                     lBasketItem.ProductName = ProductDataStatic.GetProductName(ProductId);
                     lBasket.BasketItems.Add(lBasketItem);
-                    
+
+
+
+
                     lStage = "Calculate";
 
 
@@ -294,6 +451,7 @@ namespace Subs.MimsWeb.Controllers
                 return View("Basket", lBasket);
             }
         }
+
 
         [HttpPost]
         public ActionResult BasketModification(IList<BasketModification> pModifications)

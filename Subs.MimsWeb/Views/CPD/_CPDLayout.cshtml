@@ -105,7 +105,7 @@
             </div>
 
             <div class="text-center">
-                <a asp-controller="CPD" asp-action="Enrol">ENROL</a>
+                @Html.ActionLink("ENROL", "Enrol", "CPD")
             </div>
 
             <div class="text-center">
@@ -113,7 +113,7 @@
             </div>
 
             <div class="text-center">
-                <a asp-controller="Home" asp-action="Back">BACK TO MIMS PORTAL</a>
+                @Html.ActionLink("MIMS", "Index", "Home")
             </div>
 
         </div>

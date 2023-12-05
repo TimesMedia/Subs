@@ -10,8 +10,17 @@ namespace Subs.MimsWeb
         LoginRequest,
         WebProducts,
         Basket,
-        PayUReference
+        PayUReference,
+        PrimeBasket
     }
+
+    public class BasketOption
+    {
+        public bool Mims = false;
+        public bool Emims = false;
+        public bool MobiMims = false;
+    }
+
 
     public static class SessionHelper { 
     public static void Set(HttpSessionStateBase session, SessionKey key, object value) { 
@@ -65,7 +74,18 @@ namespace Subs.MimsWeb
         return lBasket;
     }
 
-    public static string GetPayUReference(HttpSessionStateBase session)
+    public static BasketOption GetBasketOption(HttpSessionStateBase session)
+    {
+        BasketOption lBasketOption = Get<BasketOption>(session, SessionKey.PrimeBasket);
+        if (lBasketOption == null)
+        {
+            lBasketOption = new BasketOption();
+            Set(session, SessionKey.PrimeBasket, lBasketOption);
+        }
+        return lBasketOption;
+    }
+
+        public static string GetPayUReference(HttpSessionStateBase session)
     {
         string lPayUReference= Get<string>(session, SessionKey.PayUReference);
         if (String.IsNullOrWhiteSpace(lPayUReference))

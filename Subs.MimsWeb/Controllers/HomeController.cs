@@ -17,6 +17,7 @@ namespace Subs.MimsWeb.Controllers
     {
         #region Globals
  
+       
         #endregion
 
         #region Constructor
@@ -25,6 +26,7 @@ namespace Subs.MimsWeb.Controllers
             //gCompanyAdapter.AttachConnection();
         }
         #endregion
+
 
         // GET: Home
         [HttpGet]
@@ -1021,14 +1023,29 @@ namespace Subs.MimsWeb.Controllers
                     pLoginRequest.Email = lCustomerData.EmailAddress;
                     pLoginRequest.CountryId = lCustomerData.CountryId;
                     SessionHelper.Set(Session, SessionKey.LoginRequest, pLoginRequest);
- 
-                    //PaymentRequest lPaymentRequest = new PaymentRequest();
 
-                    //(lPaymentRequest.InvoiceId, lPaymentRequest.Amount) = CustomerData3.GetOutstandingOnLastInvoice(lCustomerData.CustomerId);
-                    
+
+                    // If this person selected an option on the landing page, we should now go to the Basket with that option pre-selected.
+                     
+                    BasketOption lBasketOption = SessionHelper.GetBasketOption(Session);
+
+                    if (lBasketOption.Mims && lBasketOption.Emims)
+                    {
+                        return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 1, pProductId2 = 17 });
+                    }
+
+                    if (lBasketOption.Mims && lBasketOption.MobiMims)
+                    {
+                        return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 1, pProductId2 = 32 });
+                    }
+
+                    if (lBasketOption.Emims && lBasketOption.MobiMims)
+                    {
+                        return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 17, pProductId2 = 32 });
+                    }
+
                     ViewBag.Message = "Welcome, " + lCustomerData.Title + " " + lCustomerData.Surname + ", you are now logged in.";
                     return View("Welcome"); 
-
                 }
                 else
                 {
@@ -1150,6 +1167,41 @@ namespace Subs.MimsWeb.Controllers
                 return new ViewResult();
             }
         }
+
+
+        public ActionResult SelectPrintEmims()
+        {
+            try
+            {
+                BasketOption lBasketOption = new BasketOption();
+                lBasketOption.Mims = true;
+                lBasketOption.Emims = true;
+
+                 SessionHelper.Set(Session, SessionKey.PrimeBasket, lBasketOption);
+
+                ViewBag.Message = "Sorry, you have to log in before we can process your selection.";
+                return View("Login");
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "SelectPrintEmims", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                ViewBag.Message = ex.Message;
+                return new ViewResult();
+            }
+        }
+
+
+
 
 
         // Signout **************************************************************************************************************

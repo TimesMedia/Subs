@@ -1,6 +1,5 @@
 ﻿@using Subs.Data
 @using Subs.MimsWeb.Models;
-@using System.Web;
 @model Subs.Data.WebProducts
 
 
@@ -293,7 +292,7 @@
                                                         <label style="color:black; font-size:medium;font-weight:700; display:inline;margin-left:10px">with CPD</label>
                                                     }
 
-                                                    <p> @Html.ActionLink("Add to cart", "AddToBasket", new { ProductId = p.ProductId })</p>
+                                                    <p> @Html.ActionLink("Add to cart", "AddMultipeToBasket", new { pProductId1 = p.ProductId, pProductId2 = 0 })</p>
 
                                                 </div>
                                             }

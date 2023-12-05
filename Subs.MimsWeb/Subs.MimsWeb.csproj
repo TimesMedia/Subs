@@ -310,9 +310,13 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\CPDLogo1.jpg" />
+    <Content Include="Images\discount.png" />
+    <Content Include="Images\emims &amp; mobimims.jpg" />
     <Content Include="Images\HamburgerOff.gif" />
     <Content Include="Images\HamburgerOn.gif" />
     <Content Include="Images\Medicine comparison.jpg" />
+    <Content Include="Images\Print &amp; emims.jpg" />
+    <Content Include="Images\Print &amp; mobimims.jpg" />
     <Content Include="Images\shopping.png" />
     <Content Include="Images\Tiso_Blackstar_Group_logo.psd" />
     <Content Include="appsettings.Development.json" />
