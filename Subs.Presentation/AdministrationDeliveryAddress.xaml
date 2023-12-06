@@ -149,7 +149,7 @@
                       ItemsSource="{Binding Source={StaticResource provinceCityViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" 
                       Grid.Row="2" Grid.Column="5" Grid.RowSpan="2">
                     <DataGrid.Columns>
-                        <DataGridTextColumn x:Name="cityNameColumn" Binding="{Binding CityName}" Header="City Name" Width="auto"/>
+                        <DataGridTextColumn x:Name="cityNameColumn" Binding="{Binding CityName}" Header="City Name" Width="auto" />
                         <DataGridTextColumn x:Name="cityIdColumn" Binding="{Binding CityId}" Header="CityId" Width="SizeToHeader" IsReadOnly="True"/>
                         <DataGridTextColumn  Binding="{Binding ProvinceId}" Header="ProvinceId" Width="SizeToHeader"/>
                     </DataGrid.Columns>

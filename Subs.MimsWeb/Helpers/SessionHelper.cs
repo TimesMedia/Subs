@@ -3,6 +3,8 @@ using System.Web;
 using System.Web.SessionState;
 using Subs.MimsWeb.Models;
 using Subs.Data;
+using System.Collections.Generic;
+
 namespace Subs.MimsWeb
 {
     public enum SessionKey
@@ -16,9 +18,43 @@ namespace Subs.MimsWeb
 
     public class BasketOption
     {
+        //private List<int> gProducts = new List<int>();
+
+        //public int this[int index] 
+        //{
+        //    get 
+        //    {
+        //        return gProducts[index];
+        //    }
+        //}
+
         public bool Mims = false;
         public bool Emims = false;
         public bool MobiMims = false;
+
+        public bool HasOptions
+        {
+            get 
+            {
+                if (Mims == false & Emims == false && MobiMims == false)
+                {
+                    return false;
+                }
+                else
+                { 
+                    return true;
+                }
+            }
+        }
+
+
+        public void Clear()
+        {
+            //gProducts.Clear();
+            Mims = false;
+            Emims = false;
+            MobiMims = false;
+        }
     }
 
 
@@ -58,6 +94,7 @@ namespace Subs.MimsWeb
         if (lWebProducts == null)
         {
             lWebProducts = new WebProducts();
+
             Set(session, SessionKey.WebProducts, lWebProducts);
         }
         return lWebProducts;

@@ -88,7 +88,7 @@ namespace Subs.MimsWeb.Controllers
 
 
         [HttpGet]
-        public ViewResult List(string pMessage = "")
+        public ActionResult List(string pMessage = "")
         {
 
             //Silke insisted that the page where you query what category to select from and the view where you display the products, be the same page.
@@ -98,6 +98,12 @@ namespace Subs.MimsWeb.Controllers
             {
                 ViewBag.Message = pMessage;
                 WebProducts lPreviousSelection = SessionHelper.GetWebProducts(Session);
+
+                if (lPreviousSelection.ListOfWebProducts == null)
+                {
+                    // The user has not selected anything before via the standard method
+                    return RedirectToAction("GetProducts", "Promotion");
+                }
 
                 //22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
 

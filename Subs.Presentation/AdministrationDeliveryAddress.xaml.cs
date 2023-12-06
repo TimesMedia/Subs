@@ -202,6 +202,8 @@ namespace Subs.Presentation
 
         private void SubmitCity(object sender, RoutedEventArgs e)
         {
+            // Check all the modified rows for the existence of open or closed brackets. Maybe you can use a regular expression?
+
             gCityTableAdapter.Update(gDeliveryAddressDoc.City);
             gCityTableAdapter.Fill(gDeliveryAddressDoc.City);
         }

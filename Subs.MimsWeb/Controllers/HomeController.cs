@@ -928,7 +928,34 @@ namespace Subs.MimsWeb.Controllers
             return View();
         }
 
-        [HttpPost]
+        public ActionResult CaptureSelectedPromotions()
+        { 
+            // If this person selected an option on the landing page, we should now go to the Basket with that option pre-selected.
+
+            BasketOption lBasketOption = SessionHelper.GetBasketOption(Session);
+            
+            if (lBasketOption.Mims && lBasketOption.Emims)
+            {
+                lBasketOption.Clear();
+                return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 1, pProductId2 = 17 });
+            }
+
+            if (lBasketOption.Mims && lBasketOption.MobiMims)
+            {
+                lBasketOption.Clear();
+                return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 1, pProductId2 = 32 });
+            }
+
+            if (lBasketOption.Emims && lBasketOption.MobiMims)
+            {
+                lBasketOption.Clear();
+                return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 17, pProductId2 = 32 });
+            }
+            return null;
+        }
+
+
+[HttpPost]
         public ActionResult Login(LoginRequest pLoginRequest)
         {
             CustomerData3 lCustomerData;
@@ -1025,27 +1052,19 @@ namespace Subs.MimsWeb.Controllers
                     SessionHelper.Set(Session, SessionKey.LoginRequest, pLoginRequest);
 
 
-                    // If this person selected an option on the landing page, we should now go to the Basket with that option pre-selected.
-                     
+                    // Process preselections if there are any
+
                     BasketOption lBasketOption = SessionHelper.GetBasketOption(Session);
 
-                    if (lBasketOption.Mims && lBasketOption.Emims)
+                    if (lBasketOption.HasOptions)
                     {
-                        return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 1, pProductId2 = 17 });
+                        return CaptureSelectedPromotions();
                     }
-
-                    if (lBasketOption.Mims && lBasketOption.MobiMims)
-                    {
-                        return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 1, pProductId2 = 32 });
+                    else
+                    { 
+                        ViewBag.Message = "Welcome, " + lCustomerData.Title + " " + lCustomerData.Surname + ", you are now logged in.";
+                        return View("Index");
                     }
-
-                    if (lBasketOption.Emims && lBasketOption.MobiMims)
-                    {
-                        return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 17, pProductId2 = 32 });
-                    }
-
-                    ViewBag.Message = "Welcome, " + lCustomerData.Title + " " + lCustomerData.Surname + ", you are now logged in.";
-                    return View("Welcome"); 
                 }
                 else
                 {
@@ -1177,10 +1196,20 @@ namespace Subs.MimsWeb.Controllers
                 lBasketOption.Mims = true;
                 lBasketOption.Emims = true;
 
-                 SessionHelper.Set(Session, SessionKey.PrimeBasket, lBasketOption);
+                SessionHelper.Set(Session, SessionKey.PrimeBasket, lBasketOption);
 
-                ViewBag.Message = "Sorry, you have to log in before we can process your selection.";
-                return View("Login");
+                LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+
+                if (lLoginRequest.CustomerId == null)
+                {
+                    CaptureSelectedPromotions();
+                    ViewBag.Message = "Sorry, you have to log in before we can process your selection.";
+                    return View("Login");
+                }
+                else
+                {
+                    return CaptureSelectedPromotions();
+                }
             }
             catch (Exception ex)
             {
@@ -1200,6 +1229,85 @@ namespace Subs.MimsWeb.Controllers
             }
         }
 
+        public ActionResult SelectPrintMobiMims()
+        {
+            try
+            {
+                BasketOption lBasketOption = new BasketOption();
+                lBasketOption.Mims = true;
+                lBasketOption.MobiMims = true;
+                SessionHelper.Set(Session, SessionKey.PrimeBasket, lBasketOption);
+
+                LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+
+                if (lLoginRequest.CustomerId == null)
+                {
+                    CaptureSelectedPromotions();
+                    ViewBag.Message = "Sorry, you have to log in before we can process your selection.";
+                    return View("Login");
+                }
+                else
+                {
+                    return CaptureSelectedPromotions();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "SelectPrintMobiMims", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                ViewBag.Message = ex.Message;
+                return new ViewResult();
+            }
+        }
+        public ActionResult SelectEmimsMobiMims()
+        {
+            try
+            {
+                BasketOption lBasketOption = new BasketOption();
+                lBasketOption.MobiMims = true;
+                lBasketOption.Emims = true;
+
+                SessionHelper.Set(Session, SessionKey.PrimeBasket, lBasketOption);
+
+                LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+
+                if (lLoginRequest.CustomerId == null)
+                {
+                    CaptureSelectedPromotions();
+                    ViewBag.Message = "Sorry, you have to log in before we can process your selection.";
+                    return View("Login");
+                }
+                else
+                {
+                    return CaptureSelectedPromotions();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "SelectEmimsMobiMims", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                ViewBag.Message = ex.Message;
+                return new ViewResult();
+            }
+        }
 
 
 

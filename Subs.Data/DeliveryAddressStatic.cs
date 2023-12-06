@@ -97,7 +97,7 @@ namespace Subs.Data
         }
 
         public static (int CountryId, string Province, string City, string Suburb, string Street) AddressInStrings(int pStreetId)
-        {
+        {            string lStage = "StreetId = " + pStreetId.ToString();
             try 
             {
                 if (!DeliveryAddressStatic.Loaded) {
@@ -110,10 +110,19 @@ namespace Subs.Data
                 }
 
                 (string, int) lStreet = DeliveryAddresses.Street.Where(p => p.StreetId == pStreetId).Select(q => (q.StreetName, q.SuburbId)).Single();
+
+                lStage = "Street = "  + lStreet.Item2.ToString();
                 (string, int) lSuburb = DeliveryAddresses.Suburb.Where(p => p.SuburbId == lStreet.Item2).Select(q => (q.SuburbName, q.CityId)).Single();
+
+                lStage = "Suburb = " + lSuburb.Item2.ToString();
                 (string, int) lCity = DeliveryAddresses.City.Where(p => p.CityId == lSuburb.Item2).Select(q => (q.CityName, q.ProvinceId)).Single();
+
+                lStage = "City = " + lCity.Item2.ToString();
                 (string, int) lProvince = DeliveryAddresses.Province.Where(p => p.ProvinceId == lCity.Item2).Select(q => (q.ProvinceName, q.CountryId)).Single();
                 int lCountryId = lProvince.Item2;
+
+                lStage = "Province = " + lProvince.Item2.ToString();
+
 
                 return (lProvince.Item2, lProvince.Item1, lCity.Item1, lSuburb.Item1,lStreet.Item1);
             }
@@ -127,7 +136,7 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "DeliveryAddressStatic", "AddressInStrings", "StreetId = " + pStreetId.ToString());
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "DeliveryAddressStatic", "AddressInStrings", lStage);
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
