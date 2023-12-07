@@ -228,6 +228,11 @@ namespace Subs.MimsWeb.Controllers
                 lStage = "Set";
 
                 SessionHelper.Set(Session, SessionKey.Basket, lBasket);
+
+                BasketOption lBasketOption = SessionHelper.GetBasketOption(Session);
+                lBasketOption.Clear();
+                SessionHelper.Set(Session, SessionKey.PrimeBasket, lBasketOption);
+
                 return View("Basket", lBasket);
             }
             catch (Exception ex)

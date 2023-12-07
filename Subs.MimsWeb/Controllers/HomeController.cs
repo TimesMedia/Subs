@@ -936,19 +936,19 @@ namespace Subs.MimsWeb.Controllers
             
             if (lBasketOption.Mims && lBasketOption.Emims)
             {
-                lBasketOption.Clear();
+                //lBasketOption.Clear();
                 return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 1, pProductId2 = 17 });
             }
 
             if (lBasketOption.Mims && lBasketOption.MobiMims)
             {
-                lBasketOption.Clear();
+                //lBasketOption.Clear();
                 return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 1, pProductId2 = 32 });
             }
 
             if (lBasketOption.Emims && lBasketOption.MobiMims)
             {
-                lBasketOption.Clear();
+                //lBasketOption.Clear();
                 return RedirectToAction("AddMultipleToBasket", "Promotion", new { pProductId1 = 17, pProductId2 = 32 });
             }
             return null;
