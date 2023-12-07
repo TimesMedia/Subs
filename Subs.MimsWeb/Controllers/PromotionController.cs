@@ -253,7 +253,7 @@ namespace Subs.MimsWeb.Controllers
         }
 
 
-        public ActionResult AddToBasket(ref Basket pBasket, int pProductId)
+        public void AddToBasket(ref Basket pBasket, int pProductId)
         {
             string lStage = "";
 
@@ -265,7 +265,7 @@ namespace Subs.MimsWeb.Controllers
                     if (item.Subscription.ProductId == pProductId)
                     {
                         TempData["Message"] = "You cannot add the same item more than once. Request denied.";
-                        return RedirectToAction("List", "Promotion");
+                        return; // RedirectToAction("List", "Promotion");
                     }
                 }
   
@@ -277,7 +277,7 @@ namespace Subs.MimsWeb.Controllers
                 if (SubscriptionData3.Surplus((int)lLoginRequest.CustomerId, pProductId) > 0)
                 {
                     TempData["Message"] = "You already have a surplus subscription on this product. Request denied.";                        
-                    return RedirectToAction("List", "Promotion");
+                    return; // RedirectToAction("List", "Promotion");
                 }
 
                 //Add First Item ToBasket
@@ -294,7 +294,7 @@ namespace Subs.MimsWeb.Controllers
                     if ((lResult = SubscriptionBiz.NextDate((int)lLoginRequest.CustomerId, pProductId, out lNextDate)) != "OK")
                     {
                         ViewBag.Message = lResult;
-                        return View("Basket", pBasket);
+                        return; // View("Basket", pBasket);
                     }
                 }
 
@@ -304,14 +304,14 @@ namespace Subs.MimsWeb.Controllers
                     if (lResult.Message != "OK" && !lResult.Prompt) 
                     {
                         ViewBag.Message = lResult.Message;
-                        return View("Basket", pBasket);
+                        return; // View("Basket", pBasket);
                     }
                 }
 
                 BasketItem lBasketItem = new BasketItem() { Subscription = lSubscription };
                 lBasketItem.ProductName = ProductDataStatic.GetProductName(pProductId);
                 pBasket.BasketItems.Add(lBasketItem);
-                return View("Basket", pBasket);
+                return; // View("Basket", pBasket);
             }
             catch (Exception ex)
             {
@@ -326,7 +326,7 @@ namespace Subs.MimsWeb.Controllers
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
-                return View("Basket", pBasket);
+                return; // View("Basket", pBasket);
             }
         }
 

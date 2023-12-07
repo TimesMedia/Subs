@@ -150,7 +150,7 @@ namespace MimsWeb.Controllers
 public ActionResult Enrol()
         {
 
-            List<AvailableSurvey> lSurveys = ModuleData.GetAvailableTest(108244);
+            List<AvailableSurvey> lSurveys = ModuleData.GetAvailableTest(1);
 
             return View(lSurveys);
         }
