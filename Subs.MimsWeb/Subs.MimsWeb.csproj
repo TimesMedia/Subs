@@ -315,6 +315,10 @@
     <Content Include="Images\HamburgerOff.gif" />
     <Content Include="Images\HamburgerOn.gif" />
     <Content Include="Images\Medicine comparison.jpg" />
+    <Content Include="Images\PEmims-mobimims.jpg" />
+    <Content Include="Images\PharmaDynamics.png" />
+    <Content Include="Images\PPrint-emims.jpg" />
+    <Content Include="Images\PPrint-mobimims.jpg" />
     <Content Include="Images\Print &amp; emims.jpg" />
     <Content Include="Images\Print &amp; mobimims.jpg" />
     <Content Include="Images\shopping.png" />
@@ -332,6 +336,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\img\BeyondHealthCare.pdf" />
+    <Content Include="Images\Presentation1.pptx" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Properties\PublishProfiles\IISProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\IISProfile2.pubxml" />
