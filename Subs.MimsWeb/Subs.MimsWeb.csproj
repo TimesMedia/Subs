@@ -321,6 +321,7 @@
     <Content Include="Images\PPrint-mobimims.jpg" />
     <Content Include="Images\Print &amp; emims.jpg" />
     <Content Include="Images\Print &amp; mobimims.jpg" />
+    <Content Include="Images\PThe power of two.jpg" />
     <Content Include="Images\shopping.png" />
     <Content Include="Images\Tiso_Blackstar_Group_logo.psd" />
     <Content Include="appsettings.Development.json" />
@@ -405,6 +406,7 @@
     <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\CPD\_CPDLayout.cshtml" />
     <Content Include="Views\CPD\Read.cshtml" />
+    <Content Include="Views\Home\DisplayActiveSubscriptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

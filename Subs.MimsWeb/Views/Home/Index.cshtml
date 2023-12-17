@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=yes">
     <link rel="stylesheet" href="/Content/Normalize.css">
     <link rel="stylesheet" href="/Content/Styles.css">
-    @*<link rel="stylesheet" href="~/Content/navbar.css" />*@
+    <link rel="stylesheet" href="~/Content/navbar.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
@@ -23,16 +23,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <!-- End Google Tag Manager -->
     <style>
 
-        .myOptions {
-            display: inline;
-            margin-bottom: 50px;
-            margin-left: 30px;
-
-        }
-
         .myCaption {
             text-align:center;
         }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .container a {
+            flex: 1;
+        }
+
 
         @@media (max-width: 480px) {
             #narrow {
@@ -80,62 +83,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </div>
     <br />
     <br />
-    <!--<section id="service" class="section pt-0" style="background-color:#fff">-->
-    @*<div class="col-md-4">
-            <p class="mb-0"><img src="~/Images/discount.png" class="brands"></p>
-        </div>*@
-    <!--<div class="container">
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card mb-5 mb-md-0">
-                            <div class="card-body">
-                                <p class="mb-0"><img src="~/Images/discount.png"></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card mb-5 mb-md-0">
-                            <div class="card-body">
-                                <p class="mb-0"><a href="~/Home/SelectPrintEmims"><img src="~/Images/Print & emims.jpg" class="brands"></a></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card mb-5 mb-md-0">
-                            <div class="card-body">
-                                <p class="mb-0"><a href="~/Home/SelectPrintMobiMims"><img src="~/Images/emims & mobimims.jpg" class="brands"></a></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card mb-5 mb-md-0">
-                            <div class="card-body">
-
-                                <p class="mb-0"><a href="~/Home/SelectEmimsMobiMims"><img src="~/Images/Print & mobimims.jpg" class="brands"></a></p>
-
-                            </div>
-
-                            </div>
-                        </div>
-                </div>
-            </div>
-    </section>-->
-
+  
 <div class="myCaption">
     <img src="~/Images/PThe power of two.jpg" width="300"/> 
 </div>
-   
     <br/>
-    <img src="~/Images/discount.png">
-    <div class="myOptions">
-        <a href="~/Home/SelectPrintEmims"><img src="~/Images/PPrint-emims.jpg" height="130" width="130" class="myOptions"></a>
-        <a href="~/Home/SelectPrintMobiMims"><img src="~/Images/PPrint-mobimims.jpg" height="130" width="130" class="myOptions"></a>
-        <a href="~/Home/SelectEmimsMobiMims"><img src="~/Images/PEmims-mobimims.jpg" height="130" width="130" class="myOptions"></a>
-    </div>
+    <br/>
+   
+<div class="container" title="This promotion is not valid if you are already subscribed to the products.">
+    <a href="~/Home/SelectPrintEmims"><img src="~/Images/PPrint-emims.jpg" height="150" width="200"></a>
+    <a href="~/Home/SelectPrintMobiMims"><img src="~/Images/PPrint-mobimims.jpg" height="150" width="200"></a>
+    <a href="~/Home/SelectEmimsMobiMims"><img src="~/Images/PEmims-mobimims.jpg" height="150" width="250"></a>
+</div>
     
 
     <section id="contact" class="section pt-0" style="background-color:dodgerblue;color:#fff;">

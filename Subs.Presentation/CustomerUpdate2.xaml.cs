@@ -21,9 +21,9 @@ namespace Subs.Presentation
         private CustomerData3 gCustomerData;
         private Subs.Data.CommentData gCommentData;
         private bool _Cancelled = true;
-        //private bool gAddressLine4Found = false;
-        //private bool gAddressLine3Found = false;
-        //private bool gAddressCodeFound = false;
+        private bool gAddressLine4Found = false;
+        private bool gAddressLine3Found = false;
+        private bool gAddressCodeFound = false;
         //private bool gFullAddressFound = false;
 
         private readonly static PostCodeDoc.PostCode_LinearDataTable gPostCodeLinear = new PostCodeDoc.PostCode_LinearDataTable();
@@ -198,239 +198,239 @@ namespace Subs.Presentation
             try
             {
                 // Start with a clean slate
-                //CodeDataGrid.ItemsSource = null;
-                //SuburbDataGrid.ItemsSource = null;
+                CodeDataGrid.ItemsSource = null;
+                SuburbDataGrid.ItemsSource = null;
 
-                //************************************************* PostStreet ********************************************************************************
+                //*************************************************PostStreet * *******************************************************************************
 
-                //IEnumerable<PostCodeLinear> lCodeList = new List<PostCodeLinear>();
-                //List<PostCodeLinear> lSuburbList = new List<PostCodeLinear>();
-                //ICollectionView lCodeView = new CollectionView(lCodeList);
-                //ICollectionView lSuburbView = new CollectionView(lSuburbList);
+                IEnumerable < PostCodeLinear > lCodeList = new List<PostCodeLinear>();
+                List<PostCodeLinear> lSuburbList = new List<PostCodeLinear>();
+                ICollectionView lCodeView = new CollectionView(lCodeList);
+                ICollectionView lSuburbView = new CollectionView(lSuburbList);
 
-                //int lCodeListCount = 0;
-                //int lSuburbListCount = 0;
+                int lCodeListCount = 0;
+                int lSuburbListCount = 0;
 
-                //if (gCustomerData.AddressType == AddressType.PostStreet)
-                //{
-                //    if (!string.IsNullOrWhiteSpace(gCustomerData.Address5))
-                //    {
-                //        var lQuery = from matchCode in gPostCodeLinear
-                //                     where (matchCode.Type == AddressType.PostStreet.ToString() && matchCode.Code == gCustomerData.Address5)
-                //                     orderby matchCode.Code, matchCode.AddressLine4, matchCode.AddressLine3
-                //                     select new PostCodeLinear() { Code = matchCode.Code, AddressLine4 = matchCode.AddressLine4, AddressLine3 = matchCode.AddressLine3, AddressLine3Id = matchCode.AddressLine3Id };
+                if (gCustomerData.AddressType == AddressType.PostStreet)
+                {
+                    if (!string.IsNullOrWhiteSpace(gCustomerData.Address5))
+                    {
+                        var lQuery = from matchCode in gPostCodeLinear
+                                     where (matchCode.Type == AddressType.PostStreet.ToString() && matchCode.Code == gCustomerData.Address5)
+                                     orderby matchCode.Code, matchCode.AddressLine4, matchCode.AddressLine3
+                                     select new PostCodeLinear() { Code = matchCode.Code, AddressLine4 = matchCode.AddressLine4, AddressLine3 = matchCode.AddressLine3, AddressLine3Id = matchCode.AddressLine3Id };
 
-                //        lCodeList = lQuery.ToList<PostCodeLinear>();
-                //        lCodeView = CollectionViewSource.GetDefaultView(lCodeList);
-                //        CodeDataGrid.ItemsSource = lCodeView;
-                //        lCodeListCount = lCodeList.Count();
-                //    }
+                        lCodeList = lQuery.ToList<PostCodeLinear>();
+                        lCodeView = CollectionViewSource.GetDefaultView(lCodeList);
+                        CodeDataGrid.ItemsSource = lCodeView;
+                        lCodeListCount = lCodeList.Count();
+                    }
 
-                //    if (!string.IsNullOrWhiteSpace(gCustomerData.Address3))
-                //    {
-                //        var lQueryReverse = from matchSuburb in gPostCodeLinear
-                //                            where (matchSuburb.Type == AddressType.PostStreet.ToString() && matchSuburb.AddressLine3.ToUpper().Contains(gCustomerData.Address3.ToUpper()))
-                //                            orderby matchSuburb.AddressLine3, matchSuburb.AddressLine4, matchSuburb.Code
-                //                            select new PostCodeLinear() { Code = matchSuburb.Code, AddressLine4 = matchSuburb.AddressLine4, AddressLine3 = matchSuburb.AddressLine3, AddressLine3Id = matchSuburb.AddressLine3Id };
+                    if (!string.IsNullOrWhiteSpace(gCustomerData.Address3))
+                    {
+                        var lQueryReverse = from matchSuburb in gPostCodeLinear
+                                            where (matchSuburb.Type == AddressType.PostStreet.ToString() && matchSuburb.AddressLine3.ToUpper().Contains(gCustomerData.Address3.ToUpper()))
+                                            orderby matchSuburb.AddressLine3, matchSuburb.AddressLine4, matchSuburb.Code
+                                            select new PostCodeLinear() { Code = matchSuburb.Code, AddressLine4 = matchSuburb.AddressLine4, AddressLine3 = matchSuburb.AddressLine3, AddressLine3Id = matchSuburb.AddressLine3Id };
 
-                //        lSuburbList = lQueryReverse.ToList<PostCodeLinear>();
-                //        lSuburbView = CollectionViewSource.GetDefaultView(lSuburbList);
-                //        SuburbDataGrid.ItemsSource = lSuburbView;
-                //        lSuburbListCount = lSuburbList.Count();
-                //    }
-                //}
-
-
-                ////************************************************* PostBox ********************************************************************************
-
-                //if (gCustomerData.AddressType == AddressType.PostBox)
-                //{
-                //    if (!string.IsNullOrWhiteSpace(gCustomerData.Address5))
-                //    {
-                //        var lQuery = from matchCode in gPostCodeLinear
-                //                     where (matchCode.Type == AddressType.PostBox.ToString() && matchCode.Code == gCustomerData.Address5)
-                //                     orderby matchCode.Code, matchCode.AddressLine4, matchCode.AddressLine3
-                //                     select new PostCodeLinear() { Code = matchCode.Code, AddressLine4 = matchCode.AddressLine4, AddressLine3 = matchCode.AddressLine3, AddressLine3Id = matchCode.AddressLine3Id };
-
-                //        lCodeList = lQuery.ToList<PostCodeLinear>();
-                //        lCodeView = CollectionViewSource.GetDefaultView(lCodeList);
-                //        CodeDataGrid.ItemsSource = lCodeView;
-                //        CodeDataGrid.UpdateLayout();
-                //        lCodeListCount = lCodeList.Count();
-                //    }
-
-                //    if (!string.IsNullOrWhiteSpace(gCustomerData.Address3))
-                //    {
-                //        var lQueryReverse = from matchSuburb in gPostCodeLinear
-                //                            where (matchSuburb.Type == AddressType.PostBox.ToString() && matchSuburb.AddressLine3.ToUpper().Contains(gCustomerData.Address3.ToUpper()))
-                //                            orderby matchSuburb.AddressLine3, matchSuburb.AddressLine4, matchSuburb.Code
-                //                            select new PostCodeLinear() { Code = matchSuburb.Code, AddressLine4 = matchSuburb.AddressLine4, AddressLine3 = matchSuburb.AddressLine3, AddressLine3Id = matchSuburb.AddressLine3Id };
-
-                //        lSuburbList = lQueryReverse.ToList<PostCodeLinear>();
-                //        lSuburbView = CollectionViewSource.GetDefaultView(lSuburbList);
-                //        SuburbDataGrid.ItemsSource = lSuburbView;
-                //        lSuburbListCount = lSuburbList.Count();
-                //    }
-                //}
-                ////*********************************************************************************************************************************************
+                        lSuburbList = lQueryReverse.ToList<PostCodeLinear>();
+                        lSuburbView = CollectionViewSource.GetDefaultView(lSuburbList);
+                        SuburbDataGrid.ItemsSource = lSuburbView;
+                        lSuburbListCount = lSuburbList.Count();
+                    }
+                }
 
 
-                //if (lCodeListCount == 0 && lSuburbListCount == 0)
-                //{
-                //    // Nothing to show
+                //************************************************* PostBox ********************************************************************************
 
-                //    return;
-                //}
+                if (gCustomerData.AddressType == AddressType.PostBox)
+                {
+                    if (!string.IsNullOrWhiteSpace(gCustomerData.Address5))
+                    {
+                        var lQuery = from matchCode in gPostCodeLinear
+                                     where (matchCode.Type == AddressType.PostBox.ToString() && matchCode.Code == gCustomerData.Address5)
+                                     orderby matchCode.Code, matchCode.AddressLine4, matchCode.AddressLine3
+                                     select new PostCodeLinear() { Code = matchCode.Code, AddressLine4 = matchCode.AddressLine4, AddressLine3 = matchCode.AddressLine3, AddressLine3Id = matchCode.AddressLine3Id };
 
-                //// Code grid **************************************************************************************************************************                
+                        lCodeList = lQuery.ToList<PostCodeLinear>();
+                        lCodeView = CollectionViewSource.GetDefaultView(lCodeList);
+                        CodeDataGrid.ItemsSource = lCodeView;
+                        CodeDataGrid.UpdateLayout();
+                        lCodeListCount = lCodeList.Count();
+                    }
 
-                //// Find first instance that is a match or a partial match.
+                    if (!string.IsNullOrWhiteSpace(gCustomerData.Address3))
+                    {
+                        var lQueryReverse = from matchSuburb in gPostCodeLinear
+                                            where (matchSuburb.Type == AddressType.PostBox.ToString() && matchSuburb.AddressLine3.ToUpper().Contains(gCustomerData.Address3.ToUpper()))
+                                            orderby matchSuburb.AddressLine3, matchSuburb.AddressLine4, matchSuburb.Code
+                                            select new PostCodeLinear() { Code = matchSuburb.Code, AddressLine4 = matchSuburb.AddressLine4, AddressLine3 = matchSuburb.AddressLine3, AddressLine3Id = matchSuburb.AddressLine3Id };
 
-                //if (lCodeListCount == 0)
-                //{
-                //    goto Suburb;
-                //}
+                        lSuburbList = lQueryReverse.ToList<PostCodeLinear>();
+                        lSuburbView = CollectionViewSource.GetDefaultView(lSuburbList);
+                        SuburbDataGrid.ItemsSource = lSuburbView;
+                        lSuburbListCount = lSuburbList.Count();
+                    }
+                }
+                //*********************************************************************************************************************************************
 
 
-                //// Initialisation
-                //gAddressCodeFound = false;
-                //gAddressLine3Found = false;
-                //gAddressLine4Found = false;
+                if (lCodeListCount == 0 && lSuburbListCount == 0)
+                {
+                    // Nothing to show
+
+                    return;
+                }
+
+                // Code grid **************************************************************************************************************************                
+
+                // Find first instance that is a match or a partial match.
+
+                if (lCodeListCount == 0)
+                {
+                    goto Suburb;
+                }
+
+
+                // Initialisation
+                gAddressCodeFound = false;
+                gAddressLine3Found = false;
+                gAddressLine4Found = false;
                 //gFullAddressFound = false;
 
-                //int lAddressCodeIndex = 0;
-                //int lAddressLine4Index = 0;
-                //int lAddressLine3Index = 0;
+                int lAddressCodeIndex = 0;
+                int lAddressLine4Index = 0;
+                int lAddressLine3Index = 0;
 
 
-                //for (int i = 0; i < CodeDataGrid.Items.Count; i++)
-                //{
-                //    PostCodeLinear lPostCodeLinearRow = (PostCodeLinear)CodeDataGrid.Items[i];
-                //    lAddressCodeIndex = i;
+                for (int i = 0; i < CodeDataGrid.Items.Count; i++)
+                {
+                    PostCodeLinear lPostCodeLinearRow = (PostCodeLinear)CodeDataGrid.Items[i];
+                    lAddressCodeIndex = i;
 
-                //    if (lPostCodeLinearRow.AddressLine4.ToUpper().StartsWith(gCustomerData.Address4.ToUpper()))
-                //    {
-                //        if (gAddressLine4Found != true)
-                //        {
-                //            gAddressLine4Found = true;
-                //            lAddressLine4Index = i;  // This is the first one found.
-                //        }
+                    if (lPostCodeLinearRow.AddressLine4.ToUpper().StartsWith(gCustomerData.Address4.ToUpper()))
+                    {
+                        if (gAddressLine4Found != true)
+                        {
+                            gAddressLine4Found = true;
+                            lAddressLine4Index = i;  // This is the first one found.
+                        }
 
-                //        if (lPostCodeLinearRow.AddressLine3.ToUpper().StartsWith(gCustomerData.Address3.ToUpper()))
-                //        {
-                //            gAddressLine3Found = true;
-                //            lAddressLine3Index = i;
-                //            break; //Break out of the loop
-                //        }
-                //        else continue;
-                //    }
-                //    else continue;
-                //}
-
-
-                //if (gAddressLine3Found)
-                //{
-                //    DataGridRow lRow = GetRow(CodeDataGrid, lAddressLine3Index);
-
-                //    GetCell(CodeDataGrid, lRow, 0).Background = Brushes.LightPink;
-                //    GetCell(CodeDataGrid, lRow, 1).Background = Brushes.LightPink;
-                //    GetCell(CodeDataGrid, lRow, 2).Background = Brushes.LightPink;
-
-                //    //CodeDataGrid.ScrollIntoView(CodeDataGrid.SelectedItem);
-
-                //    CodeDataGrid.ScrollIntoView(lRow.Item);
-
-                //    gFullAddressFound = true;
-
-                //}
-
-                //else if (gAddressLine4Found)
-                //{
-                //    DataGridRow lRow = GetRow(CodeDataGrid, lAddressLine4Index);
-                //    GetCell(CodeDataGrid, lRow, 0).Background = Brushes.LightPink;
-                //    GetCell(CodeDataGrid, lRow, 1).Background = Brushes.LightPink;
-                //    CodeDataGrid.ScrollIntoView(lRow.Item);
-                //}
-
-                //else
-                //{
-                //    DataGridRow lRow = GetRow(CodeDataGrid, 0);
-                //    GetCell(CodeDataGrid, lRow, 0).Background = Brushes.LightPink;
-                //    CodeDataGrid.ScrollIntoView(lRow.Item);
-                //}
-
-                //// Suburb grid ***************************************************************************************************************************                
-
-                //Suburb:
-                //// Find first instance that is a match or a partial match.
-
-                //// Initialisation
-                //gAddressLine3Found = false;
-                //gAddressLine4Found = false;
-                //gAddressCodeFound = false;
-
-                //lAddressCodeIndex = 0;
-                //lAddressLine4Index = 0;
-                //lAddressLine3Index = 0;
-
-                //if (lSuburbListCount == 0)
-                //{
-                //    return;
-                //}
-
-                //for (int i = 0; i < SuburbDataGrid.Items.Count; i++)
-                //{
-                //    PostCodeLinear lPostCodeLinearRow = (PostCodeLinear)SuburbDataGrid.Items[i];
-                //    lAddressLine3Index = i;
-
-                //    if (lPostCodeLinearRow.AddressLine4.ToUpper().StartsWith(gCustomerData.Address4))
-                //    {
-                //        if (gAddressLine4Found != true)
-                //        {
-                //            gAddressLine4Found = true;
-                //            lAddressLine4Index = i;  // This is the first one found.
-                //        }
-                //        if (lPostCodeLinearRow.Code == gCustomerData.Address5)
-                //        {
-                //            gAddressCodeFound = true;
-                //            lAddressCodeIndex = i;
-                //            break;
-                //        }
-                //        else continue;
-                //    }
-                //    else continue;
-                //}
+                        if (lPostCodeLinearRow.AddressLine3.ToUpper().StartsWith(gCustomerData.Address3.ToUpper()))
+                        {
+                            gAddressLine3Found = true;
+                            lAddressLine3Index = i;
+                            break; //Break out of the loop
+                        }
+                        else continue;
+                    }
+                    else continue;
+                }
 
 
-                //if (gAddressCodeFound)
-                //{
-                //    DataGridRow lRow = GetRow(SuburbDataGrid, lAddressCodeIndex);
+                if (gAddressLine3Found)
+                {
+                    DataGridRow lRow = GetRow(CodeDataGrid, lAddressLine3Index);
 
-                //    GetCell(SuburbDataGrid, lRow, 0).Background = Brushes.LightPink;
-                //    GetCell(SuburbDataGrid, lRow, 1).Background = Brushes.LightPink;
-                //    GetCell(SuburbDataGrid, lRow, 2).Background = Brushes.LightPink;
+                    GetCell(CodeDataGrid, lRow, 0).Background = Brushes.LightPink;
+                    GetCell(CodeDataGrid, lRow, 1).Background = Brushes.LightPink;
+                    GetCell(CodeDataGrid, lRow, 2).Background = Brushes.LightPink;
 
-                //    SuburbDataGrid.ScrollIntoView(lRow.Item);
-                //    gFullAddressFound = true;
+                    //CodeDataGrid.ScrollIntoView(CodeDataGrid.SelectedItem);
 
-                //}
+                    CodeDataGrid.ScrollIntoView(lRow.Item);
 
-                //else if (gAddressLine4Found)
-                //{
-                //    DataGridRow lRow = GetRow(SuburbDataGrid, lAddressLine4Index);
-                //    GetCell(SuburbDataGrid, lRow, 0).Background = Brushes.LightPink;
-                //    GetCell(SuburbDataGrid, lRow, 1).Background = Brushes.LightPink;
+                    //gFullAddressFound = true;
 
-                //    SuburbDataGrid.ScrollIntoView(lRow.Item);
-                //}
+                }
 
-                //else
-                //{
-                //    DataGridRow lRow = GetRow(SuburbDataGrid, 0);
+                else if (gAddressLine4Found)
+                {
+                    DataGridRow lRow = GetRow(CodeDataGrid, lAddressLine4Index);
+                    GetCell(CodeDataGrid, lRow, 0).Background = Brushes.LightPink;
+                    GetCell(CodeDataGrid, lRow, 1).Background = Brushes.LightPink;
+                    CodeDataGrid.ScrollIntoView(lRow.Item);
+                }
 
-                //    GetCell(SuburbDataGrid, lRow, 0).Background = Brushes.LightPink;
-                //    SuburbDataGrid.ScrollIntoView(lRow.Item);
-                //}
+                else
+                {
+                    DataGridRow lRow = GetRow(CodeDataGrid, 0);
+                    GetCell(CodeDataGrid, lRow, 0).Background = Brushes.LightPink;
+                    CodeDataGrid.ScrollIntoView(lRow.Item);
+                }
+
+            // Suburb grid ***************************************************************************************************************************                
+
+            Suburb:
+                // Find first instance that is a match or a partial match.
+
+                // Initialisation
+                gAddressLine3Found = false;
+                gAddressLine4Found = false;
+                gAddressCodeFound = false;
+
+                lAddressCodeIndex = 0;
+                lAddressLine4Index = 0;
+                lAddressLine3Index = 0;
+
+                if (lSuburbListCount == 0)
+                {
+                    return;
+                }
+
+                for (int i = 0; i < SuburbDataGrid.Items.Count; i++)
+                {
+                    PostCodeLinear lPostCodeLinearRow = (PostCodeLinear)SuburbDataGrid.Items[i];
+                    lAddressLine3Index = i;
+
+                    if (lPostCodeLinearRow.AddressLine4.ToUpper().StartsWith(gCustomerData.Address4))
+                    {
+                        if (gAddressLine4Found != true)
+                        {
+                            gAddressLine4Found = true;
+                            lAddressLine4Index = i;  // This is the first one found.
+                        }
+                        if (lPostCodeLinearRow.Code == gCustomerData.Address5)
+                        {
+                            gAddressCodeFound = true;
+                            lAddressCodeIndex = i;
+                            break;
+                        }
+                        else continue;
+                    }
+                    else continue;
+                }
+
+
+                if (gAddressCodeFound)
+                {
+                    DataGridRow lRow = GetRow(SuburbDataGrid, lAddressCodeIndex);
+
+                    GetCell(SuburbDataGrid, lRow, 0).Background = Brushes.LightPink;
+                    GetCell(SuburbDataGrid, lRow, 1).Background = Brushes.LightPink;
+                    GetCell(SuburbDataGrid, lRow, 2).Background = Brushes.LightPink;
+
+                    SuburbDataGrid.ScrollIntoView(lRow.Item);
+                    //gFullAddressFound = true;
+
+                }
+
+                else if (gAddressLine4Found)
+                {
+                    DataGridRow lRow = GetRow(SuburbDataGrid, lAddressLine4Index);
+                    GetCell(SuburbDataGrid, lRow, 0).Background = Brushes.LightPink;
+                    GetCell(SuburbDataGrid, lRow, 1).Background = Brushes.LightPink;
+
+                    SuburbDataGrid.ScrollIntoView(lRow.Item);
+                }
+
+                else
+                {
+                    DataGridRow lRow = GetRow(SuburbDataGrid, 0);
+
+                    GetCell(SuburbDataGrid, lRow, 0).Background = Brushes.LightPink;
+                    SuburbDataGrid.ScrollIntoView(lRow.Item);
+                }
             }
             catch (Exception ex)
             {
@@ -599,85 +599,85 @@ namespace Subs.Presentation
             }
         }
 
-        //private void ButtonKeepCode_Click(object sender, RoutedEventArgs e)
-        //{
-        //    PostCodeLinear lPostcodeLinear = (PostCodeLinear)CodeDataGrid.SelectedItem;
-        //    if (lPostcodeLinear == null)
-        //    {
-        //        MessageBox.Show("You have not selected an address to keep");
-        //        return;
-        //    }
-        //    gCustomerData.Address5 = lPostcodeLinear.Code;
-        //    gCustomerData.Address4 = lPostcodeLinear.AddressLine4;
-        //    gCustomerData.Address3 = lPostcodeLinear.AddressLine3;
-        //    gCustomerData.PostAddressId = lPostcodeLinear.AddressLine3Id;
+        private void ButtonKeepCode_Click(object sender, RoutedEventArgs e)
+        {
+            PostCodeLinear lPostcodeLinear = (PostCodeLinear)CodeDataGrid.SelectedItem;
+            if (lPostcodeLinear == null)
+            {
+                MessageBox.Show("You have not selected an address to keep");
+                return;
+            }
+            gCustomerData.Address5 = lPostcodeLinear.Code;
+            gCustomerData.Address4 = lPostcodeLinear.AddressLine4;
+            gCustomerData.Address3 = lPostcodeLinear.AddressLine3;
+            gCustomerData.PostAddressId = lPostcodeLinear.AddressLine3Id;
 
-        //    gFullAddressFound = true;
-        //}
+            //gFullAddressFound = true;
+        }
 
-        //private void ButtonKeepSuburb_Click(object sender, RoutedEventArgs e)
-        //{
-        //    PostCodeLinear lPostcodeLinear = (PostCodeLinear)SuburbDataGrid.SelectedItem;
-        //    if (lPostcodeLinear == null)
-        //    {
-        //        MessageBox.Show("You have not selected an address to keep");
-        //        return;
-        //    }
-        //    gCustomerData.Address5 = lPostcodeLinear.Code;
-        //    gCustomerData.Address4 = lPostcodeLinear.AddressLine4;
-        //    gCustomerData.Address3 = lPostcodeLinear.AddressLine3;
-        //    gCustomerData.PostAddressId = lPostcodeLinear.AddressLine3Id;
+        private void ButtonKeepSuburb_Click(object sender, RoutedEventArgs e)
+        {
+            PostCodeLinear lPostcodeLinear = (PostCodeLinear)SuburbDataGrid.SelectedItem;
+            if (lPostcodeLinear == null)
+            {
+                MessageBox.Show("You have not selected an address to keep");
+                return;
+            }
+            gCustomerData.Address5 = lPostcodeLinear.Code;
+            gCustomerData.Address4 = lPostcodeLinear.AddressLine4;
+            gCustomerData.Address3 = lPostcodeLinear.AddressLine3;
+            gCustomerData.PostAddressId = lPostcodeLinear.AddressLine3Id;
 
-        //    gFullAddressFound = true;
+            //gFullAddressFound = true;
 
-        //}
+        }
 
-        //private void ButtonKeepText_Click(object sender, RoutedEventArgs e)
-        //{
-
-
-        //    string lMessage = "This address is going to be saved as type = " + AddressTypeControl.AddressType.ToString() + ". Is this what you want?";
-
-        //    if (MessageBoxResult.No == MessageBox.Show(lMessage, "Warning", MessageBoxButton.YesNo))
-        //    {
-        //        return;
-        //    }
-
-        //    if (AddressTypeControl.AddressType == AddressType.International || AddressTypeControl.AddressType == AddressType.UnAssigned)
-        //    {
-        //        return;
-        //    }
+        private void ButtonKeepText_Click(object sender, RoutedEventArgs e)
+        {
 
 
-        //    int AddressLine3Id = PostCodeData.Merge(gCustomerData.AddressType.ToString(),
-        //                        gCustomerData.Address5,
-        //                        gCustomerData.Address3,
-        //                        gCustomerData.Address4);
+            string lMessage = "This address is going to be saved as type = " + AddressTypeControl.AddressType.ToString() + ". Is this what you want?";
 
-        //    if (AddressLine3Id != 0)
-        //    {
-        //        PostCodeDoc.PostCode_LinearRow lRow = gPostCodeLinear.FindByAddressLine3Id(AddressLine3Id);
+            if (MessageBoxResult.No == MessageBox.Show(lMessage, "Warning", MessageBoxButton.YesNo))
+            {
+                return;
+            }
 
-        //        if (lRow == null)
-        //        {
-        //            if (!PostCodeData.AddLinearRow(gPostCodeLinear, AddressLine3Id))
-        //            {
-        //                MessageBox.Show("Error adding the new address to the internal template");
-        //                return;
-        //            }
-        //        }
+            if (AddressTypeControl.AddressType == AddressType.International || AddressTypeControl.AddressType == AddressType.UnAssigned)
+            {
+                return;
+            }
 
-        //        gCustomerData.PostAddressId = AddressLine3Id;
 
-        //        ShowTemplate();
-        //        MessageBox.Show("New address saved successfully in template and in the data");
-        //        gFullAddressFound = true;
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("There was an error in saving the text address");
-        //    }
-        //}
+            int AddressLine3Id = PostCodeData.Merge(gCustomerData.AddressType.ToString(),
+                                gCustomerData.Address5,
+                                gCustomerData.Address3,
+                                gCustomerData.Address4);
+
+            if (AddressLine3Id != 0)
+            {
+                PostCodeDoc.PostCode_LinearRow lRow = gPostCodeLinear.FindByAddressLine3Id(AddressLine3Id);
+
+                if (lRow == null)
+                {
+                    if (!PostCodeData.AddLinearRow(gPostCodeLinear, AddressLine3Id))
+                    {
+                        MessageBox.Show("Error adding the new address to the internal template");
+                        return;
+                    }
+                }
+
+                gCustomerData.PostAddressId = AddressLine3Id;
+
+                ShowTemplate();
+                MessageBox.Show("New address saved successfully in template and in the data");
+                //gFullAddressFound = true;
+            }
+            else
+            {
+                MessageBox.Show("There was an error in saving the text address");
+            }
+        }
 
         private void checkAutomaticPaymentAllocation_Clicked(object sender, RoutedEventArgs e)
         {
@@ -716,8 +716,12 @@ namespace Subs.Presentation
             }
         }
 
+
         #endregion
 
-       
+        private void AddressTypeControl_RadioButtonChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

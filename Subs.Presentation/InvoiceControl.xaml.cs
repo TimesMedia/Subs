@@ -30,6 +30,8 @@ namespace Subs.Presentation
             string lStage = "Start";
             try 
             { 
+                // Extract non-address data
+
                 string[] Lines = new string[8];
                 int lNextIndex = 0;
 
@@ -40,14 +42,68 @@ namespace Subs.Presentation
                     Lines[lNextIndex] = gCustomerData.CompanyName; lNextIndex++;
                     Lines[lNextIndex] = gCustomerData.FullName; lNextIndex++;
                 }
-                else { Lines[lNextIndex] = gCustomerData.FullName; lNextIndex++; };
+                else 
+                { 
+                    // Add only FullName
+                    Lines[lNextIndex] = gCustomerData.FullName; lNextIndex++; 
+                };
 
 
                 if (!String.IsNullOrWhiteSpace(gCustomerData.Department) && gCustomerData.Department != gCustomerData.FullName)
                 {
+                    // Add Department
                     Lines[lNextIndex] = gCustomerData.Department; lNextIndex++;
                 }
-  
+
+                // Registered address  = Postal Address
+                lStage = "Registered Address";
+
+                if (lNextIndex == 4)
+                {
+                    Line1.Content = Lines[0];
+                    Line2.Content = Lines[1];
+                    Line3.Content = Lines[2];
+                    Line4.Content = Lines[3];
+                }
+
+                if (lNextIndex == 3)
+                {
+                    Line1.Content = Lines[0];
+                    Line2.Content = Lines[1];
+                    Line3.Content = Lines[2];
+                }
+
+
+                if (lNextIndex == 2)
+                {
+                    Line1.Content = Lines[0];
+                    Line2.Content = Lines[1];
+                }
+
+                if (lNextIndex == 1)
+                {
+                    Line1.Content = Lines[0];
+                }
+
+                Line4.Content = gCustomerData.Address1;
+
+                if (gCustomerData.Address2 == "")
+                {
+                    Line5.Content = gCustomerData.Address3;
+                    Line6.Content = gCustomerData.Address4;
+                    Line7.Content = gCustomerData.Address5;
+                }
+                else
+                {
+                    Line5.Content = gCustomerData.Address2;
+                    Line6.Content = gCustomerData.Address3;
+                    Line7.Content = gCustomerData.Address4;
+                    Line8.Content = gCustomerData.Address5;
+                }
+
+
+                // DeliveryAddress
+
                 if (gCustomerData.PhysicalAddressId != null)
                 {
                     DeliveryAddressData2 lDeliveryAddressData = new DeliveryAddressData2((int)gCustomerData.PhysicalAddressId);
@@ -56,43 +112,14 @@ namespace Subs.Presentation
                         throw new Exception("Error in Format of deliveryaddress");
                     }
 
-                    if (Lines[lNextIndex-1] != lDeliveryAddressData.PAddress1)
-                    {
-                        Lines[lNextIndex] = lDeliveryAddressData.PAddress1; lNextIndex++;
-                    }
-                                      
-                    Lines[lNextIndex] = lDeliveryAddressData.PAddress2; lNextIndex++;
-                    Lines[lNextIndex] = lDeliveryAddressData.PAddress3; lNextIndex++;
-                    Lines[lNextIndex] = lDeliveryAddressData.PAddress4; lNextIndex++;
-                    Lines[lNextIndex] = lDeliveryAddressData.PAddress5; lNextIndex++;
-
-                    Line1.Content = Lines[0];
-                    Line2.Content = Lines[1];
-                    Line3.Content = Lines[2];
-                    
-                    Line4.Content = gCustomerData.Address1;
-                    if (gCustomerData.Address2 == "")
-                    {
-                        Line5.Content = gCustomerData.Address3;
-                        Line6.Content = gCustomerData.Address4;
-                        Line7.Content = gCustomerData.Address5;
-                    }
-                    else
-                    { 
-                        Line5.Content = gCustomerData.Address2;
-                        Line6.Content = gCustomerData.Address3;
-                        Line7.Content = gCustomerData.Address4;
-                        Line8.Content = gCustomerData.Address5;
-                    }
-
-                    lStage = "Delivery address";
-
                     PLine1.Content = lDeliveryAddressData.PAddress1;
                     PLine2.Content = lDeliveryAddressData.PAddress2;
                     PLine3.Content = lDeliveryAddressData.PAddress3;
                     PLine4.Content = lDeliveryAddressData.PAddress4;
                     PLine5.Content = lDeliveryAddressData.PAddress5;
                 }
+
+                lStage = "InvoiceNumber";
 
                 InvoiceNumber.Content = "INV" + pInvoice[0].InvoiceId;
                 PPhoneNumber.Content = gCustomerData.PhoneNumber;

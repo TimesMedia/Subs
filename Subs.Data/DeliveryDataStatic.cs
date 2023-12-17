@@ -35,10 +35,6 @@ namespace Subs.Data
             SqlConnection lConnection = new SqlConnection();
             try
             {
-                // Cleanup before you start a new one
-
-                //pDoc.Clear();
-
                 // Get new data
 
                 SqlCommand lCommand = new SqlCommand();

@@ -45,7 +45,6 @@ namespace Subs.Data
             }
         }
 
-
         public DeliveryAddressData2(int pDeliveryAddressId)
         {
             try
@@ -229,7 +228,6 @@ namespace Subs.Data
             #endregion
 
         #region Utilities
-
       
         private bool Load(int DeliveryAddressId)
         {

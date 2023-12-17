@@ -16,8 +16,8 @@ namespace Subs.MimsWeb.Controllers
     public class HomeController : Controller
     {
         #region Globals
- 
-       
+
+
         #endregion
 
         #region Constructor
@@ -1052,13 +1052,31 @@ namespace Subs.MimsWeb.Controllers
                     SessionHelper.Set(Session, SessionKey.LoginRequest, pLoginRequest);
 
 
+                    // Record that you have logged in
+
+                    ExceptionData.WriteException(5, "User logged in", this.ToString(), "Login post",
+                                                pLoginRequest.CustomerId.ToString());
+
                     // Process preselections if there are any
 
                     BasketOption lBasketOption = SessionHelper.GetBasketOption(Session);
+                    List<ActiveSubscription> lActiveSubscriptions = new List<ActiveSubscription>();
+ 
 
                     if (lBasketOption.HasOptions)
                     {
-                        return CaptureSelectedPromotions();
+                        string lResult = DetectActiveSubscriptions((int)pLoginRequest.CustomerId, lBasketOption);
+
+                        if (lResult.Length > 0)
+                        {
+                            ViewBag.Message = "Welcome, " + lCustomerData.Title + " " + lCustomerData.Surname +
+                                ", you are now logged in. Unfortunately the promotion does not apply, since you are already subscribed to " + lResult;
+                            return View("Login");
+                        }
+                        else
+                        { 
+                            return CaptureSelectedPromotions();
+                        }
                     }
                     else
                     { 
@@ -1093,6 +1111,50 @@ namespace Subs.MimsWeb.Controllers
             }
         }
        
+        private string DetectActiveSubscriptions(int pCustomerId, BasketOption pBasketOption)
+        {
+            StringBuilder lStringBuilder = new StringBuilder();
+            List<ActiveSubscription> lActiveSubscriptions = SubscriptionData3.GetActiveSubscription((int)pCustomerId);
+            List<int> lProducts = lActiveSubscriptions.Select(p => p.ProductId).ToList();
+
+            if (pBasketOption.Mims && (lProducts.Contains(1)))
+            {
+                lStringBuilder.AppendLine(ProductDataStatic.GetProductName(1) + " ");
+            }
+
+            if (pBasketOption.Emims && (lProducts.Contains(17)))
+            {
+                lStringBuilder.AppendLine(ProductDataStatic.GetProductName(17) + " ");
+            }
+
+
+            if (pBasketOption.MobiMims && (lProducts.Contains(32)))
+            {
+                lStringBuilder.AppendLine(ProductDataStatic.GetProductName(32) + " ");
+            }
+
+            return lStringBuilder.ToString();
+        }
+
+
+        public ActionResult DisplayActiveSubscriptions()
+        {
+            LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+
+
+
+            List<ActiveSubscription> lActiveSubscriptions = SubscriptionData3.GetActiveSubscription((int)lLoginRequest.CustomerId);
+            foreach (ActiveSubscription item in lActiveSubscriptions)
+            {
+                SubscriptionData3 lSubscriptionData = new SubscriptionData3(item.SubscriptionId);
+                item.StartIssueDescription = lSubscriptionData.StartIssueDescription;
+                item.LastIssueDescription = lSubscriptionData.LastIssueDescription;
+            }
+            
+            return View("DisplayActiveSubscriptions", lActiveSubscriptions);
+        }
+
+
         //[HttpGet]
         //public ActionResult ResetPassword()
         //{ 

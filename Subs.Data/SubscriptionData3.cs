@@ -15,9 +15,17 @@ namespace Subs.Data
         public bool Prompt = false;
     }
 
-    #endregion
+    public class ActiveSubscription
+    {
+        public int SubscriptionId { get; set; }
+        public int ProductId { get; set; }
+        public string StartIssueDescription { get; set; }
+        public string LastIssueDescription { get; set; }
+    }
 
-    public class SubscriptionData3 : BaseModel
+        #endregion
+
+        public class SubscriptionData3 : BaseModel
     {
         #region Global variables
 
@@ -942,6 +950,56 @@ public static bool RegisterListDelivery(int pSubscriptionId, int pIssueId)
 
         }
 
+
+        public static List<ActiveSubscription> GetActiveSubscription(int pPayerId)
+        {
+            SqlDataReader lReader;
+            List<ActiveSubscription> lResults = new List<ActiveSubscription>();
+            SqlConnection connection = new SqlConnection();
+            try
+            {
+                connection.ConnectionString = Settings.ConnectionString;
+                connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "[dbo].[MIMS.SubscriptionData.ActiveSubscription]";
+                command.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter lParameter1 = command.CreateParameter();
+                lParameter1.ParameterName = "@PayerId";
+                lParameter1.DbType = DbType.Int32;
+                lParameter1.Value = pPayerId;
+                command.Parameters.Add(lParameter1);
+                lReader = command.ExecuteReader();
+
+                if (lReader.HasRows)
+                {
+                    while (lReader.Read())
+                    {
+                        ActiveSubscription lActiveSubscription = new ActiveSubscription();
+                        lActiveSubscription.SubscriptionId = (int)lReader[0];
+                        lActiveSubscription.ProductId = (int)lReader[1];
+                        lResults.Add(lActiveSubscription);
+                    }
+                }
+                return lResults;
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "SubscriptionData", "GetActiveSubscription", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw;
+            }
+        }
 
         #endregion
 
