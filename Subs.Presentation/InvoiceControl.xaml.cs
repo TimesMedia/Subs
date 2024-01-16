@@ -117,6 +117,7 @@ namespace Subs.Presentation
                     PLine3.Content = lDeliveryAddressData.PAddress3;
                     PLine4.Content = lDeliveryAddressData.PAddress4;
                     PLine5.Content = lDeliveryAddressData.PAddress5;
+                    PLine7.Content = lDeliveryAddressData.SDI;
                 }
 
                 lStage = "InvoiceNumber";

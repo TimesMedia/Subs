@@ -47,7 +47,7 @@ namespace Subs.Presentation.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>VANDERMERWER</string>\r\n</ArrayOfString>")]
+            "tring>VANDERMERWER</string>\r\n  <string>SAMSONS</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection Authority3 {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["Authority3"]));
@@ -58,7 +58,7 @@ namespace Subs.Presentation.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>SAMSONS</string>\r\n  <string>NKGAUO</string>\r\n</ArrayOfString>")]
+            "tring>SAMSONS</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection Authority2 {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["Authority2"]));
@@ -69,8 +69,7 @@ namespace Subs.Presentation.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>REITMANNH</string>\r\n  <string>HEIN</string>\r\n  <string>PKLDAM</string>\r\n</" +
-            "ArrayOfString>")]
+            "tring>REITMANNH</string>\r\n  <string>HEIN</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection Authority4 {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["Authority4"]));

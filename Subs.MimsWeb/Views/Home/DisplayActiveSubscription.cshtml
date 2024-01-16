@@ -1,0 +1,72 @@
+﻿@using Subs.Data;
+
+@*@model IEnumerable<Subs.Data.ActiveSubscription>*@
+@model List<ActiveSubscription>
+
+@{
+    ViewBag.Title = "Active Subscriptions";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Active Subscriptions</title>
+
+    <style>
+
+        .container {
+            display: flex;
+            margin-left: 12px;
+            flex-flow: nowrap;
+            margin-bottom: 10px;
+        }
+
+        .col1 {
+            flex: 1 1 80px;
+        }
+
+        .col2 {
+            flex: 1 1 220px;
+        }
+
+        .scrollable {
+            width: auto;
+            height: 450px;
+            overflow-y: auto;
+        }
+    </style>
+
+
+
+</head>
+<body>
+
+    @Html.ViewBag.Message
+
+    <div class="scrollable">
+        <div class="container" style="color:blue;">
+            <div class="col1">SubscriptionId</div>
+            <div class="col2">Start Issue</div>
+            <div class="col2">End Issue</div>
+        </div>
+
+
+        @if (@Model != null)
+        {
+            foreach (var item in @Model)
+            {
+                <div class="container">
+                    <div class="col1">@item.SubscriptionId</div>
+                    <div class="col2">@item.StartIssueDescription</div>
+                    <div class="col2">@item.LastIssueDescription</div>
+                </div>
+            }
+        }
+    </div>
+</body>
+</html>
+
+

@@ -55,6 +55,12 @@
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="ExceptionData.cs" />
+    <Compile Include="Module.designer.cs" />
+    <Compile Include="Module1.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Module.dbml</DependentUpon>
+    </Compile>
     <Compile Include="ModuleData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultData.cs" />
@@ -70,6 +76,14 @@
     </None>
     <None Include="DataSet1.xss">
       <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="Module.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>Module1.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Module.dbml.layout">
+      <DependentUpon>Module.dbml</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

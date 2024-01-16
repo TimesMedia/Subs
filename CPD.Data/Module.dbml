@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CPD2" Class="ModuleDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="dbo.Survey2" Member="Survey2s">
+    <Type Name="Survey2">
+      <Column Name="SurveyId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Naam" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="ExpirationDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Facility" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="RTFFileName" Storage="_XMLFileName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="VerticalAdvertURL" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="HorisontalAdvertURL" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="EBookURL" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="IssueId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AccreditationNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CMEPublication" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="CMEIssue" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="URL" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Association Name="Survey2_Module" Member="Modules" ThisKey="SurveyId" OtherKey="SurveyId" Type="Module" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Module" Member="Modules">
+    <Type Name="Module">
+      <Column Name="ModuleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Naam" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="SurveyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NormalPoints" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EthicsPoints" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Passrate" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AdvertURL" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="HorisontalAdvertURL" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="EBookURL" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="Module_Article" Member="Articles" ThisKey="ModuleId" OtherKey="ModuleId" Type="Article" />
+      <Association Name="Survey2_Module" Member="Survey2" ThisKey="SurveyId" OtherKey="SurveyId" Type="Survey2" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Article" Member="Articles">
+    <Type Name="Article">
+      <Column Name="ArticleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Naam" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ModuleId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Article_Question" Member="Questions" ThisKey="ArticleId" OtherKey="ArticleId" Type="Question" />
+      <Association Name="Module_Article" Member="Module" ThisKey="ModuleId" OtherKey="ModuleId" Type="Module" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Question" Member="Questions">
+    <Type Name="Question">
+      <Column Name="QuestionId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Question" Member="Question1" Type="System.String" DbType="NVarChar(800) NOT NULL" CanBeNull="false" />
+      <Column Name="ArticleId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NumberWithinArticle" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CorrectAnswer" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Question_Answer" Member="Answers" ThisKey="QuestionId" OtherKey="QuestionId" Type="Answer" />
+      <Association Name="Article_Question" Member="Article" ThisKey="ArticleId" OtherKey="ArticleId" Type="Article" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Answer" Member="Answers">
+    <Type Name="Answer">
+      <Column Name="AnswerId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QuestionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Answer" Member="Answer1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Correct" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Question_Answer" Member="Question" ThisKey="QuestionId" OtherKey="QuestionId" Type="Question" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+</Database>

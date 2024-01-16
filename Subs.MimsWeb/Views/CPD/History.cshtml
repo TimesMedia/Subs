@@ -16,16 +16,7 @@
             flex-flow: nowrap;
             margin-bottom: 10px;
         }
-
-        /* .container div:nth-of-type(1n+2) {
-                    margin-left: 5px;
-                }*/
-
-        /*  .container div {
-                    margin-bottom: 10px
-                }
-        */
-
+ 
         .col1 {
             flex: 1 1 80px;
         }
@@ -34,20 +25,11 @@
             flex: 1 1 220px;
         }
 
-        .heading {
-            flex: 1 1 140px;
-            color: blue;
-        }
-
-
         .scrollable {
-            /* margin: 4px, 4px;
-                padding: 4px;*/
             width: auto;
             height: 450px;
             overflow-y: auto;
-            /*text-align: justify;*/
-        }
+         }
     </style>
 
 
@@ -82,10 +64,7 @@
 
                 <div class="container">
                     <div class="col1">
-                        @*<a asp-controller="Test" asp-action="EnrolModule" asp-route-id="@item.ResultId">Reissue</a>*@
-
-                        @Html.ActionLink("Reissue", "Reissue", new {ResultId = @item.ResultId })
-
+                         @Html.ActionLink("Reissue", "Reissue", new {ResultId = @item.ResultId })
                     </div>
                     <div class="col2">@item.Module</div>
                     <div class="col1">@item.Datum.ToString("yyyy MM dd")</div>

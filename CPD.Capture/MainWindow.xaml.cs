@@ -94,14 +94,15 @@ namespace CPD.Capture
 
             private void Window_Loaded(object sender, RoutedEventArgs e)
             {
-            try { 
-            gSurveyViewSource = (CollectionViewSource)this.FindResource("SurveyViewSource");
-            StringWriter lStringWriter = new StringWriter();
-            //gModuleContext.Log = lStringWriter;
-            
-            //gSurveyViewSource.Source = gModuleContext.Survey2s.ToList();
+            try 
+            { 
+                gSurveyViewSource = (CollectionViewSource)this.FindResource("SurveyViewSource");
+                //StringWriter lStringWriter = new StringWriter();
+                //gModuleContext.Log = lStringWriter;
 
-            MessageBox.Show(lStringWriter.ToString());
+                //gSurveyViewSource.Source = gModuleContext.Survey2s.ToList();
+
+                //MessageBox.Show(lStringWriter.ToString());
             }       
 
             catch (Exception ex)
@@ -234,8 +235,7 @@ namespace CPD.Capture
                 }
 
             }
-       
-
+   
             private bool Consolidate(int pSurveyId)
             {
                 this.Cursor = Cursors.Wait;

@@ -158,7 +158,6 @@ namespace CPD.Data
             }
         }
 
-
         public static List<AvailableSurvey> GetAvailableRead(int pCustomerId)
         {
             try
@@ -217,9 +216,6 @@ namespace CPD.Data
                 throw;
             }
         }
-
-
-
 
         public static int GetIssueId(int ModuleId)
         {

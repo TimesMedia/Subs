@@ -1137,21 +1137,21 @@ namespace Subs.MimsWeb.Controllers
         }
 
 
-        public ActionResult DisplayActiveSubscriptions()
+        public ActionResult DisplayActiveSubscription()
         {
             LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
 
 
 
-            List<ActiveSubscription> lActiveSubscriptions = SubscriptionData3.GetActiveSubscription((int)lLoginRequest.CustomerId);
-            foreach (ActiveSubscription item in lActiveSubscriptions)
+            List<ActiveSubscription> lActiveSubscription = SubscriptionData3.GetActiveSubscription((int)lLoginRequest.CustomerId);
+            foreach (ActiveSubscription item in lActiveSubscription)
             {
                 SubscriptionData3 lSubscriptionData = new SubscriptionData3(item.SubscriptionId);
                 item.StartIssueDescription = lSubscriptionData.StartIssueDescription;
                 item.LastIssueDescription = lSubscriptionData.LastIssueDescription;
             }
             
-            return View("DisplayActiveSubscriptions", lActiveSubscriptions);
+            return View("DisplayActiveSubscription", lActiveSubscription);
         }
 
 

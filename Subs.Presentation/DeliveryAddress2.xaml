@@ -67,7 +67,7 @@
                         <DataGridTextColumn x:Name="countryStringColumn" Binding="{Binding CountryName}" Header="Country" Width="Auto"/>
                         <DataGridTextColumn x:Name="provinceColumn" Binding="{Binding Province, Mode=OneWay}" Header="Province" Width="Auto"/>
                         <DataGridTextColumn x:Name="cityColumn" Binding="{Binding City}" Header="City" Width="Auto"/>
-                        <DataGridTextColumn x:Name="suburbColumn" Binding="{Binding Suburbb}" Header="Suburb" Width="Auto"/>
+                        <DataGridTextColumn x:Name="suburbColumn" Binding="{Binding Suburb}" Header="Suburb" Width="Auto"/>
                         <DataGridTextColumn x:Name="streetColumn" Binding="{Binding Street}" Header="Street" Width="Auto"/>
                         <DataGridTextColumn x:Name="streetExtensionColumn1" Binding="{Binding StreetExtension}" Header="Street Extension" Width="Auto"/>
                         <DataGridTextColumn x:Name="streetSuffixColumn1" Binding="{Binding StreetSuffix}" Header="Street Suffix" Width="Auto"/>

@@ -30,55 +30,7 @@ namespace DW
             UpDateLiability();
         }
 
-        //private static void UpdateDebtor()
-        //{
-        //    try 
-        //    { 
-        //        List<Subs.Data.InvoicesAndPayments> lDebtor = new List<InvoicesAndPayments>();
-
-        //        string lResult;
-
-        //        if ((lResult = CustomerData3.PopulateInvoice(4, out lDebtor)) != "OK")
-        //        {
-        //            ExceptionData.WriteException(5, lResult + DateTime.Now.ToString(), "static Program DW", "UpdateDebtor", "");
-        //        }
-
-        //        foreach (InvoicesAndPayments p in lDebtor)
-        //        {
-
-        //               if(p.OperationId == (int)Operation.VATInvoice
-        //                                   || p.OperationId == (int)Operation.CreditNote
-        //                                   || p.OperationId == (int)Operation.AllocatePaymentToInvoice
-        //                                   || p.OperationId == (int)Operation.WriteOffMoney
-        //                                   || p.OperationId == (int)Operation.ReverseWriteOffMoney)
-        //                { 
-        //                    DWDataset.FactDebtorRow lNewRow = gDebtor.NewFactDebtorRow();
-        //                }
-        //        }
-
-        //        gDebtorAdapter.Update(gDebtor);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static Program DW", "UpdateDebtor", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-        //        throw ex;
-
-        //    }
-        //}
-
-
-
-
-
+        
 
         private static void  UpDateLiability()
         {

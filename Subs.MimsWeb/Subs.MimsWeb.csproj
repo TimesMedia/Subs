@@ -406,7 +406,7 @@
     <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\CPD\_CPDLayout.cshtml" />
     <Content Include="Views\CPD\Read.cshtml" />
-    <Content Include="Views\Home\DisplayActiveSubscriptions.cshtml" />
+    <Content Include="Views\Home\DisplayActiveSubscription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

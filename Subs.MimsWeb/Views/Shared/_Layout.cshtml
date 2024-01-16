@@ -58,6 +58,8 @@
 
         #MenuDiv div {
             flex: 1;
+            justify-content: center;
+            margin-right: 1em;
         }
 
         .MimsImage {
@@ -142,7 +144,7 @@
             }
             else
             {
-                <div>@Html.ActionLink("SUBSCRIPTIONS", "DisplayActiveSubcriptions", "Home")</div>
+                <div>@Html.ActionLink("ACTIVE_SUBS", "DisplayActiveSubscription", "Home")</div>
                 <div>@Html.ActionLink("PAY", "Pay", "Promotion")</div>
                 <div>@Html.ActionLink("LOGOUT", "Thanks", "Home")</div>
                 <div>@Html.ActionLink("PROFILE", "Account", "Home")</div>

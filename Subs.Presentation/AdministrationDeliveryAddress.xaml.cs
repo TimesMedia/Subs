@@ -202,8 +202,25 @@ namespace Subs.Presentation
 
         private void SubmitCity(object sender, RoutedEventArgs e)
         {
-            // Check all the modified rows for the existence of open or closed brackets. Maybe you can use a regular expression?
+            // Check all the modified rows for the existence of open or closed brackets.
+            // Curly brackets are inadvertently as tuples
+            
+            foreach (var item in gDeliveryAddressDoc.City)
+            {
+                if (item.RowState == DataRowState.Added | item.RowState == DataRowState.Modified)
+                {
+                    if (item.CityName.Contains("("))
+                    {
+                        item.CityName = item.CityName.Replace("(", " - ");
+                    }
 
+                    if (item.CityName.Contains(")"))
+                    {
+                        item.CityName = item.CityName.Replace(")", "");
+                    }
+                }
+            }
+ 
             gCityTableAdapter.Update(gDeliveryAddressDoc.City);
             gCityTableAdapter.Fill(gDeliveryAddressDoc.City);
         }
