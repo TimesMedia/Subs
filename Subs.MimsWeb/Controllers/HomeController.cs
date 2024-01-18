@@ -1049,13 +1049,9 @@ namespace Subs.MimsWeb.Controllers
                 {
                     pLoginRequest.Email = lCustomerData.EmailAddress;
                     pLoginRequest.CountryId = lCustomerData.CountryId;
+                    pLoginRequest.TimeStamp = DateTime.Now;
                     SessionHelper.Set(Session, SessionKey.LoginRequest, pLoginRequest);
-
-
-                    // Record that you have logged in
-
-                    ExceptionData.WriteException(5, "User logged in", this.ToString(), "Login post",
-                                                pLoginRequest.CustomerId.ToString());
+                 
 
                     // Process preselections if there are any
 
@@ -1087,7 +1083,7 @@ namespace Subs.MimsWeb.Controllers
                 else
                 {
                     ExceptionData.WriteException(5, "Invalid password", this.ToString(), "Login post",
-                                                 pLoginRequest.Password + lLoginRequest.CustomerId.ToString());
+                                                 "-" + pLoginRequest.Password + "-" + pLoginRequest.CustomerId.ToString() +"-" + lCustomerData.Password1 + "-");
                     ViewBag.Message = "Unfortunately, your password did not match. Please try again.";
                     return View();
                 }
@@ -1377,16 +1373,21 @@ namespace Subs.MimsWeb.Controllers
         // Signout **************************************************************************************************************
 
         [HttpGet]
-        public void LogOut()
-        {
-            Session.Abandon();
-        }
-
-        [HttpGet]
         public ActionResult Thanks()
         {
             try
             {
+                LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+
+                DateTime lStartTime;
+                DateTime lEndTime;
+                TimeSpan lInterval;
+
+                lStartTime = lLoginRequest.TimeStamp;
+   
+                lEndTime = DateTime.Now;
+                lInterval = lEndTime - lStartTime;
+                ExceptionData.WriteException(5, "End of shop session", this.ToString(), "Thanks","Duration in seconds = " + lInterval.TotalSeconds.ToString(),(int)lLoginRequest.CustomerId);
                 Session.Abandon();
                 return View();
 

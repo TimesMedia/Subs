@@ -7,5 +7,6 @@
         public int? CustomerId { get; set; }
         public int CountryId { get; set; }
         public bool ResetFlag { get; set; }
+        public System.DateTime TimeStamp { get; set; }
     }
 }

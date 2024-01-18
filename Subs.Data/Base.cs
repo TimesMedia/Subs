@@ -51,7 +51,9 @@ namespace Subs.Data
     {
         Any = 1,
         Print = 2,
-        Electronic = 3
+        Browser = 3,
+        Desktop = 4,
+        Tablet = 5
     }
 
     //public enum ProductCategory
