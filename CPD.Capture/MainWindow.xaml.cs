@@ -100,7 +100,7 @@ namespace CPD.Capture
                 //StringWriter lStringWriter = new StringWriter();
                 //gModuleContext.Log = lStringWriter;
 
-                //gSurveyViewSource.Source = gModuleContext.Survey2s.ToList();
+                gSurveyViewSource.Source = gModuleContext.Survey2s.ToList();
 
                 //MessageBox.Show(lStringWriter.ToString());
             }       

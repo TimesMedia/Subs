@@ -1133,6 +1133,22 @@ namespace Subs.MimsWeb.Controllers
         }
 
 
+        public ActionResult SelectReadingMaterial()
+        {
+            LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+            List<ReadingMaterial> lReadingMaterial = SubscriptionData3.GetBrowserReadingMaterial((int)lLoginRequest.CustomerId);
+            return View("SelectReadingMaterial", lReadingMaterial);
+        }
+
+
+        public RedirectResult DisplayReadingMaterial(string EBookURL)
+        {
+            return RedirectPermanent("../Content/EBooks/" + EBookURL);
+        }
+
+
+
+
         public ActionResult DisplayActiveSubscription()
         {
             LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
@@ -1150,20 +1166,6 @@ namespace Subs.MimsWeb.Controllers
             return View("DisplayActiveSubscription", lActiveSubscription);
         }
 
-
-        //[HttpGet]
-        //public ActionResult ResetPassword()
-        //{ 
-        //    //if (SendResetPassword(lCustomerData))
-        //    //{
-        //    //    ViewBag.Message = "Please check your email for a generated password.";
-        //    //}
-        //    //else
-        //    //{
-        //    //    ViewBag.Message = "Something went wrong with your request.";
-        //    //}
-        //    return View("Login");
-        //}
         private bool SendResetPassword(CustomerData3 pCustomerData)
         {
             try

@@ -1,0 +1,68 @@
+﻿@using Subs.Data;
+
+@model List<ReadingMaterial>
+
+@{
+    ViewBag.Title = "Select reading material";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SelectReadingMaterial</title>
+
+    <style>
+
+        .container {
+            display: flex;
+            margin-left: 12px;
+            flex-flow: nowrap;
+            margin-bottom: 10px;
+        }
+
+        .col1 {
+            flex: 1 1 80px;
+        }
+
+        .col2 {
+            flex: 1 1 220px;
+        }
+
+        .scrollable {
+            width: auto;
+            height: 450px;
+            overflow-y: auto;
+        }
+    </style>
+
+
+
+</head>
+<body>
+
+    @Html.ViewBag.Message
+
+    <div class="scrollable">
+        <div class="container" style="color:blue;">
+            <div class="col2">Command</div>
+            <div class="col2">Description</div>
+        </div>
+
+
+        @if (@Model != null)
+        {
+            foreach (var item in @Model)
+            {
+    <div class="container">
+
+        <div class="col2">@Html.ActionLink("Select", "DisplayReadingMaterial", new { EBookURL = item.EBookURL }, new { target="_blank"})</div>
+
+        <div class="col2">@item.Description</div>
+    </div>
+            }
+        }
+    </div>
+</body>
+</html>

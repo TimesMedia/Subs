@@ -338,6 +338,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\img\BeyondHealthCare.pdf" />
     <Content Include="Images\Presentation1.pptx" />
+    <Content Include="Content\EBooks\ContactLenses.pdf" />
+    <Content Include="Content\EBooks\Drug-Class Overview for Online.pdf" />
+    <Content Include="Content\EBooks\Ethics2.pdf" />
+    <Content Include="Content\EBooks\IVS1048.pdf" />
+    <Content Include="Content\EBooks\IVS1049.pdf" />
+    <Content Include="Content\EBooks\IVS20233.pdf" />
+    <Content Include="Content\EBooks\MDRVol58.pdf" />
+    <Content Include="Content\EBooks\Psychiatry.pdf" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Properties\PublishProfiles\IISProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\IISProfile2.pubxml" />
@@ -407,6 +415,7 @@
     <Content Include="Views\CPD\_CPDLayout.cshtml" />
     <Content Include="Views\CPD\Read.cshtml" />
     <Content Include="Views\Home\DisplayActiveSubscription.cshtml" />
+    <Content Include="Views\Home\SelectReadingMaterial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

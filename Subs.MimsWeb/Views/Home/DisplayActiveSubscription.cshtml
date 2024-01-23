@@ -1,19 +1,17 @@
 ﻿@using Subs.Data;
 
-@*@model IEnumerable<Subs.Data.ActiveSubscription>*@
 @model List<ActiveSubscription>
 
 @{
-    ViewBag.Title = "Active Subscriptions";
+    ViewBag.Title = "Reading material";
 }
-
 
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Active Subscriptions</title>
+    <title>Reading Material</title>
 
     <style>
 
@@ -48,9 +46,8 @@
 
     <div class="scrollable">
         <div class="container" style="color:blue;">
-            <div class="col1">SubscriptionId</div>
-            <div class="col2">Start Issue</div>
-            <div class="col2">End Issue</div>
+            <div class="col2">Start</div>
+            <div class="col2">End</div>
         </div>
 
 
@@ -58,11 +55,10 @@
         {
             foreach (var item in @Model)
             {
-                <div class="container">
-                    <div class="col1">@item.SubscriptionId</div>
-                    <div class="col2">@item.StartIssueDescription</div>
-                    <div class="col2">@item.LastIssueDescription</div>
-                </div>
+    <div class="container">
+        <div class="col2">@item.StartIssueDescription</div>
+        <div class="col2">@item.LastIssueDescription</div>
+    </div>
             }
         }
     </div>

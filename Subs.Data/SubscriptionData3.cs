@@ -23,9 +23,20 @@ namespace Subs.Data
         public string LastIssueDescription { get; set; }
     }
 
-        #endregion
 
-        public class SubscriptionData3 : BaseModel
+    public class ReadingMaterial
+    {
+       
+        public int IssueId { get; set; }
+        public string Description { get; set; }
+        public string EBookURL { get; set; }
+    }
+
+
+
+    #endregion
+
+    public class SubscriptionData3 : BaseModel
     {
         #region Global variables
 
@@ -1000,6 +1011,62 @@ public static bool RegisterListDelivery(int pSubscriptionId, int pIssueId)
                 throw;
             }
         }
+
+        public static List<ReadingMaterial> GetBrowserReadingMaterial(int pPayerId)
+        {
+            SqlDataReader lReader;
+            List<ReadingMaterial> lResults = new List<ReadingMaterial>();
+            SqlConnection connection = new SqlConnection();
+            try
+            {
+                connection.ConnectionString = Settings.ConnectionString;
+                connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "[dbo].[MIMS.SubscriptionData.ReadingMaterial]";
+                command.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter lParameter1 = command.CreateParameter();
+                lParameter1.ParameterName = "@PayerId";
+                lParameter1.DbType = DbType.Int32;
+                lParameter1.Value = pPayerId;
+                command.Parameters.Add(lParameter1);
+                lReader = command.ExecuteReader();
+
+                if (lReader.HasRows)
+                {
+                    while (lReader.Read())
+                    {
+                        ReadingMaterial lReadingMaterial = new ReadingMaterial();
+                        lReadingMaterial.IssueId = (int)lReader[0];
+                        lReadingMaterial.Description = (string)lReader[1];
+                        lReadingMaterial.EBookURL = (string)lReader[2];
+
+                        lResults.Add(lReadingMaterial);
+                    }
+                }
+                return lResults;
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "SubscriptionData", "GetBrowsertReadingMaterial", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw;
+            }
+        }
+
+
+
+
 
         #endregion
 

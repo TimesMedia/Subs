@@ -11,7 +11,7 @@
         Title="AdministrationProduct" MinHeight="700" MinWidth="1500" WindowStartupLocation="Manual" Height="700" >
     <Window.Resources>
         <Data:ProductDoc x:Key="productDoc"/>
-        <local:DeliveryOptionsToDictionary x:Key="lDeliveryOptionsToDictionary"/>
+       
         <CollectionViewSource x:Key="product2ViewSource" Source="{Binding Product2, Source={StaticResource productDoc}}"/>
         <CollectionViewSource x:Key="issueViewSource" Source="{Binding Product2_Issue, Source={StaticResource product2ViewSource}}">
             <CollectionViewSource.SortDescriptions>
@@ -20,6 +20,8 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
         <CollectionViewSource x:Key="baseRateViewSource" Source="{Binding Product2_BaseRate, Source={StaticResource product2ViewSource}}"/>
+
+        <local:DeliveryOptionsToDictionary x:Key="lDeliveryOptionsToDictionary"/>
 
         <Style TargetType="{x:Type DataGridCell}" >
             <Style.Triggers>
@@ -237,25 +239,22 @@
                 </StackPanel>
             </Grid>
         </TabItem>
-
         <TabItem x:Name="TabIssue" Header="Issue">
-            <Grid DataContext="{StaticResource issueViewSource}">
+            <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="11.455" />
-                    <ColumnDefinition Width="12.545"/>
-                    <ColumnDefinition Width="98"/>
-                    <ColumnDefinition Width="7"/>
-                    <ColumnDefinition Width="607"/>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                
                 <DataGrid x:Name="issueDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch" ItemsSource="{Binding}"
                             RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Stretch" Width="Auto"  DataContext="{StaticResource issueViewSource}" 
-                            CanUserDeleteRows="True" CanUserAddRows="False" SelectionUnit="CellOrRowHeader" IsSynchronizedWithCurrentItem="True" Grid.ColumnSpan="6">
+                            CanUserDeleteRows="True" CanUserAddRows="False" SelectionUnit="CellOrRowHeader" IsSynchronizedWithCurrentItem="True" Grid.ColumnSpan="3">
                     <DataGrid.RowHeaderStyle>
                         <Style TargetType="{x:Type DataGridRowHeader}">
                             <Setter Property="Background"  Value="Yellow"/>
@@ -283,9 +282,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-
-
-
+                        
                         <DataGridTextColumn x:Name="yearColumn" Binding="{Binding Year}" Header="Year" Width="40"  CellStyle="{StaticResource AlignRight}"/>
                         <DataGridTextColumn x:Name="noColumn" Binding="{Binding No}" Header="No" Width="SizeToHeader"  CellStyle="{StaticResource AlignRight}"/>
                         <DataGridTextColumn x:Name="sequenceColumn" Binding="{Binding Sequence}" Header="Sequence" Width="SizeToHeader" IsReadOnly="True" 
@@ -316,24 +313,12 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                        <DataGridTextColumn Binding="{Binding EBookURL}" Header="EBookURL"/>
                     </DataGrid.Columns>
                 </DataGrid>
-
-                <Grid Grid.Row="1" Grid.Column="0" Margin="0,10,0,0" Grid.ColumnSpan="5" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-
-                    </Grid.ColumnDefinitions>
-
-                    <Button x:Name="buttonAddIssue" Grid.Column="0" Content="Add an issue" Height="30" Width="75" Click="buttonAddIssue_Click"/>
-                    <Button x:Name="buttonSubmitIssue" Grid.Column="1" Content="Submit" Width="75" Click="buttonSubmitIssue_Click"  Height="30"/>
-                    <Button x:Name="buttonExitIssue" Grid.Column="2" Content="Exit without saving" Width="115" Click="buttonExitIssue_Click"  Height="30"  Margin="0,0,10,0"/>
-                </Grid>
+                <Button x:Name="buttonAddIssue" Grid.Row="1" Grid.Column="0" Content="Add an issue" Height="30" Width="75" Click="buttonAddIssue_Click"/>
+                <Button x:Name="buttonSubmitIssue" Grid.Row="1" Grid.Column="1" Content="Submit" Width="75" Click="buttonSubmitIssue_Click"  Height="30"/>
+                <Button x:Name="buttonExitIssue" Grid.Row="1" Grid.Column="2" Content="Exit without saving" Width="115" Click="buttonExitIssue_Click"  Height="30"  Margin="0,0,10,0"/>
             </Grid>
         </TabItem>
 
