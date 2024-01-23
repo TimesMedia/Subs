@@ -168,14 +168,12 @@ namespace Subs.Presentation
                 string[] Lines = new string[8];
                 int lNextIndex = 0;
 
-                //lCustomerData = new CustomerData3(pCustomerId);
-
                 if (!String.IsNullOrWhiteSpace(lCustomerData.CompanyName) && lCustomerData.CompanyName != lCustomerData.FullName)
                 {
                     Lines[lNextIndex] = lCustomerData.CompanyName; lNextIndex++;
                     Lines[lNextIndex] = lCustomerData.FullName; lNextIndex++;
                 }
-                else { Line1.Content = lCustomerData.FullName; lNextIndex++; };
+                else { Lines[lNextIndex] = lCustomerData.FullName; lNextIndex++; };
 
 
                 if (!String.IsNullOrWhiteSpace(lCustomerData.Department) && lCustomerData.Department != lCustomerData.FullName)
@@ -183,43 +181,68 @@ namespace Subs.Presentation
                     Lines[lNextIndex] = lCustomerData.Department; lNextIndex++;
                 }
 
-                if (lCustomerData.PhysicalAddressId != null)
+                if (lNextIndex == 3 )
                 {
-                    DeliveryAddressData2 lDeliveryAddressData = new DeliveryAddressData2((int)lCustomerData.PhysicalAddressId);
-                    if (!lDeliveryAddressData.Format())
-                    {
-                        throw new Exception("Error in Format of deliveryaddress");
-                    }
-
-                    if (Lines[lNextIndex - 1] != lDeliveryAddressData.PAddress1)
-                    {
-                        Lines[lNextIndex] = lDeliveryAddressData.PAddress1; lNextIndex++;
-                    }
-
-                    Lines[lNextIndex] = lDeliveryAddressData.PAddress2; lNextIndex++;
-                    Lines[lNextIndex] = lDeliveryAddressData.PAddress3; lNextIndex++;
-                    Lines[lNextIndex] = lDeliveryAddressData.PAddress4; lNextIndex++;
-                    Lines[lNextIndex] = lDeliveryAddressData.PAddress5; lNextIndex++;
-
                     Line1.Content = Lines[0];
                     Line2.Content = Lines[1];
-
-                    Line3.Content = lCustomerData.Address1;
-                    if (lCustomerData.Address2 == "")
+                    Line3.Content = Lines[2];
+                    Line4.Content = lCustomerData.Address1;
+                    if (lCustomerData.Address2 != null)
                     {
-                        Line4.Content = lCustomerData.Address3;
-                        Line5.Content = lCustomerData.Address4;
-                        Line6.Content = lCustomerData.Address5;
+                        Line5.Content = lCustomerData.Address2;
+                        Line6.Content = lCustomerData.Address3;
+                        Line7.Content = lCustomerData.Address4;
+                        Line8.Content = lCustomerData.Address5;
                     }
                     else
+                    {
+                        Line5.Content = lCustomerData.Address3;
+                        Line6.Content = lCustomerData.Address4;
+                        Line7.Content = lCustomerData.Address5;
+                    }
+                   
+                }
+
+                if (lNextIndex == 2)
+                {
+                    Line1.Content = Lines[0];
+                    Line2.Content = Lines[1];
+                    Line3.Content = lCustomerData.Address1;
+                    if (lCustomerData.Address2 != null)
                     {
                         Line4.Content = lCustomerData.Address2;
                         Line5.Content = lCustomerData.Address3;
                         Line6.Content = lCustomerData.Address4;
                         Line7.Content = lCustomerData.Address5;
                     }
-
+                    else
+                    {
+                        Line4.Content = lCustomerData.Address3;
+                        Line5.Content = lCustomerData.Address4;
+                        Line6.Content = lCustomerData.Address5;
+                    }
                 }
+
+                if (lNextIndex == 1)
+                {
+                    Line1.Content = Lines[0];
+                    Line2.Content = lCustomerData.Address1;
+                    if (lNextIndex == 2)
+                    {
+                        Line3.Content = lCustomerData.Address2;
+                        Line4.Content = lCustomerData.Address3;
+                        Line5.Content = lCustomerData.Address4;
+                        Line6.Content = lCustomerData.Address5;
+                    }
+                    else
+                    {
+                        Line3.Content = lCustomerData.Address3;
+                        Line4.Content = lCustomerData.Address4;
+                        Line5.Content = lCustomerData.Address5;
+                    }
+                }
+
+
                 StatementNumber.Content = "STA" + pStatementId.ToString();
                 PPhoneNumber.Content = lCustomerData.PhoneNumber;
                 PEmail.Content = lCustomerData.EmailAddress;

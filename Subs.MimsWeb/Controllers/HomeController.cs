@@ -129,7 +129,7 @@ namespace Subs.MimsWeb.Controllers
                     return View();
                 }
 
-                if (!Regex.IsMatch(pLoginRequest.Email, @"^([&\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,5}|[0-9]{1,3})(\]?)$"))
+                if (!Regex.IsMatch(pLoginRequest.Email, @"^([&\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,20}|[0-9]{1,3})(\]?)$"))
                 {
                     ViewBag.Message = "This is not a valid Email address.";
                     return View();
