@@ -1128,6 +1128,10 @@ namespace Subs.Data {
             
             private global::System.Data.DataColumn columnMarketing;
             
+            private global::System.Data.DataColumn columnBalanceInvoiceId;
+            
+            private global::System.Data.DataColumn columnBalance;
+            
             private global::System.Data.DataColumn columnModifiedBy;
             
             private global::System.Data.DataColumn columnModifiedOn;
@@ -1467,6 +1471,22 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn BalanceInvoiceIdColumn {
+                get {
+                    return this.columnBalanceInvoiceId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn BalanceColumn {
+                get {
+                    return this.columnBalance;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public global::System.Data.DataColumn ModifiedByColumn {
                 get {
                     return this.columnModifiedBy;
@@ -1555,6 +1575,8 @@ namespace Subs.Data {
                         string PracticeNumber3, 
                         bool AutomaticPaymentAllocation, 
                         bool Marketing, 
+                        int BalanceInvoiceId, 
+                        decimal Balance, 
                         string ModifiedBy, 
                         System.DateTime ModifiedOn) {
                 CustomerRow rowCustomerRow = ((CustomerRow)(this.NewRow()));
@@ -1596,6 +1618,8 @@ namespace Subs.Data {
                         PracticeNumber3,
                         AutomaticPaymentAllocation,
                         Marketing,
+                        BalanceInvoiceId,
+                        Balance,
                         ModifiedBy,
                         ModifiedOn};
                 rowCustomerRow.ItemArray = columnValuesArray;
@@ -1664,6 +1688,8 @@ namespace Subs.Data {
                 this.columnPracticeNumber3 = base.Columns["PracticeNumber3"];
                 this.columnAutomaticPaymentAllocation = base.Columns["AutomaticPaymentAllocation"];
                 this.columnMarketing = base.Columns["Marketing"];
+                this.columnBalanceInvoiceId = base.Columns["BalanceInvoiceId"];
+                this.columnBalance = base.Columns["Balance"];
                 this.columnModifiedBy = base.Columns["ModifiedBy"];
                 this.columnModifiedOn = base.Columns["ModifiedOn"];
             }
@@ -1745,6 +1771,10 @@ namespace Subs.Data {
                 base.Columns.Add(this.columnAutomaticPaymentAllocation);
                 this.columnMarketing = new global::System.Data.DataColumn("Marketing", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMarketing);
+                this.columnBalanceInvoiceId = new global::System.Data.DataColumn("BalanceInvoiceId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBalanceInvoiceId);
+                this.columnBalance = new global::System.Data.DataColumn("Balance", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBalance);
                 this.columnModifiedBy = new global::System.Data.DataColumn("ModifiedBy", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnModifiedBy);
                 this.columnModifiedOn = new global::System.Data.DataColumn("ModifiedOn", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
@@ -3097,6 +3127,38 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int BalanceInvoiceId {
+                get {
+                    try {
+                        return ((int)(this[this.tableCustomer.BalanceInvoiceIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'BalanceInvoiceId\' in table \'Customer\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCustomer.BalanceInvoiceIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal Balance {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCustomer.BalanceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Balance\' in table \'Customer\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCustomer.BalanceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string ModifiedBy {
                 get {
                     return ((string)(this[this.tableCustomer.ModifiedByColumn]));
@@ -3403,6 +3465,30 @@ namespace Subs.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetPracticeNumber3Null() {
                 this[this.tableCustomer.PracticeNumber3Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsBalanceInvoiceIdNull() {
+                return this.IsNull(this.tableCustomer.BalanceInvoiceIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetBalanceInvoiceIdNull() {
+                this[this.tableCustomer.BalanceInvoiceIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsBalanceNull() {
+                return this.IsNull(this.tableCustomer.BalanceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetBalanceNull() {
+                this[this.tableCustomer.BalanceColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4200,49 +4286,53 @@ SELECT PayerId, CustomerLiability, JournalLiability, Difference, Datum FROM Liab
             tableMapping.ColumnMappings.Add("Marketing", "Marketing");
             tableMapping.ColumnMappings.Add("ModifiedBy", "ModifiedBy");
             tableMapping.ColumnMappings.Add("ModifiedOn", "ModifiedOn");
+            tableMapping.ColumnMappings.Add("BalanceInvoiceId", "BalanceInvoiceId");
+            tableMapping.ColumnMappings.Add("Balance", "Balance");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Customer] WHERE (([CustomerId] = @Original_CustomerId) AND ([T" +
-                "itleId] = @Original_TitleId) AND ((@IsNull_Initials = 1 AND [Initials] IS NULL) " +
-                "OR ([Initials] = @Original_Initials)) AND ((@IsNull_FirstName = 1 AND [FirstName" +
-                "] IS NULL) OR ([FirstName] = @Original_FirstName)) AND ((@IsNull_Surname = 1 AND" +
-                " [Surname] IS NULL) OR ([Surname] = @Original_Surname)) AND ((@IsNull_NationalId" +
-                "1 = 1 AND [NationalId1] IS NULL) OR ([NationalId1] = @Original_NationalId1)) AND" +
-                " ((@IsNull_NationalId2 = 1 AND [NationalId2] IS NULL) OR ([NationalId2] = @Origi" +
-                "nal_NationalId2)) AND ((@IsNull_NationalId3 = 1 AND [NationalId3] IS NULL) OR ([" +
-                "NationalId3] = @Original_NationalId3)) AND ([CompanyId] = @Original_CompanyId) A" +
-                "ND ((@IsNull_CompanyNameUnverified = 1 AND [CompanyNameUnverified] IS NULL) OR (" +
-                "[CompanyNameUnverified] = @Original_CompanyNameUnverified)) AND ((@IsNull_Depart" +
-                "ment = 1 AND [Department] IS NULL) OR ([Department] = @Original_Department)) AND" +
-                " ((@IsNull_Address1 = 1 AND [Address1] IS NULL) OR ([Address1] = @Original_Addre" +
-                "ss1)) AND ((@IsNull_Address2 = 1 AND [Address2] IS NULL) OR ([Address2] = @Origi" +
-                "nal_Address2)) AND ((@IsNull_Address3 = 1 AND [Address3] IS NULL) OR ([Address3]" +
-                " = @Original_Address3)) AND ((@IsNull_Address4 = 1 AND [Address4] IS NULL) OR ([" +
-                "Address4] = @Original_Address4)) AND ((@IsNull_Address5 = 1 AND [Address5] IS NU" +
-                "LL) OR ([Address5] = @Original_Address5)) AND ([AddressType] = @Original_Address" +
-                "Type) AND ([PostAddressId] = @Original_PostAddressId) AND ((@IsNull_PhysicalAddr" +
-                "essId = 1 AND [PhysicalAddressId] IS NULL) OR ([PhysicalAddressId] = @Original_P" +
-                "hysicalAddressId)) AND ([CountryId] = @Original_CountryId) AND ((@IsNull_PhoneNu" +
-                "mber = 1 AND [PhoneNumber] IS NULL) OR ([PhoneNumber] = @Original_PhoneNumber)) " +
-                "AND ([CellPhoneNumber] = @Original_CellPhoneNumber) AND ((@IsNull_EmailAddress =" +
-                " 1 AND [EmailAddress] IS NULL) OR ([EmailAddress] = @Original_EmailAddress)) AND" +
-                " ((@IsNull_InvoiceEmail = 1 AND [InvoiceEmail] IS NULL) OR ([InvoiceEmail] = @Or" +
-                "iginal_InvoiceEmail)) AND ((@IsNull_StatementEmail = 1 AND [StatementEmail] IS N" +
-                "ULL) OR ([StatementEmail] = @Original_StatementEmail)) AND ([Liability] = @Origi" +
-                "nal_Liability) AND ([Correspondence2] = @Original_Correspondence2) AND ((@IsNull" +
-                "_VerificationDate = 1 AND [VerificationDate] IS NULL) OR ([VerificationDate] = @" +
-                "Original_VerificationDate)) AND ([CheckpointDatePayment] = @Original_CheckpointD" +
-                "atePayment) AND ([CheckpointDateInvoice] = @Original_CheckpointDateInvoice) AND " +
-                "((@IsNull_CouncilNumber = 1 AND [CouncilNumber] IS NULL) OR ([CouncilNumber] = @" +
-                "Original_CouncilNumber)) AND ((@IsNull_PracticeNumber1 = 1 AND [PracticeNumber1]" +
-                " IS NULL) OR ([PracticeNumber1] = @Original_PracticeNumber1)) AND ((@IsNull_Prac" +
-                "ticeNumber2 = 1 AND [PracticeNumber2] IS NULL) OR ([PracticeNumber2] = @Original" +
-                "_PracticeNumber2)) AND ((@IsNull_PracticeNumber3 = 1 AND [PracticeNumber3] IS NU" +
-                "LL) OR ([PracticeNumber3] = @Original_PracticeNumber3)) AND ([AutomaticPaymentAl" +
-                "location] = @Original_AutomaticPaymentAllocation) AND ([Marketing] = @Original_M" +
-                "arketing) AND ([ModifiedBy] = @Original_ModifiedBy) AND ([ModifiedOn] = @Origina" +
-                "l_ModifiedOn))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Customer] WHERE (([CustomerId] = @Original_CustomerId) AND ([TitleId" +
+                "] = @Original_TitleId) AND ((@IsNull_Initials = 1 AND [Initials] IS NULL) OR ([I" +
+                "nitials] = @Original_Initials)) AND ((@IsNull_FirstName = 1 AND [FirstName] IS N" +
+                "ULL) OR ([FirstName] = @Original_FirstName)) AND ((@IsNull_Surname = 1 AND [Surn" +
+                "ame] IS NULL) OR ([Surname] = @Original_Surname)) AND ((@IsNull_NationalId1 = 1 " +
+                "AND [NationalId1] IS NULL) OR ([NationalId1] = @Original_NationalId1)) AND ((@Is" +
+                "Null_NationalId2 = 1 AND [NationalId2] IS NULL) OR ([NationalId2] = @Original_Na" +
+                "tionalId2)) AND ((@IsNull_NationalId3 = 1 AND [NationalId3] IS NULL) OR ([Nation" +
+                "alId3] = @Original_NationalId3)) AND ([CompanyId] = @Original_CompanyId) AND ((@" +
+                "IsNull_CompanyNameUnverified = 1 AND [CompanyNameUnverified] IS NULL) OR ([Compa" +
+                "nyNameUnverified] = @Original_CompanyNameUnverified)) AND ((@IsNull_Department =" +
+                " 1 AND [Department] IS NULL) OR ([Department] = @Original_Department)) AND ((@Is" +
+                "Null_Address1 = 1 AND [Address1] IS NULL) OR ([Address1] = @Original_Address1)) " +
+                "AND ((@IsNull_Address2 = 1 AND [Address2] IS NULL) OR ([Address2] = @Original_Ad" +
+                "dress2)) AND ((@IsNull_Address3 = 1 AND [Address3] IS NULL) OR ([Address3] = @Or" +
+                "iginal_Address3)) AND ((@IsNull_Address4 = 1 AND [Address4] IS NULL) OR ([Addres" +
+                "s4] = @Original_Address4)) AND ((@IsNull_Address5 = 1 AND [Address5] IS NULL) OR" +
+                " ([Address5] = @Original_Address5)) AND ([AddressType] = @Original_AddressType) " +
+                "AND ([PostAddressId] = @Original_PostAddressId) AND ((@IsNull_PhysicalAddressId " +
+                "= 1 AND [PhysicalAddressId] IS NULL) OR ([PhysicalAddressId] = @Original_Physica" +
+                "lAddressId)) AND ([CountryId] = @Original_CountryId) AND ((@IsNull_PhoneNumber =" +
+                " 1 AND [PhoneNumber] IS NULL) OR ([PhoneNumber] = @Original_PhoneNumber)) AND ([" +
+                "CellPhoneNumber] = @Original_CellPhoneNumber) AND ((@IsNull_EmailAddress = 1 AND" +
+                " [EmailAddress] IS NULL) OR ([EmailAddress] = @Original_EmailAddress)) AND ((@Is" +
+                "Null_InvoiceEmail = 1 AND [InvoiceEmail] IS NULL) OR ([InvoiceEmail] = @Original" +
+                "_InvoiceEmail)) AND ((@IsNull_StatementEmail = 1 AND [StatementEmail] IS NULL) O" +
+                "R ([StatementEmail] = @Original_StatementEmail)) AND ([Liability] = @Original_Li" +
+                "ability) AND ([Correspondence2] = @Original_Correspondence2) AND ((@IsNull_Verif" +
+                "icationDate = 1 AND [VerificationDate] IS NULL) OR ([VerificationDate] = @Origin" +
+                "al_VerificationDate)) AND ([CheckpointDatePayment] = @Original_CheckpointDatePay" +
+                "ment) AND ([CheckpointDateInvoice] = @Original_CheckpointDateInvoice) AND ((@IsN" +
+                "ull_CouncilNumber = 1 AND [CouncilNumber] IS NULL) OR ([CouncilNumber] = @Origin" +
+                "al_CouncilNumber)) AND ((@IsNull_PracticeNumber1 = 1 AND [PracticeNumber1] IS NU" +
+                "LL) OR ([PracticeNumber1] = @Original_PracticeNumber1)) AND ((@IsNull_PracticeNu" +
+                "mber2 = 1 AND [PracticeNumber2] IS NULL) OR ([PracticeNumber2] = @Original_Pract" +
+                "iceNumber2)) AND ((@IsNull_PracticeNumber3 = 1 AND [PracticeNumber3] IS NULL) OR" +
+                " ([PracticeNumber3] = @Original_PracticeNumber3)) AND ([AutomaticPaymentAllocati" +
+                "on] = @Original_AutomaticPaymentAllocation) AND ([Marketing] = @Original_Marketi" +
+                "ng) AND ((@IsNull_BalanceInvoiceId = 1 AND [BalanceInvoiceId] IS NULL) OR ([Bala" +
+                "nceInvoiceId] = @Original_BalanceInvoiceId)) AND ((@IsNull_Balance = 1 AND [Bala" +
+                "nce] IS NULL) OR ([Balance] = @Original_Balance)) AND ([ModifiedBy] = @Original_" +
+                "ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CustomerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CustomerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_TitleId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TitleId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -4303,33 +4393,38 @@ SELECT PayerId, CustomerLiability, JournalLiability, Difference, Datum FROM Liab
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PracticeNumber3", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PracticeNumber3", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AutomaticPaymentAllocation", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AutomaticPaymentAllocation", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Marketing", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Marketing", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_BalanceInvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BalanceInvoiceId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_BalanceInvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BalanceInvoiceId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Balance", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Balance", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Balance", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Balance", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Customer] ([Password1], [TitleId], [Initials], [FirstName], [S" +
-                "urname], [NationalId1], [NationalId2], [NationalId3], [CompanyId], [CompanyNameU" +
-                "nverified], [Department], [Address1], [Address2], [Address3], [Address4], [Addre" +
-                "ss5], [AddressType], [PostAddressId], [PhysicalAddressId], [CountryId], [PhoneNu" +
-                "mber], [CellPhoneNumber], [EmailAddress], [InvoiceEmail], [StatementEmail], [Lia" +
-                "bility], [Correspondence2], [VerificationDate], [CheckpointDatePayment], [Checkp" +
-                "ointDateInvoice], [CouncilNumber], [PracticeNumber1], [PracticeNumber2], [Practi" +
-                "ceNumber3], [AutomaticPaymentAllocation], [Marketing], [ModifiedBy], [ModifiedOn" +
-                "]) VALUES (@Password1, @TitleId, @Initials, @FirstName, @Surname, @NationalId1, " +
-                "@NationalId2, @NationalId3, @CompanyId, @CompanyNameUnverified, @Department, @Ad" +
-                "dress1, @Address2, @Address3, @Address4, @Address5, @AddressType, @PostAddressId" +
-                ", @PhysicalAddressId, @CountryId, @PhoneNumber, @CellPhoneNumber, @EmailAddress," +
-                " @InvoiceEmail, @StatementEmail, @Liability, @Correspondence2, @VerificationDate" +
-                ", @CheckpointDatePayment, @CheckpointDateInvoice, @CouncilNumber, @PracticeNumbe" +
-                "r1, @PracticeNumber2, @PracticeNumber3, @AutomaticPaymentAllocation, @Marketing," +
-                " @ModifiedBy, @ModifiedOn);\r\nSELECT CustomerId, Password1, TitleId, Initials, Fi" +
-                "rstName, Surname, NationalId1, NationalId2, NationalId3, CompanyId, CompanyNameU" +
-                "nverified, Department, Address1, Address2, Address3, Address4, Address5, Address" +
-                "Type, PostAddressId, PhysicalAddressId, CountryId, PhoneNumber, CellPhoneNumber," +
-                " EmailAddress, InvoiceEmail, StatementEmail, Liability, Correspondence2, Verific" +
-                "ationDate, CheckpointDatePayment, CheckpointDateInvoice, CouncilNumber, Practice" +
-                "Number1, PracticeNumber2, PracticeNumber3, AutomaticPaymentAllocation, Marketing" +
-                ", ModifiedBy, ModifiedOn FROM Customer WHERE (CustomerId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [Customer] ([Password1], [TitleId], [Initials], [FirstName], [Surname" +
+                "], [NationalId1], [NationalId2], [NationalId3], [CompanyId], [CompanyNameUnverif" +
+                "ied], [Department], [Address1], [Address2], [Address3], [Address4], [Address5], " +
+                "[AddressType], [PostAddressId], [PhysicalAddressId], [CountryId], [PhoneNumber]," +
+                " [CellPhoneNumber], [EmailAddress], [InvoiceEmail], [StatementEmail], [Liability" +
+                "], [Correspondence2], [VerificationDate], [CheckpointDatePayment], [CheckpointDa" +
+                "teInvoice], [CouncilNumber], [PracticeNumber1], [PracticeNumber2], [PracticeNumb" +
+                "er3], [AutomaticPaymentAllocation], [Marketing], [BalanceInvoiceId], [Balance], " +
+                "[ModifiedBy], [ModifiedOn]) VALUES (@Password1, @TitleId, @Initials, @FirstName," +
+                " @Surname, @NationalId1, @NationalId2, @NationalId3, @CompanyId, @CompanyNameUnv" +
+                "erified, @Department, @Address1, @Address2, @Address3, @Address4, @Address5, @Ad" +
+                "dressType, @PostAddressId, @PhysicalAddressId, @CountryId, @PhoneNumber, @CellPh" +
+                "oneNumber, @EmailAddress, @InvoiceEmail, @StatementEmail, @Liability, @Correspon" +
+                "dence2, @VerificationDate, @CheckpointDatePayment, @CheckpointDateInvoice, @Coun" +
+                "cilNumber, @PracticeNumber1, @PracticeNumber2, @PracticeNumber3, @AutomaticPayme" +
+                "ntAllocation, @Marketing, @BalanceInvoiceId, @Balance, @ModifiedBy, @ModifiedOn)" +
+                ";\r\nSELECT CustomerId, Password1, TitleId, Initials, FirstName, Surname, National" +
+                "Id1, NationalId2, NationalId3, CompanyId, CompanyNameUnverified, Department, Add" +
+                "ress1, Address2, Address3, Address4, Address5, AddressType, PostAddressId, Physi" +
+                "calAddressId, CountryId, PhoneNumber, CellPhoneNumber, EmailAddress, InvoiceEmai" +
+                "l, StatementEmail, Liability, Correspondence2, VerificationDate, CheckpointDateP" +
+                "ayment, CheckpointDateInvoice, CouncilNumber, PracticeNumber1, PracticeNumber2, " +
+                "PracticeNumber3, AutomaticPaymentAllocation, Marketing, BalanceInvoiceId, Balanc" +
+                "e, ModifiedBy, ModifiedOn FROM Customer WHERE (CustomerId = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Password1", global::System.Data.SqlDbType.VarBinary, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Password1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TitleId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TitleId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4367,73 +4462,78 @@ SELECT PayerId, CustomerLiability, JournalLiability, Difference, Datum FROM Liab
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PracticeNumber3", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PracticeNumber3", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AutomaticPaymentAllocation", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AutomaticPaymentAllocation", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Marketing", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Marketing", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalanceInvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BalanceInvoiceId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Balance", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Balance", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Customer] SET [Password1] = @Password1, [TitleId] = @TitleId, [Init" +
-                "ials] = @Initials, [FirstName] = @FirstName, [Surname] = @Surname, [NationalId1]" +
-                " = @NationalId1, [NationalId2] = @NationalId2, [NationalId3] = @NationalId3, [Co" +
-                "mpanyId] = @CompanyId, [CompanyNameUnverified] = @CompanyNameUnverified, [Depart" +
-                "ment] = @Department, [Address1] = @Address1, [Address2] = @Address2, [Address3] " +
-                "= @Address3, [Address4] = @Address4, [Address5] = @Address5, [AddressType] = @Ad" +
-                "dressType, [PostAddressId] = @PostAddressId, [PhysicalAddressId] = @PhysicalAddr" +
-                "essId, [CountryId] = @CountryId, [PhoneNumber] = @PhoneNumber, [CellPhoneNumber]" +
-                " = @CellPhoneNumber, [EmailAddress] = @EmailAddress, [InvoiceEmail] = @InvoiceEm" +
-                "ail, [StatementEmail] = @StatementEmail, [Liability] = @Liability, [Corresponden" +
-                "ce2] = @Correspondence2, [VerificationDate] = @VerificationDate, [CheckpointDate" +
-                "Payment] = @CheckpointDatePayment, [CheckpointDateInvoice] = @CheckpointDateInvo" +
-                "ice, [CouncilNumber] = @CouncilNumber, [PracticeNumber1] = @PracticeNumber1, [Pr" +
-                "acticeNumber2] = @PracticeNumber2, [PracticeNumber3] = @PracticeNumber3, [Automa" +
-                "ticPaymentAllocation] = @AutomaticPaymentAllocation, [Marketing] = @Marketing, [" +
-                "ModifiedBy] = @ModifiedBy, [ModifiedOn] = @ModifiedOn WHERE (([CustomerId] = @Or" +
-                "iginal_CustomerId) AND ([TitleId] = @Original_TitleId) AND ((@IsNull_Initials = " +
-                "1 AND [Initials] IS NULL) OR ([Initials] = @Original_Initials)) AND ((@IsNull_Fi" +
-                "rstName = 1 AND [FirstName] IS NULL) OR ([FirstName] = @Original_FirstName)) AND" +
-                " ((@IsNull_Surname = 1 AND [Surname] IS NULL) OR ([Surname] = @Original_Surname)" +
-                ") AND ((@IsNull_NationalId1 = 1 AND [NationalId1] IS NULL) OR ([NationalId1] = @" +
-                "Original_NationalId1)) AND ((@IsNull_NationalId2 = 1 AND [NationalId2] IS NULL) " +
-                "OR ([NationalId2] = @Original_NationalId2)) AND ((@IsNull_NationalId3 = 1 AND [N" +
-                "ationalId3] IS NULL) OR ([NationalId3] = @Original_NationalId3)) AND ([CompanyId" +
-                "] = @Original_CompanyId) AND ((@IsNull_CompanyNameUnverified = 1 AND [CompanyNam" +
-                "eUnverified] IS NULL) OR ([CompanyNameUnverified] = @Original_CompanyNameUnverif" +
-                "ied)) AND ((@IsNull_Department = 1 AND [Department] IS NULL) OR ([Department] = " +
-                "@Original_Department)) AND ((@IsNull_Address1 = 1 AND [Address1] IS NULL) OR ([A" +
-                "ddress1] = @Original_Address1)) AND ((@IsNull_Address2 = 1 AND [Address2] IS NUL" +
-                "L) OR ([Address2] = @Original_Address2)) AND ((@IsNull_Address3 = 1 AND [Address" +
-                "3] IS NULL) OR ([Address3] = @Original_Address3)) AND ((@IsNull_Address4 = 1 AND" +
-                " [Address4] IS NULL) OR ([Address4] = @Original_Address4)) AND ((@IsNull_Address" +
-                "5 = 1 AND [Address5] IS NULL) OR ([Address5] = @Original_Address5)) AND ([Addres" +
-                "sType] = @Original_AddressType) AND ([PostAddressId] = @Original_PostAddressId) " +
-                "AND ((@IsNull_PhysicalAddressId = 1 AND [PhysicalAddressId] IS NULL) OR ([Physic" +
-                "alAddressId] = @Original_PhysicalAddressId)) AND ([CountryId] = @Original_Countr" +
-                "yId) AND ((@IsNull_PhoneNumber = 1 AND [PhoneNumber] IS NULL) OR ([PhoneNumber] " +
-                "= @Original_PhoneNumber)) AND ([CellPhoneNumber] = @Original_CellPhoneNumber) AN" +
-                "D ((@IsNull_EmailAddress = 1 AND [EmailAddress] IS NULL) OR ([EmailAddress] = @O" +
-                "riginal_EmailAddress)) AND ((@IsNull_InvoiceEmail = 1 AND [InvoiceEmail] IS NULL" +
-                ") OR ([InvoiceEmail] = @Original_InvoiceEmail)) AND ((@IsNull_StatementEmail = 1" +
-                " AND [StatementEmail] IS NULL) OR ([StatementEmail] = @Original_StatementEmail))" +
-                " AND ([Liability] = @Original_Liability) AND ([Correspondence2] = @Original_Corr" +
-                "espondence2) AND ((@IsNull_VerificationDate = 1 AND [VerificationDate] IS NULL) " +
-                "OR ([VerificationDate] = @Original_VerificationDate)) AND ([CheckpointDatePaymen" +
-                "t] = @Original_CheckpointDatePayment) AND ([CheckpointDateInvoice] = @Original_C" +
-                "heckpointDateInvoice) AND ((@IsNull_CouncilNumber = 1 AND [CouncilNumber] IS NUL" +
-                "L) OR ([CouncilNumber] = @Original_CouncilNumber)) AND ((@IsNull_PracticeNumber1" +
-                " = 1 AND [PracticeNumber1] IS NULL) OR ([PracticeNumber1] = @Original_PracticeNu" +
-                "mber1)) AND ((@IsNull_PracticeNumber2 = 1 AND [PracticeNumber2] IS NULL) OR ([Pr" +
-                "acticeNumber2] = @Original_PracticeNumber2)) AND ((@IsNull_PracticeNumber3 = 1 A" +
-                "ND [PracticeNumber3] IS NULL) OR ([PracticeNumber3] = @Original_PracticeNumber3)" +
-                ") AND ([AutomaticPaymentAllocation] = @Original_AutomaticPaymentAllocation) AND " +
-                "([Marketing] = @Original_Marketing) AND ([ModifiedBy] = @Original_ModifiedBy) AN" +
-                "D ([ModifiedOn] = @Original_ModifiedOn));\r\nSELECT CustomerId, Password1, TitleId" +
-                ", Initials, FirstName, Surname, NationalId1, NationalId2, NationalId3, CompanyId" +
-                ", CompanyNameUnverified, Department, Address1, Address2, Address3, Address4, Add" +
-                "ress5, AddressType, PostAddressId, PhysicalAddressId, CountryId, PhoneNumber, Ce" +
-                "llPhoneNumber, EmailAddress, InvoiceEmail, StatementEmail, Liability, Correspond" +
-                "ence2, VerificationDate, CheckpointDatePayment, CheckpointDateInvoice, CouncilNu" +
-                "mber, PracticeNumber1, PracticeNumber2, PracticeNumber3, AutomaticPaymentAllocat" +
-                "ion, Marketing, ModifiedBy, ModifiedOn FROM Customer WHERE (CustomerId = @Custom" +
-                "erId)";
+            this._adapter.UpdateCommand.CommandText = "UPDATE [Customer] SET [Password1] = @Password1, [TitleId] = @TitleId, [Initials] " +
+                "= @Initials, [FirstName] = @FirstName, [Surname] = @Surname, [NationalId1] = @Na" +
+                "tionalId1, [NationalId2] = @NationalId2, [NationalId3] = @NationalId3, [CompanyI" +
+                "d] = @CompanyId, [CompanyNameUnverified] = @CompanyNameUnverified, [Department] " +
+                "= @Department, [Address1] = @Address1, [Address2] = @Address2, [Address3] = @Add" +
+                "ress3, [Address4] = @Address4, [Address5] = @Address5, [AddressType] = @AddressT" +
+                "ype, [PostAddressId] = @PostAddressId, [PhysicalAddressId] = @PhysicalAddressId," +
+                " [CountryId] = @CountryId, [PhoneNumber] = @PhoneNumber, [CellPhoneNumber] = @Ce" +
+                "llPhoneNumber, [EmailAddress] = @EmailAddress, [InvoiceEmail] = @InvoiceEmail, [" +
+                "StatementEmail] = @StatementEmail, [Liability] = @Liability, [Correspondence2] =" +
+                " @Correspondence2, [VerificationDate] = @VerificationDate, [CheckpointDatePaymen" +
+                "t] = @CheckpointDatePayment, [CheckpointDateInvoice] = @CheckpointDateInvoice, [" +
+                "CouncilNumber] = @CouncilNumber, [PracticeNumber1] = @PracticeNumber1, [Practice" +
+                "Number2] = @PracticeNumber2, [PracticeNumber3] = @PracticeNumber3, [AutomaticPay" +
+                "mentAllocation] = @AutomaticPaymentAllocation, [Marketing] = @Marketing, [Balanc" +
+                "eInvoiceId] = @BalanceInvoiceId, [Balance] = @Balance, [ModifiedBy] = @ModifiedB" +
+                "y, [ModifiedOn] = @ModifiedOn WHERE (([CustomerId] = @Original_CustomerId) AND (" +
+                "[TitleId] = @Original_TitleId) AND ((@IsNull_Initials = 1 AND [Initials] IS NULL" +
+                ") OR ([Initials] = @Original_Initials)) AND ((@IsNull_FirstName = 1 AND [FirstNa" +
+                "me] IS NULL) OR ([FirstName] = @Original_FirstName)) AND ((@IsNull_Surname = 1 A" +
+                "ND [Surname] IS NULL) OR ([Surname] = @Original_Surname)) AND ((@IsNull_National" +
+                "Id1 = 1 AND [NationalId1] IS NULL) OR ([NationalId1] = @Original_NationalId1)) A" +
+                "ND ((@IsNull_NationalId2 = 1 AND [NationalId2] IS NULL) OR ([NationalId2] = @Ori" +
+                "ginal_NationalId2)) AND ((@IsNull_NationalId3 = 1 AND [NationalId3] IS NULL) OR " +
+                "([NationalId3] = @Original_NationalId3)) AND ([CompanyId] = @Original_CompanyId)" +
+                " AND ((@IsNull_CompanyNameUnverified = 1 AND [CompanyNameUnverified] IS NULL) OR" +
+                " ([CompanyNameUnverified] = @Original_CompanyNameUnverified)) AND ((@IsNull_Depa" +
+                "rtment = 1 AND [Department] IS NULL) OR ([Department] = @Original_Department)) A" +
+                "ND ((@IsNull_Address1 = 1 AND [Address1] IS NULL) OR ([Address1] = @Original_Add" +
+                "ress1)) AND ((@IsNull_Address2 = 1 AND [Address2] IS NULL) OR ([Address2] = @Ori" +
+                "ginal_Address2)) AND ((@IsNull_Address3 = 1 AND [Address3] IS NULL) OR ([Address" +
+                "3] = @Original_Address3)) AND ((@IsNull_Address4 = 1 AND [Address4] IS NULL) OR " +
+                "([Address4] = @Original_Address4)) AND ((@IsNull_Address5 = 1 AND [Address5] IS " +
+                "NULL) OR ([Address5] = @Original_Address5)) AND ([AddressType] = @Original_Addre" +
+                "ssType) AND ([PostAddressId] = @Original_PostAddressId) AND ((@IsNull_PhysicalAd" +
+                "dressId = 1 AND [PhysicalAddressId] IS NULL) OR ([PhysicalAddressId] = @Original" +
+                "_PhysicalAddressId)) AND ([CountryId] = @Original_CountryId) AND ((@IsNull_Phone" +
+                "Number = 1 AND [PhoneNumber] IS NULL) OR ([PhoneNumber] = @Original_PhoneNumber)" +
+                ") AND ([CellPhoneNumber] = @Original_CellPhoneNumber) AND ((@IsNull_EmailAddress" +
+                " = 1 AND [EmailAddress] IS NULL) OR ([EmailAddress] = @Original_EmailAddress)) A" +
+                "ND ((@IsNull_InvoiceEmail = 1 AND [InvoiceEmail] IS NULL) OR ([InvoiceEmail] = @" +
+                "Original_InvoiceEmail)) AND ((@IsNull_StatementEmail = 1 AND [StatementEmail] IS" +
+                " NULL) OR ([StatementEmail] = @Original_StatementEmail)) AND ([Liability] = @Ori" +
+                "ginal_Liability) AND ([Correspondence2] = @Original_Correspondence2) AND ((@IsNu" +
+                "ll_VerificationDate = 1 AND [VerificationDate] IS NULL) OR ([VerificationDate] =" +
+                " @Original_VerificationDate)) AND ([CheckpointDatePayment] = @Original_Checkpoin" +
+                "tDatePayment) AND ([CheckpointDateInvoice] = @Original_CheckpointDateInvoice) AN" +
+                "D ((@IsNull_CouncilNumber = 1 AND [CouncilNumber] IS NULL) OR ([CouncilNumber] =" +
+                " @Original_CouncilNumber)) AND ((@IsNull_PracticeNumber1 = 1 AND [PracticeNumber" +
+                "1] IS NULL) OR ([PracticeNumber1] = @Original_PracticeNumber1)) AND ((@IsNull_Pr" +
+                "acticeNumber2 = 1 AND [PracticeNumber2] IS NULL) OR ([PracticeNumber2] = @Origin" +
+                "al_PracticeNumber2)) AND ((@IsNull_PracticeNumber3 = 1 AND [PracticeNumber3] IS " +
+                "NULL) OR ([PracticeNumber3] = @Original_PracticeNumber3)) AND ([AutomaticPayment" +
+                "Allocation] = @Original_AutomaticPaymentAllocation) AND ([Marketing] = @Original" +
+                "_Marketing) AND ((@IsNull_BalanceInvoiceId = 1 AND [BalanceInvoiceId] IS NULL) O" +
+                "R ([BalanceInvoiceId] = @Original_BalanceInvoiceId)) AND ((@IsNull_Balance = 1 A" +
+                "ND [Balance] IS NULL) OR ([Balance] = @Original_Balance)) AND ([ModifiedBy] = @O" +
+                "riginal_ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn));\r\nSELECT Customer" +
+                "Id, Password1, TitleId, Initials, FirstName, Surname, NationalId1, NationalId2, " +
+                "NationalId3, CompanyId, CompanyNameUnverified, Department, Address1, Address2, A" +
+                "ddress3, Address4, Address5, AddressType, PostAddressId, PhysicalAddressId, Coun" +
+                "tryId, PhoneNumber, CellPhoneNumber, EmailAddress, InvoiceEmail, StatementEmail," +
+                " Liability, Correspondence2, VerificationDate, CheckpointDatePayment, Checkpoint" +
+                "DateInvoice, CouncilNumber, PracticeNumber1, PracticeNumber2, PracticeNumber3, A" +
+                "utomaticPaymentAllocation, Marketing, BalanceInvoiceId, Balance, ModifiedBy, Mod" +
+                "ifiedOn FROM Customer WHERE (CustomerId = @CustomerId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Password1", global::System.Data.SqlDbType.VarBinary, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Password1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TitleId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TitleId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4471,6 +4571,8 @@ SELECT PayerId, CustomerLiability, JournalLiability, Difference, Datum FROM Liab
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PracticeNumber3", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PracticeNumber3", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AutomaticPaymentAllocation", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AutomaticPaymentAllocation", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Marketing", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Marketing", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalanceInvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BalanceInvoiceId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Balance", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Balance", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CustomerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CustomerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -4532,6 +4634,10 @@ SELECT PayerId, CustomerLiability, JournalLiability, Difference, Datum FROM Liab
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PracticeNumber3", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PracticeNumber3", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AutomaticPaymentAllocation", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AutomaticPaymentAllocation", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Marketing", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Marketing", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_BalanceInvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BalanceInvoiceId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_BalanceInvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BalanceInvoiceId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Balance", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Balance", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Balance", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Balance", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CustomerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "CustomerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4550,7 +4656,10 @@ SELECT PayerId, CustomerLiability, JournalLiability, Difference, Datum FROM Liab
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[7];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1, NationalId2, NationalId3, CompanyId, CompanyNameUnverified, Department, Address1, Address2, Address3, Address4, Address5, AddressType, PostAddressId, PhysicalAddressId, CountryId, PhoneNumber, CellPhoneNumber, EmailAddress, InvoiceEmail, StatementEmail, Liability, Correspondence2, VerificationDate, CheckpointDatePayment, CheckpointDateInvoice, CouncilNumber, PracticeNumber1, PracticeNumber2, PracticeNumber3, AutomaticPaymentAllocation, Marketing, ModifiedBy, ModifiedOn FROM dbo.Customer";
+            this._commandCollection[0].CommandText = @"SELECT        CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1, NationalId2, NationalId3, CompanyId, CompanyNameUnverified, Department, Address1, Address2, Address3, Address4, Address5, AddressType, 
+                         PostAddressId, PhysicalAddressId, CountryId, PhoneNumber, CellPhoneNumber, EmailAddress, InvoiceEmail, StatementEmail, Liability, Correspondence2, VerificationDate, CheckpointDatePayment, CheckpointDateInvoice, 
+                         CouncilNumber, PracticeNumber1, PracticeNumber2, PracticeNumber3, AutomaticPaymentAllocation, Marketing, BalanceInvoiceId, Balance, ModifiedBy, ModifiedOn
+FROM            Customer";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
@@ -4566,10 +4675,12 @@ SELECT PayerId, CustomerLiability, JournalLiability, Difference, Datum FROM Liab
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CustomerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "dbo.[MIMS.CustomerDoc.Due]";
+            this._commandCollection[3].CommandText = "dbo.[MIMS.CustomerDoc.Due2]";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PayerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@InvoiceId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Balance", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 6, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[4].Connection = this.Connection;
             this._commandCollection[4].CommandText = "dbo.[MIMS.CustomerDoc.Customer.Exists]";
@@ -4602,6 +4713,37 @@ SELECT PayerId, CustomerLiability, JournalLiability, Difference, Datum FROM Liab
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
         public virtual int Fill(CustomerDoc2.CustomerDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int Due(CustomerDoc2.CustomerDataTable dataTable, global::System.Nullable<int> PayerId, global::System.Nullable<int> InvoiceId, global::System.Nullable<decimal> Balance) {
+            this.Adapter.SelectCommand = this.CommandCollection[3];
+            if ((PayerId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(PayerId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((InvoiceId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((int)(InvoiceId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((Balance.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((decimal)(Balance.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -4772,40 +4914,6 @@ SELECT PayerId, CustomerLiability, JournalLiability, Difference, Datum FROM Liab
                 }
             }
             return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual object Due(global::System.Nullable<int> PayerId) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[3];
-            if ((PayerId.HasValue == true)) {
-                command.Parameters[1].Value = ((int)(PayerId.Value));
-            }
-            else {
-                command.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
-            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                command.Connection.Open();
-            }
-            object returnValue;
-            try {
-                returnValue = command.ExecuteScalar();
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    command.Connection.Close();
-                }
-            }
-            if (((returnValue == null) 
-                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
-                return null;
-            }
-            else {
-                return ((object)(returnValue));
-            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

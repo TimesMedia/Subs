@@ -679,19 +679,19 @@ namespace Subs.Presentation
             }
         }
 
-        private void checkAutomaticPaymentAllocation_Clicked(object sender, RoutedEventArgs e)
-        {
-            CheckBox lCheckBox = (CheckBox)e.OriginalSource;
-            if (!(bool)lCheckBox.IsChecked)
-            {
-                // Deallocate after warning
+        //private void checkAutomaticPaymentAllocation_Clicked(object sender, RoutedEventArgs e)
+        //{
+        //    CheckBox lCheckBox = (CheckBox)e.OriginalSource;
+        //    if (!(bool)lCheckBox.IsChecked)
+        //    {
+        //        // Deallocate after warning
 
-                if (MessageBoxResult.Yes == MessageBox.Show("This will remove all previous payment allocations, whether automatic or manual. Do you want to continue?", "Warning", MessageBoxButton.YesNo))
-                {
-                    CustomerBiz.Deallocate(gCustomerData.CustomerId);
-                }
-            }
-        }
+        //        if (MessageBoxResult.Yes == MessageBox.Show("This will remove all previous payment allocations, whether automatic or manual. Do you want to continue?", "Warning", MessageBoxButton.YesNo))
+        //        {
+        //            CustomerBiz.Deallocate(gCustomerData.CustomerId);
+        //        }
+        //    }
+        //}
 
         private void CommentDataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
         {

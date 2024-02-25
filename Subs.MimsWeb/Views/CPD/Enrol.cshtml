@@ -49,11 +49,11 @@
         <div>
             @foreach (CPD.Data.AvailableSurvey item in @Model)
             {
-                <div class="container">
-                    <div class="col1"><a asp-controller="Test" asp-action="EnrolModule" asp-route-id="@item.SurveyId">Enrol</a></div>
-                    <div class="col2">@item.Publication</div>
-                    <div class="col3">@item.ExpirationDate</div>
-                </div>
+            <div class="container">
+                <div class="col1">@Html.ActionLink("Enrol", "Enrol", new { EBookURL = item.EBookURL }, new { target = "_blank" })</div>
+                <div class="col2">@item.Publication</div>
+                <div class="col3">@item.ExpirationDate</div>
+            </div>
             }
     </div>
 </div>

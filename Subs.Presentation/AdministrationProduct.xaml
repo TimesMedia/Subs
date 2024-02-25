@@ -314,6 +314,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Binding="{Binding EBookURL}" Header="EBookURL"/>
+                        <DataGridTextColumn Binding="{Binding EBookImage}" Header="EBookImage"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <Button x:Name="buttonAddIssue" Grid.Row="1" Grid.Column="0" Content="Add an issue" Height="30" Width="75" Click="buttonAddIssue_Click"/>

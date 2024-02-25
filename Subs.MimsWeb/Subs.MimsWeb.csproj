@@ -346,6 +346,7 @@
     <Content Include="Content\EBooks\IVS20233.pdf" />
     <Content Include="Content\EBooks\MDRVol58.pdf" />
     <Content Include="Content\EBooks\Psychiatry.pdf" />
+    <Content Include="Content\EBooks\oncology3.pdf" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Properties\PublishProfiles\IISProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\IISProfile2.pubxml" />

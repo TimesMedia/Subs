@@ -460,10 +460,14 @@ namespace Subs.Presentation
                 lIssueRow.Year = lYear;
                 lIssueRow.No = 1;
                 lIssueRow.ProductId = gCurrentProductId;
+                lIssueRow.Sequence = 0;
                 lIssueRow.StartDate = lStartDate;
                 lIssueRow.EndDate = lIssueRow.StartDate.AddMonths(1);
                 lIssueRow.SellOption = 3;
                 lIssueRow.StockProduced = 0;
+                lIssueRow.StockDelivered = 0;
+                lIssueRow.StockLost = 0;
+                lIssueRow.StockReturned = 0;
                 lIssueRow.ModifiedBy = System.Environment.UserName;
                 lIssueRow.ModifiedOn = DateTime.Now;
                 gProductDoc.Issue.AddIssueRow(lIssueRow);

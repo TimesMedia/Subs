@@ -144,10 +144,7 @@ namespace MimsWeb.Controllers
             return View();
         }
 
-
-
-
-public ActionResult Enrol()
+        public ActionResult Enrol()
         {
 
             List<AvailableSurvey> lSurveys = ModuleData.GetAvailableTest(1);

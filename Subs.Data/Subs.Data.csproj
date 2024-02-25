@@ -143,6 +143,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AdministrationDoc.xsd</DependentUpon>
     </Compile>
+    <Compile Include="AllocationData.cs" />
     <Compile Include="Base.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="NoteData.cs" />

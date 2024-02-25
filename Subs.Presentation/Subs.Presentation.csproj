@@ -31,7 +31,7 @@
     <ProductName>Mims subscription</ProductName>
     <PublisherName>ARENA</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>429</ApplicationRevision>
+    <ApplicationRevision>438</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -188,6 +188,9 @@
       <DependentUpon>SBBankStatement.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="StatementControl.xaml.cs">
+      <DependentUpon>StatementControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StatementControl2.xaml.cs">
       <DependentUpon>StatementControl2.xaml</DependentUpon>
     </Compile>
@@ -477,6 +480,10 @@
     <Page Include="SBBankStatement.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StatementControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StatementControl2.xaml">
       <Generator>MSBuild:Compile</Generator>

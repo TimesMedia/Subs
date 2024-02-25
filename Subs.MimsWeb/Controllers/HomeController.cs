@@ -1045,13 +1045,18 @@ namespace Subs.MimsWeb.Controllers
                 }
   
 
+                // Remove accidental blanks from the entered password.
+
+                pLoginRequest.Password = pLoginRequest.Password.Replace(" ", "");
+
                 if (lCustomerData.Password1 == pLoginRequest.Password)
                 {
                     pLoginRequest.Email = lCustomerData.EmailAddress;
                     pLoginRequest.CountryId = lCustomerData.CountryId;
                     pLoginRequest.TimeStamp = DateTime.Now;
                     SessionHelper.Set(Session, SessionKey.LoginRequest, pLoginRequest);
-                 
+
+                    ExceptionData.WriteException(5, "Login", this.ToString(), "CustomerId","",(int)pLoginRequest.CustomerId);
 
                     // Process preselections if there are any
 
@@ -1083,7 +1088,7 @@ namespace Subs.MimsWeb.Controllers
                 else
                 {
                     ExceptionData.WriteException(5, "Invalid password", this.ToString(), "Login post",
-                                                 "-" + pLoginRequest.Password + "-" + pLoginRequest.CustomerId.ToString() +"-" + lCustomerData.Password1 + "-");
+                                                 "Typed-" + pLoginRequest.Password + "-" + pLoginRequest.CustomerId.ToString() +"-" + lCustomerData.Password1 + "-");
                     ViewBag.Message = "Unfortunately, your password did not match. Please try again.";
                     return View();
                 }
@@ -1379,17 +1384,17 @@ namespace Subs.MimsWeb.Controllers
         {
             try
             {
-                LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+                //LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
 
-                DateTime lStartTime;
-                DateTime lEndTime;
-                TimeSpan lInterval;
+                //DateTime lStartTime;
+                //DateTime lEndTime;
+                //TimeSpan lInterval;
 
-                lStartTime = lLoginRequest.TimeStamp;
+                //lStartTime = lLoginRequest.TimeStamp;
    
-                lEndTime = DateTime.Now;
-                lInterval = lEndTime - lStartTime;
-                ExceptionData.WriteException(5, "End of shop session", this.ToString(), "Thanks","Duration in seconds = " + lInterval.TotalSeconds.ToString(),(int)lLoginRequest.CustomerId);
+                //lEndTime = DateTime.Now;
+                //lInterval = lEndTime - lStartTime;
+                //ExceptionData.WriteException(5, "End of shop session", this.ToString(), "Thanks","Duration in seconds = " + lInterval.TotalSeconds.ToString(),(int)lLoginRequest.CustomerId);
                 Session.Abandon();
                 return View();
 

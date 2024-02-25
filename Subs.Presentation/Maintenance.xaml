@@ -151,8 +151,8 @@
                     <StackPanel Orientation="Horizontal">
                         <Button x:Name="buttonLiability" Content="Liability audit" HorizontalAlignment="Left"  Padding="3" Margin="5"
                         Click="buttonLiabilities_Click" Tag="AuthorityHighest" Loaded="SetVisibility"/>
-                        <Button x:Name="buttonInvoiceDistribution" Content="Reallocate all invoices" HorizontalAlignment="Left"  Padding="3" Margin="5"
-                        Click="buttonReallocateAllInvoices_Click" Tag="AuthorityHighest" Loaded="SetVisibility"/>
+                        <!--<Button x:Name="buttonInvoiceDistribution" Content="Reallocate all invoices" HorizontalAlignment="Left"  Padding="3" Margin="5"
+                        Click="buttonReallocateAllInvoices_Click" Tag="AuthorityHighest" Loaded="SetVisibility"/>-->
 
                     </StackPanel>
                 </GroupBox>

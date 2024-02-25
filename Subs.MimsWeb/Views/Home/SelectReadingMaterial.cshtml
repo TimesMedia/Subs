@@ -35,34 +35,79 @@
             height: 450px;
             overflow-y: auto;
         }
+
+        .blokcontainer {
+            display: flex;
+            flex-flow: row wrap;
+        }
+
+        .insideblokcontainer {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: center;
+            border: solid 1px lightgray;
+            width: 200px;
+            height: 350px;
+            margin: 1em 1em 1em 1em;
+            font-size: 14px;
+        }
+
+        .imageinblok {
+            border: none;
+            width: 150px;
+            height: 200px;
+        }
     </style>
 
+    <script>
+        function Describe(i) {
+        var Target = document.getElementsByName('lDescription')[i];
+        Target.style.visibility = 'visible';
+        Target.style.zIndex = 100;
+        }
 
+        function Undescribe(i) {
+        var Target = document.getElementsByName('lDescription')[i];
+        Target.style.visibility = 'hidden';
+        }
 
+    </script>
 </head>
 <body>
 
     @Html.ViewBag.Message
 
     <div class="scrollable">
-        <div class="container" style="color:blue;">
-            <div class="col2">Command</div>
-            <div class="col2">Description</div>
-        </div>
-
+       
 
         @if (@Model != null)
         {
-            foreach (var item in @Model)
-            {
-    <div class="container">
+            <div class="blokcontainer">
+                @{
+                    int i = 0;
+                    if (Model != null)
+                    {
+ 
+                        foreach (ReadingMaterial p in Model)
+                        {
+                            <div class="insideblokcontainer">
+                                <textarea rows="3" cols="23" readonly style="font-size:14px;font-weight:500;" onmouseover="Describe(@i)" onmouseout="Undescribe(@i)">@p.Heading</textarea>
 
-        <div class="col2">@Html.ActionLink("Select", "DisplayReadingMaterial", new { EBookURL = item.EBookURL }, new { target="_blank"})</div>
+                                <div class="imageinblok" onmouseover="Describe(@i)" onmouseout="Undescribe(@i)" style="background: url(data:jpeg;base64,@p.EBookImage);background-size:100% 100%;">
+                                </div>
 
-        <div class="col2">@item.Description</div>
-    </div>
-            }
-        }
+                                <div class="DescriptionStyle" name="lDescription">
+                                    @Html.Raw(p.Description)
+                                </div>
+                                i++;
+                            </div>
+                        }
+                    }
+                }
+            </div>
+         }
+
     </div>
 </body>
 </html>

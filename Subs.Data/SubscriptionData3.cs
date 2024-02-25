@@ -26,10 +26,12 @@ namespace Subs.Data
 
     public class ReadingMaterial
     {
-       
         public int IssueId { get; set; }
+        public string Heading { get; set; }
         public string Description { get; set; }
         public string EBookURL { get; set; }
+        public  byte[] EBookImage { get; set; }
+        public bool Subscribed { get; set; }
     }
 
 
@@ -1039,9 +1041,11 @@ public static bool RegisterListDelivery(int pSubscriptionId, int pIssueId)
                     {
                         ReadingMaterial lReadingMaterial = new ReadingMaterial();
                         lReadingMaterial.IssueId = (int)lReader[0];
-                        lReadingMaterial.Description = (string)lReader[1];
-                        lReadingMaterial.EBookURL = (string)lReader[2];
-
+                        lReadingMaterial.Heading = (string)lReader[1];
+                        lReadingMaterial.Description = (string)lReader[2];
+                        lReadingMaterial.EBookURL = (string)lReader[3];
+                        lReadingMaterial.EBookImage = (byte[])lReader[4];
+                        lReadingMaterial.Subscribed = (bool)lReader[5];
                         lResults.Add(lReadingMaterial);
                     }
                 }

@@ -242,8 +242,8 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <CheckBox x:Name="checkAutomaticPaymentAllocation" Content="Automatic payment allocation" IsChecked="{Binding AutomaticPaymentAllocation}" IsThreeState="False" 
-                      Margin="10,10,0,0" Click="checkAutomaticPaymentAllocation_Clicked"/>
+            <!--<CheckBox x:Name="checkAutomaticPaymentAllocation" Content="Automatic payment allocation" IsChecked="{Binding AutomaticPaymentAllocation}" IsThreeState="False" 
+                      Margin="10,10,0,0" Click="checkAutomaticPaymentAllocation_Clicked"/>-->
             <local:AddressTypeControl x:Name="AddressTypeControl"  Width="auto" Height="82" AddressType="{Binding AddressType, Mode=TwoWay}" 
                                       RadioButtonChanged="AddressTypeControl_RadioButtonChanged" Margin="0,10,0,10"/>
 

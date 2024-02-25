@@ -287,6 +287,57 @@ namespace Subs.Data
             }
         }
 
+
+        //public static int StartingBalance(CustomerData3.BalanceRecord pRecord)
+        //{
+        //    try
+        //    {
+        //        SqlConnection lConnection = new SqlConnection(Settings.ConnectionString);
+        //        lConnection.Open();
+        //        SqlCommand Command = new SqlCommand();
+        //        Command.CommandType = CommandType.StoredProcedure;
+        //        Command.Connection = lConnection;
+
+        //        Command.CommandText = "dbo.[MIMS.LedgerData.Update]";
+               
+        //        Command.Parameters.Add("@Operation", SqlDbType.Int);
+        //        Command.Parameters.Add("@Value", SqlDbType.Decimal);
+        //        Command.Parameters.Add("@InvoiceId", SqlDbType.Int);
+        //        Command.Parameters.Add("@DateFrom", SqlDbType.DateTime);
+
+        //        //Command.Parameters["@PayerId"].Value = pRecord.CustomerId;
+        //        Command.Parameters["@Operation"].Value = Operation.Balance;
+        //        Command.Parameters["@Value"].Value = pRecord.Amount;
+        //        Command.Parameters["@InvoiceId"].Value = pRecord.InvoiceId;
+        //        Command.Parameters["@DateFrom"].Value = pRecord.DateFrom;
+        //        int? Result = (int?)Command.ExecuteScalar();
+        //        if (Result != null && Result.HasValue)
+        //        {
+        //            return (int)Result;
+        //        }
+        //        else
+        //        {
+        //            throw new Exception("The query did not return any scalar");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (ex.InnerException == null)
+        //        {
+        //            ExceptionData.WriteException(1, ex.Message, "static LedgerData", "Pay", "InvoiceId = " + pRecord.InvoiceId.ToString());
+        //            throw new Exception("static LedgerData" + " : " + "StartingBalance" + " : ", ex);
+        //        }
+        //        else
+        //        {
+        //            throw ex; // Just bubble it up
+        //        }
+        //    }
+        //}
+
+
+
+
+
         public static int ReversePaymentCheck(int pPaymentTransactionId)
         {
             try

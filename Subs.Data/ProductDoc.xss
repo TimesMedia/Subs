@@ -11,18 +11,6 @@
     <Shape ID="DesignTable:Issue" ZOrder="2" X="182" Y="221" Height="324" Width="173" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
   </Shapes>
   <Connectors>
-    <Connector ID="DesignRelation:Product2_BaseRate" ZOrder="5" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>798</X>
-          <Y>312</Y>
-        </Point>
-        <Point>
-          <X>990</X>
-          <Y>312</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
     <Connector ID="DesignRelation:Product2_Issue" ZOrder="1" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -32,6 +20,18 @@
         <Point>
           <X>355</X>
           <Y>376</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
+    <Connector ID="DesignRelation:Product2_BaseRate" ZOrder="5" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>798</X>
+          <Y>312</Y>
+        </Point>
+        <Point>
+          <X>990</X>
+          <Y>312</Y>
         </Point>
       </RoutePoints>
     </Connector>

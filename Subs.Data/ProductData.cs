@@ -155,8 +155,6 @@ namespace Subs.Data
             {
                 gProductAdapter.AttachConnection();
 
-                //DesktopProducts.Clear();
-
                 gProductAdapter.FillById(gProductTable, 0, "Current");
             }
 

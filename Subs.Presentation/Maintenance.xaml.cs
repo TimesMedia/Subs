@@ -278,7 +278,7 @@ namespace Subs.Presentation
         {
             try
             {
-                StatementControl2 lStatementControl = new StatementControl2(pCustomerId, pStatementId);
+                StatementControl lStatementControl = new StatementControl(pCustomerId, pStatementId);
                 return "OK";
             }
 
@@ -1494,70 +1494,70 @@ namespace Subs.Presentation
         //}
 
 
-        private void buttonReallocateAllInvoices_Click(object sender, RoutedEventArgs e)
-        {
-            CustomerDoc2.LiabilityDataTable lLiabilityTable = new CustomerDoc2.LiabilityDataTable();
-            Subs.Data.CustomerDoc2TableAdapters.LiabilityTableAdapter lLiabilityAdapter = new Subs.Data.CustomerDoc2TableAdapters.LiabilityTableAdapter();
-            int lCurrentPayer = 0;
-            int lCounter = 0;
-            try
-            {
-                this.Cursor = Cursors.Wait;
-                ExceptionData.WriteException(5, "Reallocation job started on  " + DateTime.Now.ToString(), this.ToString(), "buttonReallocateAllInvoices_Click", "");
+        //private void buttonReallocateAllInvoices_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CustomerDoc2.LiabilityDataTable lLiabilityTable = new CustomerDoc2.LiabilityDataTable();
+        //    Subs.Data.CustomerDoc2TableAdapters.LiabilityTableAdapter lLiabilityAdapter = new Subs.Data.CustomerDoc2TableAdapters.LiabilityTableAdapter();
+        //    int lCurrentPayer = 0;
+        //    int lCounter = 0;
+        //    try
+        //    {
+        //        this.Cursor = Cursors.Wait;
+        //        ExceptionData.WriteException(5, "Reallocation job started on  " + DateTime.Now.ToString(), this.ToString(), "buttonReallocateAllInvoices_Click", "");
 
-                lLiabilityAdapter.AttachConnection();
-                lLiabilityAdapter.Fill(lLiabilityTable);
+        //        lLiabilityAdapter.AttachConnection();
+        //        lLiabilityAdapter.Fill(lLiabilityTable);
 
-                foreach (CustomerDoc2.LiabilityRow lRow in lLiabilityTable)
-                {
-                    lCounter++;
-                    lCurrentPayer = lRow.PayerId;
-                    {
-                        string lResult;
+        //        foreach (CustomerDoc2.LiabilityRow lRow in lLiabilityTable)
+        //        {
+        //            lCounter++;
+        //            lCurrentPayer = lRow.PayerId;
+        //            {
+        //                string lResult;
 
-                        if ((lResult = CustomerBiz.DistributeAllPayments(lRow.PayerId)) != "OK")
-                        {
-                            if (lResult.Contains("Nothing"))
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                MessageBox.Show(lResult);
-                                return;
-                            }
-                        }
-                    }
+        //                if ((lResult = CustomerBiz.DistributeAllPayments(lRow.PayerId)) != "OK")
+        //                {
+        //                    if (lResult.Contains("Nothing"))
+        //                    {
+        //                        continue;
+        //                    }
+        //                    else
+        //                    {
+        //                        MessageBox.Show(lResult);
+        //                        return;
+        //                    }
+        //                }
+        //            }
 
-                    if (lCounter % 10 == 0)
-                    {
-                        ExceptionData.WriteException(5, "Reallocation job progressed on  " + DateTime.Now.ToString(), this.ToString(), "buttonReallocateAllInvoices_Click", "Counter= " + lCounter.ToString());
-                    }
-                }
+        //            if (lCounter % 10 == 0)
+        //            {
+        //                ExceptionData.WriteException(5, "Reallocation job progressed on  " + DateTime.Now.ToString(), this.ToString(), "buttonReallocateAllInvoices_Click", "Counter= " + lCounter.ToString());
+        //            }
+        //        }
 
-                ExceptionData.WriteException(5, "Reallocation job finished on  " + DateTime.Now.ToString(), this.ToString(), "buttonReallocateAllInvoices_Click", "Counter= " + lCounter.ToString());
-                MessageBox.Show("Done!");
-            }
+        //        ExceptionData.WriteException(5, "Reallocation job finished on  " + DateTime.Now.ToString(), this.ToString(), "buttonReallocateAllInvoices_Click", "Counter= " + lCounter.ToString());
+        //        MessageBox.Show("Done!");
+        //    }
 
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonReallocateAllInvoices_Click",
-                        "PayerId = " + lCurrentPayer.ToString());
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
-            }
-            finally
-            {
-                this.Cursor = Cursors.Arrow;
-            }
-        }
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonReallocateAllInvoices_Click",
+        //                "PayerId = " + lCurrentPayer.ToString());
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
+        //    }
+        //    finally
+        //    {
+        //        this.Cursor = Cursors.Arrow;
+        //    }
+        //}
 
 
 
@@ -1568,7 +1568,7 @@ namespace Subs.Presentation
 
         private void buttonTest_Click(object sender, RoutedEventArgs e)
         {
-            string lSubject = "SUBS Tax Invoice - Customerid = 118957";
+            string lSubject = "SUBS Tax Invoice - Customerid = 120072";
 
             string lBody = "Dear Client\n\n"
              + "Attached herewith your Tax invoice. This tax invoice is a legal document and should be submitted to SARS with your VAT return.\n"
@@ -1586,7 +1586,7 @@ namespace Subs.Presentation
              + "P O Box 1746, Saxonworld, Johannesburg, 2132\n"
              + "www.mims.co.za";
 
-            MessageBox.Show(CustomerBiz.SendSMTP("", "heinreitmann@gmail.com", lSubject, lBody ));            
+            MessageBox.Show(Subs.Business.CustomerBiz.SendSMTP("", "heinreitmann@gmail.com", lSubject, lBody ));            
 
         }
     }
