@@ -374,7 +374,7 @@ namespace Subs.Presentation
                     {
                         string lResult;
 
-                        if ((lResult = StatementControl2.SendEmail(lRow.StatementId, lCurrentCustomerId, lRow.EMailAddress)) != "OK")
+                        if ((lResult = StatementControl.SendEmail(lRow.StatementId, lCurrentCustomerId, lRow.EMailAddress)) != "OK")
                         {
                             lError = true;
                             Log(lResult);
@@ -1346,7 +1346,11 @@ namespace Subs.Presentation
                     {
                         string lResult;
 
-                        if ((lResult = CustomerData3.CalulateLiability(lRow.PayerId, ref lLiabilityRecords, ref lJournalLiability)) != "OK")
+                        CustomerData3 lCustomerData = new CustomerData3(lRow.PayerId);
+
+
+
+                        if ((lResult = lCustomerData.CalculateLiability2(ref lLiabilityRecords, ref lJournalLiability)) != "OK")
                         {
                             if (lResult.Contains("Nothing"))
                             {

@@ -63,7 +63,7 @@ namespace Subs.Data
 
             try
             {
-                // Create the inital records and balances
+                 // Create the inital records and balances
 
                 if (!GetNextPayment())
                 {
@@ -259,52 +259,103 @@ namespace Subs.Data
 
                 bool GetNextInvoice()
                 {
-                    if (gInvoiceQueue.Count == 0)
+                    try 
+                    { 
+                        if (gInvoiceQueue.Count == 0)
+                        {
+                            return false;
+                        }
+
+                        // Skip the records that do not contain totals.
+                        do
+                        {
+                            NextInvoice:
+                            lInvoiceRow = gInvoiceQueue.Dequeue();
+                            if (lInvoiceRow.Balance == 0)
+                            {
+                                goto NextInvoice;
+                            }
+                        } while (!lInvoiceRow.LastRow && gInvoiceQueue.Count != 0);
+
+                        gInvoiceBalance = gInvoiceBalance + lInvoiceRow.Balance;
+                        return true; 
+                    }
+                    catch (Exception ex)
                     {
-                        return false;
+                        //Display all the exceptions
+
+                        Exception CurrentException = ex;
+                        int ExceptionLevel = 0;
+                        do
+                        {
+                            ExceptionLevel++;
+                            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "GetNextInvoice",
+                                "PaymentTransactionId = " + lCurrentPaymentTransactionId.ToString());
+                            CurrentException = CurrentException.InnerException;
+                        } while (CurrentException != null);
+
+                        throw ex;
                     }
 
-                    // Skip the records that do not contain totals.
-                    do
-                    {
-                        NextInvoice:
-                        lInvoiceRow = gInvoiceQueue.Dequeue();
-                        if (lInvoiceRow.Balance == 0)
-                        {
-                            goto NextInvoice;
-                        }
-                    } while (!lInvoiceRow.LastRow && gInvoiceQueue.Count != 0);
-
-                   
-                    gInvoiceBalance = gInvoiceBalance + lInvoiceRow.Balance;
-                    return true;
                 }
 
                 bool GetNextPayment()
                 {
-                    if (gPaymentQueue.Count == 0)
-                    {
-                        return false;
-                    }
-
-                    // Skip the records that do not contain totals.
-                    do
-                    {
-                        NextPayment:
-                        lPaymentRow = gPaymentQueue.Dequeue();
-                        if (lPaymentRow.Balance == 0)
+                    try
+                    { 
+                        if (gPaymentQueue.Count == 0)
                         {
-                            goto NextPayment;
+                            return false;
                         }
-                    } while (!lPaymentRow.LastRow && gPaymentQueue.Count != 0);
 
-                    gPaymentBalance = gPaymentBalance + lPaymentRow.Balance;
-                    return true;
+                        // Skip the records that do not contain totals.
+                        do
+                        {
+                            NextPayment:
+                            lPaymentRow = gPaymentQueue.Dequeue();
+                            if (lPaymentRow.Balance == 0)
+                            {
+                                if (gPaymentQueue.Count == 0)
+                                {
+                                    return false;
+                                }
+                                else
+                                { 
+                                    goto NextPayment;
+                                }
+                            }
+                        } while (!lPaymentRow.LastRow && gPaymentQueue.Count != 0);
+
+                        gPaymentBalance = gPaymentBalance + lPaymentRow.Balance;
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        //Display all the exceptions
+
+                        Exception CurrentException = ex;
+                        int ExceptionLevel = 0;
+                        do
+                        {
+                            ExceptionLevel++;
+                            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "GetNextPayment",
+                                "PaymentTransactionId = " + lCurrentPaymentTransactionId.ToString());
+                            CurrentException = CurrentException.InnerException;
+                        } while (CurrentException != null);
+
+                        throw ex;
+                    }
                 }
+
+                //*********************************************************************************************************
+
 
                 return gFinalList;
 
-            }
+
+           
+
+        }
             catch (Exception ex)
             {
                 //Display all the exceptions
@@ -314,7 +365,7 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "PostProcessCustomer", 
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "AllocatePayments", 
                         "PaymentTransactionId = " + lCurrentPaymentTransactionId.ToString());
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);

@@ -18,6 +18,7 @@ namespace Subs.Data
         public int TransactionId {get; set;}
         public int InvoiceId {get; set;}
         public System.DateTime Date {get; set;}
+        public System.DateTime CaptureDate { get; set; }
         public string Operation { get; set; }
         public int OperationId { get; set; }
         public decimal Amount { get; set; }
@@ -44,7 +45,7 @@ namespace Subs.Data
         #region Globals - private
 
         private readonly Subs.Data.CustomerDoc2.CustomerDataTable gTable = new CustomerDoc2.CustomerDataTable();
-        private readonly static SqlConnection gConnection = new SqlConnection();
+        private readonly SqlConnection gConnection = new SqlConnection();
         private readonly Subs.Data.CustomerDoc2TableAdapters.CustomerTableAdapter gCustomerAdapter = new CustomerDoc2TableAdapters.CustomerTableAdapter();
         private readonly Subs.Data.SBDebitOrderDocTableAdapters.SBDebitOrderTableAdapter gSBDebitOrderAdapter = new SBDebitOrderDocTableAdapters.SBDebitOrderTableAdapter();
         private readonly Subs.Data.ClassificationDoc2.CustomerClassificationDataTable gCustomerClassificationAdapter = new ClassificationDoc2.CustomerClassificationDataTable();
@@ -57,6 +58,10 @@ namespace Subs.Data
         private List<InvoiceAndPayment> gInvoiceAllocations = new List<InvoiceAndPayment>();
         private List<InvoiceAndPayment> gAllInvoiceAndPayment = new List<InvoiceAndPayment>();
        
+        private decimal gDue = 0.0M;
+        private bool gDueSet = false;
+
+
 
         //public class InvoiceAndPayment
         //{
@@ -77,7 +82,7 @@ namespace Subs.Data
         {
             try
             { 
-            if (!SetConnection()) { return; }
+            //if (!SetConnection()) { return; }
             gTable.Clear(); //Start with a clean slate
             gTable.AcceptChanges(); // Do not attempt to reconcile with the database
 
@@ -110,14 +115,22 @@ namespace Subs.Data
             }
         }
 
+
+        //~CustomerData3()
+        //{
+        //     gConnection.Close();
+        //}
+
+       
+
         public CustomerData3(int CustomerId)
         {
             try
             {
-                if (!SetConnection())
-                {
-                    throw new Exception("Error in CustomerData3 constructor: SetConnection ");
-                }
+                //if (!SetConnection())
+                //{
+                //    throw new Exception("Error in CustomerData3 constructor: SetConnection ");
+                //}
                 if (!Load(CustomerId, out string Message))
                 {
                     if (!Message.Contains("There is no such customer"))
@@ -148,29 +161,32 @@ namespace Subs.Data
 
         #region Housekeeping methods
 
-        private bool SetConnection()
-        {
-            try
-            {
-                // Set the connectionString for this object
-                if (Settings.ConnectionString != "")
-                {
-                    gConnection.ConnectionString = Settings.ConnectionString;
-                    gCustomerAdapter.AttachConnection();
-                    return true;
-                }
-                else return false;
-            }
-            catch (Exception Ex)
-            {
-                string lDummy = Ex.Message;
-                return false;
-            }
-        }
+        //private bool SetConnection()
+        //{
+        //    try
+        //    {
+        //        // Set the connectionString for this object
+        //        if (Settings.ConnectionString != "")
+        //        {
+        //            gConnection.ConnectionString = Settings.ConnectionString;
+        //            gCustomerAdapter.AttachConnection();
+        //            gConnection.Open();
+        //            return true;
+        //        }
+        //        else return false;
+        //    }
+        //    catch (Exception Ex)
+        //    {
+        //        string lDummy = Ex.Message;
+        //        return false;
+        //    }
+        //}
 
 
         private bool Load(int CustomerId, out string Message)
         {
+
+            SqlConnection Connection = new SqlConnection(Settings.ConnectionString);
             try
             {
                 // Cleanup before you start a new one
@@ -180,9 +196,9 @@ namespace Subs.Data
 
                 SqlCommand Command = new SqlCommand();
                 SqlDataAdapter Adaptor = new SqlDataAdapter();
-                gConnection.Open();
-
-                Command.Connection = gConnection;
+              
+                Connection.Open();
+                Command.Connection = Connection;
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = "dbo.[MIMS.CustomerDoc.Customer.FillById]";
                 SqlCommandBuilder.DeriveParameters(Command);
@@ -217,7 +233,7 @@ namespace Subs.Data
             }
             finally
             {
-                gConnection.Close();
+                Connection.Close();
             }
         }
 
@@ -263,7 +279,7 @@ namespace Subs.Data
             }
             finally
             {
-                gConnection.Close();
+                //gConnection.Close();
             }
         }
 
@@ -334,6 +350,7 @@ namespace Subs.Data
 
         public List<InvoiceAndPayment> GetInvoiceAndPayment(int pInvoiceId, decimal pBalance)
         {
+            int lCurrentTransactionId = 0;
             try
             {
                 List<InvoiceAndPayment> lInvoiceAndPayments = new List<InvoiceAndPayment>();
@@ -346,7 +363,7 @@ namespace Subs.Data
                 lConnection.Open();
                 Command.Connection = lConnection;
                 Command.CommandType = CommandType.StoredProcedure;
-                Command.CommandText = "[dbo].[MIMS.CustomerDoc.Due2]";
+                Command.CommandText = "[dbo].[MIMS.CustomerDoc.Due3]";
 
                 Command.Parameters.Add("@PayerId", SqlDbType.Int);
                 Command.Parameters["@PayerId"].Value = CustomerId;
@@ -361,16 +378,21 @@ namespace Subs.Data
 
                 while (lReader.Read())
                 {
+                    lCurrentTransactionId = lReader.GetInt32(0);
+
                     InvoiceAndPayment lInvoiceAndPayment = new InvoiceAndPayment();
                     lInvoiceAndPayment.TransactionId = lReader.GetInt32(0);
                     lInvoiceAndPayment.InvoiceId = lReader.GetInt32(1);
                     lInvoiceAndPayment.Date = lReader.GetDateTime(2);
-                    lInvoiceAndPayment.OperationId = lReader.GetInt32(3);
-                    lInvoiceAndPayment.Operation = lReader.GetString(4);
-                    lInvoiceAndPayment.Value = lReader.GetDecimal(5);
-                    lInvoiceAndPayment.DueValue = lReader.GetDecimal(6);
+                    lInvoiceAndPayment.CaptureDate = lReader.GetDateTime(3);
+                    lInvoiceAndPayment.OperationId = lReader.GetInt32(4);
+                    lInvoiceAndPayment.Operation = lReader.GetString(5);
+                    lInvoiceAndPayment.Value = lReader.GetDecimal(6);
+                    lInvoiceAndPayment.DueValue = lReader.GetDecimal(7);
                     lInvoiceAndPayments.Add(lInvoiceAndPayment);
                 }
+
+                //lReader.Close();
 
                 //Calculate the balance values
 
@@ -390,7 +412,7 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomersData", "GetInvoiceAndPayments", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomersData", "GetInvoiceAndPayments", "CurrentTransactionId = " + lCurrentTransactionId.ToString());
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
@@ -1756,9 +1778,14 @@ namespace Subs.Data
             {
                 try
                 {
+                    if (gDueSet)
+                    {
+                        return gDue;
+                    }
+
                     // Load the relevant Balance records 
 
-                    List<InvoiceAndPayment> lInvoiceAndPayment = new List<InvoiceAndPayment>(); 
+                    List<InvoiceAndPayment> lInvoiceAndPayment = new List<InvoiceAndPayment>();
 
                     if (BalanceInvoiceId == 0)
                     {
@@ -1781,8 +1808,11 @@ namespace Subs.Data
                             throw new Exception("No balance records found");
                         }
                     }
-                   
-                    return (decimal)lInvoiceAndPayment.Sum( p => p.Value);
+
+                    gDue = (decimal)lInvoiceAndPayment.Sum(p => p.Value);
+                    gDueSet = true;
+
+                    return gDue;
   
                 }
                 catch (Exception Ex)
@@ -2262,7 +2292,7 @@ namespace Subs.Data
                 {
                     SqlCommand Command = new SqlCommand();
                     SqlDataAdapter Adaptor = new SqlDataAdapter();
-                    gConnection.Open();
+                    //gConnection.Open();
                     Command.Connection = gConnection;
                     Command.CommandType = CommandType.StoredProcedure;
                     Command.CommandText = "[MIMS.CustomerData.NumberOfActiveSubscriptions]";
@@ -2298,7 +2328,7 @@ namespace Subs.Data
 
                 finally
                 {
-                    gConnection.Close();
+                    //gConnection.Close();
                 }
             }
         }
@@ -2345,312 +2375,313 @@ namespace Subs.Data
 
         #region Direct static queries on the data
 
-        public static string PopulateInvoice(int pPayerId, out List<Subs.Data.InvoicesAndPayments> pAllInvoicesAndPayments)
-        {
-            pAllInvoicesAndPayments = null;
-            List<Subs.Data.InvoicesAndPayments> lPayment = null;
-            List<Subs.Data.InvoicesAndPayments> lInvoice = null;
-            try
+        //public static string PopulateInvoice(int pPayerId, out List<Subs.Data.InvoicesAndPayments> pAllInvoicesAndPayments)
+        //{
+        //    pAllInvoicesAndPayments = null;
+        //    List<Subs.Data.InvoicesAndPayments> lPayment = null;
+        //    List<Subs.Data.InvoicesAndPayments> lInvoice = null;
+        //    try
 
-            {
-                MIMSDataContext lContext = new MIMSDataContext(Settings.ConnectionString);
-                pAllInvoicesAndPayments = lContext.MIMS_DataContext_InvoicesAndPayments(pPayerId).ToList();
+        //    {
+        //        MIMSDataContext lContext = new MIMSDataContext(Settings.ConnectionString);
+        //        pAllInvoicesAndPayments = lContext.MIMS_DataContext_InvoicesAndPayments(pPayerId).ToList();
 
-                if (pAllInvoicesAndPayments.Count == 0)
-                {
-                    return "Nothing found. There were no new invoices since the last checkpoints.";
-                }
+        //        if (pAllInvoicesAndPayments.Count == 0)
+        //        {
+        //            return "Nothing found. There were no new invoices since the last checkpoints.";
+        //        }
 
-                decimal lInvoiceBalance = 0;
-                decimal lStatementBalance = 0;
-                int lCurrentInvoiceId = 0;
+        //        decimal lInvoiceBalance = 0;
+        //        decimal lStatementBalance = 0;
+        //        int lCurrentInvoiceId = 0;
 
-                // Create a list of all the invoiceids in this report.
+        //        // Create a list of all the invoiceids in this report.
 
-                IEnumerable<int> lInvoicesInReport = pAllInvoicesAndPayments.ToList().Where(q => q.Operation == "Invoice").Select(p => p.InvoiceId).Distinct();
+        //        IEnumerable<int> lInvoicesInReport = pAllInvoicesAndPayments.ToList().Where(q => q.Operation == "Invoice").Select(p => p.InvoiceId).Distinct();
 
-                if (lInvoicesInReport.Count() == 0)
-                {
-                    return "Nothing found. There were no new invoices since the last checkpoints.";
-                }
-
-
-                if (lInvoicesInReport.Contains(0))
-                {
-                    return "Nothing: I cannot do anything with a subscription that is not invoiced! ";
-                }
-
-     
-
-                // Set Balance to LastRow **********************************************************************************************
-
-                  IEnumerable<Subs.Data.InvoicesAndPayments> lElement = pAllInvoicesAndPayments.Where(q => q.OperationId == (int)Operation.Balance).ToList();
-                if (lElement.Count() == 1)
-                {
-                    lElement.First().LastRow = true;
-                }
-
-                // Process the payments by grouping the relevant stuff together *********************************************************
-
-                lPayment = pAllInvoicesAndPayments.Where(p => p.OperationId == (int)Operation.Balance
-                                                      || p.OperationId == (int)Operation.Pay
-                                                      || p.OperationId == (int)Operation.Refund
-                                                      || p.OperationId == (int)Operation.ReversePayment).OrderBy(q => q.TransactionId).ThenBy(r => r.Date).ToList();
-
-                Subs.Data.InvoicesAndPayments lPreviousPaymentRow = null;
-                Subs.Data.InvoicesAndPayments lPreviousInvoiceRow = null;
-                int lCurrentTransactionId = 0;
-                decimal lPaymentBalance = 0M;
-
-                foreach (Subs.Data.InvoicesAndPayments lRow in lPayment)
-                {
-                    lRow.LastRow = false;
-
-                    if (lCurrentTransactionId == lRow.TransactionId)
-                    {
-                        lRow.FirstRow = false;
-                        lPaymentBalance = lPaymentBalance + (decimal)lRow.Value;
-                    }
-                    else
-                    {
-                        // Complete the previous group on the same transactionid.
-
-                        if (lPreviousPaymentRow != null)
-                        {
-                            lPreviousPaymentRow.LastRow = true;
-                            lPreviousPaymentRow.Balance = lPaymentBalance;
-                        }
-
-                        // Work with the new invoice
-                        lRow.FirstRow = true;
-                        lCurrentTransactionId = lRow.TransactionId;
-                        lPaymentBalance = lRow.Value;
-                    }
-                    lPreviousPaymentRow = lRow;
-                }
-
-                // Do the last row
-                if (lPreviousPaymentRow != null)
-                {
-                    lPreviousPaymentRow.LastRow = true;
-                    lPreviousPaymentRow.Balance = lPaymentBalance;
-                }
+        //        if (lInvoicesInReport.Count() == 0)
+        //        {
+        //            return "Nothing found. There were no new invoices since the last checkpoints.";
+        //        }
 
 
-                // Calculate the invoices ******************************************************************************************
-
-                lInvoice = pAllInvoicesAndPayments.Where(p => !(p.OperationId == (int)Operation.Balance
-                                                        || p.OperationId == (int)Operation.Pay
-                                                        || p.OperationId == (int)Operation.Refund
-                                                        || p.OperationId == (int)Operation.ReversePayment)).OrderBy(q => q.InvoiceId).ThenBy(r => r.Date).ToList();
-
-                foreach (Subs.Data.InvoicesAndPayments lRow in lInvoice)
-                {
-                    lRow.LastRow = false;
-
-                    if (lRow.InvoiceId == lCurrentInvoiceId)
-                    {
-                        //This is a subsequent row
-                        lRow.FirstRow = false;
-                        lInvoiceBalance = lInvoiceBalance + (decimal)lRow.Value;
-                    }
-                    else
-                    {
-                        // Complete the old invoice
-
-                        if (lPreviousInvoiceRow != null)
-                        {
-                            lPreviousInvoiceRow.LastRow = true;
-                            lPreviousInvoiceRow.Balance = lInvoiceBalance;
-                            lInvoiceBalance = 0;
-                        }
-
-                        // Work with the new invoice
-                        lRow.FirstRow = true;
-                        lCurrentInvoiceId = lRow.InvoiceId;
-                        lInvoiceBalance = lRow.Value;
-                    }
-
-                    lPreviousInvoiceRow = lRow;
-                }
-
-                // Do the last row.
-                if (lPreviousInvoiceRow != null)
-                {
-                    lPreviousInvoiceRow.LastRow = true;
-                    lPreviousInvoiceRow.Balance = lInvoiceBalance;
-                }
-
-   
-                // Adjust the Payment balances ******************************************************************************
-
-                foreach (Subs.Data.InvoicesAndPayments lRow in lPayment)
-                {
-                    if (lRow.LastRow)
-                    {
-                        // This is the last row on a particular payment transactionId
-                        // Get all the allocations on that PaymentTransactionId
-                        
-                        List<Subs.Data.InvoicesAndPayments> lAllocatedPayments =
-                            lInvoice.Where(p => {return  p.OperationId == ((int)Operation.AllocatePaymentToInvoice) && (p.TransactionId == lRow.TransactionId); }).ToList();
-                                              
-                        lRow.Balance = lRow.Balance - lAllocatedPayments.Sum(q => q.Value);
-                        // So, what remains is the net value that has not been allocated yet, shown on the last row.
-                    }
-                }
-
-                // Combine the two collections into one collection
+        //        if (lInvoicesInReport.Contains(0))
+        //        {
+        //            return "Nothing: I cannot do anything with a subscription that is not invoiced! ";
+        //        }
 
 
-                pAllInvoicesAndPayments.Clear();
-                pAllInvoicesAndPayments.AddRange(lPayment);
-                pAllInvoicesAndPayments.AddRange(lInvoice);
 
-                lStatementBalance = 0;
+        //        // Set Balance to LastRow **********************************************************************************************
 
-                foreach (Subs.Data.InvoicesAndPayments lRow2 in pAllInvoicesAndPayments)
-                {
-                    lStatementBalance = lStatementBalance + lRow2.Balance;
+        //          IEnumerable<Subs.Data.InvoicesAndPayments> lElement = pAllInvoicesAndPayments.Where(q => q.OperationId == (int)Operation.Balance).ToList();
+        //        if (lElement.Count() == 1)
+        //        {
+        //            lElement.First().LastRow = true;
+        //        }
 
-                    if (lRow2.LastRow)
-                    {
-                        lRow2.StatementBalance = lStatementBalance;
-                    }
-                }
+        //        // Process the payments by grouping the relevant stuff together *********************************************************
 
-                return "OK";
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //        lPayment = pAllInvoicesAndPayments.Where(p => p.OperationId == (int)Operation.Balance
+        //                                              || p.OperationId == (int)Operation.Pay
+        //                                              || p.OperationId == (int)Operation.Refund
+        //                                              || p.OperationId == (int)Operation.ReversePayment).OrderBy(q => q.TransactionId).ThenBy(r => r.Date).ToList();
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomerData", "PopulateInvoices",
-                        "PayerId = " + pPayerId.ToString());
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Subs.Data.InvoicesAndPayments lPreviousPaymentRow = null;
+        //        Subs.Data.InvoicesAndPayments lPreviousInvoiceRow = null;
+        //        int lCurrentTransactionId = 0;
+        //        decimal lPaymentBalance = 0M;
 
-                return "Error in Populate Invoices: " + ex.Message + " PayerId = " + pPayerId.ToString();
-            }
-        }
+        //        foreach (Subs.Data.InvoicesAndPayments lRow in lPayment)
+        //        {
+        //            lRow.LastRow = false;
 
-  
-        public static string CalulateLiability(int pPayerId, ref List<LiabilityRecord> pLiabilityList, ref decimal pLiability)
-        {
-            try
-            {
-                List<InvoicesAndPayments> lInvoicesAndPayments;
+        //            if (lCurrentTransactionId == lRow.TransactionId)
+        //            {
+        //                lRow.FirstRow = false;
+        //                lPaymentBalance = lPaymentBalance + (decimal)lRow.Value;
+        //            }
+        //            else
+        //            {
+        //                // Complete the previous group on the same transactionid.
 
-                {
-                    string lResult;
+        //                if (lPreviousPaymentRow != null)
+        //                {
+        //                    lPreviousPaymentRow.LastRow = true;
+        //                    lPreviousPaymentRow.Balance = lPaymentBalance;
+        //                }
 
-                    if ((lResult = CustomerData3.PopulateInvoice(pPayerId, out lInvoicesAndPayments)) != "OK")
-                    {
-                        return lResult;
-                    }
-                }
+        //                // Work with the new invoice
+        //                lRow.FirstRow = true;
+        //                lCurrentTransactionId = lRow.TransactionId;
+        //                lPaymentBalance = lRow.Value;
+        //            }
+        //            lPreviousPaymentRow = lRow;
+        //        }
 
-
-                List<LiabilityRecord> lLiabilityList = lInvoicesAndPayments.Where(p => p.OperationId == (int)Operation.Pay
-                                                                                      || p.OperationId == (int)Operation.ReversePayment
-                                                                                      || p.OperationId == (int)Operation.Refund
-                                                                                      || p.OperationId == (int)Operation.Balance
-                                                                                      || p.OperationId == (int)Operation.WriteOffMoney
-                                                                                      || p.OperationId == (int)Operation.ReverseWriteOffMoney)
-                                                  .Select(v => new LiabilityRecord()
-                                                  {
-                                                      TransactionId = v.TransactionId,
-                                                      OriginalTransactionId = v.OriginalTransactionId,
-                                                      CaptureDate = v.CaptureDate,
-                                                      EffectiveDate = v.Date,
-                                                      Operation = v.Operation,
-                                                      OperationId = v.OperationId,
-                                                      InvoiceId = 0,
-                                                      SubscriptionId = 0,
-                                                      Value = v.Value
-                                                  }).ToList();
-
-                IEnumerable<int> lInvoices = (IEnumerable<int>)lInvoicesAndPayments.ToList<InvoicesAndPayments>().ToList().Select(p => p.InvoiceId).Distinct();
-
-                // Get deliveries
-
-                MIMSDataContext lContext = new MIMSDataContext(Settings.ConnectionString);
-                List<LiabilityRecord> lDeliveryList = (List<LiabilityRecord>)lContext.MIMS_DataContext_Deliveries(pPayerId).ToList();
-
-                foreach (LiabilityRecord lDelivery in lDeliveryList)
-                {
-                    // I do not work with deliveries that are not related to invoiced payments
-                    if (lInvoices.Contains(lDelivery.InvoiceId))
-                    {
-                        lLiabilityList.Add(lDelivery);
-                    }
-                }
-
-                // From here on switch the sign to represent Liability from our perspective
-
-                pLiability = -lLiabilityList.Sum(r => r.Value);
+        //        // Do the last row
+        //        if (lPreviousPaymentRow != null)
+        //        {
+        //            lPreviousPaymentRow.LastRow = true;
+        //            lPreviousPaymentRow.Balance = lPaymentBalance;
+        //        }
 
 
-                // I want to order by date, and then, within date, by transactionId. 
+        //        // Calculate the invoices ******************************************************************************************
 
-                // Convert to days without time, i.e. time = 00.00.00.000
+        //        lInvoice = pAllInvoicesAndPayments.Where(p => !(p.OperationId == (int)Operation.Balance
+        //                                                || p.OperationId == (int)Operation.Pay
+        //                                                || p.OperationId == (int)Operation.Refund
+        //                                                || p.OperationId == (int)Operation.ReversePayment)).OrderBy(q => q.InvoiceId).ThenBy(r => r.Date).ToList();
 
-                //Put the original transactionid back, so that you do not get duplicate keys in LiabilityRecord.
+        //        foreach (Subs.Data.InvoicesAndPayments lRow in lInvoice)
+        //        {
+        //            lRow.LastRow = false;
 
-                foreach (LiabilityRecord item in lLiabilityList)
-                {
-                    item.EffectiveDate = new DateTime(item.EffectiveDate.Year, item.EffectiveDate.Month, item.EffectiveDate.Day);
+        //            if (lRow.InvoiceId == lCurrentInvoiceId)
+        //            {
+        //                //This is a subsequent row
+        //                lRow.FirstRow = false;
+        //                lInvoiceBalance = lInvoiceBalance + (decimal)lRow.Value;
+        //            }
+        //            else
+        //            {
+        //                // Complete the old invoice
 
-                    if (item.OperationId == (int)Operation.ReversePayment || item.OperationId == (int)Operation.Refund)
-                    {
-                        item.PaymentTransactionId = item.TransactionId;
-                        item.TransactionId = (int)item.OriginalTransactionId;
-                    }
-                }
+        //                if (lPreviousInvoiceRow != null)
+        //                {
+        //                    lPreviousInvoiceRow.LastRow = true;
+        //                    lPreviousInvoiceRow.Balance = lInvoiceBalance;
+        //                    lInvoiceBalance = 0;
+        //                }
+
+        //                // Work with the new invoice
+        //                lRow.FirstRow = true;
+        //                lCurrentInvoiceId = lRow.InvoiceId;
+        //                lInvoiceBalance = lRow.Value;
+        //            }
+
+        //            lPreviousInvoiceRow = lRow;
+        //        }
+
+        //        // Do the last row.
+        //        if (lPreviousInvoiceRow != null)
+        //        {
+        //            lPreviousInvoiceRow.LastRow = true;
+        //            lPreviousInvoiceRow.Balance = lInvoiceBalance;
+        //        }
 
 
-                List<DateTime> lDates = (List<DateTime>)lLiabilityList.Select(o => o.EffectiveDate).Distinct().OrderBy(o => o.Date).ToList();
-                List<LiabilityRecord> lGroup = new List<LiabilityRecord>();
-                decimal lBalance = 0M;
+        //        // Adjust the Payment balances ******************************************************************************
 
-                foreach (DateTime lDate in lDates)
-                {
-                    lGroup = (List<LiabilityRecord>)lLiabilityList.Where(o => o.EffectiveDate == lDate).OrderBy(o => o.TransactionId).ToList();
-                    foreach (LiabilityRecord lRecord in lGroup)
-                    {
-                        lRecord.Value = -lRecord.Value;
-                        lBalance = lBalance + lRecord.Value;
-                        lRecord.Balance = lBalance;
-                    }
+        //        foreach (Subs.Data.InvoicesAndPayments lRow in lPayment)
+        //        {
+        //            if (lRow.LastRow)
+        //            {
+        //                // This is the last row on a particular payment transactionId
+        //                // Get all the allocations on that PaymentTransactionId
 
-                    foreach (LiabilityRecord lRecord in lGroup)
-                    {
-                        pLiabilityList.Add(lRecord);
-                    }
-                }
-                return "OK";
-            }
+        //                List<Subs.Data.InvoicesAndPayments> lAllocatedPayments =
+        //                    lInvoice.Where(p => {return  p.OperationId == ((int)Operation.AllocatePaymentToInvoice) && (p.TransactionId == lRow.TransactionId); }).ToList();
 
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //                lRow.Balance = lRow.Balance - lAllocatedPayments.Sum(q => q.Value);
+        //                // So, what remains is the net value that has not been allocated yet, shown on the last row.
+        //            }
+        //        }
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerData", "CalculateLiability", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        // Combine the two collections into one collection
 
-                return "Error in CalculateLiability: " + ex.Message;
-            }
-        }
+
+        //        pAllInvoicesAndPayments.Clear();
+        //        pAllInvoicesAndPayments.AddRange(lPayment);
+        //        pAllInvoicesAndPayments.AddRange(lInvoice);
+
+        //        lStatementBalance = 0;
+
+        //        foreach (Subs.Data.InvoicesAndPayments lRow2 in pAllInvoicesAndPayments)
+        //        {
+        //            lStatementBalance = lStatementBalance + lRow2.Balance;
+
+        //            if (lRow2.LastRow)
+        //            {
+        //                lRow2.StatementBalance = lStatementBalance;
+        //            }
+        //        }
+
+        //        return "OK";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
+
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomerData", "PopulateInvoices",
+        //                "PayerId = " + pPayerId.ToString());
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
+
+        //        return "Error in Populate Invoices: " + ex.Message + " PayerId = " + pPayerId.ToString();
+        //    }
+        //}
+
+
+        //public string CalulateLiability(int pPayerId, ref List<LiabilityRecord> pLiabilityList, ref decimal pLiability)
+        //{
+        //    try
+        //    {
+        //        List<InvoicesAndPayments> lInvoicesAndPayments;
+
+        //        {
+        //            string lResult;
+
+        //            if ((lResult = PopulateInvoice2()) != "OK")
+        //            {
+        //                return lResult;
+        //            }
+        //        }
+
+
+        //        List<LiabilityRecord> lLiabilityList = gAllInvoiceAndPayment.Where(p => p.OperationId == (int)Operation.Pay
+        //                                                                              || p.OperationId == (int)Operation.ReversePayment
+        //                                                                              || p.OperationId == (int)Operation.Refund
+        //                                                                              || p.OperationId == (int)Operation.Balance
+        //                                                                              || p.OperationId == (int)Operation.WriteOffMoney
+        //                                                                              || p.OperationId == (int)Operation.ReverseWriteOffMoney)
+        //                                          .Select(v => new LiabilityRecord()
+        //                                          {
+        //                                              TransactionId = v.TransactionId,
+        //                                              OriginalTransactionId = v.OriginalTransactionId,
+        //                                              CaptureDate = v.CaptureDate,
+        //                                              EffectiveDate = v.Date,
+        //                                              Operation = v.Operation,
+        //                                              OperationId = v.OperationId,
+        //                                              InvoiceId = 0,
+        //                                              SubscriptionId = 0,
+        //                                              Value = v.Value
+        //                                          }).ToList();
+
+        //        IEnumerable<int> lInvoices = (IEnumerable<int>)gAllInvoiceAndPayment.ToList<InvoicesAndPayments>().ToList().Select(p => p.InvoiceId).Distinct();
+
+        //        //Get deliveries
+
+        //        MIMSDataContext lContext = new MIMSDataContext(Settings.ConnectionString);
+        //        List<LiabilityRecord> lDeliveryList = (List<LiabilityRecord>)lContext.MIMS_DataContext_Deliveries(pPayerId).ToList();
+
+        //        foreach (LiabilityRecord lDelivery in lDeliveryList)
+        //        {
+        //            I do not work with deliveries that are not related to invoiced payments
+        //            if (lInvoices.Contains(lDelivery.InvoiceId))
+        //            {
+        //                lLiabilityList.Add(lDelivery);
+        //            }
+        //        }
+
+        //        From here on switch the sign to represent Liability from our perspective
+
+
+        //       pLiability = -lLiabilityList.Sum(r => r.Value);
+
+
+        //        I want to order by date, and then, within date, by transactionId.
+
+        //         Convert to days without time, i.e.time = 00.00.00.000
+
+        //        Put the original transactionid back, so that you do not get duplicate keys in LiabilityRecord.
+
+        //        foreach (LiabilityRecord item in lLiabilityList)
+        //        {
+        //            item.EffectiveDate = new DateTime(item.EffectiveDate.Year, item.EffectiveDate.Month, item.EffectiveDate.Day);
+
+        //            if (item.OperationId == (int)Operation.ReversePayment || item.OperationId == (int)Operation.Refund)
+        //            {
+        //                item.PaymentTransactionId = item.TransactionId;
+        //                item.TransactionId = (int)item.OriginalTransactionId;
+        //            }
+        //        }
+
+
+        //        List<DateTime> lDates = (List<DateTime>)lLiabilityList.Select(o => o.EffectiveDate).Distinct().OrderBy(o => o.Date).ToList();
+        //        List<LiabilityRecord> lGroup = new List<LiabilityRecord>();
+        //        decimal lBalance = 0M;
+
+        //        foreach (DateTime lDate in lDates)
+        //        {
+        //            lGroup = (List<LiabilityRecord>)lLiabilityList.Where(o => o.EffectiveDate == lDate).OrderBy(o => o.TransactionId).ToList();
+        //            foreach (LiabilityRecord lRecord in lGroup)
+        //            {
+        //                lRecord.Value = -lRecord.Value;
+        //                lBalance = lBalance + lRecord.Value;
+        //                lRecord.Balance = lBalance;
+        //            }
+
+        //            foreach (LiabilityRecord lRecord in lGroup)
+        //            {
+        //                pLiabilityList.Add(lRecord);
+        //            }
+        //        }
+        //        return "OK";
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        Display all the exceptions
+
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerData", "CalculateLiability", "");
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
+
+        //        return "Error in CalculateLiability: " + ex.Message;
+        //    }
+        //}
 
 
         public string CalculateLiability2(ref List<LiabilityRecord> pLiabilityList, ref decimal pLiability)

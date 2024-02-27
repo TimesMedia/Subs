@@ -61,7 +61,10 @@ namespace DW
 
                         lLiabilityRecords.Clear();
 
-                        if ((lResult = CustomerData3.CalulateLiability(PayerId, ref lLiabilityRecords, ref lJournalLiability)) != "OK")
+                        CustomerData3 lCustomerData = new CustomerData3(PayerId);
+
+
+                        if ((lResult = lCustomerData.CalculateLiability2( ref lLiabilityRecords, ref lJournalLiability)) != "OK")
                         {
                             ExceptionData.WriteException(5, lResult + DateTime.Now.ToString(), "static Program FactLiability", "UpdateLiability", "Customer =" + PayerId.ToString());
 

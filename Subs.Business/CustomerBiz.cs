@@ -45,55 +45,55 @@ namespace Subs.Business
 
         #region Payment allocation
 
-        public static string InvoiceBalances(int pPayerId, out List<OutstandingInvoice> pOutstanding)
-        {
-            pOutstanding = new List<OutstandingInvoice>();
+        //public static string InvoiceBalances(int pPayerId, out List<OutstandingInvoice> pOutstanding)
+        //{
+        //    pOutstanding = new List<OutstandingInvoice>();
 
-            try
-            {
-                List<Subs.Data.InvoicesAndPayments> lInvoices;
+        //    try
+        //    {
+        //        List<Subs.Data.InvoicesAndPayments> lInvoices;
 
-                {
-                    string lResult;
-                    if ((lResult = CustomerData3.PopulateInvoice(pPayerId, out lInvoices)) != "OK")
-                    {
+        //        {
+        //            string lResult;
+        //            if ((lResult = CustomerData3.PopulateInvoice(pPayerId, out lInvoices)) != "OK")
+        //            {
 
-                        return lResult;
-                    }
-                }
+        //                return lResult;
+        //            }
+        //        }
 
 
-                foreach (Subs.Data.InvoicesAndPayments item in lInvoices)
-                {
-                    if (item.LastRow && item.InvoiceId != 0 && item.InvoiceId != 999999999)
-                    {
-                        if (item.Balance > 1)
-                        {
-                            // Write out a tuple
-                            pOutstanding.Add(new OutstandingInvoice() { InvoiceId = item.InvoiceId, Balance = item.Balance });
-                        }
-                    }
-                }
-                return "OK";
-            }
+        //        foreach (Subs.Data.InvoicesAndPayments item in lInvoices)
+        //        {
+        //            if (item.LastRow && item.InvoiceId != 0 && item.InvoiceId != 999999999)
+        //            {
+        //                if (item.Balance > 1)
+        //                {
+        //                    // Write out a tuple
+        //                    pOutstanding.Add(new OutstandingInvoice() { InvoiceId = item.InvoiceId, Balance = item.Balance });
+        //                }
+        //            }
+        //        }
+        //        return "OK";
+        //    }
 
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerBiz", "InvoiceBalances", "PayerId = " + pPayerId.ToString());
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerBiz", "InvoiceBalances", "PayerId = " + pPayerId.ToString());
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-                return "Error in InvoiceBalance: " + ex.Message;
-            }
+        //        return "Error in InvoiceBalance: " + ex.Message;
+        //    }
 
-        }
+        //}
 
         //public static decimal DistributePaymentToInvoice(int pPaymentTransactionId, decimal pAmount, OutstandingInvoice pInvoice)
         //{
@@ -425,7 +425,7 @@ namespace Subs.Business
                 {
                     string lResult2;
 
-                    if ((lResult2 = CustomerData3.CalulateLiability(pCustomerData.CustomerId, ref lLiabilityRecords, ref lCalculatedLiability)) != "OK")
+                    if ((lResult2 = pCustomerData.CalculateLiability2(ref lLiabilityRecords, ref lCalculatedLiability)) != "OK")
                     {
                         if (!lResult2.Contains("Nothing"))
                         {
@@ -494,31 +494,34 @@ namespace Subs.Business
 
                 CustomerData3 myCustomerData = new CustomerData3(pRecord.CustomerId);
 
-                
+
 
                 // Check to see if there is .....an applicable invoice
 
-                List<OutstandingInvoice> lOutstandingInvoices;
-                {
-                    string lResult;
-
-                    if ((lResult = CustomerBiz.InvoiceBalances(pRecord.CustomerId, out lOutstandingInvoices)) != "OK")
-                    {
-                        pErrorMessage = lResult;
-                        pResult = PaymentValidationResult.NoInvoicesPast3years;
-                        return "OK";
-                    }
-                }
-
-                if (lOutstandingInvoices.Count == 0)
-                {
-                    pErrorMessage = "This payer has no applicable invoices to pay against.";
-                    pResult = PaymentValidationResult.InvalidInvoice;
-                    return "OK";
-                }
+                //********************************************************************************
 
 
-                
+                // This is equivalent to checking of he owes us.
+                //List<OutstandingInvoice> lOutstandingInvoices;
+                //{
+                //    string lResult;
+
+                //    if ((lResult = CustomerBiz.InvoiceBalances(pRecord.CustomerId, out lOutstandingInvoices)) != "OK")
+                //    {
+                //        pErrorMessage = lResult;
+                //        pResult = PaymentValidationResult.NoInvoicesPast3years;
+                //        return "OK";
+                //    }
+                //}
+
+                //if (lOutstandingInvoices.Count == 0)
+                //{
+                //    pErrorMessage = "This payer has no applicable invoices to pay against.";
+                //    pResult = PaymentValidationResult.InvalidInvoice;
+                //    return "OK";
+                //}
+
+
 
 
                 // Test to ensure that this is not a duplicate entry
@@ -532,15 +535,22 @@ namespace Subs.Business
                     return "OK";
                 }
 
+
+                //********************************************************************************
+
+
                 // See what is due
 
+                decimal lDue = myCustomerData.Due;
 
-                if ((pRecord.Amount - myCustomerData.Due) > 1)
+
+                if ((pRecord.Amount - lDue) > 1)
                 {
-                    pErrorMessage = "The most this guy owes us is " + myCustomerData.Due.ToString("#######0.00");
+                    pErrorMessage = "The most this guy owes us is " + lDue.ToString("#######0.00");
                     pResult = PaymentValidationResult.TooMuch;
                     return "OK";
                 }
+
                 pResult = PaymentValidationResult.OK;
                 return "OK";
             }

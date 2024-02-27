@@ -109,14 +109,14 @@ namespace Subs.Presentation
         private readonly Subs.Data.LedgerDoc2 gLedgerDoc = new LedgerDoc2();
         private readonly ObservableCollection<CustomerData3> gCustomers = new ObservableCollection<CustomerData3>();
         private CustomerData3 gCurrentCustomer;
-        private Subs.Data.InvoicesAndPayments gSelectedPayment = null; 
+        //private Subs.Data.InvoiceAndPayment gSelectedPayment = null; 
         private decimal gCalculatedLiability = 0M;
         private List<LiabilityRecord> gLiabilityRecords = new List<LiabilityRecord>();
 
-        private List<Subs.Data.InvoicesAndPayments> gPaymentAndInvoice = new List<InvoicesAndPayments>();
-        private List<Subs.Data.InvoicesAndPayments> gInvoice = new List<InvoicesAndPayments>();
-        private List<Subs.Data.InvoicesAndPayments> gPayment = new List<InvoicesAndPayments>();
-       
+        //private List<Subs.Data.InvoicesAndPayments> gPaymentAndInvoice = new List<InvoicesAndPayments>();
+        //private List<Subs.Data.InvoicesAndPayments> gInvoice = new List<InvoicesAndPayments>();
+        //private List<Subs.Data.InvoicesAndPayments> gPayment = new List<InvoicesAndPayments>();
+
         private List<Subs.Data.InvoiceAndPayment> gInvoiceAndPaymentCopy = new List<InvoiceAndPayment>();
         private List<Subs.Data.InvoiceAndPayment> gInvoiceAndPayment2 = new List<InvoiceAndPayment>();
         private List<Subs.Data.InvoiceAndPayment> gInvoice2 = new List<InvoiceAndPayment>();
@@ -950,7 +950,7 @@ namespace Subs.Presentation
                 {
                     string lResult;
 
-                    if ((lResult = CustomerData3.CalulateLiability(gCurrentCustomer.CustomerId, ref gLiabilityRecords, ref gCalculatedLiability)) != "OK")
+                    if ((lResult = gCurrentCustomer.CalculateLiability2(ref gLiabilityRecords, ref gCalculatedLiability)) != "OK")
                     {
                         MessageBox.Show(lResult);
                         return;
@@ -1239,7 +1239,86 @@ namespace Subs.Presentation
 
         #region Invoice tab payments
 
-        private bool PopulatePaymentAndInvoice([CallerMemberName] string pCaller = null)
+        //private bool PopulatePaymentAndInvoice([CallerMemberName] string pCaller = null)
+        //{
+        //    // This assigns the necessary data sources for display.
+
+        //    this.Cursor = Cursors.Wait;
+        //    string lStage = "Start";
+        //    try
+        //    {
+
+        //        gPaymentAndInvoice = gCurrentCustomer.GetInvoiceAndPayment(gCurrentCustomer.BalanceInvoiceId, gCurrentCustomer.Balance);
+        //        {
+        //            string lResult;
+
+        //            if ((lResult =  != "OK")
+        //            {
+        //                MessageBox.Show(lResult);
+        //                return false;
+        //            }
+        //        }
+
+        //        // Assign data sources
+        //        lStage = "Payment";
+
+        //        gPayment.Clear();
+        //        gPayment = gPaymentAndInvoice.Where(p => p.OperationId == (int)Operation.Balance
+        //                                              || p.OperationId == (int)Operation.Pay
+        //                                              || p.OperationId == (int)Operation.Refund
+        //                                              || p.OperationId == (int)Operation.ReversePayment).OrderBy(q => q.TransactionId).ThenBy(r => r.Date).ToList();
+        //          if (gPayment != null)
+        //        {
+        //            gPaymentViewSource.Source = gPayment;
+        //            PaymentDataGrid.ItemsSource = gPaymentViewSource.View;
+        //            PaymentDataGrid.Refresh();
+        //        }
+
+        //        lStage = "Invoice";
+
+        //        gInvoice.Clear();
+        //        gInvoice = gPaymentAndInvoice.Where(p => !(p.OperationId == (int)Operation.Balance
+        //                                                || p.OperationId == (int)Operation.Pay
+        //                                                || p.OperationId == (int)Operation.Refund
+        //                                                || p.OperationId == (int)Operation.ReversePayment)).OrderBy(q => q.InvoiceId).ThenBy(r => r.Date).ToList();
+               
+        //        gInvoiceViewSource.Source = gInvoice;
+        //        InvoiceDataGrid.ItemsSource = gInvoiceViewSource.View;
+        //        gInvoiceViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("InvoiceId"));
+        //        InvoiceDataGrid.Refresh();
+
+
+        //        return true;
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
+
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        int lExceptionId = 0;
+
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            lExceptionId = ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "PopulatePaymentAndInvoice", "Stage = " + lStage
+        //                + " Customer= " + gCurrentCustomer.CustomerId.ToString() + " Caller = " + pCaller);
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
+
+        //        ExceptionData.WriteExceptionTrace(lExceptionId, ex.StackTrace, "PopulatePaymentAndInvoice");
+
+        //        return false;
+        //    }
+        //    finally
+        //    {
+        //        this.Cursor = Cursors.Arrow;
+        //    }
+        //}
+
+
+        private bool PopulatePaymentAndInvoice2([CallerMemberName] string pCaller = null)
         {
             // This assigns the necessary data sources for display.
 
@@ -1247,40 +1326,33 @@ namespace Subs.Presentation
             string lStage = "Start";
             try
             {
-                {
-                    string lResult;
 
-                    if ((lResult = CustomerData3.PopulateInvoice(gCurrentCustomer.CustomerId, out gPaymentAndInvoice)) != "OK")
-                    {
-                        MessageBox.Show(lResult);
-                        return false;
-                    }
-                }
-
+                gInvoiceAndPayment2 = gCurrentCustomer.GetInvoiceAndPayment(gCurrentCustomer.BalanceInvoiceId, gCurrentCustomer.Balance);
+               
                 // Assign data sources
                 lStage = "Payment";
 
-                gPayment.Clear();
-                gPayment = gPaymentAndInvoice.Where(p => p.OperationId == (int)Operation.Balance
+                gPayment2.Clear();
+                gPayment2 = gInvoiceAndPayment2.Where(p => p.OperationId == (int)Operation.Balance
                                                       || p.OperationId == (int)Operation.Pay
                                                       || p.OperationId == (int)Operation.Refund
                                                       || p.OperationId == (int)Operation.ReversePayment).OrderBy(q => q.TransactionId).ThenBy(r => r.Date).ToList();
-                  if (gPayment != null)
+                if (gPayment2 != null)
                 {
-                    gPaymentViewSource.Source = gPayment;
+                    gPaymentViewSource.Source = gPayment2;
                     PaymentDataGrid.ItemsSource = gPaymentViewSource.View;
                     PaymentDataGrid.Refresh();
                 }
 
                 lStage = "Invoice";
 
-                gInvoice.Clear();
-                gInvoice = gPaymentAndInvoice.Where(p => !(p.OperationId == (int)Operation.Balance
+                gInvoice2.Clear();
+                gInvoice2 = gInvoiceAndPayment2.Where(p => !(p.OperationId == (int)Operation.Balance
                                                         || p.OperationId == (int)Operation.Pay
                                                         || p.OperationId == (int)Operation.Refund
                                                         || p.OperationId == (int)Operation.ReversePayment)).OrderBy(q => q.InvoiceId).ThenBy(r => r.Date).ToList();
-               
-                gInvoiceViewSource.Source = gInvoice;
+
+                gInvoiceViewSource.Source = gInvoice2;
                 InvoiceDataGrid.ItemsSource = gInvoiceViewSource.View;
                 gInvoiceViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("InvoiceId"));
                 InvoiceDataGrid.Refresh();
@@ -1314,6 +1386,9 @@ namespace Subs.Presentation
                 this.Cursor = Cursors.Arrow;
             }
         }
+
+
+
 
 
         private void AssignStatementResources([CallerMemberName] string pCaller = null)
@@ -1641,11 +1716,11 @@ namespace Subs.Presentation
                 }
             }
 
-            PopulatePaymentAndInvoice();
+            PopulatePaymentAndInvoice2();
 
             string lResult3;
 
-            if ((lResult3 = StatementControl2.SendEmail(CreateAStatement(), gCurrentCustomer.CustomerId, gCurrentCustomer.StatementEmail)) != "OK")
+            if ((lResult3 = StatementControl.SendEmail(CreateAStatement(), gCurrentCustomer.CustomerId, gCurrentCustomer.StatementEmail)) != "OK")
             {
                 MessageBox.Show(lResult3);
                 return;
@@ -1777,32 +1852,32 @@ namespace Subs.Presentation
         }
 
 
-        private void Click_SelectPaymentForAllocation(object sender, RoutedEventArgs e)
-        {
-            if (gCurrentCustomer.AutomaticPaymentAllocation)
-            {
-                MessageBox.Show("This feature is not availible for this customer.");
-                return;
-            }
+        //private void Click_SelectPaymentForAllocation(object sender, RoutedEventArgs e)
+        //{
+        //    if (gCurrentCustomer.AutomaticPaymentAllocation)
+        //    {
+        //        MessageBox.Show("This feature is not availible for this customer.");
+        //        return;
+        //    }
 
-            InvoicesAndPayments lInvoice = (InvoicesAndPayments)gPaymentViewSource.View.CurrentItem;
-            if (lInvoice.Operation != "Payment")
-            {
-                MessageBox.Show("Sorry, I respond only to payment lines.");
-                return;
-            }
+        //    InvoicesAndPayments lInvoice = (InvoicesAndPayments)gPaymentViewSource.View.CurrentItem;
+        //    if (lInvoice.Operation != "Payment")
+        //    {
+        //        MessageBox.Show("Sorry, I respond only to payment lines.");
+        //        return;
+        //    }
 
 
-            if (lInvoice.Balance >= 0)
-            {
-                MessageBox.Show("This payment has nothing left to allocate");
-                gSelectedPayment = null;
-                return;
-            }
+        //    if (lInvoice.Balance >= 0)
+        //    {
+        //        MessageBox.Show("This payment has nothing left to allocate");
+        //        gSelectedPayment = null;
+        //        return;
+        //    }
 
-            gSelectedPayment = lInvoice;
-            MessageBox.Show("OK, you have select the payment with transaction id = " + lInvoice.TransactionId.ToString());
-        }
+        //    gSelectedPayment = lInvoice;
+        //    MessageBox.Show("OK, you have select the payment with transaction id = " + lInvoice.TransactionId.ToString());
+        //}
 
 
         //private void Button_SetPaymentCheckpoint(object sender, RoutedEventArgs e)
@@ -2090,7 +2165,7 @@ namespace Subs.Presentation
                     }
                 }
 
-                PopulatePaymentAndInvoice();
+                PopulatePaymentAndInvoice2();
                 //AutomaticAllocate();
 
                 // Propagate the new liability to the current view
@@ -2166,7 +2241,7 @@ namespace Subs.Presentation
                     }
                 }
 
-                PopulatePaymentAndInvoice();
+                PopulatePaymentAndInvoice2();
 
                 MessageBox.Show("Done");
                 return;
@@ -2582,8 +2657,8 @@ namespace Subs.Presentation
             try
             {
                 this.Cursor = Cursors.Wait;
-                InvoicesAndPayments lInvoice = (InvoicesAndPayments)gInvoiceViewSource.View.CurrentItem;
-                if (lInvoice.OperationId != (int)Operation.Init_Sub)
+                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gInvoiceViewSource.View.CurrentItem;
+                if (lInvoice.OperationId != (int)Operation.VATInvoice)
                 {
                     MessageBox.Show("Sorry, I respond only to invoice lines");
                     return;
@@ -2628,7 +2703,7 @@ namespace Subs.Presentation
             try
             {
                 this.Cursor = Cursors.Wait;
-                InvoicesAndPayments lInvoice = (InvoicesAndPayments)gInvoiceViewSource.View.CurrentItem;
+                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gInvoiceViewSource.View.CurrentItem;
                 if (lInvoice.OperationId != (int)Operation.CreditNote)
                 {
                     MessageBox.Show("Sorry, I respond only to creditnote lines");
@@ -2666,7 +2741,7 @@ namespace Subs.Presentation
         {
             try
             {
-                InvoicesAndPayments lInvoice = (InvoicesAndPayments)gInvoiceViewSource.View.CurrentItem;
+                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gInvoiceViewSource.View.CurrentItem;
                 if (lInvoice.OperationId != (int)Operation.WriteOffMoney)
                 {
                     MessageBox.Show("Sorry, I respond only to write off lines");
@@ -2720,7 +2795,7 @@ namespace Subs.Presentation
 
             gSubscriptionStatusDisplayControl.Clear();
 
-            InvoicesAndPayments lInvoice = (InvoicesAndPayments)gInvoiceViewSource.View.CurrentItem;
+            InvoiceAndPayment lInvoice = (InvoiceAndPayment)gInvoiceViewSource.View.CurrentItem;
             if (!lInvoice.LastRow)
             {
                 MessageBox.Show("Sorry, I respond only to totals lines.");
@@ -2898,7 +2973,7 @@ namespace Subs.Presentation
 
                 textCurrentLiability.Text = gCalculatedLiability.ToString("########0.00");
                 MessageBox.Show("Done");
-                PopulatePaymentAndInvoice();
+                PopulatePaymentAndInvoice2();
                 tabControl1.SelectedIndex = (int)PickerTabs.Select;
             }
 

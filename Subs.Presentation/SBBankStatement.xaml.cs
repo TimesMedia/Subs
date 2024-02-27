@@ -580,7 +580,7 @@ namespace Subs.Presentation
 
                         CustomerData3 lCustomerData= new CustomerData3(lBankStatementRow.CustomerId);
 
-                        if ((lResult3 = StatementControl2.SendEmail(CreateAStatement(lBankStatementRow.CustomerId), lBankStatementRow.CustomerId, lCustomerData.StatementEmail)) != "OK")
+                        if ((lResult3 = StatementControl.SendEmail(CreateAStatement(lBankStatementRow.CustomerId), lBankStatementRow.CustomerId, lCustomerData.StatementEmail)) != "OK")
                         {
                             MessageBox.Show(lResult3);
                             return;
@@ -620,7 +620,7 @@ namespace Subs.Presentation
             {
                 int lStatementId = 0;
                 CounterData.GetUniqueNumber("Statement", ref lStatementId);
-                StatementControl2 lStatementControl = new StatementControl2(pPayerId, lStatementId);
+                StatementControl lStatementControl = new StatementControl(pPayerId, lStatementId);
                 LedgerData.Statement(pPayerId, lStatementId, lStatementControl.StatementValue);
                 return lStatementId;
             }

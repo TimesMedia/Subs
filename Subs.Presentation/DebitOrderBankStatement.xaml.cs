@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using static Subs.Data.PaymentDoc;
 
 namespace Subs.Presentation
 {
@@ -422,54 +423,54 @@ namespace Subs.Presentation
             }
         }
 
-        private bool ValidatePayment(ref PaymentData.PaymentRecord PaymentRecord, out string ErrorMessage)
-        {
+        //private bool ValidatePayment(ref PaymentData.PaymentRecord PaymentRecord, out string ErrorMessage)
+        //{
 
-            ErrorMessage = "OK";
+        //    ErrorMessage = "OK";
 
-            try
-            {
-                // Insist on a CustomerId
-                if (PaymentRecord.CustomerId == 0)
-                {
-                    ErrorMessage = "No CustomerId has been supplied.";
-                    return true;
-                }
+        //    try
+        //    {
+        //        // Insist on a CustomerId
+        //        if (PaymentRecord.CustomerId == 0)
+        //        {
+        //            ErrorMessage = "No CustomerId has been supplied.";
+        //            return true;
+        //        }
 
-                // Validate the rest of the stuff
+        //        // Validate the rest of the stuff
 
-                CustomerBiz.PaymentValidationResult myResult = new CustomerBiz.PaymentValidationResult();
+        //        CustomerBiz.PaymentValidationResult myResult = new CustomerBiz.PaymentValidationResult();
 
 
-                {
-                    string lResult;
+        //        {
+        //            string lResult;
 
-                    if ((lResult = CustomerBiz.ValidatePayment(ref PaymentRecord, ref myResult, ref ErrorMessage)) != "OK")
-                    {
-                        MessageBox.Show(lResult);
-                        return false;
-                    }
-                }
+        //            if ((lResult = CustomerBiz.ValidatePayment(ref PaymentRecord, ref myResult, ref ErrorMessage)) != "OK")
+        //            {
+        //                MessageBox.Show(lResult);
+        //                return false;
+        //            }
+        //        }
 
-                return true;
-            }
+        //        return true;
+        //    }
 
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ValidatePayment", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ValidatePayment", "");
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-                return false;
-            }
-        }
+        //        return false;
+        //    }
+        //}
 
         private void buttonValidate_Click(object sender, RoutedEventArgs e)
         {
@@ -490,8 +491,12 @@ namespace Subs.Presentation
             {
                 PaymentData.PaymentRecord myRecord = new PaymentData.PaymentRecord();
                 string ErrorMessage = "";
-                foreach (PaymentDoc.DebitOrderBankStatementRow lRow in gPaymentDoc.DebitOrderBankStatement.Rows)
+                CustomerBiz.PaymentValidationResult myResult = new CustomerBiz.PaymentValidationResult();
+
+                for (int i = 0; i < gPaymentDoc.DebitOrderBankStatement.Count; i++)
                 {
+                    DebitOrderBankStatementRow lRow = gPaymentDoc.DebitOrderBankStatement[i];
+                    
                     // skip the ones that has already been validated. 
                     if (!lRow.IsErrorMessageNull())
                     {
@@ -520,11 +525,28 @@ namespace Subs.Presentation
                     myRecord.Reference = lRow.TransactionDate.Year.ToString() + "/" + lRow.StatementNo.ToString() + "/" + lRow.AllocationNo.ToString();
 
 
-
-                    if (!ValidatePayment(ref myRecord, out ErrorMessage))
+                    ErrorMessage = "OK";
+                                        
+                    // Insist on a CustomerId
+                    if (myRecord.CustomerId == 0)
                     {
-                        return;
+                        ErrorMessage = "No CustomerId has been supplied.";
+                            
                     }
+
+                    // Validate the rest of the stuff
+
+
+                    {
+                        string lResult;
+
+                        if ((lResult = CustomerBiz.ValidatePayment(ref myRecord, ref myResult, ref ErrorMessage)) != "OK")
+                        {
+                            MessageBox.Show(lResult);
+                            return;
+                        }
+                    }
+
 
                     lRow.ErrorMessage = ErrorMessage;
 
@@ -584,23 +606,11 @@ namespace Subs.Presentation
                         continue;
                     }
 
-                    if (lBankStatementRow.ErrorMessage != "OK")
+                    if (!(lBankStatementRow.ErrorMessage == "OK" || lBankStatementRow.ErrorMessage.EndsWith("Overridden")))
                     {
-                        // This one still has some problems
-                        if (!lBankStatementRow.ErrorMessage.EndsWith("Overridden"))
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            string lMessage = lBankStatementRow.ErrorMessage + " CustomerId = " + lBankStatementRow.CustomerId.ToString();
-                            MessageBox.Show(lMessage);
-                            ExceptionData.WriteException(1, lMessage, this.ToString(), "buttonPost_Click", "");
-                            return;
-
-                        }
+                       continue; // Skip this one, do not post it.
                     }
-
+                   
                     //Construct an OverallPayment object
 
 
