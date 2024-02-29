@@ -122,14 +122,12 @@ namespace Subs.Data
                         gAllocation.Add(lAllocationRow);
 
                         gInvoiceBalance = 0;
-                        lPaymentRow.Balance = lPaymentRow.Balance + lInvoiceRow.Balance;
+
+                        lPaymentRow.Balance = lPaymentRow.Balance - lAllocationRow.Value;
+
                         gPaymentBalance = gPaymentBalance - lAllocationRow.Value;
 
                     }
-
-                    lAllocationRow.Value = lAllocationRow.Value;   // for diagnostic purposes
-
-
 
                     // Create new records as necessary
 
@@ -273,7 +271,14 @@ namespace Subs.Data
                             lInvoiceRow = gInvoiceQueue.Dequeue();
                             if (lInvoiceRow.Balance == 0)
                             {
-                                goto NextInvoice;
+                                if (gInvoiceQueue.Count == 0)
+                                {
+                                    return false;
+                                }
+                                else
+                                {
+                                    goto NextInvoice;
+                                }
                             }
                         } while (!lInvoiceRow.LastRow && gInvoiceQueue.Count != 0);
 

@@ -921,7 +921,7 @@ namespace Subs.Presentation
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "PostProcessCustomer", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "GoToStatement", "");
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 

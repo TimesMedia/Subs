@@ -154,6 +154,7 @@ namespace Subs.Presentation
 
         private void SelectById_Click(object sender, RoutedEventArgs e)
         {
+            int lCurrentSubscriptionId = 0;
             try
             {
 
@@ -165,6 +166,8 @@ namespace Subs.Presentation
                 }
 
                 int lSubscriptionId = (int)lElicit.Answer;
+
+                lCurrentSubscriptionId = lSubscriptionId;
 
                 if (lSubscriptionId == 0)
                 {
@@ -183,7 +186,7 @@ namespace Subs.Presentation
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Update", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "SelectByIdClick", "SubscriptionId = " + lCurrentSubscriptionId.ToString());
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
