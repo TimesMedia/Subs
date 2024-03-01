@@ -92,7 +92,7 @@ namespace Subs.Presentation
         private readonly MIMSDataContext gDataContext = new MIMSDataContext(Settings.ConnectionString);
 
         private readonly System.Windows.Data.CollectionViewSource gCollectionViewSourceCustomer;
-        private readonly System.Windows.Data.CollectionViewSource gInvoicesAndPaymentsViewSource;
+        private readonly System.Windows.Data.CollectionViewSource gInvoiceAndPaymentViewSource;
         private System.Windows.Data.CollectionViewSource gPaymentViewSource = new CollectionViewSource();
         private System.Windows.Data.CollectionViewSource gInvoiceViewSource = new CollectionViewSource();
         private readonly System.Windows.Data.CollectionViewSource gTooMuchTooLittleViewSource;
@@ -151,7 +151,7 @@ namespace Subs.Presentation
             //gMIMSCustomerTableAdapter.AttachConnection();
             gCollectionViewSourceCustomer = (System.Windows.Data.CollectionViewSource)this.Resources["customerViewSource"];
             gCollectionViewSourceCustomer.Source = gCustomers;
-            gInvoicesAndPaymentsViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["InvoicesAndPaymentsViewSource"];
+            gInvoiceAndPaymentViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["InvoiceAndPaymentViewSource"];
             //gPaymentViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["PaymentViewSource"];
             //gInvoiceViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["InvoiceViewSource"];
 
@@ -2137,8 +2137,8 @@ namespace Subs.Presentation
             try
             {
 
-                InvoicesAndPayments lInvoice = (InvoicesAndPayments)gPaymentViewSource.View.CurrentItem;
-                if (lInvoice.Operation != "Payment")
+                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gPaymentViewSource.View.CurrentItem;
+                if (lInvoice.OperationId != (int)Operation.Pay)
                 {
                     MessageBox.Show("Sorry, I respond only to payment lines with a valid invoice.");
                     return;
@@ -2165,7 +2165,9 @@ namespace Subs.Presentation
                     }
                 }
 
-                PopulatePaymentAndInvoice2();
+                //PopulatePaymentAndInvoice2(); // You also have to do the reallocation
+
+                GoToStatement();
                 //AutomaticAllocate();
 
                 // Propagate the new liability to the current view
@@ -2205,7 +2207,7 @@ namespace Subs.Presentation
             try
             {
                 // Check that you are standing on a payment line.
-                InvoicesAndPayments lInvoice = (InvoicesAndPayments)gPaymentViewSource.View.CurrentItem;
+                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gPaymentViewSource.View.CurrentItem;
                 if (lInvoice.Operation != "Payment")
                 {
                     MessageBox.Show("Sorry, I respond only to payment lines");
@@ -2241,7 +2243,9 @@ namespace Subs.Presentation
                     }
                 }
 
-                PopulatePaymentAndInvoice2();
+                //PopulatePaymentAndInvoice2();
+
+                GoToStatement();
 
                 MessageBox.Show("Done");
                 return;
@@ -2269,7 +2273,7 @@ namespace Subs.Presentation
             try
             {
                 // Check that you are standing on a refund line.
-                InvoicesAndPayments lInvoice = (InvoicesAndPayments)gPaymentViewSource.View.CurrentItem;
+                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gPaymentViewSource.View.CurrentItem;
                 if (lInvoice.Operation != "Refund")
                 {
                     MessageBox.Show("Sorry, I respond only to refund lines");
@@ -2589,7 +2593,7 @@ namespace Subs.Presentation
 
             try
             {
-                InvoicesAndPayments lInvoice = (InvoicesAndPayments)gInvoiceViewSource.View.CurrentItem;
+                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gInvoiceViewSource.View.CurrentItem;
                 if (lInvoice.OperationId != (int)Operation.Init_Sub)
                 {
                     MessageBox.Show("Sorry, I respond only to Invoice lines");

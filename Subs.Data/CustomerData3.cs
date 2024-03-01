@@ -57,11 +57,7 @@ namespace Subs.Data
 
         private List<InvoiceAndPayment> gInvoiceAllocations = new List<InvoiceAndPayment>();
         private List<InvoiceAndPayment> gAllInvoiceAndPayment = new List<InvoiceAndPayment>();
-       
-        private decimal gDue = 0.0M;
-        private bool gDueSet = false;
-
-
+     
 
         //public class InvoiceAndPayment
         //{
@@ -389,6 +385,11 @@ namespace Subs.Data
                     lInvoiceAndPayment.Operation = lReader.GetString(5);
                     lInvoiceAndPayment.Value = lReader.GetDecimal(6);
                     lInvoiceAndPayment.DueValue = lReader.GetDecimal(7);
+                    if (lReader.FieldCount == 8)
+                    {
+                        lInvoiceAndPayment.Reference2 = lReader.GetString(8);
+                    }
+                   
                     lInvoiceAndPayments.Add(lInvoiceAndPayment);
                 }
 
@@ -437,6 +438,17 @@ namespace Subs.Data
                 decimal lInvoiceBalance = 0;
                 decimal lStatementBalance = 0;
                 int lCurrentInvoiceId = 0;
+
+                // Change some transactionids to the referenced transactionid in order to be able to group payments together.
+
+                for (int i = 0; i < gAllInvoiceAndPayment.Count; i++)
+                {
+                    if (gAllInvoiceAndPayment[i].OperationId == (int)Operation.ReversePayment || gAllInvoiceAndPayment[i].OperationId == (int)Operation.Refund)
+                    {
+                        gAllInvoiceAndPayment[i].OriginalTransactionId = gAllInvoiceAndPayment[i].TransactionId;
+                        gAllInvoiceAndPayment[i].TransactionId = Int32.Parse(gAllInvoiceAndPayment[i].Reference2);
+                    }
+                }
 
                 // Create a list of all the invoiceids in this report.
 
@@ -585,7 +597,7 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomerData", "PopulateInvoices",
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomerData", "PopulateInvoice2",
                         "PayerId = " + CustomerId.ToString());
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
@@ -1778,11 +1790,7 @@ namespace Subs.Data
             {
                 try
                 {
-                    if (gDueSet)
-                    {
-                        return gDue;
-                    }
-
+                    
                     // Load the relevant Balance records 
 
                     List<InvoiceAndPayment> lInvoiceAndPayment = new List<InvoiceAndPayment>();
@@ -1808,11 +1816,8 @@ namespace Subs.Data
                             throw new Exception("No balance records found");
                         }
                     }
-
-                    gDue = (decimal)lInvoiceAndPayment.Sum(p => p.Value);
-                    gDueSet = true;
-
-                    return gDue;
+                       
+                    return (decimal)lInvoiceAndPayment.Sum(p => p.Value); 
   
                 }
                 catch (Exception Ex)
@@ -3104,40 +3109,40 @@ namespace Subs.Data
             }
         }
 
-        public static bool RemoveInvoicePayment(ref SqlTransaction pTransaction, int pPaymentTransactionId)
-        {
-            try
-            {
-                SqlCommand Command = new SqlCommand();
-                Command.CommandType = CommandType.StoredProcedure;
-                Command.Connection = pTransaction.Connection;
-                Command.Transaction = pTransaction;
-                SqlDataAdapter Adaptor = new SqlDataAdapter();
+        //public static bool RemoveInvoicePayment(ref SqlTransaction pTransaction, int pPaymentTransactionId)
+        //{
+        //    try
+        //    {
+        //        SqlCommand Command = new SqlCommand();
+        //        Command.CommandType = CommandType.StoredProcedure;
+        //        Command.Connection = pTransaction.Connection;
+        //        Command.Transaction = pTransaction;
+        //        SqlDataAdapter Adaptor = new SqlDataAdapter();
 
-                Command.CommandText = "[dbo].[MIMS.CustomerData.RemoveInvoicePayment]";
-                Command.Parameters.Add("@PaymentTransactionId", SqlDbType.Int);
-                Command.Parameters["@PaymentTransactionId"].Value = pPaymentTransactionId;
-                Command.ExecuteNonQuery();
+        //        Command.CommandText = "[dbo].[MIMS.CustomerData.RemoveInvoicePayment]";
+        //        Command.Parameters.Add("@PaymentTransactionId", SqlDbType.Int);
+        //        Command.Parameters["@PaymentTransactionId"].Value = pPaymentTransactionId;
+        //        Command.ExecuteNonQuery();
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "Static CustomerData2", "RemoveInvoicePayment",
-                        "PaymentTransactionId: " + pPaymentTransactionId.ToString());
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "Static CustomerData2", "RemoveInvoicePayment",
+        //                "PaymentTransactionId: " + pPaymentTransactionId.ToString());
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-                return false;
-            }
-        }
+        //        return false;
+        //    }
+        //}
 
         public static List<CustomerData3> CustomersWithUnverifiedCompany()
         {

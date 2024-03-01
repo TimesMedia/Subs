@@ -698,13 +698,13 @@ namespace Subs.Business
                     return "ReversePayment failed";
                 }
 
-                // Remove the InvoicePayment record.
+                //// Remove the InvoicePayment record.
 
-                if (!CustomerData3.RemoveInvoicePayment(ref lTransaction, pPaymentTransactionId))
-                {
-                    lTransaction.Rollback("ReversePayment");
-                    return "RemoveinvoicePayment failed";
-                }
+                //if (!CustomerData3.RemoveInvoicePayment(ref lTransaction, pPaymentTransactionId))
+                //{
+                //    lTransaction.Rollback("ReversePayment");
+                //    return "RemoveinvoicePayment failed";
+                //}
 
                 // Done
 

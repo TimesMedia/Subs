@@ -12,7 +12,7 @@
         <my:LedgerDoc2 x:Key="ledgerDoc2" />
         <CollectionViewSource x:Key="customerViewSource"/>
         <CollectionViewSource x:Key="transactionsViewSource" Source="{Binding Path=Transactions, Source={StaticResource ledgerDoc2}}" />
-        <CollectionViewSource x:Key="InvoicesAndPaymentsViewSource" Source="{Binding Path=InvoicesAndPayments, Source={StaticResource ledgerDoc2}}"/>
+        <CollectionViewSource x:Key="InvoiceAndPaymentViewSource" Source="{Binding Path=InvoiceAndPayment, Source={StaticResource ledgerDoc2}}"/>
         <!--<CollectionViewSource x:Key="PaymentViewSource"/>
         <CollectionViewSource x:Key="InvoiceViewSource"/>-->
         <CollectionViewSource x:Key="SubscriptionsViewSource"/>
@@ -312,7 +312,7 @@
         </TabItem>
 
         <TabItem x:Name="tabSubscription" Header="Subscription" TabIndex="2" Visibility="Visible" LostFocus="TabSubscription_LostFocus">
-            <Grid DataContext="{StaticResource InvoicesAndPaymentsViewSource}">
+            <Grid DataContext="{StaticResource InvoiceAndPaymentViewSource}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="16"/>
                     <ColumnDefinition Width="57"/>
