@@ -541,7 +541,6 @@ namespace Subs.Business
                     pSubscriptionData.DeliveryCost = 0;
                 }
 
-
                 UnitPrice = (pSubscriptionData.BaseRate * pSubscriptionData.DiscountMultiplier) + pSubscriptionData.DeliveryCost;
 
                 List<int> lVatCountries = new List<int>() { 61 }; //RSA
@@ -554,6 +553,8 @@ namespace Subs.Business
                 pSubscriptionData.Vat = (pSubscriptionData.VatPercentage * UnitPrice) / 100M;
 
                 pSubscriptionData.UnitPrice = UnitPrice + pSubscriptionData.Vat;
+
+                pSubscriptionData.UnitPrice = Math.Round(pSubscriptionData.UnitPrice, 2); // Fractional cents produces problems.
 
                 if (pSubscriptionData.UnitPrice < 0)
                 {

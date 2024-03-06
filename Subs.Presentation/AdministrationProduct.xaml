@@ -239,6 +239,45 @@
                 </StackPanel>
             </Grid>
         </TabItem>
+
+        <TabItem x:Name="TabBaseRate" Header="BaseRate" DataContext="{StaticResource baseRateViewSource}">
+            <Canvas Margin="0,1,0,-1">
+                <DataGrid x:Name="BaseRateDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" 
+                            ItemsSource="{Binding}" Canvas.Left="10" RowDetailsVisibilityMode="VisibleWhenSelected" Canvas.Top="10" Width="400"
+                            CanUserDeleteRows="True" CanUserAddRows="False" SelectionUnit="CellOrRowHeader">
+                    <DataGrid.RowHeaderStyle>
+                        <Style TargetType="{x:Type DataGridRowHeader}">
+                            <Setter Property="Background"  Value="Yellow"/>
+                            <Setter Property="Width"  Value="30"/>
+                            <Setter Property="BorderBrush" Value="Red" />
+                            <Setter Property="BorderThickness"  Value="3" />
+                        </Style>
+                    </DataGrid.RowHeaderStyle>
+
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn x:Name="dateFromColumn" Header="Date From" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DatePicker SelectedDate="{Binding DateFrom, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn x:Name="valueColumn" Binding="{Binding Value, Converter={StaticResource lRandConverter}}" Header="Value" 
+                                            CellStyle="{StaticResource AlignRight}"  Width="60" IsReadOnly="False"/>
+                        <DataGridTextColumn x:Name="modifiedByColumn" Binding="{Binding ModifiedBy}" Header="Modified By" Width="Auto" IsReadOnly="True"/>
+                        <DataGridTextColumn x:Name="modifiedOnColumn" Header="Modified On" Width="Auto" IsReadOnly="True"
+                                            Binding="{Binding DateFrom, Converter={StaticResource lDateConverter}}"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="buttonCalculateBaseRate" Content="Calculate a base rate" Canvas.Left="481" Canvas.Top="54" Width="160" Click="buttonCalculateBaseRate_Click"/>
+                <Label Canvas.Left="477" Canvas.Top="81" Width="164">Proposed base rate</Label>
+                <TextBox x:Name="TextProposedBaseRate" Canvas.Left="481" Canvas.Top="112" Width="160" IsReadOnly="True"></TextBox>
+                <Button x:Name="buttonAddBaseRate" Content="Add a new BaseRate" Canvas.Left="481" Canvas.Top="338" Width="160" Click="buttonAddBaseRate_Click"/>
+                <Button x:Name="buttonSubmitBaseRate" Content="Submit" Canvas.Left="481" Canvas.Top="379" Width="160" Click="buttonSubmitBaseRate_Click"/>
+                <Button x:Name="buttonExitBaseRate" Content="Exit without saving" Canvas.Left="481" Canvas.Top="421" Width="160" Click="buttonExitBaseRate_Click"/>
+            </Canvas>
+        </TabItem>
         <TabItem x:Name="TabIssue" Header="Issue">
             <Grid >
                 <Grid.RowDefinitions>
@@ -323,44 +362,6 @@
             </Grid>
         </TabItem>
 
-        <TabItem x:Name="TabBaseRate" Header="BaseRate" DataContext="{StaticResource baseRateViewSource}">
-            <Canvas Margin="0,1,0,-1">
-                <DataGrid x:Name="BaseRateDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" 
-                            ItemsSource="{Binding}" Canvas.Left="10" RowDetailsVisibilityMode="VisibleWhenSelected" Canvas.Top="10" Width="400"
-                            CanUserDeleteRows="True" CanUserAddRows="False" SelectionUnit="CellOrRowHeader">
-                    <DataGrid.RowHeaderStyle>
-                        <Style TargetType="{x:Type DataGridRowHeader}">
-                            <Setter Property="Background"  Value="Yellow"/>
-                            <Setter Property="Width"  Value="30"/>
-                            <Setter Property="BorderBrush" Value="Red" />
-                            <Setter Property="BorderThickness"  Value="3" />
-                        </Style>
-                    </DataGrid.RowHeaderStyle>
-
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn x:Name="dateFromColumn" Header="Date From" Width="100">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <DatePicker SelectedDate="{Binding DateFrom, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn x:Name="valueColumn" Binding="{Binding Value, Converter={StaticResource lRandConverter}}" Header="Value" 
-                                            CellStyle="{StaticResource AlignRight}"  Width="60" IsReadOnly="False"/>
-                        <DataGridTextColumn x:Name="modifiedByColumn" Binding="{Binding ModifiedBy}" Header="Modified By" Width="Auto" IsReadOnly="True"/>
-                        <DataGridTextColumn x:Name="modifiedOnColumn" Header="Modified On" Width="Auto" IsReadOnly="True"
-                                            Binding="{Binding DateFrom, Converter={StaticResource lDateConverter}}"/>
-
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Button x:Name="buttonCalculateBaseRate" Content="Calculate a base rate" Canvas.Left="481" Canvas.Top="54" Width="160" Click="buttonCalculateBaseRate_Click"/>
-                <Label Canvas.Left="477" Canvas.Top="81" Width="164">Proposed base rate</Label>
-                <TextBox x:Name="TextProposedBaseRate" Canvas.Left="481" Canvas.Top="112" Width="160" IsReadOnly="True"></TextBox>
-                <Button x:Name="buttonAddBaseRate" Content="Add a new BaseRate" Canvas.Left="481" Canvas.Top="338" Width="160" Click="buttonAddBaseRate_Click"/>
-                <Button x:Name="buttonSubmitBaseRate" Content="Submit" Canvas.Left="481" Canvas.Top="379" Width="160" Click="buttonSubmitBaseRate_Click"/>
-                <Button x:Name="buttonExitBaseRate" Content="Exit without saving" Canvas.Left="481" Canvas.Top="421" Width="160" Click="buttonExitBaseRate_Click"/>
-
-            </Canvas>
-        </TabItem>
+   
     </TabControl>
 </Window>

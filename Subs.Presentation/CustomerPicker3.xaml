@@ -301,7 +301,7 @@
                             <MenuItem Header="Reverse  writeoff of money" Click="Click_ReverseWriteOffMoney"  Tag="AuthorityHigh" Loaded="SetVisibility"/>
                             <MenuItem Header="Recreate credit notes" Click="Click_RecreateCreditNotes"  Tag="AuthorityHigh" Loaded="SetVisibility"/>
                             <MenuItem Header="Recreate the invoice" Click="Click_RecreateInvoice"  Tag="AuthorityHigh" Loaded="SetVisibility"/>
-                            <!--<MenuItem Header="Set as new checkpoint" Click="Click_Checkpoint"  Tag="AuthorityHigh" Loaded="SetVisibility"/>-->
+                            <MenuItem Header="Set as new checkpoint" Click="Click_Checkpoint"  Tag="AuthorityHigh" Loaded="SetVisibility"/>
                             <MenuItem Header="View Subscriptions" Click="Click_ViewSubscriptions" />
                             <MenuItem Header="Write off a certain amount" Click="Click_WriteOffMoney" Tag="AuthorityHigh" Loaded="SetVisibility"/>
                         </ContextMenu>

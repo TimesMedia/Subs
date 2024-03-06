@@ -344,15 +344,15 @@ namespace Subs.Data
         }
 
 
-        public List<InvoiceAndPayment> GetInvoiceAndPayment(int pInvoiceId, decimal pBalance)
+        public List<InvoiceAndPayment> GetInvoiceAndPayment()
         {
             int lCurrentTransactionId = 0;
+            SqlConnection lConnection = new SqlConnection();
             try
             {
                 List<InvoiceAndPayment> lInvoiceAndPayments = new List<InvoiceAndPayment>();
                 gAllInvoiceAndPayment.Clear();
 
-                SqlConnection lConnection = new SqlConnection();
                 SqlCommand Command = new SqlCommand();
                 SqlDataAdapter Adaptor = new SqlDataAdapter();
                 lConnection.ConnectionString = Settings.ConnectionString;
@@ -364,11 +364,11 @@ namespace Subs.Data
                 Command.Parameters.Add("@PayerId", SqlDbType.Int);
                 Command.Parameters["@PayerId"].Value = CustomerId;
 
-                Command.Parameters.Add("@InvoiceId", SqlDbType.Int);
-                Command.Parameters["@InvoiceId"].Value = pInvoiceId;
+                //Command.Parameters.Add("@InvoiceId", SqlDbType.Int);
+                //Command.Parameters["@InvoiceId"].Value = pInvoiceId;
 
-                Command.Parameters.Add("@Balance", SqlDbType.Decimal);
-                Command.Parameters["@Balance"].Value = pBalance;
+                //Command.Parameters.Add("@Balance", SqlDbType.Decimal);
+                //Command.Parameters["@Balance"].Value = pBalance;
 
                 SqlDataReader lReader = Command.ExecuteReader();
 
@@ -385,16 +385,10 @@ namespace Subs.Data
                     lInvoiceAndPayment.Operation = lReader.GetString(5);
                     lInvoiceAndPayment.Value = lReader.GetDecimal(6);
                     lInvoiceAndPayment.DueValue = lReader.GetDecimal(7);
-                    if (lReader.FieldCount == 8)
-                    {
-                        lInvoiceAndPayment.Reference2 = lReader.GetString(8);
-                    }
-                   
+                    lInvoiceAndPayment.Reference2 = lReader.GetString(8);
                     lInvoiceAndPayments.Add(lInvoiceAndPayment);
                 }
-
-                //lReader.Close();
-
+                               
                 //Calculate the balance values
 
                 for (int i = 1; i < lInvoiceAndPayments.Count(); i++)       // Calculate the rest
@@ -419,6 +413,13 @@ namespace Subs.Data
 
                 throw ex;
             }
+            finally
+            {
+                if (lConnection.State != ConnectionState.Closed)
+                {
+                    lConnection.Close();
+                }
+            }
         }
 
         public string PopulateInvoice2()
@@ -428,7 +429,7 @@ namespace Subs.Data
             try
 
             {
-                gAllInvoiceAndPayment = GetInvoiceAndPayment(BalanceInvoiceId, Balance);
+                gAllInvoiceAndPayment = GetInvoiceAndPayment();
 
                 if (gAllInvoiceAndPayment.Count == 0)
                 {
@@ -661,7 +662,7 @@ namespace Subs.Data
             {
                 // Get a working base
 
-                List<InvoiceAndPayment> lInvoiceAndPayment = GetInvoiceAndPayment(0, 0);
+                List<InvoiceAndPayment> lInvoiceAndPayment = GetInvoiceAndPayment();
 
                 if( lInvoiceAndPayment.Count == 0)
                 {
@@ -1797,28 +1798,18 @@ namespace Subs.Data
 
                     if (BalanceInvoiceId == 0)
                     {
-                        //Get the records corresponding to the Checkpoint dates. 
-                        lInvoiceAndPayment = GetInvoiceAndPayment(0, 0);
-
-                        if (lInvoiceAndPayment.Count == 0)
-                        {
-                            throw new Exception("No balance records found");
-                        }
+                        return 0;
                     }
                     else
                     {
                         // Get the records according to the BalanceInvoice entry in the Customer object.
-                        lInvoiceAndPayment = GetInvoiceAndPayment(BalanceInvoiceId, Balance);
-
-
-                        if (lInvoiceAndPayment.Count == 0)
-                        {
-                            throw new Exception("No balance records found");
-                        }
+                        lInvoiceAndPayment = GetInvoiceAndPayment();
+                        decimal lDue = (decimal)lInvoiceAndPayment.Sum(p => p.Value);
+                        gTable[0].Due = lDue;
+                        gCustomerAdapter.Update(gTable[0]);
+                        return lDue;
                     }
-                       
-                    return (decimal)lInvoiceAndPayment.Sum(p => p.Value); 
-  
+                    
                 }
                 catch (Exception Ex)
                 {
@@ -2104,17 +2095,7 @@ namespace Subs.Data
         //    }
         //}
 
-        public DateTime CheckpointDatePayment
-        {
-            get
-            { return gTable[0].CheckpointDatePayment; }
-
-            set
-            {
-                gTable[0].CheckpointDatePayment = value;
-                NotifyPropertyChanged("CheckpointDatePayment");
-            }
-        }
+     
 
         //public decimal CheckpointPaymentValue
         //{
@@ -2693,8 +2674,6 @@ namespace Subs.Data
         {
             try
             {
-                //List<InvoiceAndPayment> lInvoicesAndPayments;
-
                 {
                     string lResult;
 
@@ -2931,40 +2910,7 @@ namespace Subs.Data
             }
         }
 
-        public static void TruncateLiabilityReport()
-        {
-            List<int> lCustomerIds = new List<int>();
-            try
-            {
-                SqlConnection lConnection = new SqlConnection();
-                SqlCommand Command = new SqlCommand();
-                SqlDataAdapter Adaptor = new SqlDataAdapter();
-                lConnection.ConnectionString = Settings.ConnectionString;
-                lConnection.Open();
-                Command.Connection = lConnection;
-                Command.CommandType = CommandType.Text;
-                Command.CommandText = "truncate table LiabilityReport";
-               
-                Command.ExecuteNonQuery();
-               
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
-
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomersData", "TruncateLiabilityReport", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
-
-                throw ex;
-            }
-        }
-
+    
         public static bool FindCustomerIdByNationalId(string pNationalId, out int pCustomerId)
         {
             CustomerDoc2TableAdapters.CustomerTableAdapter lAdapter = new CustomerDoc2TableAdapters.CustomerTableAdapter();

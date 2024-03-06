@@ -946,7 +946,7 @@ namespace Subs.Presentation
 
                 gCalculatedLiability = 0M;
                 gLiabilityRecords.Clear();
-                //LiabilityDataGrid.ItemsSource = gLiabilityRecords;
+                
                 {
                     string lResult;
 
@@ -1327,7 +1327,7 @@ namespace Subs.Presentation
             try
             {
 
-                gInvoiceAndPayment2 = gCurrentCustomer.GetInvoiceAndPayment(gCurrentCustomer.BalanceInvoiceId, gCurrentCustomer.Balance);
+                gInvoiceAndPayment2 = gCurrentCustomer.GetInvoiceAndPayment();
                
                 // Assign data sources
                 lStage = "Payment";
@@ -2353,9 +2353,9 @@ namespace Subs.Presentation
 
                 if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 0.1M)
                 {
-                    gCurrentCustomer.CheckpointDateInvoice = CustomerData3.GetCheckpointDate(lInvoice.InvoiceId);
-                    gCurrentCustomer.CheckpointDatePayment = gCurrentCustomer.CheckpointDateInvoice;
-                    gCurrentCustomer.Update();
+                    //gCurrentCustomer.CheckpointDateInvoice = CustomerData3.GetCheckpointDate(lInvoice.InvoiceId);
+                    //gCurrentCustomer.CheckpointDatePayment = gCurrentCustomer.CheckpointDateInvoice;
+                    //gCurrentCustomer.Update();
 
                     MessageBox.Show("Checkpoints successfully changed.");
                 }

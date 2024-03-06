@@ -31,7 +31,7 @@
     <ProductName>Mims subscription</ProductName>
     <PublisherName>ARENA</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>447</ApplicationRevision>
+    <ApplicationRevision>458</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -58,7 +58,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>1D0AE8D3D433D4117B63928E73E349D4B48D776E</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>9902C78E7E1185EB68BC6256D5EB7779F74347CA</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>

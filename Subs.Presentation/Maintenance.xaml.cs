@@ -911,7 +911,7 @@ namespace Subs.Presentation
                         ProgressBar.Refresh();
                     }
 
-                    // Prime the process load the first subscription
+                    // Prime the process to load the first subscription
 
                     if (lCurrentPayerId == 0)
                     {
@@ -994,7 +994,16 @@ namespace Subs.Presentation
                         return;
                     }
 
-
+                    //Update the Invoice balances if this is the first invoice for this payer.
+                    
+                    int lCustomerId = lInvoiceList[0].PayerId;
+                    CustomerData3 lCustomerData = new CustomerData3(lCustomerId);
+                    if (lCustomerData.BalanceInvoiceId == 0)
+                    {
+                        lCustomerData.BalanceInvoiceId = lInvoiceList[0].InvoiceId;
+                        lCustomerData.Balance = 0.0M;
+                        lCustomerData.Update();
+                    }
                 }
 
 
@@ -1405,6 +1414,92 @@ namespace Subs.Presentation
         }
 
 
+        //private void buttonFindInvalidCheckpoints(object sender, RoutedEventArgs e)
+        //{
+
+        //    CustomerDoc2.LiabilityDataTable lLiabilityTable = new CustomerDoc2.LiabilityDataTable();
+        //    Subs.Data.CustomerDoc2TableAdapters.LiabilityTableAdapter lLiabilityAdapter = new Subs.Data.CustomerDoc2TableAdapters.LiabilityTableAdapter();
+        //    int lCurrentPayer = 0;
+        //    int lCounter = 0;
+        //    try
+        //    {
+        //        this.Cursor = Cursors.Wait;
+
+        //        ExceptionData.WriteException(5, "FindInvalidCheckpoints job started on  " + DateTime.Now.ToString(), this.ToString(), "buttonFindInvalidCheckpoints", "");
+
+        //        lLiabilityAdapter.AttachConnection();
+        //        lLiabilityAdapter.Fill(lLiabilityTable);
+
+
+        //        List<InvoiceAndPayment> lRecord = new List<InvoiceAndPayment>();
+
+        //        for (int i = 0; i < lLiabilityTable.Count; i++)
+        //        {
+        //            lCounter++;
+
+        //            CustomerDoc2.LiabilityRow lRow = lLiabilityTable[i];
+
+        //            lCurrentPayer = lRow.PayerId;
+        //            lRow.Datum = DateTime.Now;
+
+        //            CustomerData3 lCustomerData = new CustomerData3(lRow.PayerId);
+
+        //            lRecord = lCustomerData.GetInvoiceAndPayment(0, 0M);
+
+        //            decimal lDue = lRecord.Sum(p => p.Value);
+        //            if (Math.Abs(lDue) < 0.1M)
+        //            {
+        //                continue;
+        //            }
+
+        //            InvoiceAndPayment lFirstPayment = lRecord.Where(p => p.OperationId == 1).FirstOrDefault();
+
+        //            InvoiceAndPayment lFirstInvoice = lRecord.Where(p => p.OperationId == 19).FirstOrDefault();
+
+        //            if (lFirstPayment == null || lFirstInvoice == null)
+        //            {
+        //                lRow.JournalLiability = 99999M;  // sic
+        //            }
+        //            else
+        //            {
+
+        //                lRow.JournalLiability = Math.Abs(lFirstInvoice.Value - lFirstPayment.Value);  // sic
+        //            }
+
+        //            lLiabilityAdapter.Update(lRow);
+
+        //            if (lCounter % 100 == 0)
+        //            {
+        //                ExceptionData.WriteException(5, "FindInvalidCheckPoint job progressed on  " + DateTime.Now.ToString(), this.ToString(), "buttonLiabilities_Click", "Counter= " + lCounter.ToString());
+        //            }
+        //        }
+
+        //        ExceptionData.WriteException(5, "FindInvalidCheckpoint job finished on  " + DateTime.Now.ToString(), this.ToString(), "buttonLiabilities_Click", "Counter= " + lCounter.ToString());
+        //        MessageBox.Show("Done!");
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        Display all the exceptions
+
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonFindInvalidCheckpoints",
+        //                "PayerId = " + lCurrentPayer.ToString());
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
+
+
+        //    }
+        //    finally
+        //    {
+        //        this.Cursor = Cursors.Arrow;
+        //    }
+        //}
+
         //private void buttonReallocateAllInvoices_Click(object sender, RoutedEventArgs e)
         //{
         //    CustomerDoc2.LiabilityDataTable lLiabilityTable = new CustomerDoc2.LiabilityDataTable();
@@ -1593,5 +1688,7 @@ namespace Subs.Presentation
             MessageBox.Show(Subs.Business.CustomerBiz.SendSMTP("", "heinreitmann@gmail.com", lSubject, lBody ));            
 
         }
+
+
     }
 }

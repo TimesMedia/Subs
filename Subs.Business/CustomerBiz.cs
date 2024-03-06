@@ -801,13 +801,6 @@ namespace Subs.Business
             pTransactionId = 0;
             try
             {
-                // Update the liability on the payer
-                if (!CustomerData3.AddToLiability(ref myTransaction, pRecord.CustomerId, pRecord.Amount))
-                {
-                    myTransaction.Rollback("WriteOffMoney");
-                    return false;
-                }
-
                 if (!LedgerData.WriteOffMoney(ref myTransaction, pRecord))
                 {
                     myTransaction.Rollback("WriteOffMoney");
@@ -866,15 +859,6 @@ namespace Subs.Business
 
             try
             {
-
-                // Update the liability on the customer
-
-                if (!CustomerData3.AddToLiability(ref lSqlTransaction, pPayerId, -pAmount))
-                {
-                    lSqlTransaction.Rollback("ReverseWriteOffMoney");
-                    return "Error in updating liability on customer " + pPayerId.ToString();
-                }
-
                 if (!LedgerData.ReverseWriteOffMoney(ref lSqlTransaction, pTransactionId, pInvoiceId, pPayerId, pAmount, pExplanation))
                 {
                     lSqlTransaction.Rollback("ReverseWriteOffMoney");
@@ -916,7 +900,7 @@ namespace Subs.Business
         #endregion
 
         #region Customer related
-       
+
         public static string ValidateDuplicate(CustomerData3 pCustomerData)
         {
             // Do I have this customer already

@@ -420,6 +420,139 @@ namespace Subs.Presentation
 
         #endregion
 
+        #region Event handlers Base rate
+
+        private void buttonAddBaseRate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ProductDoc.BaseRateRow lBaseRateRow = gProductDoc.BaseRate.NewBaseRateRow();
+
+                lBaseRateRow.ProductID = gCurrentProductId;
+                lBaseRateRow.DateFrom = DateTime.Now;
+                lBaseRateRow.Value = gProposedBaseRate;
+                lBaseRateRow.ModifiedBy = System.Environment.UserName;
+                lBaseRateRow.ModifiedOn = DateTime.Now;
+                gProductDoc.BaseRate.AddBaseRateRow(lBaseRateRow);
+
+                gBaseRateViewSource.View.MoveCurrentToLast();
+                DataRowView lDataRowView = (DataRowView)gBaseRateViewSource.View.CurrentItem;
+                BaseRateDataGrid.ScrollIntoView(lDataRowView);
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonAddBaseRate_Click", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+                throw ex;
+            }
+
+        }
+        private void buttonSubmitBaseRate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                foreach (ProductDoc.BaseRateRow lRow in gProductDoc.BaseRate)
+                {
+                    if (lRow.RowState == DataRowState.Deleted)
+                    {
+                        continue;
+                    }
+                    if (lRow.DateFrom < DateTime.Now.AddYears(-4))
+                    {
+                        //Remove old stuff
+                        lRow.Delete();
+                        continue;
+                    }
+                    if (lRow.RowState == DataRowState.Added | lRow.RowState == DataRowState.Modified)
+                    {
+                        lRow.ModifiedBy = Environment.UserDomainName.ToString() + "\\" + Environment.UserName.ToString();
+                        lRow.ModifiedOn = DateTime.Now;
+                    }
+                }
+                gBaseRateAdapter.Update(gProductDoc.BaseRate);
+                MessageBox.Show("Update of base rate data successful.");
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonSubmitBaseRate_Click", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+                throw ex;
+            }
+        }
+
+        private void buttonExitBaseRate_Click(object sender, RoutedEventArgs e)
+        {
+            TabControl.SelectedIndex = 0;
+        }
+
+        #endregion
+
+        private void buttonCalculateBaseRate_Click(object sender, RoutedEventArgs e)
+        {
+            decimal lUnitPrice = 0M;
+            try
+            {
+                ElicitDecimal lElicitUnitPrice = new ElicitDecimal("What do you want the final price for the subscription to be for a South African with the default delivery method?");
+                lElicitUnitPrice.ShowDialog();
+                if (lElicitUnitPrice.Answer == 0M)
+                {
+                    System.Windows.MessageBox.Show("You have not supplied me with a valid Final Price! Please try again.");
+                    return;
+                }
+
+                lUnitPrice = lElicitUnitPrice.Answer / gCurrentProductRow.DefaultNumberOfIssues;
+
+                //ElicitInteger lElicitUnitsPerIssue = new ElicitInteger("How many Issues per subscriptionIssue");
+                //lElicitUnitsPerIssue.ShowDialog();
+                //if (lElicitUnitPrice.Answer == 0M)
+                //{
+                //    System.Windows.MessageBox.Show("You have not supplied me with a valid number of units per issue! Please try again.");
+                //    return;
+                //}
+
+                int lUnitsPerIssue = 1;
+
+                decimal lDeliveryCost = SubscriptionBiz.GetDeliveryCost(61, gCurrentProductRow.Weight * lUnitsPerIssue, (DeliveryMethod)Enum.ToObject(typeof(DeliveryMethod), gCurrentProductRow.DefaultDeliveryOption))
+                                                             / lUnitsPerIssue;
+
+                decimal lVatFraction = ProductDataStatic.GetVatRate() / 100M;
+
+                gProposedBaseRate = (lUnitPrice - lDeliveryCost - (lVatFraction * lDeliveryCost)) / (1.0M + lVatFraction);
+
+                TextProposedBaseRate.Text = gProposedBaseRate.ToString("####0.00####");
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonCalculateBaseRate_Click", "UnitPrice = " + lUnitPrice.ToString());
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+                throw ex;
+            }
+        }
+
         #region Event handlers Issue
 
         private void buttonAddIssue_Click(object sender, RoutedEventArgs e)
@@ -620,137 +753,6 @@ namespace Subs.Presentation
 
         #endregion
 
-        #region Event handlers Base rate
-
-        private void buttonAddBaseRate_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ProductDoc.BaseRateRow lBaseRateRow = gProductDoc.BaseRate.NewBaseRateRow();
-
-                lBaseRateRow.ProductID = gCurrentProductId;
-                lBaseRateRow.DateFrom = DateTime.Now;
-                lBaseRateRow.Value = gProposedBaseRate;
-                lBaseRateRow.ModifiedBy = System.Environment.UserName;
-                lBaseRateRow.ModifiedOn = DateTime.Now;
-                gProductDoc.BaseRate.AddBaseRateRow(lBaseRateRow);
-
-                gBaseRateViewSource.View.MoveCurrentToLast();
-                DataRowView lDataRowView = (DataRowView)gBaseRateViewSource.View.CurrentItem;
-                BaseRateDataGrid.ScrollIntoView(lDataRowView);
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
-
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonAddBaseRate_Click", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
-                throw ex;
-            }
-
-        }
-        private void buttonSubmitBaseRate_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                foreach (ProductDoc.BaseRateRow lRow in gProductDoc.BaseRate)
-                {
-                    if (lRow.RowState == DataRowState.Deleted)
-                    {
-                        continue;
-                    }
-                    if (lRow.DateFrom < DateTime.Now.AddYears(-4))
-                    {
-                        //Remove old stuff
-                        lRow.Delete();
-                        continue;
-                    }
-                    if (lRow.RowState == DataRowState.Added | lRow.RowState == DataRowState.Modified)
-                    {
-                        lRow.ModifiedBy = Environment.UserDomainName.ToString() + "\\" + Environment.UserName.ToString();
-                        lRow.ModifiedOn = DateTime.Now;
-                    }
-                }
-                gBaseRateAdapter.Update(gProductDoc.BaseRate);
-                MessageBox.Show("Update of base rate data successful.");
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
-
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonSubmitBaseRate_Click", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
-                throw ex;
-            }
-        }
-
-        private void buttonExitBaseRate_Click(object sender, RoutedEventArgs e)
-        {
-            TabControl.SelectedIndex = 0;
-        }
-
-        #endregion
-
-        private void buttonCalculateBaseRate_Click(object sender, RoutedEventArgs e)
-        {
-            decimal lUnitPrice = 0M;
-            try
-            {
-                ElicitDecimal lElicitUnitPrice = new ElicitDecimal("What do you want the final price for the subscription to be for a South African with the default delivery method?");
-                lElicitUnitPrice.ShowDialog();
-                if (lElicitUnitPrice.Answer == 0M)
-                {
-                    System.Windows.MessageBox.Show("You have not supplied me with a valid Final Price! Please try again.");
-                    return;
-                }
-
-                lUnitPrice = lElicitUnitPrice.Answer/ gCurrentProductRow.DefaultNumberOfIssues;
-
-                //ElicitInteger lElicitUnitsPerIssue = new ElicitInteger("How many Issues per subscriptionIssue");
-                //lElicitUnitsPerIssue.ShowDialog();
-                //if (lElicitUnitPrice.Answer == 0M)
-                //{
-                //    System.Windows.MessageBox.Show("You have not supplied me with a valid number of units per issue! Please try again.");
-                //    return;
-                //}
-
-                int lUnitsPerIssue = 1;
-
-                decimal lDeliveryCost = SubscriptionBiz.GetDeliveryCost(61, gCurrentProductRow.Weight * lUnitsPerIssue, (DeliveryMethod)Enum.ToObject(typeof(DeliveryMethod), gCurrentProductRow.DefaultDeliveryOption))
-                                                             / lUnitsPerIssue;
-
-                decimal lVatFraction = ProductDataStatic.GetVatRate() / 100M;
-
-                gProposedBaseRate = (lUnitPrice - lDeliveryCost - (lVatFraction * lDeliveryCost)) / (1.0M + lVatFraction);
-
-                TextProposedBaseRate.Text = gProposedBaseRate.ToString("####0.00####");
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
-
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonCalculateBaseRate_Click", "UnitPrice = " + lUnitPrice.ToString());
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
-                throw ex;
-            }
-        }
+      
     }
 }
