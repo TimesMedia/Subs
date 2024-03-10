@@ -87,9 +87,19 @@ namespace Subs.Data
             
             myRow.Initials = "X";
             myRow.Surname = "XX";
+            myRow.TitleId = 1;
+            myRow.CompanyId = 1;
+            myRow.CountryId = 61;
+            myRow.AddressType = 1;
+            myRow.PostAddressId = 1;
             myRow.CellPhoneNumber = "000000000";
+            myRow.Liability = 0;
+            myRow.Correspondence2 = 1;
+            myRow.CheckpointDateInvoice = DateTime.Parse("2017/06/01");
+            myRow.AutomaticPaymentAllocation = true;
+            myRow.Marketing = true;
             myRow.SetPhysicalAddressIdNull();
-           // myRow.LoginEmail = DateTime.Now.ToString();  // Provide an initial value that is unique.
+            // myRow.LoginEmail = DateTime.Now.ToString();  // Provide an initial value that is unique.
             myRow.ModifiedBy = Environment.UserDomainName;
             myRow.ModifiedOn = DateTime.Now;
             gTable.AddCustomerRow(myRow);
@@ -111,14 +121,7 @@ namespace Subs.Data
             }
         }
 
-
-        //~CustomerData3()
-        //{
-        //     gConnection.Close();
-        //}
-
-       
-
+   
         public CustomerData3(int CustomerId)
         {
             try
@@ -343,6 +346,20 @@ namespace Subs.Data
             }
         }
 
+        public (int InvoiceId, decimal Due) DueOnDate(DateTime lDate)
+        {
+            List<InvoiceAndPayment> lInvoiceAndPayments = GetInvoiceAndPayment();
+
+            for (int i = 1; i < lInvoiceAndPayments.Count(); i++)       // Calculate the rest
+            {
+                if (lInvoiceAndPayments[i].Date >= lDate)
+                {
+                    return (lInvoiceAndPayments[i].InvoiceId, lInvoiceAndPayments[i].DueValue);
+                }
+            }
+            return (0, 0.0M);
+        }
+
 
         public List<InvoiceAndPayment> GetInvoiceAndPayment()
         {
@@ -407,7 +424,7 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomersData", "GetInvoiceAndPayments", "CurrentTransactionId = " + lCurrentTransactionId.ToString());
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomersData", "GetInvoiceAndPayment", "CurrentTransactionId = " + lCurrentTransactionId.ToString());
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
@@ -598,7 +615,7 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomerData", "PopulateInvoice2",
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message,this.ToString(), "PopulateInvoice2",
                         "PayerId = " + CustomerId.ToString());
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
@@ -607,12 +624,7 @@ namespace Subs.Data
             }
         }
 
-
-     
-
-
-
-
+        
         public static DateTime GetCheckpointDate(int pInvoiceId)
         {
             try

@@ -97,6 +97,7 @@ namespace Subs.Presentation
         private System.Windows.Data.CollectionViewSource gInvoiceViewSource = new CollectionViewSource();
         private readonly System.Windows.Data.CollectionViewSource gTooMuchTooLittleViewSource;
         private readonly System.Windows.Data.CollectionViewSource gLiabilityRecordsViewSource;
+        private readonly System.Windows.Data.CollectionViewSource gDueViewSource;
 
         private readonly System.Windows.Data.CollectionViewSource gSubscriptionsViewSource;
 
@@ -117,10 +118,12 @@ namespace Subs.Presentation
         //private List<Subs.Data.InvoicesAndPayments> gInvoice = new List<InvoicesAndPayments>();
         //private List<Subs.Data.InvoicesAndPayments> gPayment = new List<InvoicesAndPayments>();
 
+
         private List<Subs.Data.InvoiceAndPayment> gInvoiceAndPaymentCopy = new List<InvoiceAndPayment>();
         private List<Subs.Data.InvoiceAndPayment> gInvoiceAndPayment2 = new List<InvoiceAndPayment>();
         private List<Subs.Data.InvoiceAndPayment> gInvoice2 = new List<InvoiceAndPayment>();
         private List<Subs.Data.InvoiceAndPayment> gPayment2 = new List<InvoiceAndPayment>();
+        private List<Subs.Data.InvoiceAndPayment> gDue = new List<InvoiceAndPayment>();
 
 
         private enum ContextMenuOperations
@@ -134,7 +137,9 @@ namespace Subs.Presentation
             Invoice = 1,
             Subscription = 2,
             Discrepancies = 3,
-            Liability = 4
+            Liability = 4,
+            Due = 5,
+            XPS = 6
  
         }
 
@@ -163,6 +168,7 @@ namespace Subs.Presentation
             gSubscriptionsViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["SubscriptionsViewSource"];
             gTooMuchTooLittleViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["TooMuchTooLittleViewSource"];
             gLiabilityRecordsViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["LiabilityRecordsViewSource"];
+            gDueViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["DueViewSource"];
 
             PaymentDatePicker.SelectedDate = DateTime.Now;
 
@@ -933,7 +939,48 @@ namespace Subs.Presentation
                 this.Cursor = Cursors.Arrow;
             }
         }
-       
+
+
+        private void Click_ShowDue(object sender, RoutedEventArgs e)
+        {
+            this.Cursor = Cursors.Wait;
+            try
+            {
+                // Get the report data
+
+                SelectCurrentCustomer();
+
+                gDue = gCurrentCustomer.GetInvoiceAndPayment();
+                gDueViewSource.Source = gDue;
+                DueDataGrid.ItemsSource = gDueViewSource.View;
+                //textCurrentLiability.Text = gCurrentCustomer.Liability.ToString("#########0.00");
+
+                SelectTab(PickerTabs.Due);
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Click_Due", "CustomerId = " + gCurrentCustomer.CustomerId.ToString());
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Arrow;
+
+            }
+        }
+
+
+
 
         private void Click_ShowLiabilities(object sender, RoutedEventArgs e)
         {
@@ -2324,10 +2371,19 @@ namespace Subs.Presentation
             try
             {
                 this.Cursor = Cursors.Wait;
-                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gInvoiceViewSource.View.CurrentItem;
+                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gDueViewSource.View.CurrentItem;
                 if (lInvoice.OperationId != (int)Operation.VATInvoice)
                 {
                     MessageBox.Show("Sorry, I respond only to invoice lines");
+                    return;
+                }
+
+                TimeSpan lTimeSpan = new TimeSpan(356 * 3,0,0,0);  // 3Years
+
+
+                if (lInvoice.Date > DateTime.Now.Subtract(lTimeSpan))
+                {
+                    MessageBox.Show("No can do, you have to keep at least 3 years of data.");
                     return;
                 }
 
@@ -2336,28 +2392,44 @@ namespace Subs.Presentation
                 int lOriginalBalanceInvoiceId = gCurrentCustomer.BalanceInvoiceId;
                 decimal lOriginalBalance = gCurrentCustomer.Balance;
                 decimal lOriginalDue = gCurrentCustomer.Due;
-
+                decimal lNewBalance = gCurrentCustomer.CalculateBalanceByInvoice(lInvoice.InvoiceId);
+               
                 try
                 {
-                    gCurrentCustomer.Balance = gCurrentCustomer.CalculateBalanceByInvoice(lInvoice.InvoiceId);
+                    if (Math.Abs(lNewBalance) < 1M)
+                    {
+                        lNewBalance = 0;   // Get rid of decimal point variations
+                    }
+
+                    if (lNewBalance > 0)
+                    {
+                        MessageBox.Show("No can do, you first have to write off " + lNewBalance.ToString("######0.######") + " from some of the previous invoices.");
+                        return;
+                    }
+
+                    if (lNewBalance < 0)
+                    {
+                        MessageBox.Show("No can do, you first have to refund " + lNewBalance.ToString("######0.######") + 
+                            " or get the client to do a reduced payment.");
+                        return;
+                    }
+
+                    gCurrentCustomer.Balance = 0;
                     gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
-                    //gCurrentCustomer.Update();
                 }
                 catch (Exception InnerException)
                 {
                     gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
                     gCurrentCustomer.Balance = lOriginalBalance;
-                    //gCurrentCustomer.Update();
                     throw InnerException;
                 }
 
-                if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 0.1M)
+                if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M)
                 {
-                    //gCurrentCustomer.CheckpointDateInvoice = CustomerData3.GetCheckpointDate(lInvoice.InvoiceId);
-                    //gCurrentCustomer.CheckpointDatePayment = gCurrentCustomer.CheckpointDateInvoice;
-                    //gCurrentCustomer.Update();
-
+                    gCurrentCustomer.Update();
+                    GoToStatement();  //Refresh the displayed statement
                     MessageBox.Show("Checkpoints successfully changed.");
+
                 }
                 else
                 {
@@ -2365,11 +2437,7 @@ namespace Subs.Presentation
                         + "New = " + gCurrentCustomer.Due.ToString("#0.000000")
                         + " Original = " + lOriginalDue.ToString("#0.000000"));
 
-                    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
-                    gCurrentCustomer.Balance = lOriginalBalance;
-                    gCurrentCustomer.Update();
-
-                    MessageBox.Show("Checkpoints change failed. Original values restored.");
+                    MessageBox.Show("Checkpoints change failed. No changes made to database.");
                 }
                 return;
             }
@@ -2382,11 +2450,11 @@ namespace Subs.Presentation
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "SetCheckpoint", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Click_Checkpoint", "");
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
-                MessageBox.Show("Error in SetCheckpoint " + ex.Message);
+                MessageBox.Show("Error in Click_Checkpoint " + ex.Message);
             }
             finally
             {
@@ -2594,7 +2662,7 @@ namespace Subs.Presentation
             try
             {
                 InvoiceAndPayment lInvoice = (InvoiceAndPayment)gInvoiceViewSource.View.CurrentItem;
-                if (lInvoice.OperationId != (int)Operation.Init_Sub)
+                if (lInvoice.OperationId != (int)Operation.VATInvoice)
                 {
                     MessageBox.Show("Sorry, I respond only to Invoice lines");
                     return;
@@ -3201,9 +3269,10 @@ namespace Subs.Presentation
         }
 
 
+
         #endregion
 
-
+     
     }
 }
 
