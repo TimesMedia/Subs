@@ -405,8 +405,10 @@ namespace Subs.Data
                     lInvoiceAndPayment.Reference2 = lReader.GetString(8);
                     lInvoiceAndPayments.Add(lInvoiceAndPayment);
                 }
-                               
+
                 //Calculate the balance values
+
+                lInvoiceAndPayments[0].DueValue = lInvoiceAndPayments[0].Value;
 
                 for (int i = 1; i < lInvoiceAndPayments.Count(); i++)       // Calculate the rest
                 {
@@ -1803,25 +1805,11 @@ namespace Subs.Data
             {
                 try
                 {
-                    
-                    // Load the relevant Balance records 
-
-                    List<InvoiceAndPayment> lInvoiceAndPayment = new List<InvoiceAndPayment>();
-
-                    if (BalanceInvoiceId == 0)
-                    {
-                        return 0;
-                    }
-                    else
-                    {
-                        // Get the records according to the BalanceInvoice entry in the Customer object.
-                        lInvoiceAndPayment = GetInvoiceAndPayment();
-                        decimal lDue = (decimal)lInvoiceAndPayment.Sum(p => p.Value);
-                        gTable[0].Due = lDue;
-                        gCustomerAdapter.Update(gTable[0]);
-                        return lDue;
-                    }
-                    
+                    List<InvoiceAndPayment>lInvoiceAndPayment = GetInvoiceAndPayment();
+                    decimal lDue = (decimal)lInvoiceAndPayment.Sum(p => p.Value);
+                    gTable[0].Due = lDue;
+                    gCustomerAdapter.Update(gTable[0]);
+                    return lDue;
                 }
                 catch (Exception Ex)
                 {

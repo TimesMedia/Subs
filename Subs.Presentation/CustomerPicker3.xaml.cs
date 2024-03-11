@@ -2378,14 +2378,14 @@ namespace Subs.Presentation
                     return;
                 }
 
-                TimeSpan lTimeSpan = new TimeSpan(356 * 3,0,0,0);  // 3Years
+                //TimeSpan lTimeSpan = new TimeSpan(356 * 3,0,0,0);  // 3Years
 
 
-                if (lInvoice.Date > DateTime.Now.Subtract(lTimeSpan))
-                {
-                    MessageBox.Show("No can do, you have to keep at least 3 years of data.");
-                    return;
-                }
+                //if (lInvoice.Date > DateTime.Now.Subtract(lTimeSpan))
+                //{
+                //    MessageBox.Show("No can do, you have to keep at least 3 years of data.");
+                //    return;
+                //}
 
                 //Try to set a new checkpoint
                 // Save originals
@@ -2409,30 +2409,34 @@ namespace Subs.Presentation
 
                     if (lNewBalance < 0)
                     {
-                        MessageBox.Show("No can do, you first have to refund " + lNewBalance.ToString("######0.######") + 
+                        MessageBox.Show("No can do, you first have to refund " + lNewBalance.ToString("######0.######") +
                             " or get the client to do a reduced payment.");
                         return;
                     }
 
-                    gCurrentCustomer.Balance = 0;
+                    gCurrentCustomer.Balance = lNewBalance;
                     gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
+                    gCurrentCustomer.Update();
                 }
                 catch (Exception InnerException)
                 {
                     gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
                     gCurrentCustomer.Balance = lOriginalBalance;
+                    gCurrentCustomer.Update();
                     throw InnerException;
                 }
 
                 if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M)
                 {
-                    gCurrentCustomer.Update();
                     GoToStatement();  //Refresh the displayed statement
                     MessageBox.Show("Checkpoints successfully changed.");
 
                 }
                 else
                 {
+                    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
+                    gCurrentCustomer.Balance = lOriginalBalance;
+                    gCurrentCustomer.Update();
                     ExceptionData.WriteException(1, "Difference in due values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCustomer.CustomerIdColumn.ToString()
                         + "New = " + gCurrentCustomer.Due.ToString("#0.000000")
                         + " Original = " + lOriginalDue.ToString("#0.000000"));
