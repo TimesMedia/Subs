@@ -2668,7 +2668,7 @@ namespace Subs.Presentation
                 InvoiceAndPayment lInvoice = (InvoiceAndPayment)gInvoiceViewSource.View.CurrentItem;
                 if (lInvoice.OperationId != (int)Operation.VATInvoice)
                 {
-                    MessageBox.Show("Sorry, I respond only to Invoice lines");
+                    MessageBox.Show("Sorry, I respond only to invoice lines");
                     return;
                 }
 
@@ -2678,11 +2678,9 @@ namespace Subs.Presentation
 
                 if (lElicitDecimal.Answer > lInvoice.Value)
                 {
-                    MessageBox.Show("Sorry, I cannot write off more than the value of the invoice");
-                    return;
+                    // Prevent writing off more than the value of the invoice
+                    lElicitDecimal.Answer = lInvoice.Value;
                 }
-
-
 
                 ElicitString lElicitString = new ElicitString("Please supply a reason.");
                 lElicitString.ShowDialog();
@@ -2705,6 +2703,7 @@ namespace Subs.Presentation
 
                     //AutomaticAllocate();
                     MessageBox.Show("Done");
+                    GoToStatement();
                 }
                 else
                 {
