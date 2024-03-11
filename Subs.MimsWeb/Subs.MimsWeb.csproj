@@ -303,12 +303,17 @@
     <Content Include="Content\navbar.css" />
     <Content Include="Content\NewBeyondHealth.html" />
     <Content Include="Content\normalize.css" />
+    <Content Include="Content\Saphex11March.html" />
+    <Content Include="Content\Saphex1weektogo.html" />
+    <Content Include="Content\Saphex2.html" />
     <Content Include="Content\skeleton.css" />
     <Content Include="Content\Styles.css" />
     <Content Include="Content\TermsConditions.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\1 week to go.png" />
+    <Content Include="Images\1-5 March.png" />
     <Content Include="Images\CPDLogo1.jpg" />
     <Content Include="Images\discount.png" />
     <Content Include="Images\emims &amp; mobimims.jpg" />
@@ -322,6 +327,7 @@
     <Content Include="Images\Print &amp; emims.jpg" />
     <Content Include="Images\Print &amp; mobimims.jpg" />
     <Content Include="Images\PThe power of two.jpg" />
+    <Content Include="Images\Saphex2.png" />
     <Content Include="Images\shopping.png" />
     <Content Include="Images\Tiso_Blackstar_Group_logo.psd" />
     <Content Include="appsettings.Development.json" />
@@ -403,7 +409,7 @@
     <Content Include="Views\PayU\PayUTransactionResult.cshtml" />
     <Content Include="Views\PayU\IndexOwnAmount.cshtml" />
     <Content Include="Content\BeyondHealthCare.html" />
-    <Content Include="Views\Promotion\Promotions.cshtml" />
+    <Content Include="Views\Promotion\PromotionsOld.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Views\Home\Thanks.cshtml" />
