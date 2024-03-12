@@ -2694,7 +2694,7 @@ namespace Subs.Data
                                                   {
                                                       TransactionId = v.TransactionId,
                                                       OriginalTransactionId = v.OriginalTransactionId,
-                                                      //CaptureDate = v.CaptureDate,
+                                                      CaptureDate = v.CaptureDate,
                                                       EffectiveDate = v.Date,
                                                       Operation = v.Operation,
                                                       OperationId = v.OperationId,

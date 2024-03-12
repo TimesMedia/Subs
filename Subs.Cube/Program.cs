@@ -27,7 +27,15 @@ namespace DW
                 Settings.ConnectionString = gConnectionString;
                 Settings.SUBSDWConnectionString = gDWConnectionString;
             }
-            UpDateLiability();
+            try
+            { 
+               UpDateLiability(); 
+            }
+            catch (Exception Ex)
+            {
+                throw Ex;            
+            }
+
         }
 
         
@@ -54,7 +62,7 @@ namespace DW
                     lCurrentPayer = PayerId;
                     decimal lJournalLiability = 0;
 
-                    gLiabilityAdapter.FillByPayerId(gLiability,PayerId);
+                    gLiabilityAdapter.FillByPayerId(gLiability, PayerId);
 
                     {
                         string lResult;
@@ -75,7 +83,6 @@ namespace DW
                     foreach (LiabilityRecord item in lLiabilityRecords)
                     {
                         lCurrentTransactionId = item.TransactionId;
-
 
                         // Skip if you have the transaction already
                         int lHits = gLiability.Where(p => p.TransactionId == item.TransactionId).Count();
@@ -113,7 +120,7 @@ namespace DW
                     } // End of foreach - item
 
                     lStage = "Before updating table";
-
+                   
                     gLiabilityAdapter.Update(gLiability);
                     gLiability.Clear();
                     gLiability.AcceptChanges();
