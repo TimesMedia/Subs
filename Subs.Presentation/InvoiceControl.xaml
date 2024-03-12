@@ -244,13 +244,14 @@
                             <StackPanel>
                                 <Label>Total(Exc)</Label>
                                 <Label>Plus Vat</Label>
-                                
+                                <Label>Minus overpayment</Label>
                                 <Label Foreground="Red" FontSize="14">Amount payable</Label>
                             </StackPanel>
 
                             <StackPanel>
                                 <Label x:Name="TotalExc" Style="{StaticResource AlignRight}" ></Label>
                                 <Label x:Name="Vat" Style="{StaticResource AlignRight}"></Label>
+                                <Label x:Name="OverPayment" Style="{StaticResource AlignRight}"></Label>
                                 <Label x:Name="Payable" Style="{StaticResource AlignRight}" Foreground="Red" FontSize="14"></Label>
                             </StackPanel>
                         </StackPanel>

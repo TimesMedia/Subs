@@ -239,11 +239,11 @@ namespace Subs.Presentation
 
                 decimal lDue = gCustomerData.Due;
 
-                lPayable = lTotalExc + lTotalVat;
+                lPayable = lTotalExc + lTotalVat + lDue;
 
                 TotalExc.Content = lTotalExc.ToString("R ######0.00");
                 Vat.Content = lTotalVat.ToString("R ######0.00");
-
+                OverPayment.Content = lDue < 0 ? lDue.ToString("R ######0.00") : "0.00";
                 Payable.Content = lPayable.ToString("R ######0.00");
 
                 // Save to disk
