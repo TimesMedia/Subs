@@ -406,6 +406,12 @@ namespace Subs.Data
                     lInvoiceAndPayments.Add(lInvoiceAndPayment);
                 }
 
+                if (lInvoiceAndPayments.Count == 0)
+                {
+                    return lInvoiceAndPayments;
+                }
+
+
                 //Calculate the balance values
 
                 lInvoiceAndPayments[0].DueValue = lInvoiceAndPayments[0].Value;
@@ -1806,6 +1812,12 @@ namespace Subs.Data
                 try
                 {
                     List<InvoiceAndPayment>lInvoiceAndPayment = GetInvoiceAndPayment();
+                    if (lInvoiceAndPayment.Count == 0)
+                    {
+                        return 0.0M;
+                    }
+                   
+                    
                     decimal lDue = (decimal)lInvoiceAndPayment.Sum(p => p.Value);
                     gTable[0].Due = lDue;
                     gCustomerAdapter.Update(gTable[0]);
@@ -2276,10 +2288,11 @@ namespace Subs.Data
             {
                 try
                 {
+                    SqlConnection Connection = new SqlConnection(Settings.ConnectionString);
                     SqlCommand Command = new SqlCommand();
                     SqlDataAdapter Adaptor = new SqlDataAdapter();
-                    //gConnection.Open();
-                    Command.Connection = gConnection;
+                    Connection.Open();
+                    Command.Connection = Connection;
                     Command.CommandType = CommandType.StoredProcedure;
                     Command.CommandText = "[MIMS.CustomerData.NumberOfActiveSubscriptions]";
                     SqlCommandBuilder.DeriveParameters(Command);

@@ -74,7 +74,10 @@ namespace DW
 
                         if ((lResult = lCustomerData.CalculateLiability2( ref lLiabilityRecords, ref lJournalLiability)) != "OK")
                         {
-                            ExceptionData.WriteException(5, lResult + DateTime.Now.ToString(), "static Program FactLiability", "UpdateLiability", "Customer =" + PayerId.ToString());
+                            if (!lResult.Contains("Nothing found") )
+                            {
+                                ExceptionData.WriteException(5, lResult + DateTime.Now.ToString(), "static Program FactLiability", "UpdateLiability", "Customer =" + PayerId.ToString());
+                            }
 
                             continue;
                         }
