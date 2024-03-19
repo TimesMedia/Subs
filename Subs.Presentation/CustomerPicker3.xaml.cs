@@ -2377,15 +2377,7 @@ namespace Subs.Presentation
                     MessageBox.Show("Sorry, I respond only to invoice lines");
                     return;
                 }
-
-                //TimeSpan lTimeSpan = new TimeSpan(356 * 3,0,0,0);  // 3Years
-
-
-                //if (lInvoice.Date > DateTime.Now.Subtract(lTimeSpan))
-                //{
-                //    MessageBox.Show("No can do, you have to keep at least 3 years of data.");
-                //    return;
-                //}
+                                
 
                 //Try to set a new checkpoint
                 // Save originals
@@ -2417,6 +2409,7 @@ namespace Subs.Presentation
                     gCurrentCustomer.Balance = lNewBalance;
                     gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
                     gCurrentCustomer.Update();
+                    LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lNewBalance);
                 }
                 catch (Exception InnerException)
                 {

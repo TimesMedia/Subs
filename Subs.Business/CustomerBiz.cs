@@ -575,7 +575,22 @@ namespace Subs.Business
         {
             pTransactionId = 0;
 
-            // Start the transaction
+            //CustomerData3 lCustomerData = new CustomerData3(pRecord.CustomerId);
+            //DateTime lFirstPaymentDate; 
+
+
+            //if (lCustomerData.BalanceInvoice == 0)
+            //{
+            //    lFirstPaymentDate = lCustomerData.CheckpointDateInvoice;
+            //}
+            //else
+            //{
+            //    lFirstPaymentDate = FirstInvoiceDate;
+            //}
+
+
+
+
 
             if (LedgerData.DuplicatePayment(pRecord.CustomerId, pRecord.Reference, pRecord.Amount) > 0)
             {
@@ -611,19 +626,6 @@ namespace Subs.Business
 
                 lConnection.Close();
                 lTransaction.Dispose();
-
-                //{
-                //    string lResult;
-
-                //    //ExceptionData.WriteException(1, "Start DistributAllPayments", "CustomerBizStatic", "Pay", DateTime.Now.ToString(), pRecord.CustomerId);
-                //    if ((lResult = DistributeAllPayments(pRecord.CustomerId)) != "OK")
-                //    {
-                //        return lResult;
-                //    }
-                //    //ExceptionData.WriteException(1, "End DistributAllPayments", "CustomerBizStatic", "Pay", DateTime.Now.ToString(), pRecord.CustomerId);
-
-                //}
-
 
                 {
                     string lResult;

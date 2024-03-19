@@ -199,7 +199,7 @@ namespace Subs.Data
         WriteOffMoney = 23,
         ReversePayment = 24,
         ReverseWriteOffMoney = 25,
-        //ArchivedBalance = 26,
+        ChangeCheckpoint = 26,
         ReverseDelivery = 27,
         ChangeReceiver = 28,
         BroughtForward = 29,

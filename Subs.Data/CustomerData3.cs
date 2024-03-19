@@ -673,6 +673,51 @@ namespace Subs.Data
         }
 
 
+        public DateTime GetFirstInvoiceDate(int pInvoiceId)
+        {
+            
+            try
+            {
+                SqlConnection lConnection = new SqlConnection();
+                SqlCommand Command = new SqlCommand();
+                SqlDataAdapter Adaptor = new SqlDataAdapter();
+                lConnection.ConnectionString = Settings.ConnectionString;
+                lConnection.Open();
+                Command.Connection = lConnection;
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = "[dbo].[MIMS.CustomerData.GetFirstInvoiceDate]";
+
+                Command.Parameters.Add("@InvoiceId", SqlDbType.Int);
+                Command.Parameters["@InvoiceId"].Value = pInvoiceId;
+
+                SqlDataReader lReader = Command.ExecuteReader();
+
+                lReader.Read();
+
+                return lReader.GetDateTime(0);
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomersData", "GetFirstInvoiceDate", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
+            }
+        }
+
+
+
+
+
+
 
         public decimal CalculateBalanceByInvoice(int pInvoiceId)
         {
@@ -2094,9 +2139,10 @@ namespace Subs.Data
                 }
             }
         }
-          
-        //public int CheckpointPaymentTransactionId
+
+        //public int CheckpointDate
         //{
+        //    // This is  old one
         //    get
         //    { return gTable[0].CheckpointPaymentTransactionId; }
 
@@ -2107,7 +2153,7 @@ namespace Subs.Data
         //    }
         //}
 
-     
+
 
         //public decimal CheckpointPaymentValue
         //{

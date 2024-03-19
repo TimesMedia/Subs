@@ -1226,6 +1226,63 @@ namespace Subs.Data
             }
         }
 
+
+        public static void ChangeCheckpoint(int PayerId, int NewInvoiceId = 0, int OldInvoiceId = 0, decimal OldBalance = 0.0M )
+        {
+            SqlConnection lConnection = new SqlConnection();
+
+            try
+            {
+                SqlCommand Command = new SqlCommand();
+                lConnection.ConnectionString = gConnectionString;
+                lConnection.Open();
+                Command.Connection = lConnection;
+
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = "dbo.[MIMS.LedgerData.Update]";
+
+                Command.Parameters.Add("@PayerId", SqlDbType.Int);
+                Command.Parameters.Add("@Operation", SqlDbType.Int);
+                Command.Parameters.Add("@InvoiceId", SqlDbType.Int);
+                Command.Parameters.Add("@ReferenceType2", SqlDbType.NVarChar, 20);
+                Command.Parameters.Add("@Reference2", SqlDbType.NVarChar, 40);
+                Command.Parameters.Add("@Value", SqlDbType.Decimal);
+                
+                // Record the credit given to the customer
+
+                Command.Parameters["@PayerId"].Value = PayerId;
+                Command.Parameters["@Operation"].Value = Operation.ChangeCheckpoint;
+                Command.Parameters["@InvoiceId"].Value = NewInvoiceId;
+                Command.Parameters["@ReferenceType2"].Value = "OldInvoiceId";
+                Command.Parameters["@Reference2"].Value = OldInvoiceId.ToString("#0");
+                Command.Parameters["@Value"].Value = OldBalance;
+
+                Command.ExecuteNonQuery();
+            }
+
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    ExceptionData.WriteException(1, ex.Message, "static LedgerData", "ChangeCheckpoint", "PayerId = " + PayerId.ToString());
+                    throw new Exception("static LedgerData" + " : " + "WriteOff" + " : ", ex);
+                }
+                else
+                {
+                    throw ex; // Just bubble it up
+                }
+            }
+            finally
+            {
+                lConnection.Close();
+            }
+        }
+
+
+
+
+
+
         public static void CancelSubscription(ref SqlTransaction myTransaction, int SubscriptionId, string Reference)
         {
             try
