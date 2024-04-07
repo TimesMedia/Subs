@@ -10,22 +10,18 @@
     <Shape ID="DesignTable:Discrepancies" ZOrder="5" X="675" Y="370" Height="229" Width="223" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="159" />
     <Shape ID="DesignTable:CustomerOld" ZOrder="3" X="1340" Y="28" Height="575" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="412" />
     <Shape ID="DesignTable:Comment2" ZOrder="4" X="622" Y="66" Height="191" Width="219" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
-    <Shape ID="DesignTable:Customer" ZOrder="2" X="1025" Y="248" Height="381" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
+    <Shape ID="DesignTable:Customer" ZOrder="2" X="957" Y="143" Height="381" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
   </Shapes>
   <Connectors>
     <Connector ID="DesignRelation:FK_Comment2_Customer" ZOrder="1" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>1025</X>
-          <Y>274</Y>
+          <X>957</X>
+          <Y>200</Y>
         </Point>
         <Point>
-          <X>824</X>
-          <Y>274</Y>
-        </Point>
-        <Point>
-          <X>824</X>
-          <Y>257</Y>
+          <X>841</X>
+          <Y>200</Y>
         </Point>
       </RoutePoints>
     </Connector>

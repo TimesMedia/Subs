@@ -522,7 +522,7 @@ namespace Subs.Presentation
                 {
                     SubscriptionData3 lSubscriptionData = new SubscriptionData3(lItem.Integer1);
 
-                    // Reversibility check check
+                    // Reversibility check
 
                     if (!IssueBiz.DeliveryReversible(lItem.Integer1, lItem.Integer2))
                     {
@@ -541,7 +541,7 @@ namespace Subs.Presentation
 
                     // Reverse the delivery and give him his money. Also log it.
 
-                    string lReason = "Dischem company takeover.";
+                    string lReason = "";
 
                     {
                         string lResult;

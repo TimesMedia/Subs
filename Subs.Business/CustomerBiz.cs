@@ -415,54 +415,54 @@ namespace Subs.Business
            
         //}
 
-        public static string SynchronizeLiability(CustomerData3 pCustomerData, [CallerMemberName] string pCaller = null)
-        {
-            try
-            {
-                decimal lCalculatedLiability = 0M;
-                List<LiabilityRecord> lLiabilityRecords = new List<LiabilityRecord>();
+        //public static string SynchronizeLiability(CustomerData3 pCustomerData, [CallerMemberName] string pCaller = null)
+        //{
+        //    try
+        //    {
+        //        decimal lCalculatedLiability = 0M;
+        //        List<LiabilityRecord> lLiabilityRecords = new List<LiabilityRecord>();
 
-                {
-                    string lResult2;
+        //        {
+        //            string lResult2;
 
-                    if ((lResult2 = pCustomerData.CalculateLiability2(ref lLiabilityRecords, ref lCalculatedLiability)) != "OK")
-                    {
-                        if (!lResult2.Contains("Nothing"))
-                        {
-                            return lResult2;
-                        }
-                    }
-                }
+        //            if ((lResult2 = pCustomerData.CalculateLiability2(ref lLiabilityRecords, ref lCalculatedLiability)) != "OK")
+        //            {
+        //                if (!lResult2.Contains("Nothing"))
+        //                {
+        //                    return lResult2;
+        //                }
+        //            }
+        //        }
 
-                pCustomerData.Liability = lCalculatedLiability;
+        //        pCustomerData.Liability = lCalculatedLiability;
 
 
-                string lResult;
-                if ((lResult = pCustomerData.Update()) != "OK")
-                {
-                    return lResult;
-                }
+        //        string lResult;
+        //        if ((lResult = pCustomerData.Update()) != "OK")
+        //        {
+        //            return lResult;
+        //        }
 
-                return "OK";
-            }
+        //        return "OK";
+        //    }
 
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerBiz", "SynchronizeLiability", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerBiz", "SynchronizeLiability", "");
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-                return "Error in SynchronizeLiability: " + ex.Message;
-            }
+        //        return "Error in SynchronizeLiability: " + ex.Message;
+        //    }
 
-        }
+        //}
 
 
 
@@ -613,12 +613,12 @@ namespace Subs.Business
                     return "What kind of payment is this? I accept only positive numbers.";
                 }
 
-                // Update the liability on the payer
-                if (!CustomerData3.AddToLiability(ref lTransaction, pRecord.CustomerId, pRecord.Amount))
-                {
-                    lTransaction.Rollback("Pay");
-                    return "Error in updating liability";
-                }
+                //// Update the liability on the payer
+                //if (!CustomerData3.AddToLiability(ref lTransaction, pRecord.CustomerId, pRecord.Amount))
+                //{
+                //    lTransaction.Rollback("Pay");
+                //    return "Error in updating liability";
+                //}
 
                 pTransactionId = LedgerData.Pay(ref lTransaction, pRecord);
 
@@ -683,12 +683,12 @@ namespace Subs.Business
 
                 // Update Liability
 
-                // Update the liability on the payer
-                if (!CustomerData3.AddToLiability(ref lTransaction, pCustomerData.CustomerId, pAmount))
-                {
-                    lTransaction.Rollback("ReversePayment");
-                    return "Error in updating liability";
-                }
+                //// Update the liability on the payer
+                //if (!CustomerData3.AddToLiability(ref lTransaction, pCustomerData.CustomerId, pAmount))
+                //{
+                //    lTransaction.Rollback("ReversePayment");
+                //    return "Error in updating liability";
+                //}
 
                // Create a transaction entry
 
@@ -749,12 +749,12 @@ namespace Subs.Business
             try
             {
 
-                // Update the liability on the payer
-                if (!CustomerData3.AddToLiability(ref lSqlTransaction, pPayerId, -pRefundAmount))
-                {
-                    lSqlTransaction.Rollback("Refund");
-                    return "Error in Refund ";
-                }
+                //// Update the liability on the payer
+                //if (!CustomerData3.AddToLiability(ref lSqlTransaction, pPayerId, -pRefundAmount))
+                //{
+                //    lSqlTransaction.Rollback("Refund");
+                //    return "Error in Refund ";
+                //}
 
                 if (!LedgerData.Refund(ref lSqlTransaction, pPaymentTransactionId, pPayerId, pRefundAmount, pEffectiveDate))
                 {

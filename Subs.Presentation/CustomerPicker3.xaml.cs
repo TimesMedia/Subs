@@ -111,7 +111,7 @@ namespace Subs.Presentation
         private readonly ObservableCollection<CustomerData3> gCustomers = new ObservableCollection<CustomerData3>();
         private CustomerData3 gCurrentCustomer;
         //private Subs.Data.InvoiceAndPayment gSelectedPayment = null; 
-        private decimal gCalculatedLiability = 0M;
+        //private decimal gCalculatedLiability = 0M;
         private List<LiabilityRecord> gLiabilityRecords = new List<LiabilityRecord>();
 
         //private List<Subs.Data.InvoicesAndPayments> gPaymentAndInvoice = new List<InvoicesAndPayments>();
@@ -982,56 +982,59 @@ namespace Subs.Presentation
 
 
 
-        private void Click_ShowLiabilities(object sender, RoutedEventArgs e)
-        {
-            this.Cursor = Cursors.Wait;
-            try
-            {
-                // Get the report data
+        //private void Click_ShowLiabilities(object sender, RoutedEventArgs e)
+        //{
+        //    this.Cursor = Cursors.Wait;
+        //    try
+        //    {
+        //        // Get the report data
 
-                SelectCurrentCustomer();
+        //        SelectCurrentCustomer();
 
-                gCalculatedLiability = 0M;
-                gLiabilityRecords.Clear();
+        //        gCalculatedLiability = 0M;
+        //        gLiabilityRecords.Clear();
                 
-                {
-                    string lResult;
+        //        {
+        //            string lResult;
 
-                    if ((lResult = gCurrentCustomer.CalculateLiability2(ref gLiabilityRecords, ref gCalculatedLiability)) != "OK")
-                    {
-                        MessageBox.Show(lResult);
-                        return;
-                    }
-                }
+        //            if ((lResult = gCurrentCustomer.CalculateLiability2(ref gLiabilityRecords, ref gCalculatedLiability)) != "OK")
+        //            {
+        //                MessageBox.Show(lResult);
+        //                return;
+        //            }
+        //        }
 
-                gLiabilityRecordsViewSource.Source = gLiabilityRecords;
-                LiabilityDataGrid.ItemsSource = gLiabilityRecordsViewSource.View;
-                textCurrentLiability.Text = gCurrentCustomer.Liability.ToString("#########0.00");
+        //        textSumOfPayments.Text = gCurrentCustomer.SumOfPayments.ToString("#########0.00");
+        //        textSumOfDeliveries.Text = gCurrentCustomer.SumOfDeliveries.ToString("#########0.00");
 
-                SelectTab(PickerTabs.Liability);
+        //        gLiabilityRecordsViewSource.Source = gLiabilityRecords;
+        //        LiabilityDataGrid.ItemsSource = gLiabilityRecordsViewSource.View;
+        //        textCurrentLiability.Text = gCurrentCustomer.Liability.ToString("#########0.00");
 
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //        SelectTab(PickerTabs.Liability);
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Click_ShowLiabilities", "CustomerId = " + gCurrentCustomer.CustomerId.ToString());
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                this.Cursor = Cursors.Arrow;
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Click_ShowLiabilities", "CustomerId = " + gCurrentCustomer.CustomerId.ToString());
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-            }
-        }
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //    finally
+        //    {
+        //        this.Cursor = Cursors.Arrow;
+
+        //    }
+        //}
 
         private void Click_Statement(object sender, RoutedEventArgs e)
         {
@@ -2218,8 +2221,8 @@ namespace Subs.Presentation
                 //AutomaticAllocate();
 
                 // Propagate the new liability to the current view
-                CustomerData3 lModifiedCustomer = new CustomerData3(gCurrentCustomer.CustomerId);
-                gCurrentCustomer.Liability = lModifiedCustomer.Liability;
+                //CustomerData3 lModifiedCustomer = new CustomerData3(gCurrentCustomer.CustomerId);
+                //gCurrentCustomer.Liability = lModifiedCustomer.Liability;
 
                 MessageBox.Show("Done");
 
@@ -2377,39 +2380,53 @@ namespace Subs.Presentation
                     MessageBox.Show("Sorry, I respond only to invoice lines");
                     return;
                 }
-                                
-
+                
                 //Try to set a new checkpoint
                 // Save originals
                 int lOriginalBalanceInvoiceId = gCurrentCustomer.BalanceInvoiceId;
                 decimal lOriginalBalance = gCurrentCustomer.Balance;
                 decimal lOriginalDue = gCurrentCustomer.Due;
-                decimal lNewBalance = gCurrentCustomer.CalculateBalanceByInvoice(lInvoice.InvoiceId);
+                //decimal lNewBalance = gCurrentCustomer.CalculateBalanceByInvoice(lInvoice.InvoiceId);
                
                 try
                 {
-                    if (Math.Abs(lNewBalance) < 1M)
-                    {
-                        lNewBalance = 0;   // Get rid of decimal point variations
-                    }
+                   // if (MessageBoxResult.No == MessageBox.Show("Do you want to provide your own starting balance?",
+                   //"Warning", MessageBoxButton.YesNo))
+                   // {
+                  
+                   //     if (Math.Abs(lNewBalance) < 1M)
+                   //     {
+                   //         lNewBalance = 0;   // Get rid of decimal point variations
+                   //     }
 
-                    if (lNewBalance > 0)
-                    {
-                        MessageBox.Show("No can do, you first have to write off " + lNewBalance.ToString("######0.######") + " from some of the previous invoices.");
-                        return;
-                    }
+                   //     if (lNewBalance > 0)
+                   //     {
+                   //         MessageBox.Show("No can do, you first have to write off " + lNewBalance.ToString("######0.######") + " from some of the previous invoices.");
+                   //         return;
+                   //     }
 
-                    if (lNewBalance < 0)
-                    {
-                        MessageBox.Show("No can do, you first have to refund " + lNewBalance.ToString("######0.######") +
-                            " or get the client to do a reduced payment.");
-                        return;
-                    }
+                   //     if (lNewBalance < 0)
+                   //     {
+                   //         MessageBox.Show("No can do, you first have to refund " + lNewBalance.ToString("######0.######") +
+                   //             " or get the client to do a reduced payment.");
+                   //         return;
+                   //     }
 
-                    gCurrentCustomer.Balance = lNewBalance;
+                   //     gCurrentCustomer.Balance = lNewBalance;
+                   // }
+
+                   // else
+                   // {
+                   //     // Override the past by providing your own balance value
+                   //     ElicitDecimal lElicitDecimal = new ElicitDecimal("What should the new starting balance be?");
+                   //     lElicitDecimal.ShowDialog();
+                   //     gCurrentCustomer.Balance = lElicitDecimal.Answer;  
+                   // }
+
                     gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
                     gCurrentCustomer.Update();
-                    LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lNewBalance);
+                    LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lOriginalBalance);
+                    MessageBox.Show("Checkpoints successfully changed by force.");
                 }
                 catch (Exception InnerException)
                 {
@@ -2419,23 +2436,23 @@ namespace Subs.Presentation
                     throw InnerException;
                 }
 
-                if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M)
-                {
-                    GoToStatement();  //Refresh the displayed statement
-                    MessageBox.Show("Checkpoints successfully changed.");
+                //if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M)
+                //{
+                //    GoToStatement();  //Refresh the displayed statement
+                //    MessageBox.Show("Checkpoints successfully changed.");
 
-                }
-                else
-                {
-                    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
-                    gCurrentCustomer.Balance = lOriginalBalance;
-                    gCurrentCustomer.Update();
-                    ExceptionData.WriteException(1, "Difference in due values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCustomer.CustomerIdColumn.ToString()
-                        + "New = " + gCurrentCustomer.Due.ToString("#0.000000")
-                        + " Original = " + lOriginalDue.ToString("#0.000000"));
+                //}
+                //else
+                //{
+                //    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
+                //    gCurrentCustomer.Balance = lOriginalBalance;
+                //    gCurrentCustomer.Update();
+                //    ExceptionData.WriteException(1, "Difference in due values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCurrentCustomer.CustomerId.ToString()
+                //        + "New = " + gCurrentCustomer.Due.ToString("#0.000000")
+                //        + " Original = " + lOriginalDue.ToString("#0.000000"));
 
-                    MessageBox.Show("Checkpoints change failed. No changes made to database.");
-                }
+                //    MessageBox.Show("Checkpoints change failed. No changes made to database.");
+                //}
                 return;
             }
             catch (Exception ex)
@@ -3030,37 +3047,37 @@ namespace Subs.Presentation
         #endregion
 
         #region Liability calculation tab
-        private void ButtonSynchroniseLiability_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                gCurrentCustomer.Liability = gCalculatedLiability;
-                gCurrentCustomer.Update();
-                ExceptionData.WriteException(2, "Synchronise liability manually", this.ToString(), "ButtonSynchroniseLiability_Click", "CustomerId = "
-                      + gCurrentCustomer.CustomerId.ToString() + " Calculated = " + gCalculatedLiability.ToString());
+        //private void ButtonSynchroniseLiability_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        gCurrentCustomer.Liability = gCalculatedLiability;
+        //        gCurrentCustomer.Update();
+        //        ExceptionData.WriteException(2, "Synchronise liability manually", this.ToString(), "ButtonSynchroniseLiability_Click", "CustomerId = "
+        //              + gCurrentCustomer.CustomerId.ToString() + " Calculated = " + gCalculatedLiability.ToString());
 
-                textCurrentLiability.Text = gCalculatedLiability.ToString("########0.00");
-                MessageBox.Show("Done");
-                PopulatePaymentAndInvoice2();
-                tabControl1.SelectedIndex = (int)PickerTabs.Select;
-            }
+        //        textCurrentLiability.Text = gCalculatedLiability.ToString("########0.00");
+        //        MessageBox.Show("Done");
+        //        PopulatePaymentAndInvoice2();
+        //        tabControl1.SelectedIndex = (int)PickerTabs.Select;
+        //    }
 
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButtonSynchroniseLiability_Click", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButtonSynchroniseLiability_Click", "");
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-                MessageBox.Show("Error in ButtonSynchroniseLiability_Click: " + ex.Message);
-            }
-        }
+        //        MessageBox.Show("Error in ButtonSynchroniseLiability_Click: " + ex.Message);
+        //    }
+        //}
 
         private void ButtonRunningToXML_Click(object sender, RoutedEventArgs e)
         {

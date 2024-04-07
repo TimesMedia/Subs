@@ -32,39 +32,46 @@ namespace Subs.Presentation
         private readonly BackgroundWorker gBackgroundWorkerPost;
         private string gCurrentProduct = "";
 
+
         [Serializable]
-        public class DeliveryItemOld
+        public class DeliveryItem
         {
-            public string WaybillNumber = "               ";
-            public string Date;
-            public string Contact_NameAndSurname;
-            public string Company;
-            public string Building;
-            public string Street;
-            public string Suburb;
+            public string Date;   //mmddyyyy
+            public string FromName = "ARENA HOLDINGS (Pty) Ltd";
+            public string FromAdress1 = "Hill on Empire";
+            public string FromAdress2= "16 Empire Road";
+            public string FromAdress3 = "JOHANNESBURG";
+            public string FromSuburb = "PARKTOWN";
+            public string FromPostalCodde = "2193";
+            public string Cell;
+            public decimal? Length;
+            public decimal? Width;
+            public decimal? Height;
+            public string ServiceType = "DBC";
+            public decimal? Weight;
+            public string AccountNumber = "J19582";
+            public string WayBillReference;
+
+            public string ToName;
+            public string ToAdress1;
+            public string ToAdress2; 
+            public string ToAdress3;
+            public string ToSuburb;
+            public string ToPostalCodde;
+            public string AccountNumber2;
+            public decimal Price;
             public string City;
-            public string PostalCode;
             public string Country;
-            public string ContactWork_Cell_Phonenumber;
-            public decimal Weight = 1;
-            public decimal Length = 1;
-            public decimal Width = 1;
-            public decimal Height = 1;
-            public decimal Value = 1;
-            public string WeekendDelivery = "No";
-            public int Pieces;
-            public string Special_Instructions = " |";
+            public string Province;
             public string EmailAddress;
-            public int Reference1;   // CustomerId
-            public string Reference2; // IssueDescription X n
-            public string Reference3; // Full Name of customer
-            public string Importer_Exporter_Code = "21340871";
-            public string ProductName;
+            public string Product;
+            public int Pieces;
+                       
             public int CustomerId;
         }
 
         [Serializable]
-        public class DeliveryItem
+        public class DeliveryItemOld    //  2024/04/05
         {
             public string Account_Number = "J19582";
             public string Company;
@@ -93,8 +100,14 @@ namespace Subs.Presentation
             public string Importer_Exporter_Code = "21340871";
             public int CustomerId;
             public string Date;   //mmddyyyy
-            public int InvoiceNUmber;
+            public int InvoiceNumber;
         }
+
+
+
+
+
+
 
         public class ProcessedFile
         { 
@@ -832,46 +845,46 @@ namespace Subs.Presentation
                         }
 
                         lNewDeliveryItem.CustomerId = lRow.ReceiverId;
-                        lNewDeliveryItem.ProductName = lRow.IssueDescription;
+                        lNewDeliveryItem.Product = lRow.IssueDescription;
 
                         lNewDeliveryItem.Date = DateTime.Now.ToString("ddMMyyyy");
-                        lNewDeliveryItem.ContactPerson = lRow.Title + " " + lRow.Initials + " " + lRow.Surname;
+                        lNewDeliveryItem.ToName = lRow.Title + " " + lRow.Initials + " " + lRow.Surname;
 
-                        if (!lRow.IsCompanyNull())
-                        {
-                            lNewDeliveryItem.Company = lRow.Company;
-                        }
+                        //if (!lRow.IsCompanyNull())
+                        //{
+                        //    lNewDeliveryItem.Company = lRow.Company;
+                        //}
 
-                        DeliveryAddressData2 lDeliveryAddressData = new DeliveryAddressData2(lRow.DeliveryAddressId);
+                       DeliveryAddressData2 lDeliveryAddressData = new DeliveryAddressData2(lRow.DeliveryAddressId);
 
-                        if (lDeliveryAddressData.Building != "")
-                        {
-                            lNewDeliveryItem.BuildingComplex = "Building: " + lDeliveryAddressData.Building;
-                            if (lDeliveryAddressData.FloorNo != "")
-                            {
-                                lNewDeliveryItem.BuildingComplex = lNewDeliveryItem.BuildingComplex + " Floor: " + lDeliveryAddressData.FloorNo;
-                                if (lDeliveryAddressData.Room != "")
-                                {
-                                    lNewDeliveryItem.BuildingComplex = lNewDeliveryItem.BuildingComplex + " Room: " + lDeliveryAddressData.Room;
-                                }
-                            };
-                        }
+                        //if (lDeliveryAddressData.Building != "")
+                        //{
+                        //    lNewDeliveryItem.BuildingComplex = "Building: " + lDeliveryAddressData.Building;
+                        //    if (lDeliveryAddressData.FloorNo != "")
+                        //    {
+                        //        lNewDeliveryItem.BuildingComplex = lNewDeliveryItem.BuildingComplex + " Floor: " + lDeliveryAddressData.FloorNo;
+                        //        if (lDeliveryAddressData.Room != "")
+                        //        {
+                        //            lNewDeliveryItem.BuildingComplex = lNewDeliveryItem.BuildingComplex + " Room: " + lDeliveryAddressData.Room;
+                        //        }
+                        //    };
+                        //}
 
-                        lNewDeliveryItem.StreetAddress = lDeliveryAddressData.StreetNo + " " + lDeliveryAddressData.Street + " " + lDeliveryAddressData.StreetExtension
+                        lNewDeliveryItem.ToAdress1 = lDeliveryAddressData.StreetNo + " " + lDeliveryAddressData.Street + " " + lDeliveryAddressData.StreetExtension
                                                                             + " " + lDeliveryAddressData.StreetSuffix;
-                        lNewDeliveryItem.Suburb = lDeliveryAddressData.Suburb;
+                        lNewDeliveryItem.ToSuburb = lDeliveryAddressData.Suburb;
                         lNewDeliveryItem.City = lDeliveryAddressData.City;
                         lNewDeliveryItem.Province = lDeliveryAddressData.Province;
 
-                        lNewDeliveryItem.PostalCode = lDeliveryAddressData.PostCode;
+                        lNewDeliveryItem.ToPostalCodde = lDeliveryAddressData.PostCode;
                         lNewDeliveryItem.Country = lDeliveryAddressData.CountryName;
 
-                        lNewDeliveryItem.MobileNumber = lCustomerData.CellPhoneNumber;
+                        lNewDeliveryItem.Cell = lCustomerData.CellPhoneNumber;
 
-                        if (lCustomerData.CellPhoneNumber == "")
-                        {
-                            lNewDeliveryItem.OfficeNumber = lCustomerData.PhoneNumber;
-                        }
+                        //if (lCustomerData.CellPhoneNumber == "")
+                        //{
+                        //    lNewDeliveryItem.OfficeNumber = lCustomerData.PhoneNumber;
+                        //}
 
                         if (!lRow.IsWeightNull())
                         {
@@ -886,7 +899,7 @@ namespace Subs.Presentation
                         lNewDeliveryItem.Width = lRow.IsWidthNull() ? 0 :  lRow.Width;
                         lNewDeliveryItem.Height = lRow.IsHeightNull() ? 0 : lRow.Height;
 
-                        lNewDeliveryItem.Value = lRow.UnitPrice * lRow.UnitsPerIssue;
+                        lNewDeliveryItem.Price = lRow.UnitPrice * lRow.UnitsPerIssue;
                         lNewDeliveryItem.Pieces = lRow.UnitsPerIssue;
                         lNewDeliveryItem.EmailAddress = lRow.EmailAddress;
  
@@ -929,7 +942,7 @@ namespace Subs.Presentation
                         DeliveryItem lNewItem = lCustomerGroup.ElementAt(0);
 
                         lNewItem.Weight = lCustomerGroup.Sum(p => p.Weight);
-                        lNewItem.Value = lCustomerGroup.Sum(p => p.Value);
+                        lNewItem.Price = lCustomerGroup.Sum(p => p.Price);
 
                         lNewItem.Length = lCustomerGroup.Max(p => p.Length);
                         lNewItem.Width = lCustomerGroup.Max(p => p.Width);
@@ -937,14 +950,14 @@ namespace Subs.Presentation
 
                         int lUnitsPerIssue = 0;
                         string lProductString = "";
-                        var lProductGroups = lCustomerGroup.GroupBy(p => p.ProductName);
+                        var lProductGroups = lCustomerGroup.GroupBy(p => p.Product);
                         foreach (IGrouping<string, DeliveryItem> lProductGroup in lProductGroups)
                         {
                             lUnitsPerIssue = lProductGroup.Sum(p => p.Pieces);
-                            lProductString = lProductString + lProductGroup.ElementAt(0).ProductName + " X " + lUnitsPerIssue.ToString() + "; ";
+                            lProductString = lProductString + lProductGroup.ElementAt(0).Product + " X " + lUnitsPerIssue.ToString() + "; ";
                         }
                        
-                        lNewItem.ProductName = lProductString;
+                        lNewItem.Product = lProductString;
                         lNewItem.Pieces = lCustomerGroup.Sum(p => p.Pieces);
                         gDeliveryItems.Add(lNewItem);
                     }

@@ -1813,14 +1813,14 @@ namespace Subs.Data
         {
             get
             {
-                return gTable[0].Liability;
+                return Deliverable - Due;
             }
 
-            set
-            {
-                gTable[0].Liability = value;
-                NotifyPropertyChanged("Liability");
-            }
+            //set
+            //{
+            //    gTable[0].Liability = value;
+            //    NotifyPropertyChanged("Liability");
+            //}
         }
 
         public decimal Deliverable
@@ -1856,17 +1856,7 @@ namespace Subs.Data
             {
                 try
                 {
-                    List<InvoiceAndPayment>lInvoiceAndPayment = GetInvoiceAndPayment();
-                    if (lInvoiceAndPayment.Count == 0)
-                    {
-                        return 0.0M;
-                    }
-                   
-                    
-                    decimal lDue = (decimal)lInvoiceAndPayment.Sum(p => p.Value);
-                    gTable[0].Due = lDue;
-                    gCustomerAdapter.Update(gTable[0]);
-                    return lDue;
+                    return (decimal)gCustomerAdapter.DueSum(CustomerId);
                 }
                 catch (Exception Ex)
                 {
@@ -2245,6 +2235,50 @@ namespace Subs.Data
                 NotifyPropertyChanged("Balance");
             }
         }
+
+        public Decimal SumOfPayments
+        {
+            get
+            {
+                if (gTable[0].IsSumOfPaymentsNull())
+                {
+                    return 0M;
+                }
+                else
+                {
+                    return gTable[0].SumOfPayments;
+                }
+            }
+
+            set
+            {
+                gTable[0].SumOfPayments = value;
+                NotifyPropertyChanged("SumOfPayments");
+            }
+        }
+
+        public Decimal SumOfDeliveries
+        {
+            get
+            {
+                if (gTable[0].IsSumOfDeliveriesNull())
+                {
+                    return 0M;
+                }
+                else
+                {
+                    return gTable[0].SumOfDeliveries;
+                }
+            }
+
+            set
+            {
+                gTable[0].SumOfDeliveries = value;
+                NotifyPropertyChanged("SumOfDeliveries");
+            }
+        }
+
+
 
 
         public string ModifiedBy
@@ -2746,9 +2780,9 @@ namespace Subs.Data
                 List<LiabilityRecord> lLiabilityList = gAllInvoiceAndPayment.Where(p => p.OperationId == (int)Operation.Pay
                                                                                       || p.OperationId == (int)Operation.ReversePayment
                                                                                       || p.OperationId == (int)Operation.Refund
-                                                                                      || p.OperationId == (int)Operation.Balance
-                                                                                      || p.OperationId == (int)Operation.WriteOffMoney
-                                                                                      || p.OperationId == (int)Operation.ReverseWriteOffMoney)
+                                                                                      || p.OperationId == (int)Operation.Balance)
+                                                                                     //|| p.OperationId == (int)Operation.WriteOffMoney
+                                                                                      //|| p.OperationId == (int)Operation.ReverseWriteOffMoney)
                                                   .Select(v => new LiabilityRecord()
                                                   {
                                                       TransactionId = v.TransactionId,
@@ -2761,6 +2795,19 @@ namespace Subs.Data
                                                       SubscriptionId = 0,
                                                       Value = v.Value
                                                   }).ToList();
+
+                // Seperate out the payment related stuff
+
+                List<LiabilityRecord> lPaymentList = lLiabilityList.Where(p => p.OperationId == (int)Operation.Pay
+                                                                                      || p.OperationId == (int)Operation.ReversePayment
+                                                                                      || p.OperationId == (int)Operation.Refund
+                                                                                      || p.OperationId == (int)Operation.Balance
+                                                                                     ).ToList();
+
+                SumOfPayments = -lPaymentList.Sum(p => p.Value);
+                gCustomerAdapter.Update(gTable[0]);
+
+
 
                 IEnumerable<int> lInvoices = (IEnumerable<int>)gAllInvoiceAndPayment.ToList<InvoiceAndPayment>().ToList().Select(p => p.InvoiceId).Distinct();
 
@@ -2777,6 +2824,9 @@ namespace Subs.Data
                         lLiabilityList.Add(lDelivery);
                     }
                 }
+
+                SumOfDeliveries = -lDeliveryList.Sum(p => p.Value);
+                gCustomerAdapter.Update(gTable[0]);
 
                 // From here on switch the sign to represent Liability from our perspective
 
@@ -2804,7 +2854,7 @@ namespace Subs.Data
                 List<DateTime> lDates = (List<DateTime>)lLiabilityList.Select(o => o.EffectiveDate).Distinct().OrderBy(o => o.Date).ToList();
                 List<LiabilityRecord> lGroup = new List<LiabilityRecord>();
                 decimal lBalance = 0M;
-
+                
                 foreach (DateTime lDate in lDates)
                 {
                     lGroup = (List<LiabilityRecord>)lLiabilityList.Where(o => o.EffectiveDate == lDate).OrderBy(o => o.TransactionId).ToList();
@@ -3076,43 +3126,43 @@ namespace Subs.Data
             }
         }
 
-        public static bool AddToLiability(ref SqlTransaction pTransaction, int pCustomerId, decimal pAddition, [CallerMemberName] string pCaller = null)
-        {
-            try
-            {
-                SqlCommand Command = new SqlCommand();
-                Command.CommandType = CommandType.StoredProcedure;
-                Command.Connection = pTransaction.Connection;
-                Command.Transaction = pTransaction;
-                SqlDataAdapter Adaptor = new SqlDataAdapter();
+        //public static bool AddToLiability(ref SqlTransaction pTransaction, int pCustomerId, decimal pAddition, [CallerMemberName] string pCaller = null)
+        //{
+        //    try
+        //    {
+        //        SqlCommand Command = new SqlCommand();
+        //        Command.CommandType = CommandType.StoredProcedure;
+        //        Command.Connection = pTransaction.Connection;
+        //        Command.Transaction = pTransaction;
+        //        SqlDataAdapter Adaptor = new SqlDataAdapter();
 
-                Command.CommandText = "[dbo].[MIMS.CustomerData.AddToLiability]";
+        //        Command.CommandText = "[dbo].[MIMS.CustomerData.AddToLiability]";
 
-                Command.Parameters.Add("@CustomerId", SqlDbType.Int);
-                Command.Parameters.Add("@Addition", SqlDbType.Decimal);
+        //        Command.Parameters.Add("@CustomerId", SqlDbType.Int);
+        //        Command.Parameters.Add("@Addition", SqlDbType.Decimal);
 
-                Command.Parameters["@CustomerId"].Value = pCustomerId;
-                Command.Parameters["@Addition"].Value = pAddition;
-                Command.ExecuteNonQuery();
+        //        Command.Parameters["@CustomerId"].Value = pCustomerId;
+        //        Command.Parameters["@Addition"].Value = pAddition;
+        //        Command.ExecuteNonQuery();
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "Static CustomerData2", "AddToLiability", "CustomerId = " + pCustomerId.ToString());
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "Static CustomerData2", "AddToLiability", "CustomerId = " + pCustomerId.ToString());
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-                return false;
-            }
-        }
+        //        return false;
+        //    }
+        //}
 
         //public static bool RemoveInvoicePayment(ref SqlTransaction pTransaction, int pPaymentTransactionId)
         //{

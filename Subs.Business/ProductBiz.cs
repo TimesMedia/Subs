@@ -366,13 +366,13 @@ namespace Subs.Business
                     return true;
                 }
 
-                // Update the Liability
+                //// Update the Liability
 
-                if (!CustomerData3.AddToLiability(ref lTransaction, pData.PayerId, -(pData.UnitsPerIssue * pData.UnitPrice)))
-                {
-                    lTransaction.Rollback("Deliver");
-                    return false;
-                }
+                //if (!CustomerData3.AddToLiability(ref lTransaction, pData.PayerId, -(pData.UnitsPerIssue * pData.UnitPrice)))
+                //{
+                //    lTransaction.Rollback("Deliver");
+                //    return false;
+                //}
 
                 // Update the ProductData
 

@@ -108,7 +108,7 @@ namespace Subs.Presentation
 
                     StatementRow = gPaymentDoc.DebitOrderBankStatement.NewDebitOrderBankStatementRow();
 
-                    string lCustomerIdString = Buffer.Substring(139, 10).Trim();
+                    string lCustomerIdString = Buffer.Substring(138, 10).Trim();
     
                     // Ensure that it is a number
 
@@ -134,6 +134,7 @@ namespace Subs.Presentation
                     StatementRow.AllocationNo = ++CurrentAllocationNo;
                     StatementRow.BankTransactionType = "DebitOrder";
                     StatementRow.BankPaymentMethod = "DebitOrder";
+                    StatementRow.Posted = false;
                     StatementRow.TransactionDate = new DateTime(Convert.ToInt32(lRunDate.Substring(0, 4)),
                                                     Convert.ToInt32(lRunDate.Substring(4, 2)),
                                                     Convert.ToInt32(lRunDate.Substring(6, 2)));

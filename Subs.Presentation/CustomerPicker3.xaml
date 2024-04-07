@@ -134,7 +134,7 @@
                             <MenuItem Header="DeliveryAddress" Click="Click_DeliveryAddress" IsEnabled="{Binding IsEnabled, ElementName=Profile}"/>
                             <MenuItem Header="Destroy customer" Click="Click_DestroyCustomer" Tag="AuthorityHigh" Loaded="SetVisibility"/>
                             <MenuItem Header="Statement" Click="Click_Statement" />
-                            <MenuItem Header="Liability calculation" Click="Click_ShowLiabilities"/>
+                            <!--<MenuItem Header="Liability calculation" Click="Click_ShowLiabilities"/>-->
                             <MenuItem Header="Profile" Click="Click_Profile" IsEnabled ="True" x:Name="Profile"/>
                             <MenuItem Header="Select" Click="Click_CustomerSelect" />
                             <MenuItem Header="Set password" Click="Click_SetPassword" />
@@ -429,9 +429,14 @@
                 </Grid.RowDefinitions>
                 <WrapPanel Grid.ColumnSpan="2">
                     <Button x:Name="ButtonRunningToXML" Click="ButtonRunningToXML_Click">Write to XML</Button>
-                    <Label>Your current liability is:</Label>
+                    <Label>Your current liability in CustomerTable is:</Label>
                     <TextBox x:Name="textCurrentLiability" Margin="10,0,10,0" IsReadOnly="True"></TextBox>
-                    <Button Click="ButtonSynchroniseLiability_Click"  Tag="AuthorityHigh" Loaded="SetVisibility">Synchronise liability</Button>
+                    <Label>Your current sum of payments is:</Label>
+                    <TextBox x:Name="textSumOfPayments" Margin="10,0,10,0" IsReadOnly="True"></TextBox>
+                    <Label>Your current sum of deliveries is:</Label>
+                    <TextBox x:Name="textSumOfDeliveries" Margin="10,0,10,0" IsReadOnly="True"></TextBox>
+
+                    <!--<Button Click="ButtonSynchroniseLiability_Click"  Tag="AuthorityHigh" Loaded="SetVisibility">Synchronise liability</Button>-->
                 </WrapPanel>
                 <DataGrid x:Name="LiabilityDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch" Grid.Row="1"
                                   Margin="0,0,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Left" RowHeight="30"
@@ -481,7 +486,7 @@
                 </WrapPanel>-->
                 <DataGrid x:Name="DueDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch" Grid.Row="1"
                                   Margin="0,0,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Left" RowHeight="30"
-                                  MouseDoubleClick="DisplayStatusAndHistory" SelectionUnit="CellOrRowHeader"  SelectionMode="Single">
+                                  MouseDoubleClick="DisplayStatusAndHistory" SelectionUnit="CellOrRowHeader"  SelectionMode="Single" CanUserSortColumns="False">
                     <DataGrid.RowHeaderStyle>
                         <Style TargetType="{x:Type DataGridRowHeader}">
                             <Setter Property="Background"  Value="Yellow"/>
@@ -500,11 +505,11 @@
 
                     </DataGrid.Columns>
 
-                    <DataGrid.ContextMenu>
+                    <!--<DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Use this as a new checkpoint" Click="Click_Checkpoint" />
                         </ContextMenu>
-                    </DataGrid.ContextMenu>
+                    </DataGrid.ContextMenu>-->
 
                 </DataGrid>
             </Grid>

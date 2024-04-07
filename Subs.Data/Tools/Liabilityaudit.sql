@@ -1,0 +1,52 @@
+--select a.[PayerId], [CustomerLiability], [JournalLiability], [Difference], b.BalanceInvoiceId, 'Balancedate' = Convert( date, c.DateFrom),
+--'DebitOrder' = isnull(d.CustomerId, 0) 
+--from Liability as a inner join Customer as b on a.PayerId = b.CustomerId
+--inner join Transactions as c on b.BalanceInvoiceId = c.InvoiceId and c.operation = 19
+--left outer join SBDebitOrder as d on a.PayerId = d.CustomerId and d.Suspended = 0
+--where abs(Difference) > 0.2
+--and Datum is not null
+
+exec [dbo].[MIMS.CustomerDoc.DueSum] 112490
+
+
+exec [dbo].[MIMS.CustomerDoc.Deliverable] 112490
+
+
+
+select a.InvoiceId, 'Deliverable' = sum(a.UnitPrice * d.UnitsLeft)
+from Subscription as a
+inner join Customer as b on a.PayerId = b.CustomerId
+inner join SubscriptionIssue as d on a.Subscriptionid = d.SubscriptionId
+where d.UnitsLeft <> 0
+and a.Status = 1
+and a.PayerId = 112490
+and a.InvoiceId >= b.BalanceInvoiceId
+group by a.InvoiceId
+
+
+
+
+
+
+-- Find all deliveries on credit
+
+drop table #Temp1
+
+select a.PayerId, c.BalanceInvoiceId, 'InvoiceBalanceDate' = a.dateFrom
+into #Temp1
+from Transactions as a inner join Liability as b on a.PayerId = b.PayerId
+inner join Customer as c on a.PayerId = c.CustomerId
+where a.operation = 19
+and a.InvoiceId = c.BalanceInvoiceId
+
+
+
+select a.*
+from Transactions as a inner join  #Temp1 as b on a.PayerId = b.PayerId
+inner join Subscription as c on a.SubscriptionId = b.
+where operation = 2
+
+and a.DateFrom < b.InvoiceBalanceDate
+
+
+

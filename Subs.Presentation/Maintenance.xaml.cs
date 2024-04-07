@@ -1351,13 +1351,15 @@ namespace Subs.Presentation
 
                     List<LiabilityRecord> lLiabilityRecords = new List<LiabilityRecord>();
                     decimal lJournalLiability = 0;
+                    CustomerData3 lCustomerData = new CustomerData3(lRow.PayerId);
+
+
+
 
                     {
                         string lResult;
 
-                        CustomerData3 lCustomerData = new CustomerData3(lRow.PayerId);
-
-
+  
 
                         if ((lResult = lCustomerData.CalculateLiability2(ref lLiabilityRecords, ref lJournalLiability)) != "OK")
                         {
@@ -1375,6 +1377,7 @@ namespace Subs.Presentation
                         }
                     }
 
+                    lRow.CustomerLiability = lCustomerData.Liability;
                     lRow.JournalLiability = lJournalLiability;
                     lRow.Datum = DateTime.Now;
 

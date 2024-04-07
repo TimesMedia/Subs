@@ -336,17 +336,17 @@ namespace Subs.Business
                     // Leave a trace of destruction
                     ExceptionData.WriteException(5, "Subscription " + pSubscriptionData.SubscriptionId.ToString() + " destroyed.", "SubscriptionBiz static", "Cancel", pReason + "CustomerId = " + pSubscriptionData.PayerId.ToString());
 
-                    {
-                        string lResult;
+                    //{
+                    //    string lResult;
 
-                        if ((lResult = CustomerBiz.SynchronizeLiability(new CustomerData3(pSubscriptionData.PayerId))) != "OK")
-                        {
-                            if (!lResult.Contains("Nothing"))
-                            {
-                                return lResult;
-                            }
-                        }
-                    }
+                    //    if ((lResult = CustomerBiz.SynchronizeLiability(new CustomerData3(pSubscriptionData.PayerId))) != "OK")
+                    //    {
+                    //        if (!lResult.Contains("Nothing"))
+                    //        {
+                    //            return lResult;
+                    //        }
+                    //    }
+                    //}
 
                     return "OK";
                 }
@@ -1083,12 +1083,12 @@ namespace Subs.Business
 
             try
             {
-                // Update the Liability
-                decimal Money = UnitsToReturn * pSubscriptionData.UnitPrice;
-                if (!CustomerData3.AddToLiability(ref lTransaction, pSubscriptionData.PayerId, Money))
-                {
-                    throw new WarningException("CustomerData.UpdateLiability failed.");
-                }
+                //// Update the Liability
+                //decimal Money = UnitsToReturn * pSubscriptionData.UnitPrice;
+                //if (!CustomerData3.AddToLiability(ref lTransaction, pSubscriptionData.PayerId, Money))
+                //{
+                //    throw new WarningException("CustomerData.UpdateLiability failed.");
+                //}
 
                 // Update the subscriptionissue
 
