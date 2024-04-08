@@ -267,6 +267,10 @@ namespace Subs.Business
             try
             {
                 List<MIMS_DeliveryDataStatic_DeliverableElectronicResult> lData;
+
+                CustomerData3 lCustomer = new CustomerData3(pReceiverId);
+
+
                 {
                     string lResult;
 
@@ -281,13 +285,13 @@ namespace Subs.Business
                     return "OK";
                 }
 
-                decimal lRemainingLiability = (decimal)lData[0].Liability;
-                //string lReport = "";
-
+                decimal lRemainingLiability = lCustomer.Liability;
+  
                 foreach (var lItem in lData)
                 {
-                    if (lItem.Liability > lItem.UnitPrice * lItem.UnitsPerIssue)
+                    if (lRemainingLiability > lItem.UnitPrice * lItem.UnitsPerIssue)
                     {
+                        // It has been paid for
                         // See if any intermediate deliveries where skipped.
 
                         if (IssueBiz.GetSkipped(lItem.SubscriptionId, lItem.IssueId))
