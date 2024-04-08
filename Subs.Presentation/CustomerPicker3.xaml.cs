@@ -137,9 +137,9 @@ namespace Subs.Presentation
             Invoice = 1,
             Subscription = 2,
             Discrepancies = 3,
-            Liability = 4,
-            Due = 5,
-            XPS = 6
+            //Liability = 4,
+            Due = 4,
+            XPS = 5
  
         }
 

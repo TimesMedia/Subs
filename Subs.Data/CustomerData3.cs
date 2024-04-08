@@ -93,7 +93,7 @@ namespace Subs.Data
             myRow.AddressType = 1;
             myRow.PostAddressId = 1;
             myRow.CellPhoneNumber = "000000000";
-            myRow.Liability = 0;
+            myRow.Reserved = 0;
             myRow.Correspondence2 = 1;
             myRow.CheckpointDateInvoice = DateTime.Parse("2017/06/01");
             myRow.AutomaticPaymentAllocation = true;

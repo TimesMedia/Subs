@@ -28,6 +28,8 @@ group by a.InvoiceId
 
 
 
+
+
 -- Find all deliveries on credit
 
 drop table #Temp1
@@ -40,13 +42,13 @@ where a.operation = 19
 and a.InvoiceId = c.BalanceInvoiceId
 
 
-
-select a.*
+select 'DeliveryDate' = a.DateFrom, b.InvoiceBalanceDate, a.*
 from Transactions as a inner join  #Temp1 as b on a.PayerId = b.PayerId
-inner join Subscription as c on a.SubscriptionId = b.
+inner join Subscription as c on a.SubscriptionId = c.SubscriptionId
 where operation = 2
-
+--and a.PayerId = 120954
 and a.DateFrom < b.InvoiceBalanceDate
+and c.InvoiceId >= b.BalanceInvoiceId   -- 578 entries
 
 
 
