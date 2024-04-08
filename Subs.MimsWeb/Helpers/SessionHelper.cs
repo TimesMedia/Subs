@@ -28,15 +28,14 @@ namespace Subs.MimsWeb
         //    }
         //}
 
-        public bool Mims = false;
-        public bool Emims = false;
-        public bool MobiMims = false;
+        public bool MIC = false;
+        
 
         public bool HasOptions
         {
             get 
             {
-                if (Mims == false & Emims == false && MobiMims == false)
+                if (MIC == false)
                 {
                     return false;
                 }
@@ -51,9 +50,7 @@ namespace Subs.MimsWeb
         public void Clear()
         {
             //gProducts.Clear();
-            Mims = false;
-            Emims = false;
-            MobiMims = false;
+            MIC = false;
         }
     }
 
