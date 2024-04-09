@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=yes">
     <link rel="stylesheet" href="/Content/Styles.css">
     @*<link rel="stylesheet" href="~/Content/navbar.css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +23,7 @@
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-MRQP4B3F');</script>
     <!-- End Google Tag Manager -->
-   
+
 
     <style>
 
@@ -51,12 +52,11 @@
         }
 
         #MenuDiv a:hover {
-            font-size: 1em;
             /* background-color: cornflowerblue;*/
         }
 
 
-        #MenuDiv div {
+        #MenuDiv {
             flex: 1;
             justify-content: center;
             margin-right: 1em;
@@ -79,6 +79,70 @@
                 display: flex;
                 flex-flow: column wrap;
             }
+        }
+
+
+
+        #MenuDiv {
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+            #MenuDiv a {
+                float: left;
+                font-size: 14px;
+                color: black;
+                text-align: center;
+                padding: 14px 14px;
+                text-decoration: none;
+            }
+
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+
+            .dropdown .dropbtn {
+                font-size: 16px;
+                border: none;
+                outline: none;
+                color: white;
+                padding: 14px 16px;
+                background-color: inherit;
+                font-family: inherit;
+                margin: 0;
+            }
+
+            #MenuDiv a:hover, .dropdown:hover .dropbtn {
+                background-color: dodgerblue;
+                color: #fff;
+                text-underline-offset: auto;
+            }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                float: none;
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
     </style>
 
@@ -114,41 +178,44 @@
     <img src="~/Images/HamburgerOn.gif" id="HamburgerOn" class="Hamburger" onclick="MenuFunction()" />
     <img src="~/Images/HamburgerOff.gif" id="HamburgerOff" class="Hamburger" onclick="MenuFunction()" />
 
+    <div  class="MenuContainer">
+        <img src="~/Content/img/logos/mims-small.png" width="110" />
+    </div>
+
+
     <div id="MenuDiv" class="MenuContainer">
 
-        <div>
-            <img src="~/Content/img/logos/mims-small.png" width="110" />
-        </div>
 
-        <div>@Html.ActionLink("HOME", "Index", "Home")</div>
 
-        <div>@Html.ActionLink("ABOUT", "About", "Home")</div>
+        <div>@Html.ActionLink("Home", "Index", "Home")<i class="fa fa-home" aria-hidden="true"></i></div>
 
-        <div>@Html.ActionLink("SHOP", "GetProducts", "Promotion")</div>
+        <div>@Html.ActionLink("About Us", "About", "Home")</div>
 
-        <div>@Html.ActionLink("PROMOTIONS", "Promotions", "Promotion")</div>
+        <div>@Html.ActionLink("Shop", "GetProducts", "Promotion")</div>
+
+        <div>@Html.ActionLink("Promotions", "Promotions", "Promotion")</div>
 
         <div>@Html.ActionLink("CPD", "CPD", "Home")</div>
-        <div><a href="https://drugchecker.mims.co.za/login">INTERACTION_CHECKER</a></div>
+        <div><a href="https://drugchecker.mims.co.za/login">Interaction-Checker</a></div>
 
-        <div><a href="http://www.generic.co.za/">GENERICS</a></div>
+        <div><a href="http://www.generic.co.za/">Generics</a></div>
 
         @*<div>@Html.ActionLink("CONTACT", "Contact", "Home", new { target = "Contacts" })</div>*@
 
         @{ LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
             if (lLoginRequest.CustomerId == null)
             {
-                <div>@Html.ActionLink("LOGIN", "Login", "Home")</div>
+                <div>@Html.ActionLink("Login", "Login", "Home")</div>
 
-                <div>@Html.ActionLink("REGISTER", "RegisterEmail", "Home")</div>
+                <div>@Html.ActionLink("Register", "RegisterEmail", "Home")</div>
             }
             else
             {
                 <div title="All electrionically readable material that you have purchased over the years.">@Html.ActionLink("READING", "SelectReadingMaterial", "Home")</div>
-                <div>@Html.ActionLink("ACTIVE_SUBS", "DisplayActiveSubscription", "Home")</div>
-                <div>@Html.ActionLink("PAY", "Pay", "Promotion")</div>
-                <div>@Html.ActionLink("LOGOUT", "Thanks", "Home")</div>
-                <div>@Html.ActionLink("PROFILE", "Account", "Home")</div>
+                <div>@Html.ActionLink("Active_Subs", "DisplayActiveSubscription", "Home")</div>
+                <div>@Html.ActionLink("Pay", "Pay", "Promotion")</div>
+                <div>@Html.ActionLink("Logout", "Thanks", "Home")</div>
+                <div>@Html.ActionLink("Profile", "Account", "Home")</div>
 
                 if (lLoginRequest.CustomerId == 120072 || lLoginRequest.CustomerId == 120311)
                 {
