@@ -1242,7 +1242,7 @@ namespace Subs.MimsWeb.Controllers
                 if (lLoginRequest.CustomerId == null)
                 {
                     CaptureSelectedPromotions();
-                    ViewBag.Message = "Sorry, you have to log or register before we can process your selection.";
+                    ViewBag.Message = "Sorry, please log in or register before we can process your selection.";
                     return View("Login");
                 }
                 else
