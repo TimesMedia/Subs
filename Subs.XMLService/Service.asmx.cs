@@ -37,10 +37,6 @@ namespace Subs.XMLService
         }
 
 
-
-
-
-
         [SoapHeader("Authentication")]
         [WebMethod]
         public bool SendOTP(int pCustomerId, int pOTP)

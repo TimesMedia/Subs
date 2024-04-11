@@ -24,13 +24,7 @@ and a.InvoiceId >= b.BalanceInvoiceId
 group by a.InvoiceId
 
 
-
-
-
-
-
-
--- Find all deliveries on credit
+-- Find all deliveries that occured before the existence of invoice.
 
 drop table #Temp1
 
@@ -41,14 +35,51 @@ inner join Customer as c on a.PayerId = c.CustomerId
 where a.operation = 19
 and a.InvoiceId = c.BalanceInvoiceId
 
+drop table #Payers
 
-select 'DeliveryDate' = a.DateFrom, b.InvoiceBalanceDate, a.*
+select  a.PayerId --'DeliveryDate' = a.DateFrom, b.InvoiceBalanceDate, c.DeliverOnCredit, a.*
+into #Payers
 from Transactions as a inner join  #Temp1 as b on a.PayerId = b.PayerId
-inner join Subscription as c on a.SubscriptionId = c.SubscriptionId
+inner join SubscriptionIssue as c on a.SubscriptionId = c.SubscriptionId and a.IssueId = c.IssueId
+inner join Subscription as d on a.SubscriptionId = d.SubscriptionId
 where operation = 2
 --and a.PayerId = 120954
 and a.DateFrom < b.InvoiceBalanceDate
-and c.InvoiceId >= b.BalanceInvoiceId   -- 578 entries
+and d.InvoiceId >= b.BalanceInvoiceId 
+group by a.PayerId
+order by a.PayerId
+
+drop table #Proposal
+
+select a.CustomerId, a.BalanceInvoiceId, 'NewBalanceInvoiceid' = isnull(min(c.InvoiceId),0)
+into #Proposal
+from Customer as a inner join #Payers as b on a.CustomerId = b.PayerId
+inner join Transactions as c on a.CustomerId = c.PayerId and c.operation = 19
+where c.InvoiceId > a.BalanceInvoiceid
+and c.DateFrom > '2021/04/09'
+group by a.CustomerId, a.BalanceInvoiceId
+
+
+
+
+
+
+
+
+select *
+from Customer
+where BalanceInvoiceId = 0
+
+
+
+
+
+update Customer
+set BalanceInvoiceId = b.NewBalanceInvoiceid
+from Customer as a inner join #Proposal as b on a.CustomerId = b.CustomerId
+
+
+
 
 
 
