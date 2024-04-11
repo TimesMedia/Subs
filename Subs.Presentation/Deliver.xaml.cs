@@ -54,6 +54,7 @@ namespace Subs.Presentation
 
             public string ToName;
             public string BuildingComplex;
+            public string Company;
             public string ToAdress1;
             public string ToAdress2; 
             public string ToAdress3;
@@ -851,12 +852,12 @@ namespace Subs.Presentation
                         lNewDeliveryItem.Date = DateTime.Now.ToString("ddMMyyyy");
                         lNewDeliveryItem.ToName = lRow.Title + " " + lRow.Initials + " " + lRow.Surname;
 
-                        //if (!lRow.IsCompanyNull())
-                        //{
-                        //    lNewDeliveryItem.Company = lRow.Company;
-                        //}
+                            if (!lRow.IsCompanyNull())
+                            {
+                                lNewDeliveryItem.Company = lRow.Company;
+                            }
 
-                       DeliveryAddressData2 lDeliveryAddressData = new DeliveryAddressData2(lRow.DeliveryAddressId);
+                            DeliveryAddressData2 lDeliveryAddressData = new DeliveryAddressData2(lRow.DeliveryAddressId);
 
                             if (lDeliveryAddressData.Building != "")
                             {
@@ -870,6 +871,7 @@ namespace Subs.Presentation
                                     }
                                 };
                             }
+                            
 
                             lNewDeliveryItem.ToAdress1 = lDeliveryAddressData.StreetNo + " " + lDeliveryAddressData.Street + " " + lDeliveryAddressData.StreetExtension
                                                                             + " " + lDeliveryAddressData.StreetSuffix;
@@ -879,6 +881,7 @@ namespace Subs.Presentation
 
                         lNewDeliveryItem.ToPostalCodde = lDeliveryAddressData.PostCode;
                         lNewDeliveryItem.Country = lDeliveryAddressData.CountryName;
+                         
 
                         lNewDeliveryItem.Cell = lCustomerData.CellPhoneNumber;
 
