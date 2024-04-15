@@ -3831,7 +3831,20 @@ namespace Subs.Data {
             public void SetBuildingNull() {
                 this[this.tableDeliveryAddress.BuildingColumn] = global::System.Convert.DBNull;
             }
-            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsProductNameNull()
+            {
+                return this.IsNull(this.tableDeliveryAddress.BuildingColumn);
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetProductNameNull()
+            {
+                this[this.tableDeliveryAddress.BuildingColumn] = global::System.Convert.DBNull;
+            }
+
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsFloorNoNull() {

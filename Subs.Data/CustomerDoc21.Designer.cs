@@ -1136,7 +1136,9 @@ namespace Subs.Data {
             private global::System.Data.DataColumn columnCellPhoneNumber;
             
             private global::System.Data.DataColumn columnEmailAddress;
-            
+
+            private global::System.Data.DataColumn columnPublication;
+
             private global::System.Data.DataColumn columnInvoiceEmail;
             
             private global::System.Data.DataColumn columnStatementEmail;
@@ -1399,7 +1401,16 @@ namespace Subs.Data {
                     return this.columnEmailAddress;
                 }
             }
-            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn PublicationColumn
+            {
+                get
+                {
+                    return this.columnEmailAddress;
+                }
+            }
+
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public global::System.Data.DataColumn InvoiceEmailColumn {
@@ -2351,7 +2362,9 @@ namespace Subs.Data {
             private global::System.Data.DataColumn columnCompanyNameUnverified;
             
             private global::System.Data.DataColumn columnDepartment;
-            
+
+            private global::System.Data.DataColumn columnPublication;
+
             private global::System.Data.DataColumn columnAddress1;
             
             private global::System.Data.DataColumn columnAddress2;
@@ -3738,7 +3751,27 @@ namespace Subs.Data {
                     this[this.tableCustomerOld.DepartmentColumn] = value;
                 }
             }
-            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Publication
+            {
+                get
+                {
+                    try
+                    {
+                        return ((string)(this[this.tableCustomerOld.PublicationColumn]));
+                    }
+                    catch (global::System.InvalidCastException e)
+                    {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Publication\' in table \'CustomerOld\' is DBNull.", e);
+                    }
+                }
+                set
+                {
+                    this[this.tableCustomerOld.DepartmentColumn] = value;
+                }
+            }
+
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string Address1 {
@@ -4190,7 +4223,20 @@ namespace Subs.Data {
             public void SetSurnameNull() {
                 this[this.tableCustomerOld.SurnameColumn] = global::System.Convert.DBNull;
             }
-            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsPublicationNull()
+            {
+                return this.IsNull(this.tableCustomerOld.PublicationColumn);
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetPublicationNull()
+            {
+                this[this.tableCustomerOld.PublicationColumn] = global::System.Convert.DBNull;
+            }
+
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsNationalId1Null() {
@@ -4251,6 +4297,7 @@ namespace Subs.Data {
                 this[this.tableCustomerOld.DepartmentColumn] = global::System.Convert.DBNull;
             }
             
+
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsAddress1Null() {
@@ -4686,7 +4733,9 @@ namespace Subs.Data {
                     this[this.tableCustomer.NationalId1Column] = value;
                 }
             }
+
             
+
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string NationalId2 {
