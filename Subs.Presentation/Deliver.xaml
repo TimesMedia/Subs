@@ -108,6 +108,7 @@
             <Button  Content="Registered mail" Canvas.Left="827" Canvas.Top="82" Click="FormatRegisteredMail" Height="22" Name="buttonFormatRegisteredMail" Width="307" Margin="0"/>
 
             <Button Content="Collection list" Click="FormatCollectionList" Height="23" Name="buttonFormatCollectionList" Width="307" Canvas.Left="478" Canvas.Top="117" />
+            <Button  Content="Media Courier list" Canvas.Left="829" Canvas.Top="118" Click="MediaFormatCourierList" Height="22" x:Name="buttonMediaFormatCourierList_Copy" Width="307"/>
         </Canvas>
 
     </Grid>

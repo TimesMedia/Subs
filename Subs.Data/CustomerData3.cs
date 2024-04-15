@@ -99,6 +99,7 @@ namespace Subs.Data
             myRow.AutomaticPaymentAllocation = true;
             myRow.Marketing = true;
             myRow.SetPhysicalAddressIdNull();
+            
             // myRow.LoginEmail = DateTime.Now.ToString();  // Provide an initial value that is unique.
             myRow.ModifiedBy = Environment.UserDomainName;
             myRow.ModifiedOn = DateTime.Now;
@@ -1401,6 +1402,7 @@ namespace Subs.Data
                 NotifyPropertyChanged("Department");
             }
         }
+        
 
         public string Address1
         {
@@ -1929,6 +1931,7 @@ namespace Subs.Data
                 }
             }
         }
+
 
         public string PracticeNumber1
         {
