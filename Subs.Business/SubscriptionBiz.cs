@@ -806,7 +806,7 @@ namespace Subs.Business
         {
             try
             {
-                int lUnits = 0;
+                int lUnitsDiscountFactor = 0;
                 decimal lInternallyCalculatedDiscountFraction;
 
 
@@ -827,52 +827,35 @@ namespace Subs.Business
                                                                                          lBasketItem.Subscription.DeliveryMethod)
                                                          / lBasketItem.Subscription.UnitsPerIssue;
                     }
+
                 }  // End of foreach loop
 
 
                 // *****************************************Cater for products with overlapping content
 
-                List<int> lMimsProducts = new List<int>() { 1, 8, 17, 32, 47, 49 };
-                List<int> lPromotionProducts = new List<int>() {  8, 10 };
+                List<int> lMimsProducts = new List<int>() { 1, 17, 32, 47, 49 };
+                //List<int> lPromotionProducts = new List<int>() {  8, 10 }; // MDR OTC
 
                 int lNumberOfMimsProducts = pBasket.Where(p => lMimsProducts.Contains(p.Subscription.ProductId)).Count();
-                int lNumberOfPromotionProducts = pBasket.Where(p => lPromotionProducts.Contains(p.Subscription.ProductId)).Count();
-
-
-                //***********************************************************************************************
-
-                if (DateTime.Now < new DateTime(2022,08,28))
-                {
-                    if (lNumberOfPromotionProducts > 1)
-                    {
-                        // Boost the unitcount if you have more than one product that covers more or less the same information.
-
-                        lUnits = 50;
-                    }
-                }
-
-
-
-
-
+              
                 if (lNumberOfMimsProducts > 1)
                 {
                     // Boost the unitcount if you have more than one product that covers more or less the same information.
 
-                    lUnits = 50;
+                    lUnitsDiscountFactor = 50;
                 }
 
-                lUnits = lUnits + pBasket.Sum(p => p.Subscription.UnitsPerIssue);
+                lUnitsDiscountFactor = lUnitsDiscountFactor + pBasket.Sum(p => p.Subscription.UnitsPerIssue);
 
                 // ************************************** Give additional discount on mass purchases
 
-                if (lUnits == 1)
+                if (lUnitsDiscountFactor == 1)
                 {
                     lInternallyCalculatedDiscountFraction = 0;
                 }
                 else
                 {
-                    lInternallyCalculatedDiscountFraction = (decimal)(0.006 * Math.Pow(lUnits, 2) + (1.0 * lUnits) - 1) / 100;
+                    lInternallyCalculatedDiscountFraction = (decimal)(0.006 * Math.Pow(lUnitsDiscountFactor, 2) + (1.0 * lUnitsDiscountFactor) - 1) / 100;
                 }
 
 
@@ -917,7 +900,7 @@ namespace Subs.Business
 
 
                     // Cater for discount via last minute override at at item level. Give the customer the benefit of the most discount.
-
+                    
                     if (lBasketItem.ExplicitDiscountPercentage > 0)
                     {
                         lBasketItem.Subscription.DiscountMultiplier = (1 - (decimal)(lBasketItem.ExplicitDiscountPercentage / 100));
@@ -926,6 +909,11 @@ namespace Subs.Business
                     else
                     {
                         // Cater for absolute price override
+
+                        if (lBasketItem.Subscription.ProductId == 88 && lNumberOfMimsProducts > 0)
+                        {
+                            lBasketItem.FinalPriceOverride = 345.00M; // Hard coded propmotion
+                        }
 
                         if (lBasketItem.FinalPriceOverride > 0)
                         {
