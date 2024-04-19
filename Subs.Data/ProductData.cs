@@ -75,6 +75,7 @@ namespace Subs.Data
                 _DiscountedPrice = value;
                 NotifyPropertyChanged("DiscountedPrice");
                 NotifyPropertyChanged("FullDiscount");
+                NotifyPropertyChanged("Discount");
             }
         }
         public decimal FinalPriceOverride

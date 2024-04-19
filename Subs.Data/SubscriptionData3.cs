@@ -374,15 +374,6 @@ namespace Subs.Data
                 NotifyPropertyChanged("ReceiverSurname");
                 NotifyPropertyChanged("ReceiverCompany");
                 NotifyPropertyChanged("ReceiverCountryId");
- 
-
-                //CustomerData3 lCustomerData = new CustomerData3(value);
-                //gSubscriptionTable[0].ReceiverSurname = lCustomerData.Surname;
-                //NotifyPropertyChanged("ReceiverSurname");
-                //gSubscriptionTable[0].ReceiverCompany = lCustomerData.CompanyNaam;
-                //NotifyPropertyChanged("ReceiverCompany");
-                //gSubscriptionTable[0].ReceiverCountry = lCustomerData.CountryId;
-                //NotifyPropertyChanged("ReceiverCountry");
             }
         }
 
