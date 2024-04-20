@@ -932,7 +932,7 @@ namespace Subs.Business
 
                     decimal lDiscountPercentage = SubscriptionBiz.PromotionDiscountPercentage(lPromotionCriteria);
 
-                    lBasketItem.Subscription.DiscountMultiplier = 1 * (1 - lDiscountPercentage);
+                    lBasketItem.Subscription.DiscountMultiplier = 1 * (1 - lDiscountPercentage/100);
                     return true;
                 }
 

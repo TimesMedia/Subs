@@ -127,10 +127,10 @@ namespace Subs.Data
         {
             try
             {
-                //if (!SetConnection())
-                //{
-                //    throw new Exception("Error in CustomerData3 constructor: SetConnection ");
-                //}
+                if (!SetConnection())
+                {
+                    throw new Exception("Error in CustomerData3 constructor: SetConnection ");
+                }
                 if (!Load(CustomerId, out string Message))
                 {
                     if (!Message.Contains("There is no such customer"))
@@ -161,32 +161,32 @@ namespace Subs.Data
 
         #region Housekeeping methods
 
-        //private bool SetConnection()
-        //{
-        //    try
-        //    {
-        //        // Set the connectionString for this object
-        //        if (Settings.ConnectionString != "")
-        //        {
-        //            gConnection.ConnectionString = Settings.ConnectionString;
-        //            gCustomerAdapter.AttachConnection();
-        //            gConnection.Open();
-        //            return true;
-        //        }
-        //        else return false;
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        string lDummy = Ex.Message;
-        //        return false;
-        //    }
-        //}
+        private bool SetConnection()
+        {
+            try
+            {
+                // Set the connectionString for this object
+                if (Settings.ConnectionString != "")
+                {
+                    gConnection.ConnectionString = Settings.ConnectionString;
+                    gCustomerAdapter.AttachConnection();
+                    gConnection.Open();
+                    return true;
+                }
+                else return false;
+            }
+            catch (Exception Ex)
+            {
+                string lDummy = Ex.Message;
+                return false;
+            }
+        }
 
 
         private bool Load(int CustomerId, out string Message)
         {
 
-            SqlConnection Connection = new SqlConnection(Settings.ConnectionString);
+            //SqlConnection Connection = new SqlConnection(Settings.ConnectionString);
             try
             {
                 // Cleanup before you start a new one
@@ -197,8 +197,8 @@ namespace Subs.Data
                 SqlCommand Command = new SqlCommand();
                 SqlDataAdapter Adaptor = new SqlDataAdapter();
               
-                Connection.Open();
-                Command.Connection = Connection;
+               // Connection.Open();
+                Command.Connection = gConnection;
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = "dbo.[MIMS.CustomerDoc.Customer.FillById]";
                 SqlCommandBuilder.DeriveParameters(Command);
@@ -231,10 +231,10 @@ namespace Subs.Data
                 Message = ex.Message + "on " + CustomerId.ToString();
                 return false;
             }
-            finally
-            {
-                Connection.Close();
-            }
+            //finally
+            //{
+            //    Connection.Close();
+            //}
         }
 
 
