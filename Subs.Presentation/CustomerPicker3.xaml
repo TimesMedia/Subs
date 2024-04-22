@@ -130,7 +130,7 @@
                         <ContextMenu>
                             <MenuItem Header="ConsolidateSource" Click="Click_ConsolidateSource"/>
                             <MenuItem Header="ConsolidateTarget" Click="Click_ConsolidateTarget"/>
-                            <MenuItem Header="Due calculation" Click="Click_ShowDue"/>
+                            <MenuItem Header="Due calculation" Click="Click_ShowDue" Tag="AuthorityHigh" Loaded="SetVisibility"/>
                             <MenuItem Header="DeliveryAddress" Click="Click_DeliveryAddress" IsEnabled="{Binding IsEnabled, ElementName=Profile}"/>
                             <MenuItem Header="Destroy customer" Click="Click_DestroyCustomer" Tag="AuthorityHigh" Loaded="SetVisibility"/>
                             <MenuItem Header="Statement" Click="Click_Statement" />

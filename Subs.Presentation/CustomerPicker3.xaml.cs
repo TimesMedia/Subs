@@ -471,8 +471,10 @@ namespace Subs.Presentation
                 {
                     CustomerData3 lCustomer = new CustomerData3(lSelection);
                     gCustomers.Add(lCustomer);
+                   
                 }
-            }
+
+              }
             catch (Exception ex)
             {
                 //Display all the exceptions
@@ -953,7 +955,6 @@ namespace Subs.Presentation
                 gDue = gCurrentCustomer.GetInvoiceAndPayment();
                 gDueViewSource.Source = gDue;
                 DueDataGrid.ItemsSource = gDueViewSource.View;
-                //textCurrentLiability.Text = gCurrentCustomer.Liability.ToString("#########0.00");
 
                 SelectTab(PickerTabs.Due);
             }

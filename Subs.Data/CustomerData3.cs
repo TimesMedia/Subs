@@ -231,10 +231,10 @@ namespace Subs.Data
                 Message = ex.Message + "on " + CustomerId.ToString();
                 return false;
             }
-            //finally
-            //{
-            //    Connection.Close();
-            //}
+            finally
+            {
+                gConnection.Close();
+            }
         }
 
 

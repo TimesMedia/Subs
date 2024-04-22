@@ -932,7 +932,13 @@ namespace Subs.Business
 
                     decimal lDiscountPercentage = SubscriptionBiz.PromotionDiscountPercentage(lPromotionCriteria);
 
-                    lBasketItem.Subscription.DiscountMultiplier = 1 * (1 - lDiscountPercentage/100);
+                    if (lDiscountPercentage != 0)
+                    {
+                        lBasketItem.Subscription.DiscountMultiplier = 1 * (1 - lDiscountPercentage / 100);
+                    }
+
+                    //Leave it as is
+
                     return true;
                 }
 
@@ -945,6 +951,7 @@ namespace Subs.Business
                         lBasketItem.Subscription.DiscountMultiplier = (1 - (decimal)(lBasketItem.ExplicitDiscountPercentage / 100));
                     }
 
+                    //Leave it as is
                     return true;
                 }
 
@@ -955,8 +962,8 @@ namespace Subs.Business
                     {
                       lBasketItem.Subscription.DiscountMultiplier = GetDiscountMultipier(lBasketItem.Subscription, lBasketItem.FinalPriceOverride);
                     }
-
-                return true;
+                    //Leave it as is
+                    return true;
                 }
             }
 

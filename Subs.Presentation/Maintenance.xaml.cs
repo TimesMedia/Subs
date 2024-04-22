@@ -434,6 +434,8 @@ namespace Subs.Presentation
                     return;
                 }
 
+                MessageBox.Show("Note that this could take more than 15 minutes to complete");
+
                 this.Cursor = Cursors.Wait;
 
                 {
@@ -533,6 +535,8 @@ namespace Subs.Presentation
                 }
 
                 this.Cursor = Cursors.Wait;
+
+                MessageBox.Show("Note that this could take more than 1 minute to complete");
 
                 {
                     string lResult;
