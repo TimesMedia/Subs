@@ -1461,9 +1461,7 @@ namespace Subs.Data {
             
             private global::System.Data.DataColumn columnModifiedOn;
             
-            private global::System.Data.DataColumn columnSumOfPayments;
-            
-            private global::System.Data.DataColumn columnSumOfDeliveries;
+            private global::System.Data.DataColumn columnDeliverable;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -1828,17 +1826,9 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn SumOfPaymentsColumn {
+            public global::System.Data.DataColumn DeliverableColumn {
                 get {
-                    return this.columnSumOfPayments;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn SumOfDeliveriesColumn {
-                get {
-                    return this.columnSumOfDeliveries;
+                    return this.columnDeliverable;
                 }
             }
             
@@ -1920,8 +1910,7 @@ namespace Subs.Data {
                         decimal Balance, 
                         string ModifiedBy, 
                         System.DateTime ModifiedOn, 
-                        decimal SumOfPayments, 
-                        decimal SumOfDeliveries) {
+                        decimal Deliverable) {
                 CustomerRow rowCustomerRow = ((CustomerRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1965,8 +1954,7 @@ namespace Subs.Data {
                         Balance,
                         ModifiedBy,
                         ModifiedOn,
-                        SumOfPayments,
-                        SumOfDeliveries};
+                        Deliverable};
                 rowCustomerRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCustomerRow);
                 return rowCustomerRow;
@@ -2037,8 +2025,7 @@ namespace Subs.Data {
                 this.columnBalance = base.Columns["Balance"];
                 this.columnModifiedBy = base.Columns["ModifiedBy"];
                 this.columnModifiedOn = base.Columns["ModifiedOn"];
-                this.columnSumOfPayments = base.Columns["SumOfPayments"];
-                this.columnSumOfDeliveries = base.Columns["SumOfDeliveries"];
+                this.columnDeliverable = base.Columns["Deliverable"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2126,10 +2113,8 @@ namespace Subs.Data {
                 base.Columns.Add(this.columnModifiedBy);
                 this.columnModifiedOn = new global::System.Data.DataColumn("ModifiedOn", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnModifiedOn);
-                this.columnSumOfPayments = new global::System.Data.DataColumn("SumOfPayments", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSumOfPayments);
-                this.columnSumOfDeliveries = new global::System.Data.DataColumn("SumOfDeliveries", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSumOfDeliveries);
+                this.columnDeliverable = new global::System.Data.DataColumn("Deliverable", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeliverable);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnCustomerId}, true));
                 this.columnCustomerId.AutoIncrement = true;
@@ -2173,8 +2158,7 @@ namespace Subs.Data {
                 this.columnModifiedBy.AllowDBNull = false;
                 this.columnModifiedBy.MaxLength = 50;
                 this.columnModifiedOn.AllowDBNull = false;
-                this.columnSumOfPayments.DefaultValue = ((decimal)(0m));
-                this.columnSumOfDeliveries.DefaultValue = ((decimal)(0m));
+                this.columnDeliverable.DefaultValue = ((decimal)(0m));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3321,33 +3305,17 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public decimal SumOfPayments {
+            public decimal Deliverable {
                 get {
                     try {
-                        return ((decimal)(this[this.tableCustomer.SumOfPaymentsColumn]));
+                        return ((decimal)(this[this.tableCustomer.DeliverableColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SumOfPayments\' in table \'Customer\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Deliverable\' in table \'Customer\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableCustomer.SumOfPaymentsColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public decimal SumOfDeliveries {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableCustomer.SumOfDeliveriesColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SumOfDeliveries\' in table \'Customer\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCustomer.SumOfDeliveriesColumn] = value;
+                    this[this.tableCustomer.DeliverableColumn] = value;
                 }
             }
             
@@ -3689,26 +3657,14 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsSumOfPaymentsNull() {
-                return this.IsNull(this.tableCustomer.SumOfPaymentsColumn);
+            public bool IsDeliverableNull() {
+                return this.IsNull(this.tableCustomer.DeliverableColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetSumOfPaymentsNull() {
-                this[this.tableCustomer.SumOfPaymentsColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsSumOfDeliveriesNull() {
-                return this.IsNull(this.tableCustomer.SumOfDeliveriesColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetSumOfDeliveriesNull() {
-                this[this.tableCustomer.SumOfDeliveriesColumn] = global::System.Convert.DBNull;
+            public void SetDeliverableNull() {
+                this[this.tableCustomer.DeliverableColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4618,8 +4574,7 @@ SELECT CommentId, CustomerId, Comment, ModifiedBy, ModifiedOn FROM Comment2 WHER
             tableMapping.ColumnMappings.Add("Balance", "Balance");
             tableMapping.ColumnMappings.Add("ModifiedBy", "ModifiedBy");
             tableMapping.ColumnMappings.Add("ModifiedOn", "ModifiedOn");
-            tableMapping.ColumnMappings.Add("SumOfPayments", "SumOfPayments");
-            tableMapping.ColumnMappings.Add("SumOfDeliveries", "SumOfDeliveries");
+            tableMapping.ColumnMappings.Add("Deliverable", "Deliverable");
             tableMapping.ColumnMappings.Add("Reserved", "Reserved");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
@@ -4666,10 +4621,8 @@ SELECT CommentId, CustomerId, Comment, ModifiedBy, ModifiedOn FROM Comment2 WHER
                 "nvoiceId = 1 AND [BalanceInvoiceId] IS NULL) OR ([BalanceInvoiceId] = @Original_" +
                 "BalanceInvoiceId)) AND ((@IsNull_Balance = 1 AND [Balance] IS NULL) OR ([Balance" +
                 "] = @Original_Balance)) AND ([ModifiedBy] = @Original_ModifiedBy) AND ([Modified" +
-                "On] = @Original_ModifiedOn) AND ((@IsNull_SumOfPayments = 1 AND [SumOfPayments] " +
-                "IS NULL) OR ([SumOfPayments] = @Original_SumOfPayments)) AND ((@IsNull_SumOfDeli" +
-                "veries = 1 AND [SumOfDeliveries] IS NULL) OR ([SumOfDeliveries] = @Original_SumO" +
-                "fDeliveries)))";
+                "On] = @Original_ModifiedOn) AND ((@IsNull_Deliverable = 1 AND [Deliverable] IS N" +
+                "ULL) OR ([Deliverable] = @Original_Deliverable)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CustomerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CustomerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_TitleId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TitleId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -4738,10 +4691,8 @@ SELECT CommentId, CustomerId, Comment, ModifiedBy, ModifiedOn FROM Comment2 WHER
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Balance", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Balance", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SumOfPayments", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SumOfPayments", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SumOfPayments", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "SumOfPayments", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SumOfDeliveries", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SumOfDeliveries", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SumOfDeliveries", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "SumOfDeliveries", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Deliverable", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Deliverable", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Deliverable", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Deliverable", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [Customer] ([Password1], [TitleId], [Initials], [FirstName], [Surname" +
@@ -4752,23 +4703,22 @@ SELECT CommentId, CustomerId, Comment, ModifiedBy, ModifiedOn FROM Comment2 WHER
                 ", [Correspondence2], [VerificationDate], [Due], [CheckpointDateInvoice], [Counci" +
                 "lNumber], [PracticeNumber1], [PracticeNumber2], [PracticeNumber3], [AutomaticPay" +
                 "mentAllocation], [Marketing], [BalanceInvoiceId], [Balance], [ModifiedBy], [Modi" +
-                "fiedOn], [SumOfPayments], [SumOfDeliveries]) VALUES (@Password1, @TitleId, @Init" +
-                "ials, @FirstName, @Surname, @NationalId1, @NationalId2, @NationalId3, @CompanyId" +
-                ", @CompanyNameUnverified, @Department, @Address1, @Address2, @Address3, @Address" +
-                "4, @Address5, @AddressType, @PostAddressId, @PhysicalAddressId, @CountryId, @Pho" +
-                "neNumber, @CellPhoneNumber, @EmailAddress, @InvoiceEmail, @StatementEmail, @Rese" +
-                "rved, @Correspondence2, @VerificationDate, @Due, @CheckpointDateInvoice, @Counci" +
-                "lNumber, @PracticeNumber1, @PracticeNumber2, @PracticeNumber3, @AutomaticPayment" +
-                "Allocation, @Marketing, @BalanceInvoiceId, @Balance, @ModifiedBy, @ModifiedOn, @" +
-                "SumOfPayments, @SumOfDeliveries);\r\nSELECT CustomerId, Password1, TitleId, Initia" +
-                "ls, FirstName, Surname, NationalId1, NationalId2, NationalId3, CompanyId, Compan" +
-                "yNameUnverified, Department, Address1, Address2, Address3, Address4, Address5, A" +
-                "ddressType, PostAddressId, PhysicalAddressId, CountryId, PhoneNumber, CellPhoneN" +
-                "umber, EmailAddress, InvoiceEmail, StatementEmail, Reserved, Correspondence2, Ve" +
-                "rificationDate, Due, CheckpointDateInvoice, CouncilNumber, PracticeNumber1, Prac" +
-                "ticeNumber2, PracticeNumber3, AutomaticPaymentAllocation, Marketing, BalanceInvo" +
-                "iceId, Balance, ModifiedBy, ModifiedOn, SumOfPayments, SumOfDeliveries FROM Cust" +
-                "omer WHERE (CustomerId = SCOPE_IDENTITY())";
+                "fiedOn], [Deliverable]) VALUES (@Password1, @TitleId, @Initials, @FirstName, @Su" +
+                "rname, @NationalId1, @NationalId2, @NationalId3, @CompanyId, @CompanyNameUnverif" +
+                "ied, @Department, @Address1, @Address2, @Address3, @Address4, @Address5, @Addres" +
+                "sType, @PostAddressId, @PhysicalAddressId, @CountryId, @PhoneNumber, @CellPhoneN" +
+                "umber, @EmailAddress, @InvoiceEmail, @StatementEmail, @Reserved, @Correspondence" +
+                "2, @VerificationDate, @Due, @CheckpointDateInvoice, @CouncilNumber, @PracticeNum" +
+                "ber1, @PracticeNumber2, @PracticeNumber3, @AutomaticPaymentAllocation, @Marketin" +
+                "g, @BalanceInvoiceId, @Balance, @ModifiedBy, @ModifiedOn, @Deliverable);\r\nSELECT" +
+                " CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1, Nati" +
+                "onalId2, NationalId3, CompanyId, CompanyNameUnverified, Department, Address1, Ad" +
+                "dress2, Address3, Address4, Address5, AddressType, PostAddressId, PhysicalAddres" +
+                "sId, CountryId, PhoneNumber, CellPhoneNumber, EmailAddress, InvoiceEmail, Statem" +
+                "entEmail, Reserved, Correspondence2, VerificationDate, Due, CheckpointDateInvoic" +
+                "e, CouncilNumber, PracticeNumber1, PracticeNumber2, PracticeNumber3, AutomaticPa" +
+                "ymentAllocation, Marketing, BalanceInvoiceId, Balance, ModifiedBy, ModifiedOn, D" +
+                "eliverable FROM Customer WHERE (CustomerId = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Password1", global::System.Data.SqlDbType.VarBinary, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Password1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TitleId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TitleId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4810,8 +4760,7 @@ SELECT CommentId, CustomerId, Comment, ModifiedBy, ModifiedOn FROM Comment2 WHER
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Balance", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Balance", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SumOfPayments", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "SumOfPayments", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SumOfDeliveries", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "SumOfDeliveries", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Deliverable", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Deliverable", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [Customer] SET [Password1] = @Password1, [TitleId] = @TitleId, [Initials] " +
@@ -4829,61 +4778,59 @@ SELECT CommentId, CustomerId, Comment, ModifiedBy, ModifiedOn FROM Comment2 WHER
                 "ticeNumber1] = @PracticeNumber1, [PracticeNumber2] = @PracticeNumber2, [Practice" +
                 "Number3] = @PracticeNumber3, [AutomaticPaymentAllocation] = @AutomaticPaymentAll" +
                 "ocation, [Marketing] = @Marketing, [BalanceInvoiceId] = @BalanceInvoiceId, [Bala" +
-                "nce] = @Balance, [ModifiedBy] = @ModifiedBy, [ModifiedOn] = @ModifiedOn, [SumOfP" +
-                "ayments] = @SumOfPayments, [SumOfDeliveries] = @SumOfDeliveries WHERE (([Custome" +
-                "rId] = @Original_CustomerId) AND ([TitleId] = @Original_TitleId) AND ((@IsNull_I" +
-                "nitials = 1 AND [Initials] IS NULL) OR ([Initials] = @Original_Initials)) AND ((" +
-                "@IsNull_FirstName = 1 AND [FirstName] IS NULL) OR ([FirstName] = @Original_First" +
-                "Name)) AND ((@IsNull_Surname = 1 AND [Surname] IS NULL) OR ([Surname] = @Origina" +
-                "l_Surname)) AND ((@IsNull_NationalId1 = 1 AND [NationalId1] IS NULL) OR ([Nation" +
-                "alId1] = @Original_NationalId1)) AND ((@IsNull_NationalId2 = 1 AND [NationalId2]" +
-                " IS NULL) OR ([NationalId2] = @Original_NationalId2)) AND ((@IsNull_NationalId3 " +
-                "= 1 AND [NationalId3] IS NULL) OR ([NationalId3] = @Original_NationalId3)) AND (" +
-                "[CompanyId] = @Original_CompanyId) AND ((@IsNull_CompanyNameUnverified = 1 AND [" +
-                "CompanyNameUnverified] IS NULL) OR ([CompanyNameUnverified] = @Original_CompanyN" +
-                "ameUnverified)) AND ((@IsNull_Department = 1 AND [Department] IS NULL) OR ([Depa" +
-                "rtment] = @Original_Department)) AND ((@IsNull_Address1 = 1 AND [Address1] IS NU" +
-                "LL) OR ([Address1] = @Original_Address1)) AND ((@IsNull_Address2 = 1 AND [Addres" +
-                "s2] IS NULL) OR ([Address2] = @Original_Address2)) AND ((@IsNull_Address3 = 1 AN" +
-                "D [Address3] IS NULL) OR ([Address3] = @Original_Address3)) AND ((@IsNull_Addres" +
-                "s4 = 1 AND [Address4] IS NULL) OR ([Address4] = @Original_Address4)) AND ((@IsNu" +
-                "ll_Address5 = 1 AND [Address5] IS NULL) OR ([Address5] = @Original_Address5)) AN" +
-                "D ([AddressType] = @Original_AddressType) AND ([PostAddressId] = @Original_PostA" +
-                "ddressId) AND ((@IsNull_PhysicalAddressId = 1 AND [PhysicalAddressId] IS NULL) O" +
-                "R ([PhysicalAddressId] = @Original_PhysicalAddressId)) AND ([CountryId] = @Origi" +
-                "nal_CountryId) AND ((@IsNull_PhoneNumber = 1 AND [PhoneNumber] IS NULL) OR ([Pho" +
-                "neNumber] = @Original_PhoneNumber)) AND ([CellPhoneNumber] = @Original_CellPhone" +
-                "Number) AND ((@IsNull_EmailAddress = 1 AND [EmailAddress] IS NULL) OR ([EmailAdd" +
-                "ress] = @Original_EmailAddress)) AND ((@IsNull_InvoiceEmail = 1 AND [InvoiceEmai" +
-                "l] IS NULL) OR ([InvoiceEmail] = @Original_InvoiceEmail)) AND ((@IsNull_Statemen" +
-                "tEmail = 1 AND [StatementEmail] IS NULL) OR ([StatementEmail] = @Original_Statem" +
-                "entEmail)) AND ((@IsNull_Reserved = 1 AND [Reserved] IS NULL) OR ([Reserved] = @" +
-                "Original_Reserved)) AND ([Correspondence2] = @Original_Correspondence2) AND ((@I" +
-                "sNull_VerificationDate = 1 AND [VerificationDate] IS NULL) OR ([VerificationDate" +
-                "] = @Original_VerificationDate)) AND ((@IsNull_Due = 1 AND [Due] IS NULL) OR ([D" +
-                "ue] = @Original_Due)) AND ([CheckpointDateInvoice] = @Original_CheckpointDateInv" +
-                "oice) AND ((@IsNull_CouncilNumber = 1 AND [CouncilNumber] IS NULL) OR ([CouncilN" +
-                "umber] = @Original_CouncilNumber)) AND ((@IsNull_PracticeNumber1 = 1 AND [Practi" +
-                "ceNumber1] IS NULL) OR ([PracticeNumber1] = @Original_PracticeNumber1)) AND ((@I" +
-                "sNull_PracticeNumber2 = 1 AND [PracticeNumber2] IS NULL) OR ([PracticeNumber2] =" +
-                " @Original_PracticeNumber2)) AND ((@IsNull_PracticeNumber3 = 1 AND [PracticeNumb" +
-                "er3] IS NULL) OR ([PracticeNumber3] = @Original_PracticeNumber3)) AND ([Automati" +
-                "cPaymentAllocation] = @Original_AutomaticPaymentAllocation) AND ([Marketing] = @" +
-                "Original_Marketing) AND ((@IsNull_BalanceInvoiceId = 1 AND [BalanceInvoiceId] IS" +
-                " NULL) OR ([BalanceInvoiceId] = @Original_BalanceInvoiceId)) AND ((@IsNull_Balan" +
-                "ce = 1 AND [Balance] IS NULL) OR ([Balance] = @Original_Balance)) AND ([Modified" +
-                "By] = @Original_ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn) AND ((@IsN" +
-                "ull_SumOfPayments = 1 AND [SumOfPayments] IS NULL) OR ([SumOfPayments] = @Origin" +
-                "al_SumOfPayments)) AND ((@IsNull_SumOfDeliveries = 1 AND [SumOfDeliveries] IS NU" +
-                "LL) OR ([SumOfDeliveries] = @Original_SumOfDeliveries)));\r\nSELECT CustomerId, Pa" +
-                "ssword1, TitleId, Initials, FirstName, Surname, NationalId1, NationalId2, Nation" +
-                "alId3, CompanyId, CompanyNameUnverified, Department, Address1, Address2, Address" +
-                "3, Address4, Address5, AddressType, PostAddressId, PhysicalAddressId, CountryId," +
-                " PhoneNumber, CellPhoneNumber, EmailAddress, InvoiceEmail, StatementEmail, Reser" +
-                "ved, Correspondence2, VerificationDate, Due, CheckpointDateInvoice, CouncilNumbe" +
-                "r, PracticeNumber1, PracticeNumber2, PracticeNumber3, AutomaticPaymentAllocation" +
-                ", Marketing, BalanceInvoiceId, Balance, ModifiedBy, ModifiedOn, SumOfPayments, S" +
-                "umOfDeliveries FROM Customer WHERE (CustomerId = @CustomerId)";
+                "nce] = @Balance, [ModifiedBy] = @ModifiedBy, [ModifiedOn] = @ModifiedOn, [Delive" +
+                "rable] = @Deliverable WHERE (([CustomerId] = @Original_CustomerId) AND ([TitleId" +
+                "] = @Original_TitleId) AND ((@IsNull_Initials = 1 AND [Initials] IS NULL) OR ([I" +
+                "nitials] = @Original_Initials)) AND ((@IsNull_FirstName = 1 AND [FirstName] IS N" +
+                "ULL) OR ([FirstName] = @Original_FirstName)) AND ((@IsNull_Surname = 1 AND [Surn" +
+                "ame] IS NULL) OR ([Surname] = @Original_Surname)) AND ((@IsNull_NationalId1 = 1 " +
+                "AND [NationalId1] IS NULL) OR ([NationalId1] = @Original_NationalId1)) AND ((@Is" +
+                "Null_NationalId2 = 1 AND [NationalId2] IS NULL) OR ([NationalId2] = @Original_Na" +
+                "tionalId2)) AND ((@IsNull_NationalId3 = 1 AND [NationalId3] IS NULL) OR ([Nation" +
+                "alId3] = @Original_NationalId3)) AND ([CompanyId] = @Original_CompanyId) AND ((@" +
+                "IsNull_CompanyNameUnverified = 1 AND [CompanyNameUnverified] IS NULL) OR ([Compa" +
+                "nyNameUnverified] = @Original_CompanyNameUnverified)) AND ((@IsNull_Department =" +
+                " 1 AND [Department] IS NULL) OR ([Department] = @Original_Department)) AND ((@Is" +
+                "Null_Address1 = 1 AND [Address1] IS NULL) OR ([Address1] = @Original_Address1)) " +
+                "AND ((@IsNull_Address2 = 1 AND [Address2] IS NULL) OR ([Address2] = @Original_Ad" +
+                "dress2)) AND ((@IsNull_Address3 = 1 AND [Address3] IS NULL) OR ([Address3] = @Or" +
+                "iginal_Address3)) AND ((@IsNull_Address4 = 1 AND [Address4] IS NULL) OR ([Addres" +
+                "s4] = @Original_Address4)) AND ((@IsNull_Address5 = 1 AND [Address5] IS NULL) OR" +
+                " ([Address5] = @Original_Address5)) AND ([AddressType] = @Original_AddressType) " +
+                "AND ([PostAddressId] = @Original_PostAddressId) AND ((@IsNull_PhysicalAddressId " +
+                "= 1 AND [PhysicalAddressId] IS NULL) OR ([PhysicalAddressId] = @Original_Physica" +
+                "lAddressId)) AND ([CountryId] = @Original_CountryId) AND ((@IsNull_PhoneNumber =" +
+                " 1 AND [PhoneNumber] IS NULL) OR ([PhoneNumber] = @Original_PhoneNumber)) AND ([" +
+                "CellPhoneNumber] = @Original_CellPhoneNumber) AND ((@IsNull_EmailAddress = 1 AND" +
+                " [EmailAddress] IS NULL) OR ([EmailAddress] = @Original_EmailAddress)) AND ((@Is" +
+                "Null_InvoiceEmail = 1 AND [InvoiceEmail] IS NULL) OR ([InvoiceEmail] = @Original" +
+                "_InvoiceEmail)) AND ((@IsNull_StatementEmail = 1 AND [StatementEmail] IS NULL) O" +
+                "R ([StatementEmail] = @Original_StatementEmail)) AND ((@IsNull_Reserved = 1 AND " +
+                "[Reserved] IS NULL) OR ([Reserved] = @Original_Reserved)) AND ([Correspondence2]" +
+                " = @Original_Correspondence2) AND ((@IsNull_VerificationDate = 1 AND [Verificati" +
+                "onDate] IS NULL) OR ([VerificationDate] = @Original_VerificationDate)) AND ((@Is" +
+                "Null_Due = 1 AND [Due] IS NULL) OR ([Due] = @Original_Due)) AND ([CheckpointDate" +
+                "Invoice] = @Original_CheckpointDateInvoice) AND ((@IsNull_CouncilNumber = 1 AND " +
+                "[CouncilNumber] IS NULL) OR ([CouncilNumber] = @Original_CouncilNumber)) AND ((@" +
+                "IsNull_PracticeNumber1 = 1 AND [PracticeNumber1] IS NULL) OR ([PracticeNumber1] " +
+                "= @Original_PracticeNumber1)) AND ((@IsNull_PracticeNumber2 = 1 AND [PracticeNum" +
+                "ber2] IS NULL) OR ([PracticeNumber2] = @Original_PracticeNumber2)) AND ((@IsNull" +
+                "_PracticeNumber3 = 1 AND [PracticeNumber3] IS NULL) OR ([PracticeNumber3] = @Ori" +
+                "ginal_PracticeNumber3)) AND ([AutomaticPaymentAllocation] = @Original_AutomaticP" +
+                "aymentAllocation) AND ([Marketing] = @Original_Marketing) AND ((@IsNull_BalanceI" +
+                "nvoiceId = 1 AND [BalanceInvoiceId] IS NULL) OR ([BalanceInvoiceId] = @Original_" +
+                "BalanceInvoiceId)) AND ((@IsNull_Balance = 1 AND [Balance] IS NULL) OR ([Balance" +
+                "] = @Original_Balance)) AND ([ModifiedBy] = @Original_ModifiedBy) AND ([Modified" +
+                "On] = @Original_ModifiedOn) AND ((@IsNull_Deliverable = 1 AND [Deliverable] IS N" +
+                "ULL) OR ([Deliverable] = @Original_Deliverable)));\r\nSELECT CustomerId, Password1" +
+                ", TitleId, Initials, FirstName, Surname, NationalId1, NationalId2, NationalId3, " +
+                "CompanyId, CompanyNameUnverified, Department, Address1, Address2, Address3, Addr" +
+                "ess4, Address5, AddressType, PostAddressId, PhysicalAddressId, CountryId, PhoneN" +
+                "umber, CellPhoneNumber, EmailAddress, InvoiceEmail, StatementEmail, Reserved, Co" +
+                "rrespondence2, VerificationDate, Due, CheckpointDateInvoice, CouncilNumber, Prac" +
+                "ticeNumber1, PracticeNumber2, PracticeNumber3, AutomaticPaymentAllocation, Marke" +
+                "ting, BalanceInvoiceId, Balance, ModifiedBy, ModifiedOn, Deliverable FROM Custom" +
+                "er WHERE (CustomerId = @CustomerId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Password1", global::System.Data.SqlDbType.VarBinary, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Password1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TitleId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TitleId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4925,8 +4872,7 @@ SELECT CommentId, CustomerId, Comment, ModifiedBy, ModifiedOn FROM Comment2 WHER
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Balance", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Balance", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SumOfPayments", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "SumOfPayments", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SumOfDeliveries", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "SumOfDeliveries", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Deliverable", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Deliverable", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CustomerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CustomerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_TitleId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TitleId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Initials", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Initials", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -4994,10 +4940,8 @@ SELECT CommentId, CustomerId, Comment, ModifiedBy, ModifiedOn FROM Comment2 WHER
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Balance", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Balance", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SumOfPayments", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SumOfPayments", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SumOfPayments", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "SumOfPayments", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SumOfDeliveries", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SumOfDeliveries", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SumOfDeliveries", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "SumOfDeliveries", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Deliverable", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Deliverable", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Deliverable", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "Deliverable", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CustomerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "CustomerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -5014,10 +4958,7 @@ SELECT CommentId, CustomerId, Comment, ModifiedBy, ModifiedOn FROM Comment2 WHER
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[7];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT        CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1, NationalId2, NationalId3, CompanyId, CompanyNameUnverified, Department, Address1, Address2, Address3, Address4, Address5, AddressType, 
-                         PostAddressId, PhysicalAddressId, CountryId, PhoneNumber, CellPhoneNumber, EmailAddress, InvoiceEmail, StatementEmail, Reserved, Correspondence2, VerificationDate, Due, CheckpointDateInvoice, CouncilNumber, 
-                         PracticeNumber1, PracticeNumber2, PracticeNumber3, AutomaticPaymentAllocation, Marketing, BalanceInvoiceId, Balance, ModifiedBy, ModifiedOn, SumOfPayments, SumOfDeliveries
-FROM            Customer";
+            this._commandCollection[0].CommandText = @"SELECT CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1, NationalId2, NationalId3, CompanyId, CompanyNameUnverified, Department, Address1, Address2, Address3, Address4, Address5, AddressType, PostAddressId, PhysicalAddressId, CountryId, PhoneNumber, CellPhoneNumber, EmailAddress, InvoiceEmail, StatementEmail, Reserved, Correspondence2, VerificationDate, Due, CheckpointDateInvoice, CouncilNumber, PracticeNumber1, PracticeNumber2, PracticeNumber3, AutomaticPaymentAllocation, Marketing, BalanceInvoiceId, Balance, ModifiedBy, ModifiedOn, Deliverable FROM Customer";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
@@ -5177,1245 +5118,6 @@ FROM            Customer";
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(global::System.Data.DataRow[] dataRows) {
             return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(
-                    int Original_CustomerId, 
-                    int Original_TitleId, 
-                    string Original_Initials, 
-                    string Original_FirstName, 
-                    string Original_Surname, 
-                    string Original_NationalId1, 
-                    string Original_NationalId2, 
-                    string Original_NationalId3, 
-                    int Original_CompanyId, 
-                    string Original_CompanyNameUnverified, 
-                    string Original_Department, 
-                    string Original_Address1, 
-                    string Original_Address2, 
-                    string Original_Address3, 
-                    string Original_Address4, 
-                    string Original_Address5, 
-                    int Original_AddressType, 
-                    int Original_PostAddressId, 
-                    global::System.Nullable<int> Original_PhysicalAddressId, 
-                    int Original_CountryId, 
-                    string Original_PhoneNumber, 
-                    string Original_CellPhoneNumber, 
-                    string Original_EmailAddress, 
-                    string Original_InvoiceEmail, 
-                    string Original_StatementEmail, 
-                    global::System.Nullable<decimal> Original_Reserved, 
-                    int Original_Correspondence2, 
-                    global::System.Nullable<global::System.DateTime> Original_VerificationDate, 
-                    global::System.Nullable<decimal> Original_Due, 
-                    System.DateTime Original_CheckpointDateInvoice, 
-                    string Original_CouncilNumber, 
-                    string Original_PracticeNumber1, 
-                    string Original_PracticeNumber2, 
-                    string Original_PracticeNumber3, 
-                    bool Original_AutomaticPaymentAllocation, 
-                    bool Original_Marketing, 
-                    global::System.Nullable<int> Original_BalanceInvoiceId, 
-                    global::System.Nullable<decimal> Original_Balance, 
-                    string Original_ModifiedBy, 
-                    System.DateTime Original_ModifiedOn, 
-                    global::System.Nullable<decimal> Original_SumOfPayments, 
-                    global::System.Nullable<decimal> Original_SumOfDeliveries) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_CustomerId));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_TitleId));
-            if ((Original_Initials == null)) {
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_Initials));
-            }
-            if ((Original_FirstName == null)) {
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((string)(Original_FirstName));
-            }
-            if ((Original_Surname == null)) {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[7].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[7].Value = ((string)(Original_Surname));
-            }
-            if ((Original_NationalId1 == null)) {
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[9].Value = ((string)(Original_NationalId1));
-            }
-            if ((Original_NationalId2 == null)) {
-                this.Adapter.DeleteCommand.Parameters[10].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[11].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[10].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[11].Value = ((string)(Original_NationalId2));
-            }
-            if ((Original_NationalId3 == null)) {
-                this.Adapter.DeleteCommand.Parameters[12].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[13].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[12].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[13].Value = ((string)(Original_NationalId3));
-            }
-            this.Adapter.DeleteCommand.Parameters[14].Value = ((int)(Original_CompanyId));
-            if ((Original_CompanyNameUnverified == null)) {
-                this.Adapter.DeleteCommand.Parameters[15].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[16].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[15].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[16].Value = ((string)(Original_CompanyNameUnverified));
-            }
-            if ((Original_Department == null)) {
-                this.Adapter.DeleteCommand.Parameters[17].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[18].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[17].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[18].Value = ((string)(Original_Department));
-            }
-            if ((Original_Address1 == null)) {
-                this.Adapter.DeleteCommand.Parameters[19].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[20].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[19].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[20].Value = ((string)(Original_Address1));
-            }
-            if ((Original_Address2 == null)) {
-                this.Adapter.DeleteCommand.Parameters[21].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[22].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[21].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[22].Value = ((string)(Original_Address2));
-            }
-            if ((Original_Address3 == null)) {
-                this.Adapter.DeleteCommand.Parameters[23].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[24].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[23].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[24].Value = ((string)(Original_Address3));
-            }
-            if ((Original_Address4 == null)) {
-                this.Adapter.DeleteCommand.Parameters[25].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[26].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[25].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[26].Value = ((string)(Original_Address4));
-            }
-            if ((Original_Address5 == null)) {
-                this.Adapter.DeleteCommand.Parameters[27].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[28].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[27].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[28].Value = ((string)(Original_Address5));
-            }
-            this.Adapter.DeleteCommand.Parameters[29].Value = ((int)(Original_AddressType));
-            this.Adapter.DeleteCommand.Parameters[30].Value = ((int)(Original_PostAddressId));
-            if ((Original_PhysicalAddressId.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[31].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[32].Value = ((int)(Original_PhysicalAddressId.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[31].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[32].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.DeleteCommand.Parameters[33].Value = ((int)(Original_CountryId));
-            if ((Original_PhoneNumber == null)) {
-                this.Adapter.DeleteCommand.Parameters[34].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[35].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[34].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[35].Value = ((string)(Original_PhoneNumber));
-            }
-            if ((Original_CellPhoneNumber == null)) {
-                throw new global::System.ArgumentNullException("Original_CellPhoneNumber");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[36].Value = ((string)(Original_CellPhoneNumber));
-            }
-            if ((Original_EmailAddress == null)) {
-                this.Adapter.DeleteCommand.Parameters[37].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[38].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[37].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[38].Value = ((string)(Original_EmailAddress));
-            }
-            if ((Original_InvoiceEmail == null)) {
-                this.Adapter.DeleteCommand.Parameters[39].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[40].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[39].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[40].Value = ((string)(Original_InvoiceEmail));
-            }
-            if ((Original_StatementEmail == null)) {
-                this.Adapter.DeleteCommand.Parameters[41].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[42].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[41].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[42].Value = ((string)(Original_StatementEmail));
-            }
-            if ((Original_Reserved.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[43].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[44].Value = ((decimal)(Original_Reserved.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[43].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[44].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.DeleteCommand.Parameters[45].Value = ((int)(Original_Correspondence2));
-            if ((Original_VerificationDate.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[46].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[47].Value = ((System.DateTime)(Original_VerificationDate.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[46].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[47].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Due.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[48].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[49].Value = ((decimal)(Original_Due.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[48].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[49].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.DeleteCommand.Parameters[50].Value = ((System.DateTime)(Original_CheckpointDateInvoice));
-            if ((Original_CouncilNumber == null)) {
-                this.Adapter.DeleteCommand.Parameters[51].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[52].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[51].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[52].Value = ((string)(Original_CouncilNumber));
-            }
-            if ((Original_PracticeNumber1 == null)) {
-                this.Adapter.DeleteCommand.Parameters[53].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[54].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[53].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[54].Value = ((string)(Original_PracticeNumber1));
-            }
-            if ((Original_PracticeNumber2 == null)) {
-                this.Adapter.DeleteCommand.Parameters[55].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[56].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[55].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[56].Value = ((string)(Original_PracticeNumber2));
-            }
-            if ((Original_PracticeNumber3 == null)) {
-                this.Adapter.DeleteCommand.Parameters[57].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[58].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[57].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[58].Value = ((string)(Original_PracticeNumber3));
-            }
-            this.Adapter.DeleteCommand.Parameters[59].Value = ((bool)(Original_AutomaticPaymentAllocation));
-            this.Adapter.DeleteCommand.Parameters[60].Value = ((bool)(Original_Marketing));
-            if ((Original_BalanceInvoiceId.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[61].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[62].Value = ((int)(Original_BalanceInvoiceId.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[61].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[62].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Balance.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[63].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[64].Value = ((decimal)(Original_Balance.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[63].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[64].Value = global::System.DBNull.Value;
-            }
-            if ((Original_ModifiedBy == null)) {
-                throw new global::System.ArgumentNullException("Original_ModifiedBy");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[65].Value = ((string)(Original_ModifiedBy));
-            }
-            this.Adapter.DeleteCommand.Parameters[66].Value = ((System.DateTime)(Original_ModifiedOn));
-            if ((Original_SumOfPayments.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[67].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[68].Value = ((decimal)(Original_SumOfPayments.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[67].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[68].Value = global::System.DBNull.Value;
-            }
-            if ((Original_SumOfDeliveries.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[69].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[70].Value = ((decimal)(Original_SumOfDeliveries.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[69].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[70].Value = global::System.DBNull.Value;
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
-            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.DeleteCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.DeleteCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(
-                    byte[] Password1, 
-                    int TitleId, 
-                    string Initials, 
-                    string FirstName, 
-                    string Surname, 
-                    string NationalId1, 
-                    string NationalId2, 
-                    string NationalId3, 
-                    int CompanyId, 
-                    string CompanyNameUnverified, 
-                    string Department, 
-                    string Address1, 
-                    string Address2, 
-                    string Address3, 
-                    string Address4, 
-                    string Address5, 
-                    int AddressType, 
-                    int PostAddressId, 
-                    global::System.Nullable<int> PhysicalAddressId, 
-                    int CountryId, 
-                    string PhoneNumber, 
-                    string CellPhoneNumber, 
-                    string EmailAddress, 
-                    string InvoiceEmail, 
-                    string StatementEmail, 
-                    global::System.Nullable<decimal> Reserved, 
-                    int Correspondence2, 
-                    global::System.Nullable<global::System.DateTime> VerificationDate, 
-                    global::System.Nullable<decimal> Due, 
-                    System.DateTime CheckpointDateInvoice, 
-                    string CouncilNumber, 
-                    string PracticeNumber1, 
-                    string PracticeNumber2, 
-                    string PracticeNumber3, 
-                    bool AutomaticPaymentAllocation, 
-                    bool Marketing, 
-                    global::System.Nullable<int> BalanceInvoiceId, 
-                    global::System.Nullable<decimal> Balance, 
-                    string ModifiedBy, 
-                    System.DateTime ModifiedOn, 
-                    global::System.Nullable<decimal> SumOfPayments, 
-                    global::System.Nullable<decimal> SumOfDeliveries) {
-            if ((Password1 == null)) {
-                this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[0].Value = ((byte[])(Password1));
-            }
-            this.Adapter.InsertCommand.Parameters[1].Value = ((int)(TitleId));
-            if ((Initials == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(Initials));
-            }
-            if ((FirstName == null)) {
-                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(FirstName));
-            }
-            if ((Surname == null)) {
-                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(Surname));
-            }
-            if ((NationalId1 == null)) {
-                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[5].Value = ((string)(NationalId1));
-            }
-            if ((NationalId2 == null)) {
-                this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[6].Value = ((string)(NationalId2));
-            }
-            if ((NationalId3 == null)) {
-                this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[7].Value = ((string)(NationalId3));
-            }
-            this.Adapter.InsertCommand.Parameters[8].Value = ((int)(CompanyId));
-            if ((CompanyNameUnverified == null)) {
-                this.Adapter.InsertCommand.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[9].Value = ((string)(CompanyNameUnverified));
-            }
-            if ((Department == null)) {
-                this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[10].Value = ((string)(Department));
-            }
-            if ((Address1 == null)) {
-                this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[11].Value = ((string)(Address1));
-            }
-            if ((Address2 == null)) {
-                this.Adapter.InsertCommand.Parameters[12].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[12].Value = ((string)(Address2));
-            }
-            if ((Address3 == null)) {
-                this.Adapter.InsertCommand.Parameters[13].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[13].Value = ((string)(Address3));
-            }
-            if ((Address4 == null)) {
-                this.Adapter.InsertCommand.Parameters[14].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[14].Value = ((string)(Address4));
-            }
-            if ((Address5 == null)) {
-                this.Adapter.InsertCommand.Parameters[15].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[15].Value = ((string)(Address5));
-            }
-            this.Adapter.InsertCommand.Parameters[16].Value = ((int)(AddressType));
-            this.Adapter.InsertCommand.Parameters[17].Value = ((int)(PostAddressId));
-            if ((PhysicalAddressId.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[18].Value = ((int)(PhysicalAddressId.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[18].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.InsertCommand.Parameters[19].Value = ((int)(CountryId));
-            if ((PhoneNumber == null)) {
-                this.Adapter.InsertCommand.Parameters[20].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[20].Value = ((string)(PhoneNumber));
-            }
-            if ((CellPhoneNumber == null)) {
-                throw new global::System.ArgumentNullException("CellPhoneNumber");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[21].Value = ((string)(CellPhoneNumber));
-            }
-            if ((EmailAddress == null)) {
-                this.Adapter.InsertCommand.Parameters[22].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[22].Value = ((string)(EmailAddress));
-            }
-            if ((InvoiceEmail == null)) {
-                this.Adapter.InsertCommand.Parameters[23].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[23].Value = ((string)(InvoiceEmail));
-            }
-            if ((StatementEmail == null)) {
-                this.Adapter.InsertCommand.Parameters[24].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[24].Value = ((string)(StatementEmail));
-            }
-            if ((Reserved.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[25].Value = ((decimal)(Reserved.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[25].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.InsertCommand.Parameters[26].Value = ((int)(Correspondence2));
-            if ((VerificationDate.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[27].Value = ((System.DateTime)(VerificationDate.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[27].Value = global::System.DBNull.Value;
-            }
-            if ((Due.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[28].Value = ((decimal)(Due.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[28].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.InsertCommand.Parameters[29].Value = ((System.DateTime)(CheckpointDateInvoice));
-            if ((CouncilNumber == null)) {
-                this.Adapter.InsertCommand.Parameters[30].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[30].Value = ((string)(CouncilNumber));
-            }
-            if ((PracticeNumber1 == null)) {
-                this.Adapter.InsertCommand.Parameters[31].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[31].Value = ((string)(PracticeNumber1));
-            }
-            if ((PracticeNumber2 == null)) {
-                this.Adapter.InsertCommand.Parameters[32].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[32].Value = ((string)(PracticeNumber2));
-            }
-            if ((PracticeNumber3 == null)) {
-                this.Adapter.InsertCommand.Parameters[33].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[33].Value = ((string)(PracticeNumber3));
-            }
-            this.Adapter.InsertCommand.Parameters[34].Value = ((bool)(AutomaticPaymentAllocation));
-            this.Adapter.InsertCommand.Parameters[35].Value = ((bool)(Marketing));
-            if ((BalanceInvoiceId.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[36].Value = ((int)(BalanceInvoiceId.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[36].Value = global::System.DBNull.Value;
-            }
-            if ((Balance.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[37].Value = ((decimal)(Balance.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[37].Value = global::System.DBNull.Value;
-            }
-            if ((ModifiedBy == null)) {
-                throw new global::System.ArgumentNullException("ModifiedBy");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[38].Value = ((string)(ModifiedBy));
-            }
-            this.Adapter.InsertCommand.Parameters[39].Value = ((System.DateTime)(ModifiedOn));
-            if ((SumOfPayments.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[40].Value = ((decimal)(SumOfPayments.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[40].Value = global::System.DBNull.Value;
-            }
-            if ((SumOfDeliveries.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[41].Value = ((decimal)(SumOfDeliveries.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[41].Value = global::System.DBNull.Value;
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(
-                    byte[] Password1, 
-                    int TitleId, 
-                    string Initials, 
-                    string FirstName, 
-                    string Surname, 
-                    string NationalId1, 
-                    string NationalId2, 
-                    string NationalId3, 
-                    int CompanyId, 
-                    string CompanyNameUnverified, 
-                    string Department, 
-                    string Address1, 
-                    string Address2, 
-                    string Address3, 
-                    string Address4, 
-                    string Address5, 
-                    int AddressType, 
-                    int PostAddressId, 
-                    global::System.Nullable<int> PhysicalAddressId, 
-                    int CountryId, 
-                    string PhoneNumber, 
-                    string CellPhoneNumber, 
-                    string EmailAddress, 
-                    string InvoiceEmail, 
-                    string StatementEmail, 
-                    global::System.Nullable<decimal> Reserved, 
-                    int Correspondence2, 
-                    global::System.Nullable<global::System.DateTime> VerificationDate, 
-                    global::System.Nullable<decimal> Due, 
-                    System.DateTime CheckpointDateInvoice, 
-                    string CouncilNumber, 
-                    string PracticeNumber1, 
-                    string PracticeNumber2, 
-                    string PracticeNumber3, 
-                    bool AutomaticPaymentAllocation, 
-                    bool Marketing, 
-                    global::System.Nullable<int> BalanceInvoiceId, 
-                    global::System.Nullable<decimal> Balance, 
-                    string ModifiedBy, 
-                    System.DateTime ModifiedOn, 
-                    global::System.Nullable<decimal> SumOfPayments, 
-                    global::System.Nullable<decimal> SumOfDeliveries, 
-                    int Original_CustomerId, 
-                    int Original_TitleId, 
-                    string Original_Initials, 
-                    string Original_FirstName, 
-                    string Original_Surname, 
-                    string Original_NationalId1, 
-                    string Original_NationalId2, 
-                    string Original_NationalId3, 
-                    int Original_CompanyId, 
-                    string Original_CompanyNameUnverified, 
-                    string Original_Department, 
-                    string Original_Address1, 
-                    string Original_Address2, 
-                    string Original_Address3, 
-                    string Original_Address4, 
-                    string Original_Address5, 
-                    int Original_AddressType, 
-                    int Original_PostAddressId, 
-                    global::System.Nullable<int> Original_PhysicalAddressId, 
-                    int Original_CountryId, 
-                    string Original_PhoneNumber, 
-                    string Original_CellPhoneNumber, 
-                    string Original_EmailAddress, 
-                    string Original_InvoiceEmail, 
-                    string Original_StatementEmail, 
-                    global::System.Nullable<decimal> Original_Reserved, 
-                    int Original_Correspondence2, 
-                    global::System.Nullable<global::System.DateTime> Original_VerificationDate, 
-                    global::System.Nullable<decimal> Original_Due, 
-                    System.DateTime Original_CheckpointDateInvoice, 
-                    string Original_CouncilNumber, 
-                    string Original_PracticeNumber1, 
-                    string Original_PracticeNumber2, 
-                    string Original_PracticeNumber3, 
-                    bool Original_AutomaticPaymentAllocation, 
-                    bool Original_Marketing, 
-                    global::System.Nullable<int> Original_BalanceInvoiceId, 
-                    global::System.Nullable<decimal> Original_Balance, 
-                    string Original_ModifiedBy, 
-                    System.DateTime Original_ModifiedOn, 
-                    global::System.Nullable<decimal> Original_SumOfPayments, 
-                    global::System.Nullable<decimal> Original_SumOfDeliveries, 
-                    int CustomerId) {
-            if ((Password1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[0].Value = ((byte[])(Password1));
-            }
-            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(TitleId));
-            if ((Initials == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(Initials));
-            }
-            if ((FirstName == null)) {
-                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(FirstName));
-            }
-            if ((Surname == null)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Surname));
-            }
-            if ((NationalId1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(NationalId1));
-            }
-            if ((NationalId2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(NationalId2));
-            }
-            if ((NationalId3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(NationalId3));
-            }
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(CompanyId));
-            if ((CompanyNameUnverified == null)) {
-                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(CompanyNameUnverified));
-            }
-            if ((Department == null)) {
-                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Department));
-            }
-            if ((Address1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(Address1));
-            }
-            if ((Address2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[12].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((string)(Address2));
-            }
-            if ((Address3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Address3));
-            }
-            if ((Address4 == null)) {
-                this.Adapter.UpdateCommand.Parameters[14].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((string)(Address4));
-            }
-            if ((Address5 == null)) {
-                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(Address5));
-            }
-            this.Adapter.UpdateCommand.Parameters[16].Value = ((int)(AddressType));
-            this.Adapter.UpdateCommand.Parameters[17].Value = ((int)(PostAddressId));
-            if ((PhysicalAddressId.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((int)(PhysicalAddressId.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[19].Value = ((int)(CountryId));
-            if ((PhoneNumber == null)) {
-                this.Adapter.UpdateCommand.Parameters[20].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[20].Value = ((string)(PhoneNumber));
-            }
-            if ((CellPhoneNumber == null)) {
-                throw new global::System.ArgumentNullException("CellPhoneNumber");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((string)(CellPhoneNumber));
-            }
-            if ((EmailAddress == null)) {
-                this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[22].Value = ((string)(EmailAddress));
-            }
-            if ((InvoiceEmail == null)) {
-                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((string)(InvoiceEmail));
-            }
-            if ((StatementEmail == null)) {
-                this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((string)(StatementEmail));
-            }
-            if ((Reserved.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[25].Value = ((decimal)(Reserved.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[25].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[26].Value = ((int)(Correspondence2));
-            if ((VerificationDate.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[27].Value = ((System.DateTime)(VerificationDate.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[27].Value = global::System.DBNull.Value;
-            }
-            if ((Due.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[28].Value = ((decimal)(Due.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[28].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[29].Value = ((System.DateTime)(CheckpointDateInvoice));
-            if ((CouncilNumber == null)) {
-                this.Adapter.UpdateCommand.Parameters[30].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[30].Value = ((string)(CouncilNumber));
-            }
-            if ((PracticeNumber1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[31].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[31].Value = ((string)(PracticeNumber1));
-            }
-            if ((PracticeNumber2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[32].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[32].Value = ((string)(PracticeNumber2));
-            }
-            if ((PracticeNumber3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[33].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[33].Value = ((string)(PracticeNumber3));
-            }
-            this.Adapter.UpdateCommand.Parameters[34].Value = ((bool)(AutomaticPaymentAllocation));
-            this.Adapter.UpdateCommand.Parameters[35].Value = ((bool)(Marketing));
-            if ((BalanceInvoiceId.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[36].Value = ((int)(BalanceInvoiceId.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[36].Value = global::System.DBNull.Value;
-            }
-            if ((Balance.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[37].Value = ((decimal)(Balance.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[37].Value = global::System.DBNull.Value;
-            }
-            if ((ModifiedBy == null)) {
-                throw new global::System.ArgumentNullException("ModifiedBy");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[38].Value = ((string)(ModifiedBy));
-            }
-            this.Adapter.UpdateCommand.Parameters[39].Value = ((System.DateTime)(ModifiedOn));
-            if ((SumOfPayments.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[40].Value = ((decimal)(SumOfPayments.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[40].Value = global::System.DBNull.Value;
-            }
-            if ((SumOfDeliveries.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[41].Value = ((decimal)(SumOfDeliveries.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[41].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[42].Value = ((int)(Original_CustomerId));
-            this.Adapter.UpdateCommand.Parameters[43].Value = ((int)(Original_TitleId));
-            if ((Original_Initials == null)) {
-                this.Adapter.UpdateCommand.Parameters[44].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[45].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[44].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[45].Value = ((string)(Original_Initials));
-            }
-            if ((Original_FirstName == null)) {
-                this.Adapter.UpdateCommand.Parameters[46].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[47].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[46].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[47].Value = ((string)(Original_FirstName));
-            }
-            if ((Original_Surname == null)) {
-                this.Adapter.UpdateCommand.Parameters[48].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[49].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[48].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[49].Value = ((string)(Original_Surname));
-            }
-            if ((Original_NationalId1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[50].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[51].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[50].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[51].Value = ((string)(Original_NationalId1));
-            }
-            if ((Original_NationalId2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[52].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[53].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[52].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[53].Value = ((string)(Original_NationalId2));
-            }
-            if ((Original_NationalId3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[54].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[55].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[54].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[55].Value = ((string)(Original_NationalId3));
-            }
-            this.Adapter.UpdateCommand.Parameters[56].Value = ((int)(Original_CompanyId));
-            if ((Original_CompanyNameUnverified == null)) {
-                this.Adapter.UpdateCommand.Parameters[57].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[58].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[57].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[58].Value = ((string)(Original_CompanyNameUnverified));
-            }
-            if ((Original_Department == null)) {
-                this.Adapter.UpdateCommand.Parameters[59].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[60].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[59].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[60].Value = ((string)(Original_Department));
-            }
-            if ((Original_Address1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[61].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[62].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[61].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[62].Value = ((string)(Original_Address1));
-            }
-            if ((Original_Address2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[63].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[64].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[63].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[64].Value = ((string)(Original_Address2));
-            }
-            if ((Original_Address3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[65].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[66].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[65].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[66].Value = ((string)(Original_Address3));
-            }
-            if ((Original_Address4 == null)) {
-                this.Adapter.UpdateCommand.Parameters[67].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[68].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[67].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[68].Value = ((string)(Original_Address4));
-            }
-            if ((Original_Address5 == null)) {
-                this.Adapter.UpdateCommand.Parameters[69].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[70].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[69].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[70].Value = ((string)(Original_Address5));
-            }
-            this.Adapter.UpdateCommand.Parameters[71].Value = ((int)(Original_AddressType));
-            this.Adapter.UpdateCommand.Parameters[72].Value = ((int)(Original_PostAddressId));
-            if ((Original_PhysicalAddressId.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[73].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[74].Value = ((int)(Original_PhysicalAddressId.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[73].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[74].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[75].Value = ((int)(Original_CountryId));
-            if ((Original_PhoneNumber == null)) {
-                this.Adapter.UpdateCommand.Parameters[76].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[77].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[76].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[77].Value = ((string)(Original_PhoneNumber));
-            }
-            if ((Original_CellPhoneNumber == null)) {
-                throw new global::System.ArgumentNullException("Original_CellPhoneNumber");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[78].Value = ((string)(Original_CellPhoneNumber));
-            }
-            if ((Original_EmailAddress == null)) {
-                this.Adapter.UpdateCommand.Parameters[79].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[80].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[79].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[80].Value = ((string)(Original_EmailAddress));
-            }
-            if ((Original_InvoiceEmail == null)) {
-                this.Adapter.UpdateCommand.Parameters[81].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[82].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[81].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[82].Value = ((string)(Original_InvoiceEmail));
-            }
-            if ((Original_StatementEmail == null)) {
-                this.Adapter.UpdateCommand.Parameters[83].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[84].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[83].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[84].Value = ((string)(Original_StatementEmail));
-            }
-            if ((Original_Reserved.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[85].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[86].Value = ((decimal)(Original_Reserved.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[85].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[86].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[87].Value = ((int)(Original_Correspondence2));
-            if ((Original_VerificationDate.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[88].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[89].Value = ((System.DateTime)(Original_VerificationDate.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[88].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[89].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Due.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[90].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[91].Value = ((decimal)(Original_Due.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[90].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[91].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[92].Value = ((System.DateTime)(Original_CheckpointDateInvoice));
-            if ((Original_CouncilNumber == null)) {
-                this.Adapter.UpdateCommand.Parameters[93].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[94].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[93].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[94].Value = ((string)(Original_CouncilNumber));
-            }
-            if ((Original_PracticeNumber1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[95].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[96].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[95].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[96].Value = ((string)(Original_PracticeNumber1));
-            }
-            if ((Original_PracticeNumber2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[97].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[98].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[97].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[98].Value = ((string)(Original_PracticeNumber2));
-            }
-            if ((Original_PracticeNumber3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[99].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[100].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[99].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[100].Value = ((string)(Original_PracticeNumber3));
-            }
-            this.Adapter.UpdateCommand.Parameters[101].Value = ((bool)(Original_AutomaticPaymentAllocation));
-            this.Adapter.UpdateCommand.Parameters[102].Value = ((bool)(Original_Marketing));
-            if ((Original_BalanceInvoiceId.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[103].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[104].Value = ((int)(Original_BalanceInvoiceId.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[103].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[104].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Balance.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[105].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[106].Value = ((decimal)(Original_Balance.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[105].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[106].Value = global::System.DBNull.Value;
-            }
-            if ((Original_ModifiedBy == null)) {
-                throw new global::System.ArgumentNullException("Original_ModifiedBy");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[107].Value = ((string)(Original_ModifiedBy));
-            }
-            this.Adapter.UpdateCommand.Parameters[108].Value = ((System.DateTime)(Original_ModifiedOn));
-            if ((Original_SumOfPayments.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[109].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[110].Value = ((decimal)(Original_SumOfPayments.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[109].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[110].Value = global::System.DBNull.Value;
-            }
-            if ((Original_SumOfDeliveries.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[111].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[112].Value = ((decimal)(Original_SumOfDeliveries.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[111].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[112].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[113].Value = ((int)(CustomerId));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
-            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.UpdateCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.UpdateCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(
-                    byte[] Password1, 
-                    int TitleId, 
-                    string Initials, 
-                    string FirstName, 
-                    string Surname, 
-                    string NationalId1, 
-                    string NationalId2, 
-                    string NationalId3, 
-                    int CompanyId, 
-                    string CompanyNameUnverified, 
-                    string Department, 
-                    string Address1, 
-                    string Address2, 
-                    string Address3, 
-                    string Address4, 
-                    string Address5, 
-                    int AddressType, 
-                    int PostAddressId, 
-                    global::System.Nullable<int> PhysicalAddressId, 
-                    int CountryId, 
-                    string PhoneNumber, 
-                    string CellPhoneNumber, 
-                    string EmailAddress, 
-                    string InvoiceEmail, 
-                    string StatementEmail, 
-                    global::System.Nullable<decimal> Reserved, 
-                    int Correspondence2, 
-                    global::System.Nullable<global::System.DateTime> VerificationDate, 
-                    global::System.Nullable<decimal> Due, 
-                    System.DateTime CheckpointDateInvoice, 
-                    string CouncilNumber, 
-                    string PracticeNumber1, 
-                    string PracticeNumber2, 
-                    string PracticeNumber3, 
-                    bool AutomaticPaymentAllocation, 
-                    bool Marketing, 
-                    global::System.Nullable<int> BalanceInvoiceId, 
-                    global::System.Nullable<decimal> Balance, 
-                    string ModifiedBy, 
-                    System.DateTime ModifiedOn, 
-                    global::System.Nullable<decimal> SumOfPayments, 
-                    global::System.Nullable<decimal> SumOfDeliveries, 
-                    int Original_CustomerId, 
-                    int Original_TitleId, 
-                    string Original_Initials, 
-                    string Original_FirstName, 
-                    string Original_Surname, 
-                    string Original_NationalId1, 
-                    string Original_NationalId2, 
-                    string Original_NationalId3, 
-                    int Original_CompanyId, 
-                    string Original_CompanyNameUnverified, 
-                    string Original_Department, 
-                    string Original_Address1, 
-                    string Original_Address2, 
-                    string Original_Address3, 
-                    string Original_Address4, 
-                    string Original_Address5, 
-                    int Original_AddressType, 
-                    int Original_PostAddressId, 
-                    global::System.Nullable<int> Original_PhysicalAddressId, 
-                    int Original_CountryId, 
-                    string Original_PhoneNumber, 
-                    string Original_CellPhoneNumber, 
-                    string Original_EmailAddress, 
-                    string Original_InvoiceEmail, 
-                    string Original_StatementEmail, 
-                    global::System.Nullable<decimal> Original_Reserved, 
-                    int Original_Correspondence2, 
-                    global::System.Nullable<global::System.DateTime> Original_VerificationDate, 
-                    global::System.Nullable<decimal> Original_Due, 
-                    System.DateTime Original_CheckpointDateInvoice, 
-                    string Original_CouncilNumber, 
-                    string Original_PracticeNumber1, 
-                    string Original_PracticeNumber2, 
-                    string Original_PracticeNumber3, 
-                    bool Original_AutomaticPaymentAllocation, 
-                    bool Original_Marketing, 
-                    global::System.Nullable<int> Original_BalanceInvoiceId, 
-                    global::System.Nullable<decimal> Original_Balance, 
-                    string Original_ModifiedBy, 
-                    System.DateTime Original_ModifiedOn, 
-                    global::System.Nullable<decimal> Original_SumOfPayments, 
-                    global::System.Nullable<decimal> Original_SumOfDeliveries) {
-            return this.Update(Password1, TitleId, Initials, FirstName, Surname, NationalId1, NationalId2, NationalId3, CompanyId, CompanyNameUnverified, Department, Address1, Address2, Address3, Address4, Address5, AddressType, PostAddressId, PhysicalAddressId, CountryId, PhoneNumber, CellPhoneNumber, EmailAddress, InvoiceEmail, StatementEmail, Reserved, Correspondence2, VerificationDate, Due, CheckpointDateInvoice, CouncilNumber, PracticeNumber1, PracticeNumber2, PracticeNumber3, AutomaticPaymentAllocation, Marketing, BalanceInvoiceId, Balance, ModifiedBy, ModifiedOn, SumOfPayments, SumOfDeliveries, Original_CustomerId, Original_TitleId, Original_Initials, Original_FirstName, Original_Surname, Original_NationalId1, Original_NationalId2, Original_NationalId3, Original_CompanyId, Original_CompanyNameUnverified, Original_Department, Original_Address1, Original_Address2, Original_Address3, Original_Address4, Original_Address5, Original_AddressType, Original_PostAddressId, Original_PhysicalAddressId, Original_CountryId, Original_PhoneNumber, Original_CellPhoneNumber, Original_EmailAddress, Original_InvoiceEmail, Original_StatementEmail, Original_Reserved, Original_Correspondence2, Original_VerificationDate, Original_Due, Original_CheckpointDateInvoice, Original_CouncilNumber, Original_PracticeNumber1, Original_PracticeNumber2, Original_PracticeNumber3, Original_AutomaticPaymentAllocation, Original_Marketing, Original_BalanceInvoiceId, Original_Balance, Original_ModifiedBy, Original_ModifiedOn, Original_SumOfPayments, Original_SumOfDeliveries, Original_CustomerId);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

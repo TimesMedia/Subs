@@ -1817,12 +1817,6 @@ namespace Subs.Data
             {
                 return Deliverable - Due;
             }
-
-            //set
-            //{
-            //    gTable[0].Liability = value;
-            //    NotifyPropertyChanged("Liability");
-            //}
         }
 
         public decimal Deliverable
@@ -2239,50 +2233,47 @@ namespace Subs.Data
             }
         }
 
-        public Decimal SumOfPayments
-        {
-            get
-            {
-                if (gTable[0].IsSumOfPaymentsNull())
-                {
-                    return 0M;
-                }
-                else
-                {
-                    return gTable[0].SumOfPayments;
-                }
-            }
+        //public Decimal SumOfPayments
+        //{
+        //    get
+        //    {
+        //        if (gTable[0].IsSumOfPaymentsNull())
+        //        {
+        //            return 0M;
+        //        }
+        //        else
+        //        {
+        //            return gTable[0].SumOfPayments;
+        //        }
+        //    }
 
-            set
-            {
-                gTable[0].SumOfPayments = value;
-                NotifyPropertyChanged("SumOfPayments");
-            }
-        }
+        //    set
+        //    {
+        //        gTable[0].SumOfPayments = value;
+        //        NotifyPropertyChanged("SumOfPayments");
+        //    }
+        //}
 
-        public Decimal SumOfDeliveries
-        {
-            get
-            {
-                if (gTable[0].IsSumOfDeliveriesNull())
-                {
-                    return 0M;
-                }
-                else
-                {
-                    return gTable[0].SumOfDeliveries;
-                }
-            }
+        //public Decimal SumOfDeliveries
+        //{
+        //    get
+        //    {
+        //        if (gTable[0].IsSumOfDeliveriesNull())
+        //        {
+        //            return 0M;
+        //        }
+        //        else
+        //        {
+        //            return gTable[0].SumOfDeliveries;
+        //        }
+        //    }
 
-            set
-            {
-                gTable[0].SumOfDeliveries = value;
-                NotifyPropertyChanged("SumOfDeliveries");
-            }
-        }
-
-
-
+        //    set
+        //    {
+        //        gTable[0].SumOfDeliveries = value;
+        //        NotifyPropertyChanged("SumOfDeliveries");
+        //    }
+        //}
 
         public string ModifiedBy
         {
@@ -2807,7 +2798,7 @@ namespace Subs.Data
                                                                                       || p.OperationId == (int)Operation.Balance
                                                                                      ).ToList();
 
-                SumOfPayments = -lPaymentList.Sum(p => p.Value);
+                //SumOfPayments = -lPaymentList.Sum(p => p.Value);
                 gCustomerAdapter.Update(gTable[0]);
 
 
@@ -2828,7 +2819,7 @@ namespace Subs.Data
                     }
                 }
 
-                SumOfDeliveries = -lDeliveryList.Sum(p => p.Value);
+                //SumOfDeliveries = -lDeliveryList.Sum(p => p.Value);
                 gCustomerAdapter.Update(gTable[0]);
 
                 // From here on switch the sign to represent Liability from our perspective
