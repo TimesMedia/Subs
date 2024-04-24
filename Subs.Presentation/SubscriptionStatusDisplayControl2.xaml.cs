@@ -30,7 +30,7 @@ namespace Subs.Presentation
             public string IssueDescription { get; set; }
             public int Sequence { get; set; }
             public int UnitsLeft { get; set; }
-            public bool DeliveryOnCredit { get; set; }
+            public bool DeliverOnCredit { get; set; }
         }
 
         public class SubscriptionStatus
@@ -96,7 +96,7 @@ namespace Subs.Presentation
                     lStatus.IssueDescription = ProductDataStatic.GetIssueDescription(item.IssueId);
                     lStatus.Sequence = item.Sequence;
                     lStatus.UnitsLeft = item.UnitsLeft;
-                    lStatus.DeliveryOnCredit = item.DeliverOnCredit;
+                    lStatus.DeliverOnCredit = item.DeliverOnCredit;
                     lSubscriptionStatus.List.Add(lStatus);
                 }
 

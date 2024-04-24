@@ -967,40 +967,7 @@ namespace Subs.Presentation
             }
         }
 
-        //private void buttonWriteToXML_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        string XMLFile = "c:\\Subs\\DebitOrder_" + calenderDeliver.SelectedDate.Value.Year.ToString()
-        //               + calenderDeliver.SelectedDate.Value.Month.ToString("0#")
-        //               + ".xml";
-        //        System.IO.FileStream lOutputFile = System.IO.File.Create(XMLFile);
-
-        //        System.Xml.Serialization.XmlSerializer writer =
-        //        new System.Xml.Serialization.XmlSerializer(typeof(List<DebitOrderProposal>));
-
-        //        writer.Serialize(lOutputFile, gDebitOrderProposals);
-        //        MessageBox.Show("XML written to " + XMLFile);
-        //        lOutputFile.Close();
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonWriteToXML_Click", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        MessageBox.Show("Error in buttonWriteToXML_Click " + ex.Message);
-        //    }
-        //}
-
+  
         private void buttonWriteToCSV_Click(object sender, RoutedEventArgs e)
         {
             int lCounter = 1;

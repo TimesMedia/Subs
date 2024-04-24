@@ -104,7 +104,7 @@
                         <DataGridTextColumn x:Name="countryNameColumn" Binding="{Binding CountryName}" Header="Country Name"  />
                         <DataGridTextColumn x:Name="phoneNumberColumn" Binding="{Binding PhoneNumber}" Header="Phone Number"  />
                         <DataGridTextColumn x:Name="cellPhoneNumberColumn" Binding="{Binding CellPhoneNumber}" Header="Cell Phone Number"  />
-                        <DataGridTextColumn x:Name="liabilityColumn" Binding="{Binding Liability, StringFormat={}{0:R ### ### ##0.00}}" 
+                        <DataGridTextColumn x:Name="liabilityColumn" Binding="{Binding Liability, StringFormat={}{0: ### ### ##0.00}}" 
                                                     CellStyle="{StaticResource AlignRight}" Header="Liability"  />
                         <DataGridTextColumn x:Name="dueColumn" Binding="{Binding Due, StringFormat={}{0:### ### ##0.00}}" 
                                                     CellStyle="{StaticResource AlignRight}" Header="Due"  />
