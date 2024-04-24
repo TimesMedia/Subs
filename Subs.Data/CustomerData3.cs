@@ -1815,7 +1815,7 @@ namespace Subs.Data
         {
             get
             {
-                return Due - Deliverable;
+                return Deliverable - Due;
             }
         }
 

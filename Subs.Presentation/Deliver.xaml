@@ -97,7 +97,7 @@
             <Button  Content="Skip the marked entries" Click="Skip" Canvas.Left="25" Canvas.Top="120"  Height="22" Name="buttonSkip" Width="150"/>
 
             <Button  Content="Post" Canvas.Left="218" Canvas.Top="78" Click="buttonPost_Click" Height="22" Name="buttonPost" Width="150"/>
-            <Button  Content="Save by deliverymethod"  Canvas.Left="218" Canvas.Top="120" Click="ButtonSplitByDeliveryMethod" Height="23" Name="buttonGenerateXML" Width="150"/>
+            <Button  Content="Split by deliverymethod"  Canvas.Left="218" Canvas.Top="120" Click="ButtonSplitByDeliveryMethod" Height="23" Name="buttonGenerateXML" Width="150"/>
             <Label Canvas.Left="469">Format delivery lists for</Label>
             <CheckBox Content="Payers" Canvas.Left="636" Canvas.Top="7"  Height="16" Name="checkPayers" IsChecked="True" Width="50" />
             <CheckBox Canvas.Left="711" Canvas.Top="8" Content="NonPayers" Height="16" Name="checkNonPayers" IsChecked="True" />
