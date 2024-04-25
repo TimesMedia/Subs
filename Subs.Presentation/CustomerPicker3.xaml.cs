@@ -2427,6 +2427,12 @@ namespace Subs.Presentation
                     gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
                     gCurrentCustomer.Update();
                     LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lOriginalBalance);
+
+                    // Select the customer again.
+
+                    SetCurrentCustomer(gCurrentCustomer.CustomerId);
+                    GoToStatement();
+
                     MessageBox.Show("Checkpoints successfully changed by force.");
                 }
                 catch (Exception InnerException)

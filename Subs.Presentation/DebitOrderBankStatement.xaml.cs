@@ -928,7 +928,7 @@ namespace Subs.Presentation
                 {
                     if (item.IssueId != 0)
                     {
-                        // Persist in database
+                        // Persist in database, except when they are debt entries. So the debt entries cannot be tied to a debtor.
                         gDebitOrderHistoryAdapter.Insert(item.SubscriptionId, item.IssueId, DateTime.Now, Environment.UserName);
                         lCount++;
                     }
