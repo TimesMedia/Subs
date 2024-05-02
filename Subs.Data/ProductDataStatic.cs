@@ -205,7 +205,10 @@ namespace Subs.Data
             }
             finally
             {
-                gConnection.Close();
+                if (gConnection.State == ConnectionState.Open)
+                {
+                    gConnection.Close();
+                }
             }
         }
 

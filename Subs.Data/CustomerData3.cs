@@ -2876,7 +2876,7 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerData", "CalculateLiability", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerData", "CalculateLiability2", "");
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
