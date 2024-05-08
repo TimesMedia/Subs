@@ -428,7 +428,7 @@ namespace Subs.Presentation
             {
                 ProductDoc.BaseRateRow lBaseRateRow = gProductDoc.BaseRate.NewBaseRateRow();
 
-                lBaseRateRow.ProductID = gCurrentProductId;
+                lBaseRateRow.ProductId = gCurrentProductId;
                 lBaseRateRow.DateFrom = DateTime.Now;
                 lBaseRateRow.Value = gProposedBaseRate;
                 lBaseRateRow.ModifiedBy = System.Environment.UserName;

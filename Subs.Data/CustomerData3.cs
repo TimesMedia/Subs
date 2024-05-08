@@ -1873,6 +1873,40 @@ namespace Subs.Data
             }
         }
 
+        public int PreviousCheckpoint
+        {
+            get
+            {
+                try
+                {
+                    return (int)gCustomerAdapter.GetPreviousCheckpoint(CustomerId);
+                }
+                catch (Exception Ex)
+                {
+                    //Display all the exceptions
+
+                    Exception CurrentException = Ex;
+                    int ExceptionLevel = 0;
+                    do
+                    {
+                        ExceptionLevel++;
+                        ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "PreviousCheckpoint", "CustomerId = " + CustomerId.ToString());
+                        CurrentException = CurrentException.InnerException;
+                    } while (CurrentException != null);
+
+                    throw Ex;
+                }
+
+            }
+        }
+
+
+
+
+
+
+
+
         public DateTime? VerificationDate
         {
             get

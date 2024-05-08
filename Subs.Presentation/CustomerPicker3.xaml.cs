@@ -41,7 +41,6 @@ namespace Subs.Presentation
                 NotifyPropertyChanged("PaymentAmount");
             }
         }
-
         public int PaymentMethod
         {
             get
@@ -983,60 +982,7 @@ namespace Subs.Presentation
 
 
 
-        //private void Click_ShowLiabilities(object sender, RoutedEventArgs e)
-        //{
-        //    this.Cursor = Cursors.Wait;
-        //    try
-        //    {
-        //        // Get the report data
-
-        //        SelectCurrentCustomer();
-
-        //        gCalculatedLiability = 0M;
-        //        gLiabilityRecords.Clear();
-                
-        //        {
-        //            string lResult;
-
-        //            if ((lResult = gCurrentCustomer.CalculateLiability2(ref gLiabilityRecords, ref gCalculatedLiability)) != "OK")
-        //            {
-        //                MessageBox.Show(lResult);
-        //                return;
-        //            }
-        //        }
-
-        //        textSumOfPayments.Text = gCurrentCustomer.SumOfPayments.ToString("#########0.00");
-        //        textSumOfDeliveries.Text = gCurrentCustomer.SumOfDeliveries.ToString("#########0.00");
-
-        //        gLiabilityRecordsViewSource.Source = gLiabilityRecords;
-        //        LiabilityDataGrid.ItemsSource = gLiabilityRecordsViewSource.View;
-        //        textCurrentLiability.Text = gCurrentCustomer.Liability.ToString("#########0.00");
-
-        //        SelectTab(PickerTabs.Liability);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Click_ShowLiabilities", "CustomerId = " + gCurrentCustomer.CustomerId.ToString());
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        this.Cursor = Cursors.Arrow;
-
-        //    }
-        //}
-
+  
         private void Click_Statement(object sender, RoutedEventArgs e)
         {
             SelectCurrentCustomer();
@@ -1160,10 +1106,6 @@ namespace Subs.Presentation
 
         }
 
-
-
-
-
         private void Click_DeliveryAddress(object sender, RoutedEventArgs e)
         {
             SelectCurrentCustomer();
@@ -1213,7 +1155,6 @@ namespace Subs.Presentation
                 this.Cursor = Cursors.Arrow;
             }
         }
-
 
         private void Click_ConsolidateSource(object sender, RoutedEventArgs e)
         {
@@ -1289,86 +1230,7 @@ namespace Subs.Presentation
         #endregion
 
         #region Invoice tab payments
-
-        //private bool PopulatePaymentAndInvoice([CallerMemberName] string pCaller = null)
-        //{
-        //    // This assigns the necessary data sources for display.
-
-        //    this.Cursor = Cursors.Wait;
-        //    string lStage = "Start";
-        //    try
-        //    {
-
-        //        gPaymentAndInvoice = gCurrentCustomer.GetInvoiceAndPayment(gCurrentCustomer.BalanceInvoiceId, gCurrentCustomer.Balance);
-        //        {
-        //            string lResult;
-
-        //            if ((lResult =  != "OK")
-        //            {
-        //                MessageBox.Show(lResult);
-        //                return false;
-        //            }
-        //        }
-
-        //        // Assign data sources
-        //        lStage = "Payment";
-
-        //        gPayment.Clear();
-        //        gPayment = gPaymentAndInvoice.Where(p => p.OperationId == (int)Operation.Balance
-        //                                              || p.OperationId == (int)Operation.Pay
-        //                                              || p.OperationId == (int)Operation.Refund
-        //                                              || p.OperationId == (int)Operation.ReversePayment).OrderBy(q => q.TransactionId).ThenBy(r => r.Date).ToList();
-        //          if (gPayment != null)
-        //        {
-        //            gPaymentViewSource.Source = gPayment;
-        //            PaymentDataGrid.ItemsSource = gPaymentViewSource.View;
-        //            PaymentDataGrid.Refresh();
-        //        }
-
-        //        lStage = "Invoice";
-
-        //        gInvoice.Clear();
-        //        gInvoice = gPaymentAndInvoice.Where(p => !(p.OperationId == (int)Operation.Balance
-        //                                                || p.OperationId == (int)Operation.Pay
-        //                                                || p.OperationId == (int)Operation.Refund
-        //                                                || p.OperationId == (int)Operation.ReversePayment)).OrderBy(q => q.InvoiceId).ThenBy(r => r.Date).ToList();
-               
-        //        gInvoiceViewSource.Source = gInvoice;
-        //        InvoiceDataGrid.ItemsSource = gInvoiceViewSource.View;
-        //        gInvoiceViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("InvoiceId"));
-        //        InvoiceDataGrid.Refresh();
-
-
-        //        return true;
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        int lExceptionId = 0;
-
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            lExceptionId = ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "PopulatePaymentAndInvoice", "Stage = " + lStage
-        //                + " Customer= " + gCurrentCustomer.CustomerId.ToString() + " Caller = " + pCaller);
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        ExceptionData.WriteExceptionTrace(lExceptionId, ex.StackTrace, "PopulatePaymentAndInvoice");
-
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        this.Cursor = Cursors.Arrow;
-        //    }
-        //}
-
-
+  
         private bool PopulatePaymentAndInvoice2([CallerMemberName] string pCaller = null)
         {
             // This assigns the necessary data sources for display.
@@ -1438,10 +1300,6 @@ namespace Subs.Presentation
             }
         }
 
-
-
-
-
         private void AssignStatementResources([CallerMemberName] string pCaller = null)
         {
             // This assigns the necessary data sources for display.
@@ -1504,10 +1362,6 @@ namespace Subs.Presentation
            
         }
 
-
-
-
-
         public static T GetVisualChild<T>(Visual parent) where T : Visual
         {
             try
@@ -1542,7 +1396,6 @@ namespace Subs.Presentation
                 throw ex;
             }
         }
-
 
         public DataGridCell GetCell(DataGrid host, DataGridRow row, int columnIndex)
         {
@@ -1580,7 +1433,6 @@ namespace Subs.Presentation
                 throw ex;
             }
         }
-
 
         private void InvoiceDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
         {
@@ -1780,40 +1632,6 @@ namespace Subs.Presentation
             MessageBox.Show("Payment completed and Statement successfully Emailed to " + gCurrentCustomer.CustomerId.ToString());
         }
 
-        //private void AutomaticAllocate()
-        //{
-        //    try
-        //    {
-        //        this.Cursor = Cursors.Wait;
-        //        {
-        //            string lResult;
-
-        //            if ((lResult = CustomerBiz.DistributeAllPayments(gCurrentCustomer.CustomerId)) != "OK")
-        //            {
-        //                MessageBox.Show(lResult);
-        //                return;
-        //            }
-        //        }
-        //        PopulatePaymentAndInvoice();
-        //    }
-        //    finally
-        //    {
-        //        this.Cursor = Cursors.Arrow;
-        //    }
-        //}
-
-        //private void ButtonAllocate_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (!gCurrentCustomer.AutomaticPaymentAllocation)
-        //    {
-        //        MessageBox.Show("I cannot do automatic payment allocation for this customer. You will have to do it manually.");
-        //        return;
-        //    }
-
-        //    AutomaticAllocate();
-        //    MessageBox.Show("Done!");
-        //}
-
         private void InvoiceDataGrid_GotFocus(object sender, RoutedEventArgs e)
         {
             foreach (InvoiceAndPayment lRow in InvoiceDataGrid.Items)
@@ -1826,11 +1644,9 @@ namespace Subs.Presentation
             }
         }
 
-
         #endregion
 
         #region Invoice tab payment contextmenu
-
 
         private void PaymentDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1877,7 +1693,6 @@ namespace Subs.Presentation
 
         }
 
-
         private void Click_HighlightAllocations(object sender, RoutedEventArgs e)
         {
             InvoiceAndPayment lPayment = (InvoiceAndPayment)gPaymentViewSource.View.CurrentItem;
@@ -1901,287 +1716,7 @@ namespace Subs.Presentation
                 }
             }
         }
-
-
-        //private void Click_SelectPaymentForAllocation(object sender, RoutedEventArgs e)
-        //{
-        //    if (gCurrentCustomer.AutomaticPaymentAllocation)
-        //    {
-        //        MessageBox.Show("This feature is not availible for this customer.");
-        //        return;
-        //    }
-
-        //    InvoicesAndPayments lInvoice = (InvoicesAndPayments)gPaymentViewSource.View.CurrentItem;
-        //    if (lInvoice.Operation != "Payment")
-        //    {
-        //        MessageBox.Show("Sorry, I respond only to payment lines.");
-        //        return;
-        //    }
-
-
-        //    if (lInvoice.Balance >= 0)
-        //    {
-        //        MessageBox.Show("This payment has nothing left to allocate");
-        //        gSelectedPayment = null;
-        //        return;
-        //    }
-
-        //    gSelectedPayment = lInvoice;
-        //    MessageBox.Show("OK, you have select the payment with transaction id = " + lInvoice.TransactionId.ToString());
-        //}
-
-
-        //private void Button_SetPaymentCheckpoint(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-
-        //        InvoicesAndPayments lInvoiceAndPayment = (InvoicesAndPayments)gPaymentViewSource.View.CurrentItem;
-        //        if (lInvoiceAndPayment.Operation != "Payment")
-        //        {
-        //            MessageBox.Show("Sorry, I respond only to payment lines.");
-        //            return;
-        //        }
-
-        //        DateTime lPreviousValue = gCurrentCustomer.CheckpointDatePayment;
-
-        //        ElicitDate lElicitDate = new ElicitDate("Please supply a date before the payments that you want to include");
-        //        lElicitDate.ShowDialog();
-        //        gCurrentCustomer.CheckpointDatePayment = lElicitDate.Answer;
-
-        //        {
-        //            string lResult;
-
-        //            if ((lResult = gCurrentCustomer.Update()) != "OK")
-        //            {
-        //                MessageBox.Show(lResult);
-        //                return;
-        //            }
-        //        }
-
-        //        Cursor = Cursors.Wait;
-        //        AutomaticAllocate();
-
-        //        {
-        //            string lResult;
-
-        //            if ((lResult = CustomerBiz.SynchronizeLiability(gCurrentCustomer)) != "OK")
-        //            {
-        //                MessageBox.Show(lResult);
-        //                return;
-        //            }
-        //        }
-
-        //        ExceptionData.WriteException(5, "PreviousValue = " + lPreviousValue.ToString() + "NewValue = " + gCurrentCustomer.CheckpointDatePayment, this.ToString(),
-        //            "ButtonSetPaymentCheckpoint", "");
-
-        //        MessageBox.Show("Done");
-
-        //        return;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Button_SetPaymentCheckpoint", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        MessageBox.Show("Error in Click_SetAsPaymentCheckpoint: " + ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        Cursor = Cursors.Arrow;
-        //    }
-        //}
-
-
-        //private void Click_SetAsPaymentCheckpoint1(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        InvoicesAndPayments lInvoiceAndPayment = (InvoicesAndPayments)gPaymentViewSource.View.CurrentItem;
-        //        if (lInvoiceAndPayment.Operation != "Payment")
-        //        {
-        //            MessageBox.Show("Sorry, I respond only to payment lines.");
-        //            return;
-        //        }
-
-        //        // Ensure that the checkpoint payment can cover all previously active subscriptions
-
-        //        decimal lPastSubscriptionValue = InvoiceData.ActiveSubscriptionsBefore(lInvoiceAndPayment.Date, gCurrentCustomer.CustomerId);
-
-        //        if (lPastSubscriptionValue > -lInvoiceAndPayment.Value)
-        //        {
-        //            MessageBox.Show("No can do! This payment does not cover all previous subscriptions.");
-        //            return;
-        //        }
-
-        //        gCurrentCustomer.CheckpointPaymentDate = lInvoiceAndPayment.Date.AddDays(1);
-        //        gCurrentCustomer.CheckpointPaymentValue = 0M;
-
-        //        Cursor = Cursors.Wait;
-
-
-        //        string lResult;
-        //        if ((lResult = gCurrentCustomer.Update()) != "OK")
-        //        {
-        //            return;
-        //        }
-
-        //        //PopulatePaymentAndInvoice();
-        //        AutomaticAllocate();
-
-        //        {
-        //            string lResult2;
-
-        //            if ((lResult2 = CustomerBiz.SynchronizeLiability(gCurrentCustomer)) != "OK")
-        //            {
-        //                MessageBox.Show(lResult2);
-        //                return;
-        //            }
-        //        }
-        //        MessageBox.Show("Done");
-
-        //        return;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Button_SetAsPaymentCheckpoint1", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        MessageBox.Show("Error in Click_SetAsPaymentCheckpoint: " + ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        Cursor = Cursors.Arrow;
-        //    }
-        //}
-
-        //private void Click_ResetAllCheckpoints(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        gCurrentCustomer.CheckpointDatePayment = DateTime.Parse("2017/06/01");
-        //        //gCurrentCustomer.CheckpointPaymentValue = 0M;
-        //        gCurrentCustomer.CheckpointDateInvoice = DateTime.Parse("2017/06/01");
-        //        //gCurrentCustomer.CheckpointPaymentTransactionId = 0;
-        //        gCurrentCustomer.Update();
-
-        //        //PopulatePaymentAndInvoice();
-        //        this.AutomaticAllocate();
-
-        //        {
-        //            string lResult;
-
-        //            if ((lResult = CustomerBiz.SynchronizeLiability(gCurrentCustomer)) != "OK")
-        //            {
-        //                MessageBox.Show(lResult);
-        //                return;
-        //            }
-        //        }
-
-        //        MessageBox.Show("Done");
-
-        //        return;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Click_ResetAllCheckpoints", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        MessageBox.Show("Error in Button_SetCheckpointInvoice: " + ex.Message);
-        //    }
-        //}
-
-        //private void Click_SetAsReducedCheckpoint(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        InvoicesAndPayments lInvoiceAndPayment = (InvoicesAndPayments)gPaymentViewSource.View.CurrentItem;
-        //        if (lInvoiceAndPayment.OperationId != (int)Operation.Pay && lInvoiceAndPayment.OperationId != (int)Operation.Balance)
-        //        {
-        //            MessageBox.Show("Sorry, I respond only to the payment that you plan to reduce.");
-        //            return;
-        //        }
-
-        //        ElicitDecimal lElicitDecimal = new ElicitDecimal("Please supply the balance pertaining to the future in terms of a positive number.");
-        //        lElicitDecimal.ShowDialog();
-
-        //        gCurrentCustomer.CheckpointPaymentTransactionId = lInvoiceAndPayment.TransactionId;
-        //        gCurrentCustomer.CheckpointPaymentDate = lInvoiceAndPayment.Date.AddDays(1);
-        //        gCurrentCustomer.CheckpointPaymentValue = -lElicitDecimal.Answer;
-
-        //        string lResult;
-        //        if ((lResult = gCurrentCustomer.Update()) != "OK")
-        //        {
-        //            return;
-        //        }
-
-        //        Cursor = Cursors.Wait;
-
-        //        PopulatePaymentAndInvoice();
-        //        this.AutomaticAllocate();
-
-        //        {
-        //            string lResult2;
-
-        //            if ((lResult2 = CustomerBiz.SynchronizeLiability(gCurrentCustomer)) != "OK")
-        //            {
-        //                MessageBox.Show(lResult2);
-        //                return;
-        //            }
-        //        }
-
-        //        //gCustomerAdapter.FillById(gCustomer, "CustomerId", gCurrentCustomer.CustomerId, "");
-
-        //        MessageBox.Show("Done");
-
-        //        return;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Button_SetCheckpointPayment", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        MessageBox.Show("Error in Button_SetCheckpointPayment: " + ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        Cursor = Cursors.Arrow;
-        //    }
-        //}
-
-
+    
         private void Click_ReversePayment(object sender, RoutedEventArgs e)
         {
             this.Cursor = Cursors.Wait;
@@ -2318,7 +1853,6 @@ namespace Subs.Presentation
             }
         }
 
-
         private void Click_AssignRefund(object sender, RoutedEventArgs e)
         {
             try
@@ -2369,182 +1903,6 @@ namespace Subs.Presentation
         #endregion
 
         #region Invoice tab invoices
-
-        private void Click_Checkpoint(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                this.Cursor = Cursors.Wait;
-                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gDueViewSource.View.CurrentItem;
-                if (lInvoice.OperationId != (int)Operation.VATInvoice)
-                {
-                    MessageBox.Show("Sorry, I respond only to invoice lines");
-                    return;
-                }
-                
-                //Try to set a new checkpoint
-                // Save originals
-                int lOriginalBalanceInvoiceId = gCurrentCustomer.BalanceInvoiceId;
-                decimal lOriginalBalance = gCurrentCustomer.Balance;
-                decimal lOriginalDue = gCurrentCustomer.Due;
-                //decimal lNewBalance = gCurrentCustomer.CalculateBalanceByInvoice(lInvoice.InvoiceId);
-               
-                try
-                {
-                   // if (MessageBoxResult.No == MessageBox.Show("Do you want to provide your own starting balance?",
-                   //"Warning", MessageBoxButton.YesNo))
-                   // {
-                  
-                   //     if (Math.Abs(lNewBalance) < 1M)
-                   //     {
-                   //         lNewBalance = 0;   // Get rid of decimal point variations
-                   //     }
-
-                   //     if (lNewBalance > 0)
-                   //     {
-                   //         MessageBox.Show("No can do, you first have to write off " + lNewBalance.ToString("######0.######") + " from some of the previous invoices.");
-                   //         return;
-                   //     }
-
-                   //     if (lNewBalance < 0)
-                   //     {
-                   //         MessageBox.Show("No can do, you first have to refund " + lNewBalance.ToString("######0.######") +
-                   //             " or get the client to do a reduced payment.");
-                   //         return;
-                   //     }
-
-                   //     gCurrentCustomer.Balance = lNewBalance;
-                   // }
-
-                   // else
-                   // {
-                   //     // Override the past by providing your own balance value
-                   //     ElicitDecimal lElicitDecimal = new ElicitDecimal("What should the new starting balance be?");
-                   //     lElicitDecimal.ShowDialog();
-                   //     gCurrentCustomer.Balance = lElicitDecimal.Answer;  
-                   // }
-
-                    gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
-                    gCurrentCustomer.Update();
-                    LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lOriginalBalance);
-
-                    // Select the customer again.
-
-                    SetCurrentCustomer(gCurrentCustomer.CustomerId);
-                    GoToStatement();
-
-                    MessageBox.Show("Checkpoints successfully changed by force.");
-                }
-                catch (Exception InnerException)
-                {
-                    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
-                    gCurrentCustomer.Balance = lOriginalBalance;
-                    gCurrentCustomer.Update();
-                    throw InnerException;
-                }
-
-                //if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M)
-                //{
-                //    GoToStatement();  //Refresh the displayed statement
-                //    MessageBox.Show("Checkpoints successfully changed.");
-
-                //}
-                //else
-                //{
-                //    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
-                //    gCurrentCustomer.Balance = lOriginalBalance;
-                //    gCurrentCustomer.Update();
-                //    ExceptionData.WriteException(1, "Difference in due values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCurrentCustomer.CustomerId.ToString()
-                //        + "New = " + gCurrentCustomer.Due.ToString("#0.000000")
-                //        + " Original = " + lOriginalDue.ToString("#0.000000"));
-
-                //    MessageBox.Show("Checkpoints change failed. No changes made to database.");
-                //}
-                return;
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
-
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Click_Checkpoint", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
-
-                MessageBox.Show("Error in Click_Checkpoint " + ex.Message);
-            }
-            finally
-            {
-                this.Cursor = Cursors.Arrow;
-            }
-
-        }
-        //private void ButtonSetCheckpointInvoice(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        ElicitDate lElicitDate = new ElicitDate("Please supply a date to start reporting on invoices");
-        //        lElicitDate.ShowDialog();
-
-        //        decimal lPastSubscriptionValue = InvoiceData.ActiveSubscriptionsBefore(lElicitDate.Answer, gCurrentCustomer.CustomerId);
-
-        //        if (lPastSubscriptionValue > 0)
-        //        {
-        //            MessageBox.Show("No can do! There are active subscriptions valued at " + lPastSubscriptionValue.ToString() + " before this date.");
-        //            return;
-        //        }
-
-        //        DateTime lPreviousValue = gCurrentCustomer.CheckpointDateInvoice;
-
-        //        gCurrentCustomer.CheckpointDateInvoice = lElicitDate.Answer;
-        //        gCurrentCustomer.Update();
-
-        //        Cursor = Cursors.Wait;
-
-        //        PopulatePaymentAndInvoice();
-        //        //this.AutomaticAllocate();
-
-        //        {
-        //            string lResult;
-
-        //            if ((lResult = CustomerBiz.SynchronizeLiability(gCurrentCustomer)) != "OK")
-        //            {
-        //                MessageBox.Show(lResult);
-        //                return;
-        //            }
-        //        }
-
-        //        ExceptionData.WriteException(5, "PreviousValue = " + lPreviousValue.ToString() + "NewValue = " + gCurrentCustomer.CheckpointDateInvoice, this.ToString(),
-        //        "ButtonSetInvoiceCheckpoint", "");
-
-        //        MessageBox.Show("Done");
-
-        //        return;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Button_SetCheckpointInvoice", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        MessageBox.Show("Error in Button_SetCheckpointINvoice: " + ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        Cursor = Cursors.Arrow;
-        //    }
-        //}
 
         private void ButtonCreateStatement_Click(object sender, RoutedEventArgs e)
         {
@@ -2606,78 +1964,7 @@ namespace Subs.Presentation
             }
         }
 
-        //private void Click_AllocatePayment(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (gCurrentCustomer.AutomaticPaymentAllocation)
-        //        {
-        //            MessageBox.Show("This feature is not availible for this customer.");
-        //            return;
-        //        }
-
-        //        if (gSelectedPayment == null)
-        //        {
-        //            MessageBox.Show("You have not selected a payment to allocate");
-        //            return;
-        //        }
-
-        //        InvoicesAndPayments lInvoice = (InvoicesAndPayments)gInvoiceViewSource.View.CurrentItem;
-        //        if (!lInvoice.LastRow)
-        //        {
-        //            MessageBox.Show("Sorry, I respond only to the last row on the invoice.");
-        //            return;
-        //        }
-
-        //        CustomerData3.OutstandingInvoice lOutstandingInvoice = new CustomerData3.OutstandingInvoice();
-        //        lOutstandingInvoice.InvoiceId = lInvoice.InvoiceId;
-        //        lOutstandingInvoice.Balance = lInvoice.Balance;
-
-        //        CustomerBiz.DistributePaymentToInvoice(gSelectedPayment.TransactionId, gSelectedPayment.Balance, lOutstandingInvoice);
-
-        //        gSelectedPayment = null;
-
-        //        PopulatePaymentAndInvoice();
-        //        MessageBox.Show("Done");
-        //        return;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Click_AllocatePayment", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        MessageBox.Show("Failed due to technical error");
-        //    }
-        //}
-        //private void Click_DeallocatePayment(object sender, RoutedEventArgs e)
-        //{
-        //    if (gCurrentCustomer.AutomaticPaymentAllocation)
-        //    {
-        //        MessageBox.Show("This feature is not availible for this customer.");
-        //        return;
-        //    }
-
-        //    InvoicesAndPayments lInvoice = (InvoicesAndPayments)gInvoiceViewSource.View.CurrentItem;
-        //    if (lInvoice.Operation != "PaymentAllocation")
-        //    {
-        //        MessageBox.Show("Sorry, I respond only to payment lines with a valid invoice.");
-        //        return;
-        //    }
-
-        //    CustomerBiz.DeallocateByInvoiceId(lInvoice.InvoiceId);
-        //    PopulatePaymentAndInvoice();
-        //    MessageBox.Show("Done");
-        //}
-
-        private void Click_WriteOffMoney(object sender, RoutedEventArgs e)
+         private void Click_WriteOffMoney(object sender, RoutedEventArgs e)
         {
 
             try
@@ -2825,9 +2112,6 @@ namespace Subs.Presentation
                 this.Cursor = Cursors.Arrow;
             }
         }
-
-
-
 
         private void Click_ReverseWriteOffMoney(object sender, RoutedEventArgs e)
         {
@@ -3052,69 +2336,8 @@ namespace Subs.Presentation
         }
 
         #endregion
-
-        #region Liability calculation tab
-        //private void ButtonSynchroniseLiability_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        gCurrentCustomer.Liability = gCalculatedLiability;
-        //        gCurrentCustomer.Update();
-        //        ExceptionData.WriteException(2, "Synchronise liability manually", this.ToString(), "ButtonSynchroniseLiability_Click", "CustomerId = "
-        //              + gCurrentCustomer.CustomerId.ToString() + " Calculated = " + gCalculatedLiability.ToString());
-
-        //        textCurrentLiability.Text = gCalculatedLiability.ToString("########0.00");
-        //        MessageBox.Show("Done");
-        //        PopulatePaymentAndInvoice2();
-        //        tabControl1.SelectedIndex = (int)PickerTabs.Select;
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButtonSynchroniseLiability_Click", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        MessageBox.Show("Error in ButtonSynchroniseLiability_Click: " + ex.Message);
-        //    }
-        //}
-
-        private void ButtonRunningToXML_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                string lOutputFile = "c:\\SUBS" + "\\" + gCurrentCustomer.CustomerId.ToString() + "RunningBalances.xml";
-                FileStream lFileStream = new FileStream(lOutputFile, FileMode.Create);
-                XmlSerializer lSerializer = new XmlSerializer(typeof(List<LiabilityRecord>));
-                lSerializer.Serialize(lFileStream, gLiabilityRecords);
-                MessageBox.Show(gLiabilityRecords.Count.ToString() + " Records written to " + lOutputFile.ToString());
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
-
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButtonRunningToXML_Click", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
-
-                MessageBox.Show(ex.Message);
-                return;
-            }
-        }
-
-        #endregion
+      
+       
 
         #region Over paid delivered tab
 
@@ -3290,9 +2513,181 @@ namespace Subs.Presentation
 
 
 
+
         #endregion
 
-     
+        #region Due calculation
+        private void ButtonResetCheckpoint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Save the current
+                int lCurrentBalanceInvoiceId = gCurrentCustomer.BalanceInvoiceId;
+                decimal lOriginalBalance = gCurrentCustomer.Balance;
+
+
+                try
+                {
+                    if (gCurrentCustomer.PreviousCheckpoint == 0)
+                    {
+                        MessageBox.Show("No checkpoint has been set in the past.");
+                        return;
+                    }
+
+                    gCurrentCustomer.BalanceInvoiceId = gCurrentCustomer.PreviousCheckpoint;
+                    gCurrentCustomer.Update();
+                    LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, gCurrentCustomer.BalanceInvoiceId, lCurrentBalanceInvoiceId, lOriginalBalance);
+
+                    // Select the customer again.
+
+                    SetCurrentCustomer(gCurrentCustomer.CustomerId);
+                    GoToStatement();
+
+                    MessageBox.Show("Checkpoints successfully reset to " + gCurrentCustomer.BalanceInvoiceId.ToString() + " by force.");
+                }
+                catch (Exception InnerException)
+                {
+                    gCurrentCustomer.BalanceInvoiceId = lCurrentBalanceInvoiceId;
+                    gCurrentCustomer.Balance = lOriginalBalance;
+                    gCurrentCustomer.Update();
+                    throw InnerException;
+                }
+                return;
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButtonResetCheckpoint", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show("Error in ButtonResetCheckpoint " + ex.Message);
+            }
+
+        }
+
+        private void Click_Checkpoint(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.Cursor = Cursors.Wait;
+                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gDueViewSource.View.CurrentItem;
+                if (lInvoice.OperationId != (int)Operation.VATInvoice)
+                {
+                    MessageBox.Show("Sorry, I respond only to invoice lines");
+                    return;
+                }
+
+                //Try to set a new checkpoint
+                // Save originals
+                int lOriginalBalanceInvoiceId = gCurrentCustomer.BalanceInvoiceId;
+                decimal lOriginalBalance = gCurrentCustomer.Balance;
+                decimal lOriginalDue = gCurrentCustomer.Due;
+                //decimal lNewBalance = gCurrentCustomer.CalculateBalanceByInvoice(lInvoice.InvoiceId);
+
+                try
+                {
+                    // if (MessageBoxResult.No == MessageBox.Show("Do you want to provide your own starting balance?",
+                    //"Warning", MessageBoxButton.YesNo))
+                    // {
+
+                    //     if (Math.Abs(lNewBalance) < 1M)
+                    //     {
+                    //         lNewBalance = 0;   // Get rid of decimal point variations
+                    //     }
+
+                    //     if (lNewBalance > 0)
+                    //     {
+                    //         MessageBox.Show("No can do, you first have to write off " + lNewBalance.ToString("######0.######") + " from some of the previous invoices.");
+                    //         return;
+                    //     }
+
+                    //     if (lNewBalance < 0)
+                    //     {
+                    //         MessageBox.Show("No can do, you first have to refund " + lNewBalance.ToString("######0.######") +
+                    //             " or get the client to do a reduced payment.");
+                    //         return;
+                    //     }
+
+                    //     gCurrentCustomer.Balance = lNewBalance;
+                    // }
+
+                    // else
+                    // {
+                    //     // Override the past by providing your own balance value
+                    //     ElicitDecimal lElicitDecimal = new ElicitDecimal("What should the new starting balance be?");
+                    //     lElicitDecimal.ShowDialog();
+                    //     gCurrentCustomer.Balance = lElicitDecimal.Answer;  
+                    // }
+
+                    gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
+                    gCurrentCustomer.Update();
+                    LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lOriginalBalance);
+
+                    // Select the customer again.
+
+                    SetCurrentCustomer(gCurrentCustomer.CustomerId);
+                    GoToStatement();
+
+                    MessageBox.Show("Checkpoints successfully changed changed to " + gCurrentCustomer.BalanceInvoiceId.ToString() + " by force.");
+                }
+                catch (Exception InnerException)
+                {
+                    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
+                    gCurrentCustomer.Balance = lOriginalBalance;
+                    gCurrentCustomer.Update();
+                    throw InnerException;
+                }
+
+                //if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M)
+                //{
+                //    GoToStatement();  //Refresh the displayed statement
+                //    MessageBox.Show("Checkpoints successfully changed.");
+
+                //}
+                //else
+                //{
+                //    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
+                //    gCurrentCustomer.Balance = lOriginalBalance;
+                //    gCurrentCustomer.Update();
+                //    ExceptionData.WriteException(1, "Difference in due values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCurrentCustomer.CustomerId.ToString()
+                //        + "New = " + gCurrentCustomer.Due.ToString("#0.000000")
+                //        + " Original = " + lOriginalDue.ToString("#0.000000"));
+
+                //    MessageBox.Show("Checkpoints change failed. No changes made to database.");
+                //}
+                return;
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Click_Checkpoint", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show("Error in Click_Checkpoint " + ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Arrow;
+            }
+
+        }
+
+
+        #endregion
     }
 }
 

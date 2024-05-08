@@ -264,6 +264,9 @@
                         </DataGridTemplateColumn>
                         <DataGridTextColumn x:Name="valueColumn" Binding="{Binding Value, Converter={StaticResource lRandConverter}}" Header="Value" 
                                             CellStyle="{StaticResource AlignRight}"  Width="60" IsReadOnly="False"/>
+                        <DataGridTextColumn x:Name="productionrateColumn" Binding="{Binding ProductionRate, Converter={StaticResource lRandConverter}}" Header="ProductionRate" 
+                                            CellStyle="{StaticResource AlignRight}"  Width="100" IsReadOnly="False"/>
+
                         <DataGridTextColumn x:Name="modifiedByColumn" Binding="{Binding ModifiedBy}" Header="Modified By" Width="Auto" IsReadOnly="True"/>
                         <DataGridTextColumn x:Name="modifiedOnColumn" Header="Modified On" Width="Auto" IsReadOnly="True"
                                             Binding="{Binding DateFrom, Converter={StaticResource lDateConverter}}"/>

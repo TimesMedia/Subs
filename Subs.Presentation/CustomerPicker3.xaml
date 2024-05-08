@@ -417,73 +417,16 @@
             </Grid>
         </TabItem>
 
-        <!--<TabItem Header="Liability calculation" x:Name="tabRunning"  TabIndex="4">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="501*"/>
-                    <ColumnDefinition Width="815*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <WrapPanel Grid.ColumnSpan="2">
-                    <Button x:Name="ButtonRunningToXML" Click="ButtonRunningToXML_Click">Write to XML</Button>
-                    <Label>Your current liability in CustomerTable is:</Label>
-                    <TextBox x:Name="textCurrentLiability" Margin="10,0,10,0" IsReadOnly="True"></TextBox>
-                    <Label>Your current sum of payments is:</Label>
-                    <TextBox x:Name="textSumOfPayments" Margin="10,0,10,0" IsReadOnly="True"></TextBox>
-                    <Label>Your current sum of deliveries is:</Label>
-                    <TextBox x:Name="textSumOfDeliveries" Margin="10,0,10,0" IsReadOnly="True"></TextBox>
-
-                    --><!--<Button Click="ButtonSynchroniseLiability_Click"  Tag="AuthorityHigh" Loaded="SetVisibility">Synchronise liability</Button>--><!--
-                </WrapPanel>
-                <DataGrid x:Name="LiabilityDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch" Grid.Row="1"
-                                  Margin="0,0,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Left" RowHeight="30"
-                                  MouseDoubleClick="DisplayStatusAndHistory" SelectionUnit="CellOrRowHeader"  SelectionMode="Single" Grid.ColumnSpan="2">
-                    <DataGrid.RowHeaderStyle>
-                        <Style TargetType="{x:Type DataGridRowHeader}">
-                            <Setter Property="Background"  Value="Yellow"/>
-                            <Setter Property="Width"  Value="30"/>
-                            <Setter Property="BorderBrush" Value="Red" />
-                            <Setter Property="BorderThickness"  Value="3" />
-                        </Style>
-                    </DataGrid.RowHeaderStyle>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn  Header="TransactionId" Width="80" Binding="{Binding TransactionId}"/>
-                        <DataGridTextColumn  Header="Date" Width="80" Binding="{Binding EffectiveDate, Converter={StaticResource lDateConverter}}"/>
-                        <DataGridTextColumn Binding="{Binding Operation}" Header="Operation" Width="105"/>
-                        <DataGridTextColumn Binding="{Binding InvoiceId}" Header="InvoiceId" Width="105"/>
-                        <DataGridTextColumn Binding="{Binding SubscriptionId}" Header="SubscriptionId" Width="105"/>
-
-                        <DataGridTextColumn Binding="{Binding Value, Converter={StaticResource lRandConverter}}" Header="Value" Width="70" CellStyle="{StaticResource AlignRight}"/>
-                        <DataGridTextColumn Binding="{Binding Balance, Converter={StaticResource lRandConverter}}" Header="Liability" Width="70" CellStyle="{StaticResource AlignRight}"/>
-
-                    </DataGrid.Columns>
-
-                    <DataGrid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Use this as a new checkpoint" Click="Click_Checkpoint" />
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>
-
-                </DataGrid>
-            </Grid>
-        </TabItem>-->
-
-
+      
         <TabItem Header="Due calculation" x:Name="tabDue"  TabIndex="4">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <!--<WrapPanel>
-                    <Button x:Name="ButtonRunningToXML" Click="ButtonRunningToXML_Click">Write to XML</Button>
-                    <Label>Your current liability is:</Label>
-                    <TextBox x:Name="textCurrentLiability" Margin="10,0,10,0" IsReadOnly="True"></TextBox>
-                    <Button Click="ButtonSynchroniseLiability_Click"  Tag="AuthorityHigh" Loaded="SetVisibility">Synchronise liability</Button>
-                </WrapPanel>-->
+                
+                <Button Click="ButtonResetCheckpoint_Click" Margin="10,10,0,10" HorizontalAlignment="Left"   Width="100" Tag="AuthorityHigh" Loaded="SetVisibility">Reset Checkpoint</Button>
+               
                 <DataGrid x:Name="DueDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch" Grid.Row="1"
                                   Margin="0,0,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Left" RowHeight="30"
                                   MouseDoubleClick="DisplayStatusAndHistory" SelectionUnit="CellOrRowHeader"  SelectionMode="Single" CanUserSortColumns="False">
