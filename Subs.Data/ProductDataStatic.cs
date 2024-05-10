@@ -664,6 +664,41 @@ namespace Subs.Data
             }
         }
 
+        public static int GetSubscriptionMedium(int pIssueId)
+        {
+            try
+            {
+                if (gDoc.Product2.Count == 0)
+                {
+                    Refresh();
+                }
+
+                ProductDoc.Product2Row lRow = gDoc.Product2.FindByProductId(GetProductId(pIssueId));
+
+                if (lRow == null)
+                {
+                    throw new Exception("ProductId not found!");
+                }
+                else
+                {
+                    return lRow.Medium;
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    ExceptionData.WriteException(1, ex.Message, "static ProductData", "GetSubscriptionMedium", "IssueId = " + pIssueId.ToString());
+                    throw new Exception("static ProductData" + " : " + "GetSubscriptionMedium" + " : ", ex);
+                }
+                else
+                {
+                    throw ex; // Just bubble it up
+                }
+            }
+        }
+
+
         public static DateTime GetExpirationDate(int pProductId)
         {
             try

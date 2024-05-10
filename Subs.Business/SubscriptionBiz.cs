@@ -492,6 +492,7 @@ namespace Subs.Business
                     int lNextIssue = IssueBiz.GetIssueId(pSubscriptionData.ProductId, pSubscriptionData.ProposedLastSequence + 1);
                     if (lNextIssue != 0)
                     {
+                        // There is a next issue availible
                         pSubscriptionData.ProposedLastIssue = lNextIssue;
                         pSubscriptionData.ProposedLastSequence = IssueBiz.GetSequenceNumber(pSubscriptionData.ProposedLastIssue);
   
@@ -501,10 +502,6 @@ namespace Subs.Business
                             pSubscriptionData.ProposedStartIssue = lNextIssue;
                             pSubscriptionData.ProposedStartSequence = IssueBiz.GetSequenceNumber(pSubscriptionData.ProposedStartIssue);
                         }
-                    }
-                    else
-                    {
-                         return new MimsValidationResult() { Message = "The pre-defined issues do not allow for an automatic proposal of an alternate issue for an almost spent issue.\nDo you want to keep the current issue?", Prompt=true };
                     }
                 }
 
@@ -809,7 +806,7 @@ namespace Subs.Business
                 int lDiscountFactor = 0;
                 decimal lInternallyCalculatedDiscountFraction;
 
-                List<int> lMimsProducts = new List<int>() { 1, 17, 32, 47, 49 };
+                List<int> lMimsProducts = new List<int>() { 1, 8, 17, 32, 47, 49 };
                 int lNumberOfMimsProducts = pBasket.Where(p => lMimsProducts.Contains(p.Subscription.ProductId)).Count();
 
 

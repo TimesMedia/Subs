@@ -49,7 +49,7 @@ namespace Subs.Data
 
     public enum SubscriptionMedium
     {
-        Any = 1,
+        PrintAndBrowser = 1,
         Print = 2,
         Browser = 3,
         Desktop = 4,

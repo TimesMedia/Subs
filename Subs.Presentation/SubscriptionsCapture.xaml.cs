@@ -371,7 +371,7 @@ namespace Subs.Presentation
         {
             DeskTopProduct lProduct = (DeskTopProduct)o;
 
-            if ((int)comboSubscriptionType.SelectedValue == (int)SubscriptionType.Any && (int)comboSubscriptionMedium.SelectedValue == (int)SubscriptionMedium.Any)
+            if ((int)comboSubscriptionType.SelectedValue == (int)SubscriptionType.Any && (int)comboSubscriptionMedium.SelectedValue == (int)SubscriptionMedium.PrintAndBrowser)
             {
                 return true;
             }
@@ -384,7 +384,7 @@ namespace Subs.Presentation
                 else return false;
             }
 
-            if ((int)comboSubscriptionMedium.SelectedValue == (int)SubscriptionMedium.Any)
+            if ((int)comboSubscriptionMedium.SelectedValue == (int)SubscriptionMedium.PrintAndBrowser)
             {
                 if (lProduct.SubscriptionType == (int)comboSubscriptionType.SelectedValue)
                     return true;

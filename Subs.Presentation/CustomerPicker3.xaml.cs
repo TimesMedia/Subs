@@ -2528,12 +2528,7 @@ namespace Subs.Presentation
 
                 try
                 {
-                    if (gCurrentCustomer.PreviousCheckpoint == 0)
-                    {
-                        MessageBox.Show("No checkpoint has been set in the past.");
-                        return;
-                    }
-
+  
                     gCurrentCustomer.BalanceInvoiceId = gCurrentCustomer.PreviousCheckpoint;
                     gCurrentCustomer.Update();
                     LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, gCurrentCustomer.BalanceInvoiceId, lCurrentBalanceInvoiceId, lOriginalBalance);

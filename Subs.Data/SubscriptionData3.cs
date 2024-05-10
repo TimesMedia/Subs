@@ -401,6 +401,14 @@ namespace Subs.Data
                 }
                 else
                 {
+                    if (!gSubscriptionTable[0].IsInvoiceIdNull())
+                    {
+                        // This subscription has been assigned to another invoice in the past. 
+                        // You cannot assign it to another invoice now!
+
+                        throw new Exception("Subscription " + SubscriptionId.ToString() + " has been assigned to another invoice already. Investigate!");
+                    }
+
                     gSubscriptionTable[0].InvoiceId = (int)value;
                 }
             }
