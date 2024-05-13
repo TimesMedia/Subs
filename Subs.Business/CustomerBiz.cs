@@ -33,7 +33,8 @@ namespace Subs.Business
             InvalidAllocationNumber = 7,
             PayerDoesNotExist = 8,
             NegativeNumber = 9,
-            NoInvoicesPast3years = 10
+            NoInvoicesPast3years = 10,
+            PaymentBeforeBalanceInvoice
         }
 
 
@@ -42,432 +43,7 @@ namespace Subs.Business
            
         }
         #endregion
-
-        #region Payment allocation
-
-        //public static string InvoiceBalances(int pPayerId, out List<OutstandingInvoice> pOutstanding)
-        //{
-        //    pOutstanding = new List<OutstandingInvoice>();
-
-        //    try
-        //    {
-        //        List<Subs.Data.InvoicesAndPayments> lInvoices;
-
-        //        {
-        //            string lResult;
-        //            if ((lResult = CustomerData3.PopulateInvoice(pPayerId, out lInvoices)) != "OK")
-        //            {
-
-        //                return lResult;
-        //            }
-        //        }
-
-
-        //        foreach (Subs.Data.InvoicesAndPayments item in lInvoices)
-        //        {
-        //            if (item.LastRow && item.InvoiceId != 0 && item.InvoiceId != 999999999)
-        //            {
-        //                if (item.Balance > 1)
-        //                {
-        //                    // Write out a tuple
-        //                    pOutstanding.Add(new OutstandingInvoice() { InvoiceId = item.InvoiceId, Balance = item.Balance });
-        //                }
-        //            }
-        //        }
-        //        return "OK";
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerBiz", "InvoiceBalances", "PayerId = " + pPayerId.ToString());
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        return "Error in InvoiceBalance: " + ex.Message;
-        //    }
-
-        //}
-
-        //public static decimal DistributePaymentToInvoice(int pPaymentTransactionId, decimal pAmount, OutstandingInvoice pInvoice)
-        //{
-        //    // This was used when a customer provides documentation to the effect that a payment has to be allocated to a specific invoice.
-        //    // It is called a 'preference list' 
-        //    try
-        //    {
-        //        MIMSDataContext lContext = new MIMSDataContext(Settings.ConnectionString); 
-
-        //        decimal lPaymentRemaining = -pAmount;
-        //        decimal lAmount = 0M;
-
-        //        if (pInvoice.Balance >= lPaymentRemaining)
-        //        {
-        //            // Put everything into this invoice
-        //            lAmount = lPaymentRemaining;
-        //            lPaymentRemaining = 0;
-        //        }
-        //        else
-        //        {
-        //            // Put onto this Invoice as much as you can.
-        //            lAmount = pInvoice.Balance;
-        //            lPaymentRemaining = lPaymentRemaining - pInvoice.Balance;
-        //        }
-
-        //        // Add a record to the InvoicePayment table
-
-        //        lContext.MIMS_InvoicePayment_Insert(pInvoice.InvoiceId, pPaymentTransactionId, lAmount);
-        //        return lPaymentRemaining;
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerBiz", "DistributePaymentToInvoice", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        throw ex;
-        //    }
-        //}
-
-
-        //private static bool DistributePaymentToOutstandingInvoices(int pPaymentTransactionId, decimal pAmount, List<OutstandingInvoice> pOutstandingInvoices)
-        //{
-        //    try
-        //    {
-        //        MIMSDataContext lContext = new MIMSDataContext(Settings.ConnectionString);
-        //        int lInvoiceId = 0;
-        //        decimal lAmount = 0;
-        //        decimal lPaymentRemaining = -pAmount;
-                
-        //        foreach (OutstandingInvoice lInvoice in pOutstandingInvoices)
-        //        {
-        //            lInvoiceId = lInvoice.InvoiceId;
-
-        //            if (lInvoice.Balance >= lPaymentRemaining)
-        //            {
-        //                // Put everything into this invoice
-        //                lAmount = lPaymentRemaining;
-        //                lPaymentRemaining = 0;
-        //            }
-        //            else
-        //            {
-        //                // Put onto this Invoice as much as you can.
-        //                lAmount = lInvoice.Balance;
-        //                lPaymentRemaining = lPaymentRemaining - lInvoice.Balance;
-        //            }
-
-        //            // Add a record to the InvoicePayment table
-
-        //            lContext.MIMS_InvoicePayment_Insert(lInvoiceId, pPaymentTransactionId, lAmount);
-
-        //            if (lPaymentRemaining < 1)
-        //            {
-        //                break;
-        //            }
-
-        //        } // End of foreach loop - Invoices ***************************************************************************************
-
-        //        return true;
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerBiz", "DistributePaymentToOutstandingInvoices", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        return false;
-        //    }
-        //}
-
-        //private static string DistributePayment(int pPayerId, int pPaymentTransactionId, decimal pAmount)
-        //{
-        //    MIMSDataContext lContext = new MIMSDataContext(Settings.ConnectionString);
-
-        //    PaymentData.PaymentRecord myRecord = new PaymentData.PaymentRecord();
-        //    List<OutstandingInvoice> lOutstandingInvoices;
-        //    try
-        //    {
-
-        //        // Now distriubute the payment over the invoices 
-
-        //        {
-        //            string lResult;
-
-        //            if ((lResult = CustomerBiz.InvoiceBalances(pPayerId, out lOutstandingInvoices)) != "OK")
-        //            {
-        //                return lResult;
-        //            }
-        //        }
-
-        //        if (lOutstandingInvoices.Count == 0)
-        //        {
-        //            return "OK";
-        //        }
-        //        else
-        //        {
-        //            if (!DistributePaymentToOutstandingInvoices(pPaymentTransactionId, pAmount, lOutstandingInvoices))
-        //            {
-        //                return "Error in DistributePaymentToOutstandingInvoices ";
-        //            }
-        //        }
-
-        //        return "OK";
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerBiz", "DistributePayment", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        return "error in DistributePayment: " + ex.Message;
-        //    }
-
-        //}
-
-    
-        //public static string DistributeAllPayments(int pPayerId)
-
-        //{
-        //    try
-        //    {
-        //        CustomerData3 lCustomer = new CustomerData3(pPayerId);
-
-        //        if (!lCustomer.AutomaticPaymentAllocation)
-        //        {
-        //            // You will have to do these allocations manually.
-        //            return "OK";
-        //        }
-
-        //        Deallocate(pPayerId);
-
-        //        string lResult;
-
-        //        if ((lResult = CustomerData3.PopulateInvoice(pPayerId, out List<InvoicesAndPayments> lInvoicesAndPayments)) != "OK")
-        //        {
-        //            if (lResult.Contains("Nothing"))
-        //            {
-        //                return "OK";
-        //            }
-        //            else
-        //            {
-        //                return lResult;
-        //            }
-        //        }
-
-        //        // Find all the payment-related record balances
-
-        //        List<InvoicesAndPayments> lPayments;
-
-        //        lPayments = lInvoicesAndPayments.Where(p => p.LastRow && (
-        //                                                    p.OperationId == (int)Operation.Pay)
-        //                                                 || p.OperationId == (int)Operation.Balance
-        //                                                 || p.OperationId == (int)Operation.Refund
-        //                                                 || p.OperationId == (int)Operation.ReversePayment)
-        //                                        .ToList();
-
-
-        //        foreach (InvoicesAndPayments lPayment in lPayments)
-        //        {
-
-        //            if (lPayment.Balance >= 0)
-        //            {
-        //                // The is nothing to distribute
-        //                continue;
-        //            }
-
-        //            {
-        //                string lResult2;
-
-        //                if ((lResult2 = CustomerBiz.DistributePayment(pPayerId,
-        //                                                              lPayment.TransactionId,
-        //                                                              lPayment.Balance)) != "OK")
-        //                {
-        //                    if (lResult2.Contains("Nothing"))
-        //                    {
-        //                        continue;
-        //                    }
-        //                    else
-        //                    {
-        //                        return lResult2;
-        //                    }
-        //                }
-        //            }
-
-        //        }  // end of lPayments loop
-
-        //        return "OK";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerBiz", "DistributeAllPayments", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        return "Error in DistributeAllPayments " + ex.Message;
-        //    }
-
-        //}
-
-        //public static void Deallocate(int pPayerId)
-        //{
-        //    try
-        //    { 
-        //        MIMSDataContext lContext = new MIMSDataContext(Settings.ConnectionString);
-
-        //        // Get the current payments
-
-
-        //        CustomerData3.PopulateInvoice(pPayerId, out List<InvoicesAndPayments> lInvoicesAndPayments);
-
-        //        // Delete all current allocations
-
-        //        IEnumerable<int> lAllocationsToDelete
-        //            = lInvoicesAndPayments.Where(p => (p.OperationId == (int)Operation.Pay || p.OperationId == (int)Operation.Balance))
-        //                                  .ToList()
-        //                                  .Select(p => p.TransactionId);
-
-        //        foreach (int lTransactionId in lAllocationsToDelete)
-        //        {
-        //            lContext.MIMS_InvoicePayment_DeleteByPaymentTransactionId(lTransactionId);
-        //        } 
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "staticCustomerBiz", "Deallocate", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        throw ex;
-        //    }
-
-        //}
-
-
-        //public static void DeallocateByInvoiceId(int pInvoiceId)
-        //{
-        //    try
-        //    {
-        //        MIMSDataContext lContext = new MIMSDataContext(Settings.ConnectionString);
-
-        //        // Get the current payments
-        //        lContext.MIMS_InvoicePayment_DeleteByInvoiceId((int)pInvoiceId);
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "staticCustomerBiz", "DeallocateByInvoiceId", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        throw ex;
-        //    }
-           
-        //}
-
-        //public static string SynchronizeLiability(CustomerData3 pCustomerData, [CallerMemberName] string pCaller = null)
-        //{
-        //    try
-        //    {
-        //        decimal lCalculatedLiability = 0M;
-        //        List<LiabilityRecord> lLiabilityRecords = new List<LiabilityRecord>();
-
-        //        {
-        //            string lResult2;
-
-        //            if ((lResult2 = pCustomerData.CalculateLiability2(ref lLiabilityRecords, ref lCalculatedLiability)) != "OK")
-        //            {
-        //                if (!lResult2.Contains("Nothing"))
-        //                {
-        //                    return lResult2;
-        //                }
-        //            }
-        //        }
-
-        //        pCustomerData.Liability = lCalculatedLiability;
-
-
-        //        string lResult;
-        //        if ((lResult = pCustomerData.Update()) != "OK")
-        //        {
-        //            return lResult;
-        //        }
-
-        //        return "OK";
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static CustomerBiz", "SynchronizeLiability", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        return "Error in SynchronizeLiability: " + ex.Message;
-        //    }
-
-        //}
-
-
-
-        #endregion
-
+     
         #region Payment
 
         public static string ValidatePayment(ref Subs.Data.PaymentData.PaymentRecord pRecord, ref PaymentValidationResult pResult, ref string pErrorMessage)
@@ -495,35 +71,6 @@ namespace Subs.Business
                 CustomerData3 myCustomerData = new CustomerData3(pRecord.CustomerId);
 
 
-
-                // Check to see if there is .....an applicable invoice
-
-                //********************************************************************************
-
-
-                // This is equivalent to checking of he owes us.
-                //List<OutstandingInvoice> lOutstandingInvoices;
-                //{
-                //    string lResult;
-
-                //    if ((lResult = CustomerBiz.InvoiceBalances(pRecord.CustomerId, out lOutstandingInvoices)) != "OK")
-                //    {
-                //        pErrorMessage = lResult;
-                //        pResult = PaymentValidationResult.NoInvoicesPast3years;
-                //        return "OK";
-                //    }
-                //}
-
-                //if (lOutstandingInvoices.Count == 0)
-                //{
-                //    pErrorMessage = "This payer has no applicable invoices to pay against.";
-                //    pResult = PaymentValidationResult.InvalidInvoice;
-                //    return "OK";
-                //}
-
-
-
-
                 // Test to ensure that this is not a duplicate entry
 
                 if (LedgerData.DuplicatePayment(pRecord.CustomerId,
@@ -535,6 +82,17 @@ namespace Subs.Business
                     return "OK";
                 }
 
+                // Test to see if it refers to a payment before the checkpoint invoice date.
+              
+
+                if (pRecord.Date < (myCustomerData.BalanceInvoiceDate?? myCustomerData.CheckpointDateInvoice))
+                {
+                    pErrorMessage = "This payment refers too far into the past!";
+                    ExceptionData.WriteException(5, "PaymentBeforeBalanceInvoice detected", "CustomerBizStatic", "ValidatePayment", "Reference = " + pRecord.Reference);
+                    pResult = PaymentValidationResult.PaymentBeforeBalanceInvoice;
+                    return "OK";
+
+                }
 
                 //********************************************************************************
 
@@ -681,15 +239,6 @@ namespace Subs.Business
                     return "This payment has been reversed already.";
                 }
 
-                // Update Liability
-
-                //// Update the liability on the payer
-                //if (!CustomerData3.AddToLiability(ref lTransaction, pCustomerData.CustomerId, pAmount))
-                //{
-                //    lTransaction.Rollback("ReversePayment");
-                //    return "Error in updating liability";
-                //}
-
                // Create a transaction entry
 
                 pReverseTransactionId = LedgerData.ReversePayment(ref lTransaction, pCustomerData.CustomerId, -pAmount, pPaymentTransactionId, pExplanation);
@@ -699,14 +248,6 @@ namespace Subs.Business
                     lTransaction.Rollback("ReversePayment");
                     return "ReversePayment failed";
                 }
-
-                //// Remove the InvoicePayment record.
-
-                //if (!CustomerData3.RemoveInvoicePayment(ref lTransaction, pPaymentTransactionId))
-                //{
-                //    lTransaction.Rollback("ReversePayment");
-                //    return "RemoveinvoicePayment failed";
-                //}
 
                 // Done
 
