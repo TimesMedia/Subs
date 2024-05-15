@@ -19,11 +19,30 @@ namespace Subs.Data
         #region Housekeeping
         public PromotionData()
         {
+            try
+            { 
             gPromotionAdapter.AttachConnection();
             SubscriptionDoc3.PromotionRow lNewPromotionRow = gPromotionTable.NewPromotionRow();
             lNewPromotionRow.StartDate = DateTime.Now;
             lNewPromotionRow.EndDate = DateTime.Now.AddMonths(1);
             gPromotionTable.AddPromotionRow(lNewPromotionRow);
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "PromotionData constructor", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
+            }
+
         }
 
         public PromotionData(int pPromotionId)
@@ -85,9 +104,54 @@ namespace Subs.Data
             set
             {
                 gPromotionTable[0].ProductId = value;
+                gPromotionTable[0].SetIssueIdNull(); 
+                NotifyPropertyChanged("ProductId");
                 NotifyPropertyChanged("ProductName");
+                NotifyPropertyChanged("IssueId");
+                NotifyPropertyChanged("IssueName");
             }
         }
+
+        public int? IssueId
+        {
+            get
+            {
+             if (gPromotionTable[0].IsIssueIdNull())
+                {
+                    return null;
+                }
+                return gPromotionTable[0].IssueId;
+            }
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    gPromotionTable[0].IssueId = (int)value;
+                }
+                else
+                {
+                    gPromotionTable[0].SetIssueIdNull();
+                }
+                NotifyPropertyChanged("IssueId");
+                NotifyPropertyChanged("IssueName");
+            }
+        }
+
+        public string IssueName
+        {
+            get
+            {
+                if (IssueId != null)
+                {
+                    return ProductDataStatic.GetIssueDescription((int)IssueId);
+                } 
+                else return null;
+                
+            }
+        }
+
+
         public DateTime StartDate
         {
             get

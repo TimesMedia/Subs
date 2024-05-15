@@ -39,24 +39,13 @@
                             <Setter Property="BorderThickness"  Value="3" />
                         </Style>
                     </DataGrid.RowHeaderStyle>
-
-                    <DataGrid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem x:Name="MenuItemPayer"  Header ="Insert a payer"  Click="AddPayer_Click"/>
-                            <MenuItem x:Name="MenuItemProduct" Header="Insert a product"  Click="AddProduct_Click"/>
-                            <MenuItem x:Name="MenuItemPayerClear" Header="Clear a payer"  Click="PayerClear_Click"/>
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>
-
+                  
                     <DataGrid.Columns>
-
                         <DataGridTextColumn x:Name="PayerColumn" Binding="{Binding PayerSurname, Mode=OneWay}" Header="Payer" Width="Auto" IsReadOnly="True"/>
-
                         <DataGridTextColumn x:Name="ProductColumn" Binding="{Binding ProductName, Mode=OneWay}" Header="Product" Width="auto" IsReadOnly="True"/>
-
+                        <DataGridTextColumn x:Name="IssueColumn" Binding="{Binding IssueName, Mode=OneWay}" Header="Issue" Width="auto" IsReadOnly="True"/>
                         <DataGridTextColumn x:Name="DiscountPercentageColumn" Binding="{Binding DiscountPercentage, Converter={StaticResource lRandConverter}}" Header="Percentage discount" 
-                                                CellStyle="{StaticResource AlignRight}"  Width="Auto"/>
-
+                                              CellStyle="{StaticResource AlignRight}"  Width="Auto"/>
                         <DataGridTemplateColumn x:Name="StartDateColumn" Header="Start date" Width="auto" CanUserSort="True" SortMemberPath="StartDate">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -81,6 +70,17 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
+
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="MenuItemPayer"  Header ="Insert a payer"  Click="AddPayer_Click"/>
+                            <MenuItem x:Name="MenuItemPayerClear" Header="Clear a payer"  Click="PayerClear_Click"/>
+                            <MenuItem x:Name="MenuItemProduct" Header="Insert a product"  Click="AddProduct_Click"/>
+                            <MenuItem x:Name="MenuItemIssue" Header="Insert an issue"  Click="AddIssue_Click"/>
+                            <MenuItem x:Name="MenuItemIssueClear" Header="Clear an issue"  Click="IssueClear_Click"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
                 </DataGrid>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10" Grid.ColumnSpan="2">

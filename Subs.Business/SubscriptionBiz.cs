@@ -53,6 +53,7 @@ namespace Subs.Business
 
     public static class SubscriptionBiz
     {
+      
         public static MimsValidationResult Validate(SubscriptionData3 pSubscriptionData)
         {
             SqlConnection lConnection = new SqlConnection(Settings.ConnectionString);
@@ -656,14 +657,9 @@ namespace Subs.Business
         {
             try
             {
-                //return pSubscriptionData.UnitPrice * pSubscriptionData.UnitsPerIssue * pSubscriptionData.NumberOfIssues;
-
-
-
                 return (pSubscriptionData.BaseRate + pSubscriptionData.DeliveryCost)
-                  * ((pSubscriptionData.VatPercentage + 100) / 100)
-                  * pSubscriptionData.UnitsPerIssue * pSubscriptionData.NumberOfIssues;
-
+                * ((pSubscriptionData.VatPercentage + 100) / 100)
+                * pSubscriptionData.UnitsPerIssue * pSubscriptionData.NumberOfIssues;
             }
             catch (Exception ex)
             {
@@ -710,34 +706,53 @@ namespace Subs.Business
         {
             try
             {
+                List<PromotionData> lPromotions = new List<PromotionData>();
                 SubscriptionDoc3.PromotionDataTable lTable = new SubscriptionDoc3.PromotionDataTable();
                 Data.SubscriptionDoc3TableAdapters.PromotionTableAdapter lAdapter = new Data.SubscriptionDoc3TableAdapters.PromotionTableAdapter();
                 lAdapter.AttachConnection();
                 lAdapter.Fill(lTable);
 
-                List<SubscriptionDoc3.PromotionRow> lProducts = lTable.Where(p => p.ProductId == pCriteria.ProductId).ToList();
+                foreach (SubscriptionDoc3.PromotionRow lRow in lTable)
+                {
+                    lPromotions.Add(new PromotionData(lRow.PromotionId));
+                }
+
+                // Filter by product
+
+                List<PromotionData> lProducts = lPromotions.Where(p => p.ProductId == pCriteria.ProductId).ToList();
                 if (lProducts.Count == 0)
                 {
                     //There are no promotions for this product
                     return 0;
                 }
 
-                List<SubscriptionDoc3.PromotionRow> lPayers = lProducts.Where(p => !p.IsPayerIdNull() && p.PayerId == pCriteria.PayerId).ToList();
-                if (lPayers.Count == 1)
+                // Filter by all payer and issue
+
+                List<PromotionData> lHits = lProducts.Where(p => p.PayerId == pCriteria.PayerId && p.IssueId == pCriteria.IssueId).ToList();
+                if (lHits.Count >= 1)
                 {
                     // You have a match on the payer as well
-                    return lPayers[0].DiscountPercentage;
+                    return lHits[0].DiscountPercentage;
                 }
 
-
-                List<SubscriptionDoc3.PromotionRow> lProductWide = lProducts.Where(p => p.IsPayerIdNull()).ToList();
-                if (lProductWide.Count == 1)
+                // Filter by payer alone
+                lHits = lProducts.Where(p => p.PayerId == pCriteria.PayerId).ToList();
+                if (lHits.Count >= 1)
                 {
-                    // You have a match on the product alone
-                    return lProductWide[0].DiscountPercentage;
+                    // You have a match on the payer as well
+                    return lHits[0].DiscountPercentage;
                 }
 
-                return 0; // No match
+                // Filter by issue alone
+                lHits = lProducts.Where(p => p.IssueId == pCriteria.IssueId).ToList();
+                if (lHits.Count >= 1)
+                {
+                    // You have a match on the payer as well
+                    return lHits[0].DiscountPercentage;
+                }
+
+                // You have a match on the product alone
+                    return lProducts[0].DiscountPercentage;
             }
 
             catch (Exception ex)
@@ -835,11 +850,12 @@ namespace Subs.Business
                     if (!ExplicitPercentageDiscount(lBasketItem)) { return false;}
 
                     if (!ExplicitFinalPrice(lBasketItem)) { return false; }
-
+                                       
                     //Calculate final totals
 
                     SubscriptionBiz.SetUnitPriceAndVat(lBasketItem.Subscription);
 
+                    lBasketItem.DiscountPercentage = (1 - lBasketItem.Subscription.DiscountMultiplier) * 100;
                     lBasketItem.Price = SubscriptionBiz.FullPrice(lBasketItem.Subscription);
                     lBasketItem.DiscountedPrice = SubscriptionBiz.DiscountedPrice(lBasketItem.Subscription);
 
@@ -964,6 +980,7 @@ namespace Subs.Business
                 }
             }
 
+            //****************************************************************************************************************************************
 
 
             catch (Exception ex)
@@ -1302,16 +1319,15 @@ namespace Subs.Business
         {
             try
             {
-                // Reverse engineer the discountmultiplier.
-
-                pSubscriptionData.DiscountMultiplier = 1;  // Full price
-                SetUnitPriceAndVat(pSubscriptionData);
-
+  
                 decimal lDesiredUnitPrice = pDesiredPrice/(pSubscriptionData.UnitsPerIssue * pSubscriptionData.NumberOfIssues); 
-                // This unitprice includes Vat and DeliveryCost, so this has to be subtracted to arrive at the DiscountedBaseRate
                 
-                //decimal lDiscountedBaseRate = lDesiredUnitPrice - (pSubscriptionData.DeliveryCost + pSubscriptionData.Vat);
-                return (lDesiredUnitPrice * 100)/ (pSubscriptionData.BaseRate * 115);
+                decimal lNumerator = ((100 * lDesiredUnitPrice ) / ( 100 + pSubscriptionData.VatPercentage) ) - pSubscriptionData.DeliveryCost;
+                decimal lDenominator = pSubscriptionData.BaseRate;
+
+                decimal lDiscountMultiplier = lNumerator / lDenominator;
+
+                return lDiscountMultiplier;
                
             }
             catch (Exception ex)

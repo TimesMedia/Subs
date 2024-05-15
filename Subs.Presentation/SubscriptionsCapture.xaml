@@ -132,6 +132,9 @@
                                             CellStyle="{StaticResource AlignRight}"/>
                         <DataGridTextColumn x:Name="Discount"  Header="Discount"  Width="Auto" Binding="{Binding Discount, Converter={StaticResource lRandConverter}}" 
                                             CellStyle="{StaticResource AlignRight}"/>
+                        <DataGridTextColumn x:Name="DiscountPercentage"  Header="DiscountPercentage"  Width="Auto" Binding="{Binding DiscountPercentage, Converter={StaticResource lRandConverter}}" 
+                                            CellStyle="{StaticResource AlignRight}"/>
+
                         <DataGridTextColumn x:Name="DiscountedPrice"  Header="Discounted price"  Width="Auto" Binding="{Binding DiscountedPrice, Converter={StaticResource lRandConverter}}" 
                                             CellStyle="{StaticResource AlignRight}"/>
 

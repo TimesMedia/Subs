@@ -135,16 +135,32 @@ namespace Subs.Presentation
         }
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
+            PromotionData lPromotion = (PromotionData)gPromotionViewSource.View.CurrentItem;
             Subs.Presentation.IssuePicker2 lPicker = new Subs.Presentation.IssuePicker2();
             lPicker.ShowDialog();
-            PromotionData lPromotion = (PromotionData)gPromotionViewSource.View.CurrentItem;
             lPromotion.ProductId = lPicker.ProductId;
+        }
+
+        private void AddIssue_Click(object sender, RoutedEventArgs e)
+        {
+            PromotionData lPromotion = (PromotionData)gPromotionViewSource.View.CurrentItem;
+            Subs.Presentation.IssuePicker2 lPicker = new Subs.Presentation.IssuePicker2();
+            lPicker.ProductSelect(lPromotion.ProductId);
+            lPicker.ShowDialog();
+            lPromotion.IssueId = lPicker.IssueId;
         }
         private void PayerClear_Click(object sender, RoutedEventArgs e)
         {
             PromotionData lPromotion = (PromotionData)gPromotionViewSource.View.CurrentItem;
             lPromotion.PayerId = null;
         }
+
+        private void IssueClear_Click(object sender, RoutedEventArgs e)
+        {
+            PromotionData lPromotion = (PromotionData)gPromotionViewSource.View.CurrentItem;
+            lPromotion.IssueId = null;
+        }
+
         #endregion
 
         #region Buttons
@@ -227,5 +243,5 @@ namespace Subs.Presentation
             };
         }
 
-    }
+      }
 }

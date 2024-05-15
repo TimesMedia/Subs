@@ -17,6 +17,7 @@ namespace Subs.Data
     public class BasketItem : BaseModel
     {
         private decimal _DiscountedPrice;
+        private decimal _DiscountPercentage;
         private decimal _FullPrice;
         private decimal _ExplicitDiscountPercentage = 0M;
         private decimal _FinalPriceOverride = 0M;
@@ -78,6 +79,23 @@ namespace Subs.Data
                 NotifyPropertyChanged("Discount");
             }
         }
+
+        public decimal DiscountPercentage
+        {
+            get
+            {
+                return _DiscountPercentage;
+            }
+
+            set
+            {
+                _DiscountPercentage = value;
+            }
+        }
+
+
+
+
         public decimal FinalPriceOverride
         {
             get

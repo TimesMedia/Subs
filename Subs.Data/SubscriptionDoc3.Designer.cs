@@ -3213,6 +3213,8 @@ namespace Subs.Data {
             
             private global::System.Data.DataColumn columnProductId;
             
+            private global::System.Data.DataColumn columnIssueId;
+            
             private global::System.Data.DataColumn columnStartDate;
             
             private global::System.Data.DataColumn columnEndDate;
@@ -3277,6 +3279,14 @@ namespace Subs.Data {
             public global::System.Data.DataColumn ProductIdColumn {
                 get {
                     return this.columnProductId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn IssueIdColumn {
+                get {
+                    return this.columnIssueId;
                 }
             }
             
@@ -3357,12 +3367,13 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public PromotionRow AddPromotionRow(int PayerId, int ProductId, System.DateTime StartDate, System.DateTime EndDate, decimal DiscountPercentage, string ModifiedBy, System.DateTime ModifiedOn) {
+            public PromotionRow AddPromotionRow(int PayerId, int ProductId, int IssueId, System.DateTime StartDate, System.DateTime EndDate, decimal DiscountPercentage, string ModifiedBy, System.DateTime ModifiedOn) {
                 PromotionRow rowPromotionRow = ((PromotionRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         PayerId,
                         ProductId,
+                        IssueId,
                         StartDate,
                         EndDate,
                         DiscountPercentage,
@@ -3400,6 +3411,7 @@ namespace Subs.Data {
                 this.columnPromotionId = base.Columns["PromotionId"];
                 this.columnPayerId = base.Columns["PayerId"];
                 this.columnProductId = base.Columns["ProductId"];
+                this.columnIssueId = base.Columns["IssueId"];
                 this.columnStartDate = base.Columns["StartDate"];
                 this.columnEndDate = base.Columns["EndDate"];
                 this.columnDiscountPercentage = base.Columns["DiscountPercentage"];
@@ -3416,6 +3428,8 @@ namespace Subs.Data {
                 base.Columns.Add(this.columnPayerId);
                 this.columnProductId = new global::System.Data.DataColumn("ProductId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnProductId);
+                this.columnIssueId = new global::System.Data.DataColumn("IssueId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIssueId);
                 this.columnStartDate = new global::System.Data.DataColumn("StartDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStartDate);
                 this.columnEndDate = new global::System.Data.DataColumn("EndDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
@@ -3436,6 +3450,7 @@ namespace Subs.Data {
                 this.columnPromotionId.Unique = true;
                 this.columnProductId.AllowDBNull = false;
                 this.columnProductId.DefaultValue = ((int)(1));
+                this.columnIssueId.DefaultValue = ((int)(0));
                 this.columnStartDate.AllowDBNull = false;
                 this.columnEndDate.AllowDBNull = false;
                 this.columnDiscountPercentage.AllowDBNull = false;
@@ -6006,6 +6021,22 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int IssueId {
+                get {
+                    try {
+                        return ((int)(this[this.tablePromotion.IssueIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'IssueId\' in table \'Promotion\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePromotion.IssueIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public System.DateTime StartDate {
                 get {
                     return ((global::System.DateTime)(this[this.tablePromotion.StartDateColumn]));
@@ -6079,6 +6110,18 @@ namespace Subs.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetPayerIdNull() {
                 this[this.tablePromotion.PayerIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsIssueIdNull() {
+                return this.IsNull(this.tablePromotion.IssueIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetIssueIdNull() {
+                this[this.tablePromotion.IssueIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8593,15 +8636,18 @@ FROM            Subscription";
             tableMapping.ColumnMappings.Add("DiscountPercentage", "DiscountPercentage");
             tableMapping.ColumnMappings.Add("ModifiedBy", "ModifiedBy");
             tableMapping.ColumnMappings.Add("ModifiedOn", "ModifiedOn");
+            tableMapping.ColumnMappings.Add("IssueId", "IssueId");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Promotion] WHERE (([PromotionId] = @Original_PromotionId) AND ((@IsNull_PayerId = 1 AND [PayerId] IS NULL) OR ([PayerId] = @Original_PayerId)) AND ([ProductId] = @Original_ProductId) AND ([StartDate] = @Original_StartDate) AND ([EndDate] = @Original_EndDate) AND ([DiscountPercentage] = @Original_DiscountPercentage) AND ((@IsNull_ModifiedBy = 1 AND [ModifiedBy] IS NULL) OR ([ModifiedBy] = @Original_ModifiedBy)) AND ((@IsNull_ModifiedOn = 1 AND [ModifiedOn] IS NULL) OR ([ModifiedOn] = @Original_ModifiedOn)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Promotion] WHERE (([PromotionId] = @Original_PromotionId) AND ((@IsNull_PayerId = 1 AND [PayerId] IS NULL) OR ([PayerId] = @Original_PayerId)) AND ([ProductId] = @Original_ProductId) AND ((@IsNull_IssueId = 1 AND [IssueId] IS NULL) OR ([IssueId] = @Original_IssueId)) AND ([StartDate] = @Original_StartDate) AND ([EndDate] = @Original_EndDate) AND ([DiscountPercentage] = @Original_DiscountPercentage) AND ((@IsNull_ModifiedBy = 1 AND [ModifiedBy] IS NULL) OR ([ModifiedBy] = @Original_ModifiedBy)) AND ((@IsNull_ModifiedOn = 1 AND [ModifiedOn] IS NULL) OR ([ModifiedOn] = @Original_ModifiedOn)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PromotionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PromotionId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_StartDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EndDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EndDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DiscountPercentage", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "DiscountPercentage", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -8611,11 +8657,12 @@ FROM            Subscription";
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[Promotion] ([PayerId], [ProductId], [StartDate], [EndDate], [DiscountPercentage], [ModifiedBy], [ModifiedOn]) VALUES (@PayerId, @ProductId, @StartDate, @EndDate, @DiscountPercentage, @ModifiedBy, @ModifiedOn);
-SELECT PromotionId, PayerId, ProductId, StartDate, EndDate, DiscountPercentage, ModifiedBy, ModifiedOn FROM Promotion WHERE (PromotionId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[Promotion] ([PayerId], [ProductId], [IssueId], [StartDate], [EndDate], [DiscountPercentage], [ModifiedBy], [ModifiedOn]) VALUES (@PayerId, @ProductId, @IssueId, @StartDate, @EndDate, @DiscountPercentage, @ModifiedBy, @ModifiedOn);
+SELECT PromotionId, PayerId, ProductId, IssueId, StartDate, EndDate, DiscountPercentage, ModifiedBy, ModifiedOn FROM Promotion WHERE (PromotionId = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StartDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EndDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EndDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DiscountPercentage", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "DiscountPercentage", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -8623,11 +8670,12 @@ SELECT PromotionId, PayerId, ProductId, StartDate, EndDate, DiscountPercentage, 
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Promotion] SET [PayerId] = @PayerId, [ProductId] = @ProductId, [StartDate] = @StartDate, [EndDate] = @EndDate, [DiscountPercentage] = @DiscountPercentage, [ModifiedBy] = @ModifiedBy, [ModifiedOn] = @ModifiedOn WHERE (([PromotionId] = @Original_PromotionId) AND ((@IsNull_PayerId = 1 AND [PayerId] IS NULL) OR ([PayerId] = @Original_PayerId)) AND ([ProductId] = @Original_ProductId) AND ([StartDate] = @Original_StartDate) AND ([EndDate] = @Original_EndDate) AND ([DiscountPercentage] = @Original_DiscountPercentage) AND ((@IsNull_ModifiedBy = 1 AND [ModifiedBy] IS NULL) OR ([ModifiedBy] = @Original_ModifiedBy)) AND ((@IsNull_ModifiedOn = 1 AND [ModifiedOn] IS NULL) OR ([ModifiedOn] = @Original_ModifiedOn)));
-SELECT PromotionId, PayerId, ProductId, StartDate, EndDate, DiscountPercentage, ModifiedBy, ModifiedOn FROM Promotion WHERE (PromotionId = @PromotionId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Promotion] SET [PayerId] = @PayerId, [ProductId] = @ProductId, [IssueId] = @IssueId, [StartDate] = @StartDate, [EndDate] = @EndDate, [DiscountPercentage] = @DiscountPercentage, [ModifiedBy] = @ModifiedBy, [ModifiedOn] = @ModifiedOn WHERE (([PromotionId] = @Original_PromotionId) AND ((@IsNull_PayerId = 1 AND [PayerId] IS NULL) OR ([PayerId] = @Original_PayerId)) AND ([ProductId] = @Original_ProductId) AND ((@IsNull_IssueId = 1 AND [IssueId] IS NULL) OR ([IssueId] = @Original_IssueId)) AND ([StartDate] = @Original_StartDate) AND ([EndDate] = @Original_EndDate) AND ([DiscountPercentage] = @Original_DiscountPercentage) AND ((@IsNull_ModifiedBy = 1 AND [ModifiedBy] IS NULL) OR ([ModifiedBy] = @Original_ModifiedBy)) AND ((@IsNull_ModifiedOn = 1 AND [ModifiedOn] IS NULL) OR ([ModifiedOn] = @Original_ModifiedOn)));
+SELECT PromotionId, PayerId, ProductId, IssueId, StartDate, EndDate, DiscountPercentage, ModifiedBy, ModifiedOn FROM Promotion WHERE (PromotionId = @PromotionId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StartDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EndDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EndDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DiscountPercentage", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "DiscountPercentage", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -8637,6 +8685,8 @@ SELECT PromotionId, PayerId, ProductId, StartDate, EndDate, DiscountPercentage, 
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_StartDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EndDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EndDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DiscountPercentage", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "DiscountPercentage", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -8660,8 +8710,8 @@ SELECT PromotionId, PayerId, ProductId, StartDate, EndDate, DiscountPercentage, 
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT PromotionId, PayerId, ProductId, StartDate, EndDate, DiscountPercentage, M" +
-                "odifiedBy, ModifiedOn FROM dbo.Promotion";
+            this._commandCollection[0].CommandText = "SELECT PromotionId, PayerId, ProductId, IssueId,  StartDate, EndDate, DiscountPer" +
+                "centage, ModifiedBy, ModifiedOn FROM dbo.Promotion";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;

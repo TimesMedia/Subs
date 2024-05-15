@@ -986,6 +986,22 @@ namespace Subs.Presentation
 
             try
             {
+                //Save a list to the database to prevent duplicates in future.
+                int lCount = 0;
+
+                foreach (DebitOrderProposal item in gDebitOrderProposals)
+                {
+                    if (item.IssueId != 0)
+                    {
+                        // Persist in database, except when they are debt entries. So the debt entries cannot be tied to a debtor.
+                        gDebitOrderHistoryAdapter.Insert(item.SubscriptionId, item.IssueId, DateTime.Now, Environment.UserName);
+                        lCount++;
+                    }
+                }
+
+                // OK, if this succeeded, write stuff toCSV.
+
+
                 // Remove all the 'surplus rows
 
                 foreach (DebitOrderProposal lProposal in gDebitOrderProposals)
@@ -1036,7 +1052,7 @@ namespace Subs.Presentation
                             lString.Append(","); // Account type
                             lString.Append("," + lPreviousProposal.BankCode.PadLeft(6, '0'));
                             lString.Append("," + lAmount.ToString("#######0.00"));
-                            lString.Append(lPreviousProposal.CustomerId.ToString());  // 6
+                            lString.Append("," + lPreviousProposal.CustomerId.ToString());  // 6
                             lString.Append(","); // 7
                             lString.Append(",True"); // 8
                             lString.Append("," + lPreviousProposal.EmailAddress); // 9

@@ -391,6 +391,10 @@ namespace Subs.Data
 {
     public partial class SubscriptionDoc3
     {
+        partial class PromotionDataTable
+        {
+        }
+
         public partial class SubscriptionDataTable
         {
         }
