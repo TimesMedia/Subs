@@ -726,7 +726,7 @@ namespace Subs.Business
                     return 0;
                 }
 
-                // Filter by all payer and issue
+                // Filter by product, payer and issue
 
                 List<PromotionData> lHits = lProducts.Where(p => p.PayerId == pCriteria.PayerId && p.IssueId == pCriteria.IssueId).ToList();
                 if (lHits.Count >= 1)
@@ -735,7 +735,7 @@ namespace Subs.Business
                     return lHits[0].DiscountPercentage;
                 }
 
-                // Filter by payer alone
+                // Filter by product and payer alone
                 lHits = lProducts.Where(p => p.PayerId == pCriteria.PayerId).ToList();
                 if (lHits.Count >= 1)
                 {
@@ -743,7 +743,7 @@ namespace Subs.Business
                     return lHits[0].DiscountPercentage;
                 }
 
-                // Filter by issue alone
+                // Filter by product and issue alone
                 lHits = lProducts.Where(p => p.IssueId == pCriteria.IssueId).ToList();
                 if (lHits.Count >= 1)
                 {
@@ -752,7 +752,15 @@ namespace Subs.Business
                 }
 
                 // You have a match on the product alone
-                    return lProducts[0].DiscountPercentage;
+                lHits = lProducts.Where(p => p.IssueId == null && p.PayerId == null).ToList();
+                if (lHits.Count >= 1)
+                {
+                    return lHits[0].DiscountPercentage;
+                }
+
+
+                return 0;
+
             }
 
             catch (Exception ex)
@@ -819,7 +827,7 @@ namespace Subs.Business
             try
             {
                 int lDiscountFactor = 0;
-                decimal lInternallyCalculatedDiscountFraction;
+                decimal lInternallyCalculatedDiscountFraction = 0;
 
                 List<int> lMimsProducts = new List<int>() { 1, 8, 17, 32, 47, 49 };
                 int lNumberOfMimsProducts = pBasket.Where(p => lMimsProducts.Contains(p.Subscription.ProductId)).Count();
@@ -866,60 +874,76 @@ namespace Subs.Business
 //****************************************************************************************************************************************
                 bool DeliveryCost()
                 {
-                    foreach (BasketItem lBasketItem in pBasket)
+                    try 
+                    { 
+                        foreach (BasketItem lBasketItem in pBasket)
+                        {
+                            lBasketItem.DeliveryOptions = ProductBiz.GetDeliveryOptions(lBasketItem.Subscription.ProductId);
+
+                            if (lBasketItem.Subscription.FreeDelivery)
+                            {
+                                lBasketItem.Subscription.DeliveryCost = 0;
+                            }
+                            else
+                            {
+                                lBasketItem.Subscription.DeliveryCost = SubscriptionBiz.GetDeliveryCost(lBasketItem.Subscription.ReceiverCountryId,
+                                                                 lBasketItem.Subscription.Weight * lBasketItem.Subscription.UnitsPerIssue,
+                                                                 lBasketItem.Subscription.DeliveryMethod)
+                                                                 / lBasketItem.Subscription.UnitsPerIssue;
+                            }
+
+                        }  // End of foreach loop
+                        return true;
+                    }
+                    catch (Exception ex)
                     {
-                        lBasketItem.DeliveryOptions = ProductBiz.GetDeliveryOptions(lBasketItem.Subscription.ProductId);
-
-                        if (lBasketItem.Subscription.FreeDelivery)
-                        {
-                            lBasketItem.Subscription.DeliveryCost = 0;
-                        }
-                        else
-                        {
-                            lBasketItem.Subscription.DeliveryCost = SubscriptionBiz.GetDeliveryCost(lBasketItem.Subscription.ReceiverCountryId,
-                                                             lBasketItem.Subscription.Weight * lBasketItem.Subscription.UnitsPerIssue,
-                                                             lBasketItem.Subscription.DeliveryMethod)
-                                                             / lBasketItem.Subscription.UnitsPerIssue;
-                        }
-
-                    }  // End of foreach loop
-                    return true;
+                        ExceptionData.WriteException(1, ex.Message, "SubscriptionBiz", "CalculateBasket-DeliveryCost", "");
+                        return false;
+                    }
                 }
 
 
                 // *****************************************Cater for MIMS product discount
                 bool MimsProductDiscount()
                 {
-                    if (lNumberOfMimsProducts > 1)
-                    {
-                        // Boost the unitcount if you have more than one product that covers more or less the same information.
+                    try
+                    { 
+                        if (lNumberOfMimsProducts > 1)
+                        {
+                            // Boost the unitcount if you have more than one product that covers more or less the same information.
 
-                        lDiscountFactor = 50;
+                            lDiscountFactor = 50;
+                        }
+
+                        lDiscountFactor = lDiscountFactor + pBasket.Sum(p => p.Subscription.UnitsPerIssue);
+
+                        // ************************************** Give additional discount on mass purchases
+
+                        if (lDiscountFactor == 1)
+                        {
+                            lInternallyCalculatedDiscountFraction = 0;
+                        }
+                        else
+                        {
+                            lInternallyCalculatedDiscountFraction = (decimal)(0.006 * Math.Pow(lDiscountFactor, 2) + (1.0 * lDiscountFactor) - 1) / 100;
+                        }
+
+
+                        // *************************************  Apply a ceiling on overall discount.
+
+
+                        if (lInternallyCalculatedDiscountFraction > 0.3M)
+                        {
+                            lInternallyCalculatedDiscountFraction = 0.3M;
+                        }
+
+                        return true;
                     }
-
-                    lDiscountFactor = lDiscountFactor + pBasket.Sum(p => p.Subscription.UnitsPerIssue);
-
-                    // ************************************** Give additional discount on mass purchases
-
-                    if (lDiscountFactor == 1)
+                    catch(Exception ex)
                     {
-                        lInternallyCalculatedDiscountFraction = 0;
+                        ExceptionData.WriteException(1, ex.Message, "SubscriptionBiz", "CalculateBasket-MimsProductDiscount", "");
+                        return false;
                     }
-                    else
-                    {
-                        lInternallyCalculatedDiscountFraction = (decimal)(0.006 * Math.Pow(lDiscountFactor, 2) + (1.0 * lDiscountFactor) - 1) / 100;
-                    }
-
-
-                    // *************************************  Apply a ceiling on overall discount.
-
-
-                    if (lInternallyCalculatedDiscountFraction > 0.3M)
-                    {
-                        lInternallyCalculatedDiscountFraction = 0.3M;
-                    }
-
-                    return true;
                 }
 
                 bool HardCodedMICDiscount(BasketItem lBasketItem)
@@ -933,27 +957,35 @@ namespace Subs.Business
 
                 bool PromotionDiscount(BasketItem lBasketItem)
                 {
+                    try 
+                    { 
+
                     // Cater for discount via promotion.
+                        PromotionCriteria lPromotionCriteria = new PromotionCriteria()
+                        {
+                            PayerId = lBasketItem.Subscription.PayerId,
+                            ProductId = lBasketItem.Subscription.ProductId,
+                            IssueId = lBasketItem.Subscription.ProposedStartIssue,
+                            StartDate = DateTime.Now
+                        };
 
-                    PromotionCriteria lPromotionCriteria = new PromotionCriteria()
-                    {
-                        PayerId = lBasketItem.Subscription.PayerId,
-                        ProductId = lBasketItem.Subscription.ProductId,
-                        IssueId = lBasketItem.Subscription.ProposedStartIssue,
-                        StartDate = DateTime.Now
-                    };
+                        decimal lDiscountPercentage = SubscriptionBiz.PromotionDiscountPercentage(lPromotionCriteria);
 
-                    decimal lDiscountPercentage = SubscriptionBiz.PromotionDiscountPercentage(lPromotionCriteria);
+                        if (lDiscountPercentage != 0)
+                        {
+                            lBasketItem.Subscription.DiscountMultiplier = 1 * (1 - lDiscountPercentage / 100);
+                        }
 
-                    if (lDiscountPercentage != 0)
-                    {
-                        lBasketItem.Subscription.DiscountMultiplier = 1 * (1 - lDiscountPercentage / 100);
-                    }
-
-                    //Leave it as is
+                        //Leave it as is
 
                     return true;
                 }
+                catch (Exception ex)
+                {
+                        ExceptionData.WriteException(1, ex.Message, "SubscriptionBiz", "CalculateBasket-PromiotionDiscount", "");
+                        return false;
+                }
+        }
 
                 bool ExplicitPercentageDiscount(BasketItem lBasketItem)
                 {
