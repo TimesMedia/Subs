@@ -170,6 +170,7 @@
                         <TableColumn  Width="Auto"/>
                         <TableColumn  Width="Auto"/>
                         <TableColumn  Width="Auto"/>
+                        <TableColumn  Width="Auto"/>
                     </Table.Columns>
                     
                     
@@ -194,7 +195,12 @@
                             <TableCell>
                                 <Paragraph TextAlignment="Right">Base price/u</Paragraph>
                             </TableCell>
-                            <TableCell>
+
+                        <TableCell>
+                            <Paragraph TextAlignment="Right">Discount %</Paragraph>
+                        </TableCell>
+
+                        <TableCell>
                             <Paragraph TextAlignment="Right">Discount/u</Paragraph>
                             </TableCell>
                             <TableCell>

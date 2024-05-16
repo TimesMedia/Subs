@@ -129,6 +129,11 @@ namespace Subs.Presentation
                     lDebitValueParagraph.TextAlignment = TextAlignment.Right;
                     lTableRow.Cells.Add(new TableCell(lDebitValueParagraph));
 
+                    decimal lDiscountPercentage = (1 - lSubscription.DiscountMultiplier) * 100;
+                    Paragraph lDiscountPercentageParagraph = new Paragraph(new Run(lDiscountPercentage.ToString("#0.00")));
+                    lDebitValueParagraph.TextAlignment = TextAlignment.Right;
+                    lTableRow.Cells.Add(new TableCell(lDebitValueParagraph));
+
                     decimal lDiscountedPrice = lSubscription.BaseRate * lSubscription.DiscountMultiplier;
                     decimal lDiscount = lSubscription.BaseRate - lDiscountedPrice;
                     Paragraph lDiscountParagraph = new Paragraph(new Run(lDiscount.ToString("R ######0.00")));
