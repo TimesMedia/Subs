@@ -497,6 +497,70 @@ namespace Subs.Presentation
                 
         }
 
+        private void BulkActivate_Click(object sender, RoutedEventArgs e)
+        {
+            int lCurrentSubscriptionId = 0;
+            try
+            {
+                ElicitString lElicitString = new ElicitString("Why do you want the order number to be");
+                lElicitString.ShowDialog();
+                if (lElicitString.Answer == "")
+                {
+                    return;
+                }
+
+                ElicitRichText lElicit = new ElicitRichText("Please provide me with a list of subscription ids. ");
+                lElicit.ShowDialog();
+                List<int> lListOfIntegers = lElicit.ListOfIntegers;
+                lElicit.Close();
+                MainWindow.Refresh();
+                int lCounter = 0;
+                Cursor = Cursors.Wait;
+  
+                foreach (int lItem in lListOfIntegers)
+                {
+                    SubscriptionData3 lSubscriptionData = new SubscriptionData3(lItem);
+
+                    if (lSubscriptionData.Status != SubStatus.Proposed)
+                    {
+                        MessageBox.Show("I cannot activate a subscription, unless it is a proposed subscription.");
+                        return;
+                    }
+
+                    lSubscriptionData.OrderNumber = lElicitString.Answer;
+
+                    if (!SubscriptionBiz.Activate(lSubscriptionData))
+                    {
+                        return;
+                    }
+
+                    lCounter++;
+                }
+                MessageBox.Show(lCounter.ToString() + " subscriptions activated.");
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "BulkActivate_Click",
+                                                 "SubscriptionId = " + lCurrentSubscriptionId.ToString());
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                Cursor = Cursors.Arrow;
+            }
+
+        }
+
 
         private void BulkReturn_Click(object sender, RoutedEventArgs e)
         {

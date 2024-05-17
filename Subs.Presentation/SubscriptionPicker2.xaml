@@ -58,12 +58,14 @@
                                 Tag="AuthorityMedium" Loaded="SetVisibility" Width="157"/>
                         <Button x:Name="ButtonBulkReturn"  Content="Return a list of subscription - issues" Canvas.Left="318" Canvas.Top="93" Click="BulkReturn_Click" Margin="0"
                                 Tag="AuthorityHighest" Loaded="SetVisibility" Width="240"/>
-
-                        <Button x:Name="buttoBulkCreate"  Content="Create a list of subscriptions" Canvas.Left="594" Canvas.Top="93" Click="buttonBulkCreate_Click" Margin="0"
+                        <Button Content="Activate list of proforma"  Click="BulkActivate_Click" 
+                                Tag="AuthorityHigh" Loaded="SetVisibility" Width="157" Canvas.Top="59" 
+                                Canvas.Left="594"/>
+                        <Button x:Name="buttonBulkRenew"  Content="Renew a list of subscriptions" Canvas.Left="594" Canvas.Top="93" Click="buttonBulkCreate_Click" Margin="0"
                                 Tag="AuthorityHighest" Loaded="SetVisibility" Width="157"/>
                     </Canvas>
                 </GroupBox>
-                <UserControl x:Name="SubscriptionGrid" Grid.Row="1" Height="auto" VerticalAlignment="Stretch" Margin="0,10,0,0"/>
+                <UserControl x:Name="SubscriptionGrid" Grid.Row="1" Height="auto" VerticalAlignment="Stretch"    Margin="0,10,0,0"/>
             </Grid>
         </TabItem>
         <TabItem Header="Reports">
