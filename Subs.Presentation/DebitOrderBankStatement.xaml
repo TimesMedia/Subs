@@ -57,7 +57,7 @@
             </Grid>
         </TabItem>
 
-        <TabItem Header="Propose debitors">
+        <TabItem Header="Propose debitors" Height="22" VerticalAlignment="Bottom">
             <Canvas Margin="0,0,0,0">
                 <DatePicker x:Name="calenderDeliver" Canvas.Left="22" Canvas.Top="41" SelectedDateFormat="Long" Width="191"/>
                 <Label Content="Select the planned delivery month" Canvas.Left="22" Canvas.Top="10"/>

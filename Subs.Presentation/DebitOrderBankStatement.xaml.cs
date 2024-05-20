@@ -1083,7 +1083,8 @@ namespace Subs.Presentation
                             lString.Append(","); // 34
                             lString.Append(","); // 35
                             lString.Append(","); // 36
-                            lString.Append(",MIMS"); // 37
+                            lString.Append("," + lProposal.ProductName);  // 37
+                            lString.Append("," + lProposal.Classification);  // 38
                             lWriter.WriteLine(lString.ToString());
 
                         }

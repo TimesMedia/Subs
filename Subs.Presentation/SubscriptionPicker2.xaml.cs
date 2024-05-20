@@ -653,13 +653,13 @@ namespace Subs.Presentation
 
         }
 
-        private void buttonBulkCreate_Click(object sender, RoutedEventArgs e)
+        private void buttonBulkCreateProForma_Click(object sender, RoutedEventArgs e)
         {
             // Target parameters ***************************
            
             int pStartIssue = 1033;
             int pNumberOfIssues = 2;
-            string pOrderNumber = "Bulk";
+            //string pOrderNumber = "Bulk";
             DeliveryMethod lDeliveryMethod = DeliveryMethod.ElectronicSingle;
 
             // *********************************************
@@ -683,7 +683,7 @@ namespace Subs.Presentation
                     SubscriptionData3 lTargetSubscription = new SubscriptionData3();
 
                     lTargetSubscription.PayerId = lSourceSubscription.PayerId;
-                    lTargetSubscription.ReceiverId = lSourceSubscription.PayerId;
+                    lTargetSubscription.ReceiverId = lSourceSubscription.ReceiverId;
                     lTargetSubscription.ProductId = ProductDataStatic.GetProductId(pStartIssue);
 
                     lTargetSubscription.DeliveryMethod = lDeliveryMethod;
@@ -696,9 +696,10 @@ namespace Subs.Presentation
                     lTargetSubscription.ProposedStartSequence = IssueBiz.GetSequenceNumber(pStartIssue);
                     lTargetSubscription.ProposedLastSequence = lTargetSubscription.ProposedStartSequence + pNumberOfIssues - 1;
                     lTargetSubscription.ProposedLastIssue = IssueBiz.GetIssueId(lTargetSubscription.ProductId, lTargetSubscription.ProposedLastSequence);
-                    lTargetSubscription.OrderNumber = pOrderNumber;
+                    lTargetSubscription.Status =  SubStatus.Proposed;
+                    //lTargetSubscription.OrderNumber = pOrderNumber;
 
-                    // Becasue this subscription is not initialised, the BaseRate defaults to 0;
+                    // Because this subscription is not initialised, the BaseRate defaults to 0;
 
                     ObservableCollection<BasketItem> lBasket = new ObservableCollection<BasketItem>();
 
