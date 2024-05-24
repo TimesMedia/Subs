@@ -31,7 +31,7 @@
     <ProductName>Mims subscription</ProductName>
     <PublisherName>ARENA</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>512</ApplicationRevision>
+    <ApplicationRevision>515</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -317,6 +317,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
+    <EmbeddedResource Include="DOTemplate.xlsx" />
     <None Include="packages.config" />
     <EmbeddedResource Include="PROTemplate.xlsx" />
     <None Include="Properties\Settings.settings">

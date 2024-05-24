@@ -311,6 +311,13 @@ namespace Subs.Business
 
         public static string Cancel(Data.SubscriptionData3 pSubscriptionData, string pReason)
         {
+            CustomerData3 lCustomerData = new CustomerData3(pSubscriptionData.PayerId);
+
+            if (pSubscriptionData.InvoiceId < lCustomerData.BalanceInvoiceId)
+            {
+                return "Invoice is too o9ld to be cancelled";
+            }
+
 
             SqlConnection lConnection = new SqlConnection();
             SqlTransaction lTransaction;
@@ -337,18 +344,6 @@ namespace Subs.Business
                     // Leave a trace of destruction
                     ExceptionData.WriteException(5, "Subscription " + pSubscriptionData.SubscriptionId.ToString() + " destroyed.", "SubscriptionBiz static", "Cancel", pReason + "CustomerId = " + pSubscriptionData.PayerId.ToString());
 
-                    //{
-                    //    string lResult;
-
-                    //    if ((lResult = CustomerBiz.SynchronizeLiability(new CustomerData3(pSubscriptionData.PayerId))) != "OK")
-                    //    {
-                    //        if (!lResult.Contains("Nothing"))
-                    //        {
-                    //            return lResult;
-                    //        }
-                    //    }
-                    //}
-
                     return "OK";
                 }
 
@@ -358,7 +353,6 @@ namespace Subs.Business
                 {
                     return "Subscription " + pSubscriptionData.SubscriptionId.ToString() + " is already cancelled and cannot be cancelled again.";
                 }
-
 
 
                 if (IssueBiz.GetUnitsLeft(pSubscriptionData.SubscriptionId) > 0)

@@ -63,7 +63,7 @@
                 <Label Content="Select the planned delivery month" Canvas.Left="22" Canvas.Top="10"/>
 
                 <DataGrid x:Name="ProposalDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="551" Width="1076" 
-                      Canvas.Left="22" RowDetailsVisibilityMode="VisibleWhenSelected" Canvas.Top="110" RowHeight="30" CanUserAddRows="False" CanUserDeleteRows="True">
+                      Canvas.Left="22" RowDetailsVisibilityMode="VisibleWhenSelected" Canvas.Top="110" RowHeight="30" CanUserAddRows="False" CanUserDeleteRows="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding CustomerId}" Header="Customer Id" Width="Auto"/>
                         <DataGridTextColumn x:Name="productNameColumn" Binding="{Binding ProductName}" Header="Product Name" Width="Auto"/>
@@ -84,16 +84,16 @@
                     </DataGrid.RowHeaderStyle>
                 </DataGrid>
                 <Button x:Name="buttonProposeDebitOrder" Content="Propose debit order values" Canvas.Left="423" Canvas.Top="14" Width="167"
-			    Click="buttonProposeDebitOrder_Click"/>
+			    Click="ButtonProposeDebitOrder"/>
                 <Button Content="Write to XML" Canvas.Left="688" Canvas.Top="16" Width="167"
 			    Click="buttonWriteToXML_Click"/>
 
-                <Button Content="Write to CSV" Canvas.Left="688" Canvas.Top="60" Width="167"
-			    Click="buttonWriteToCSV_Click"/>
+                <Button Content="Write to Excel" Canvas.Left="688" Canvas.Top="60" Width="167"
+			    Click="ButtonWriteToExcel"/>
             </Canvas>
 
         </TabItem>
-        <TabItem Header="Bank statement">
+        <!--<TabItem Header="Bank statement">
             <Canvas Margin="0,0,0,0" DataContext="{StaticResource DebitOrderBankStatementViewSource}">
                 <Button x:Name="buttonLoad" Content="Load a new bank statement from a file" Canvas.Left="10" Canvas.Top="10" Width="270" Click="buttonLoad_Click"/>
 
@@ -157,7 +157,7 @@
                     </DataGrid.ContextMenu>
                 </DataGrid>
             </Canvas>
-        </TabItem>
+        </TabItem>-->
     </TabControl>
 
 

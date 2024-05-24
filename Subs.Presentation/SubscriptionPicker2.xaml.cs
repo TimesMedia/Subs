@@ -653,95 +653,95 @@ namespace Subs.Presentation
 
         }
 
-        private void buttonBulkCreateProForma_Click(object sender, RoutedEventArgs e)
-        {
-            // Target parameters ***************************
+        //private void buttonBulkCreateProForma_Click(object sender, RoutedEventArgs e)
+        //{
+        //    // Target parameters ***************************
            
-            int pStartIssue = 1033;
-            int pNumberOfIssues = 2;
-            //string pOrderNumber = "Bulk";
-            DeliveryMethod lDeliveryMethod = DeliveryMethod.ElectronicSingle;
+        //    //int pStartIssue = 1033;
+        //    //int pNumberOfIssues = 2;
+        //    ////string pOrderNumber = "Bulk";
+        //    //DeliveryMethod lDeliveryMethod = DeliveryMethod.ElectronicSingle;
 
-            // *********************************************
+        //    // *********************************************
 
-            int lCurrentSubscriptionId = 0;
-            try
-            {
-                ElicitRichText lElicit = new ElicitRichText("Please provide me with a list of source SUBSCRIPTION ids. ");
-                lElicit.ShowDialog();
-                List<int> lListOfIntegers = lElicit.ListOfIntegers;
-                lElicit.Close();
-                MainWindow.Refresh();
-                int lCounter = 0;
-                Cursor = Cursors.Wait;
+        //    int lCurrentSubscriptionId = 0;
+        //    try
+        //    {
+        //        ElicitRichText lElicit = new ElicitRichText("Please provide me with a list of source SUBSCRIPTION ids. ");
+        //        lElicit.ShowDialog();
+        //        List<int> lListOfIntegers = lElicit.ListOfIntegers;
+        //        lElicit.Close();
+        //        MainWindow.Refresh();
+        //        int lCounter = 0;
+        //        Cursor = Cursors.Wait;
 
-                foreach (int lItem in lListOfIntegers)
-                {
-                    SubscriptionData3 lSourceSubscription = new SubscriptionData3(lItem);
-                    lCurrentSubscriptionId = lSourceSubscription.SubscriptionId;
+        //        foreach (int lItem in lListOfIntegers)
+        //        {
+        //            SubscriptionData3 lSourceSubscription = new SubscriptionData3(lItem);
+        //            lCurrentSubscriptionId = lSourceSubscription.SubscriptionId;
 
-                    SubscriptionData3 lTargetSubscription = new SubscriptionData3();
+        //            SubscriptionData3 lTargetSubscription = new SubscriptionData3();
 
-                    lTargetSubscription.PayerId = lSourceSubscription.PayerId;
-                    lTargetSubscription.ReceiverId = lSourceSubscription.ReceiverId;
-                    lTargetSubscription.ProductId = ProductDataStatic.GetProductId(pStartIssue);
+        //            lTargetSubscription.PayerId = lSourceSubscription.PayerId;
+        //            lTargetSubscription.ReceiverId = lSourceSubscription.ReceiverId;
+        //            lTargetSubscription.ProductId = ProductDataStatic.GetProductId(pStartIssue);
 
-                    lTargetSubscription.DeliveryMethod = lDeliveryMethod;
-                    lTargetSubscription.DeliveryAddressId = lSourceSubscription.DeliveryAddressId;
-                    lTargetSubscription.RenewalNotice = false;
-                    lTargetSubscription.UnitsPerIssue = lSourceSubscription.UnitsPerIssue;
-                    lTargetSubscription.NumberOfIssues = pNumberOfIssues;
+        //            lTargetSubscription.DeliveryMethod = lDeliveryMethod;
+        //            lTargetSubscription.DeliveryAddressId = lSourceSubscription.DeliveryAddressId;
+        //            lTargetSubscription.RenewalNotice = false;
+        //            lTargetSubscription.UnitsPerIssue = lSourceSubscription.UnitsPerIssue;
+        //            lTargetSubscription.NumberOfIssues = pNumberOfIssues;
 
-                    lTargetSubscription.ProposedStartIssue = pStartIssue;
-                    lTargetSubscription.ProposedStartSequence = IssueBiz.GetSequenceNumber(pStartIssue);
-                    lTargetSubscription.ProposedLastSequence = lTargetSubscription.ProposedStartSequence + pNumberOfIssues - 1;
-                    lTargetSubscription.ProposedLastIssue = IssueBiz.GetIssueId(lTargetSubscription.ProductId, lTargetSubscription.ProposedLastSequence);
-                    lTargetSubscription.Status =  SubStatus.Proposed;
-                    //lTargetSubscription.OrderNumber = pOrderNumber;
+        //            lTargetSubscription.ProposedStartIssue = pStartIssue;
+        //            lTargetSubscription.ProposedStartSequence = IssueBiz.GetSequenceNumber(pStartIssue);
+        //            lTargetSubscription.ProposedLastSequence = lTargetSubscription.ProposedStartSequence + pNumberOfIssues - 1;
+        //            lTargetSubscription.ProposedLastIssue = IssueBiz.GetIssueId(lTargetSubscription.ProductId, lTargetSubscription.ProposedLastSequence);
+        //            lTargetSubscription.Status =  SubStatus.Proposed;
+        //            //lTargetSubscription.OrderNumber = pOrderNumber;
 
-                    // Because this subscription is not initialised, the BaseRate defaults to 0;
+        //            // Because this subscription is not initialised, the BaseRate defaults to 0;
 
-                    ObservableCollection<BasketItem> lBasket = new ObservableCollection<BasketItem>();
+        //            ObservableCollection<BasketItem> lBasket = new ObservableCollection<BasketItem>();
 
-                    BasketItem lBasketItem = new BasketItem() { Subscription = lTargetSubscription};
-                    lBasketItem.ExplicitDiscountPercentage = 100M;
+        //            BasketItem lBasketItem = new BasketItem() { Subscription = lTargetSubscription};
+        //            lBasketItem.ExplicitDiscountPercentage = 100M;
 
 
-                    lBasket.Add(lBasketItem);
+        //            lBasket.Add(lBasketItem);
 
-                    if (!SubscriptionBiz.CalculateBasket(lBasket))
-                    {
-                        return;
-                    }
+        //            if (!SubscriptionBiz.CalculateBasket(lBasket))
+        //            {
+        //                return;
+        //            }
 
-                    SubscriptionsCapture.SubmitBasket(lBasket); 
+        //            SubscriptionsCapture.SubmitBasket(lBasket); 
 
-                    lCounter++;
-                }
+        //            lCounter++;
+        //        }
 
-                MessageBox.Show(lCounter.ToString() + " subscriptions created in bulk. Nothing delivered yet.");
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //        MessageBox.Show(lCounter.ToString() + " subscriptions created in bulk. Nothing delivered yet.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonBulkCreate_Click",
-                                                 "SourceSubscriptionId = " + lCurrentSubscriptionId.ToString());
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonBulkCreate_Click",
+        //                                         "SourceSubscriptionId = " + lCurrentSubscriptionId.ToString());
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                Cursor = Cursors.Arrow;
-            }
-        }
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //    finally
+        //    {
+        //        Cursor = Cursors.Arrow;
+        //    }
+        //}
 
 
 

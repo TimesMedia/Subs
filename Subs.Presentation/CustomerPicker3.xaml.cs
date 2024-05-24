@@ -1822,7 +1822,7 @@ namespace Subs.Presentation
                 {
                     string lResult;
 
-                    if ((lResult = CustomerBiz.Refund(lInvoice.TransactionId, gCurrentCustomer.CustomerId, lElicitDecimal.Answer, lElicitDate.Answer)) != "OK")
+                    if ((lResult = CustomerBiz.Refund(lInvoice.TransactionId, gCurrentCustomer, lElicitDecimal.Answer, lElicitDate.Answer)) != "OK")
                     {
                         MessageBox.Show(lResult);
                         return;

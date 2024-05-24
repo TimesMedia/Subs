@@ -226,6 +226,11 @@ namespace Subs.Business
         {
             pReverseTransactionId = 0;
 
+            if (pCustomerData.BalanceInvoiceTransactionId >= pPaymentTransactionId)
+            {
+                return "Payment too old to be reversed";
+            }
+
             SqlTransaction lTransaction;
             SqlConnection lConnection = new SqlConnection();
             lConnection.ConnectionString = Settings.ConnectionString;
@@ -279,8 +284,14 @@ namespace Subs.Business
             }
         }
 
-        public static string Refund(int pPaymentTransactionId, int pPayerId, decimal pRefundAmount, DateTime pEffectiveDate)
+        public static string Refund(int pPaymentTransactionId, CustomerData3 pCustomerData, decimal pRefundAmount, DateTime pEffectiveDate)
         {
+            if (pCustomerData.BalanceInvoiceTransactionId >= pPaymentTransactionId)
+            {
+                return "Payment too old to be refunded";
+            }
+
+
             // Start the transaction
             SqlTransaction lSqlTransaction;
             SqlConnection lConnection = new SqlConnection();
@@ -289,15 +300,7 @@ namespace Subs.Business
             lSqlTransaction = lConnection.BeginTransaction("Refund");
             try
             {
-
-                //// Update the liability on the payer
-                //if (!CustomerData3.AddToLiability(ref lSqlTransaction, pPayerId, -pRefundAmount))
-                //{
-                //    lSqlTransaction.Rollback("Refund");
-                //    return "Error in Refund ";
-                //}
-
-                if (!LedgerData.Refund(ref lSqlTransaction, pPaymentTransactionId, pPayerId, pRefundAmount, pEffectiveDate))
+                if (!LedgerData.Refund(ref lSqlTransaction, pPaymentTransactionId, pCustomerData.CustomerId, pRefundAmount, pEffectiveDate))
                 {
                     lSqlTransaction.Rollback("Refund");
                     return "Error in Refund ";

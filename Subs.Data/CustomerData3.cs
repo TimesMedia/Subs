@@ -2265,6 +2265,32 @@ namespace Subs.Data
 
 
 
+        public int? BalanceInvoiceTransactionId
+        {
+            get
+            {
+                try
+                {
+                    return (int)gCustomerAdapter.BalanceInvoiceTransactionId(BalanceInvoiceId);
+                }
+                catch (Exception Ex)
+                {
+                    //Display all the exceptions
+
+                    Exception CurrentException = Ex;
+                    int ExceptionLevel = 0;
+                    do
+                    {
+                        ExceptionLevel++;
+                        ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "BalanceInvoiceTransactionId", "CustomerId = " + CustomerId.ToString());
+                        CurrentException = CurrentException.InnerException;
+                    } while (CurrentException != null);
+
+                    throw Ex;
+                }
+            }
+        }
+
 
 
         public Decimal Balance

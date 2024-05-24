@@ -125,20 +125,28 @@ namespace Subs.Presentation
 
                     lTableRow.Cells.Add(new TableCell(new Paragraph(new Run(ProductDataStatic.GetIssueDescription(lSubscription.LastIssue)))));
 
-                    Paragraph lDebitValueParagraph = new Paragraph(new Run(lSubscription.BaseRate.ToString("R ######0.00")));
-                    lDebitValueParagraph.TextAlignment = TextAlignment.Right;
-                    lTableRow.Cells.Add(new TableCell(lDebitValueParagraph));
+                    // BaseRate
+
+                    Paragraph lBaseRateParagraph = new Paragraph(new Run(lSubscription.BaseRate.ToString("R ######0.00")));
+                    lBaseRateParagraph.TextAlignment = TextAlignment.Right;
+                    lTableRow.Cells.Add(new TableCell(lBaseRateParagraph));
+
+                    // Discount percentage
 
                     decimal lDiscountPercentage = (1 - lSubscription.DiscountMultiplier) * 100;
                     Paragraph lDiscountPercentageParagraph = new Paragraph(new Run(lDiscountPercentage.ToString("#0.00")));
-                    lDebitValueParagraph.TextAlignment = TextAlignment.Right;
-                    lTableRow.Cells.Add(new TableCell(lDebitValueParagraph));
+                    lDiscountPercentageParagraph.TextAlignment = TextAlignment.Right;
+                    lTableRow.Cells.Add(new TableCell(lDiscountPercentageParagraph));
+
+                    // Discount per uit
 
                     decimal lDiscountedPrice = lSubscription.BaseRate * lSubscription.DiscountMultiplier;
                     decimal lDiscount = lSubscription.BaseRate - lDiscountedPrice;
                     Paragraph lDiscountParagraph = new Paragraph(new Run(lDiscount.ToString("R ######0.00")));
                     lDiscountParagraph.TextAlignment = TextAlignment.Right;
-                     lTableRow.Cells.Add(new TableCell(lDiscountParagraph));
+                    lTableRow.Cells.Add(new TableCell(lDiscountParagraph));
+
+                    // DeliveryCost
 
                     Paragraph lDeliveryParagraph = new Paragraph(new Run(lSubscription.DeliveryCost.ToString("R ######0.00")));
                     lDeliveryParagraph.TextAlignment = TextAlignment.Right;
@@ -146,6 +154,8 @@ namespace Subs.Presentation
 
                     decimal lUnitPriceExc = lSubscription.UnitPrice - lSubscription.Vat;
 
+
+                    // UnitPrice
 
                     Paragraph lUnitPriceParagraph = new Paragraph(new Run(lUnitPriceExc.ToString("R ######0.00")));
                     lUnitPriceParagraph.TextAlignment = TextAlignment.Right;

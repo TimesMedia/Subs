@@ -8,7 +8,7 @@ namespace Subs.Data
     {
         private Excel.Application gApp = new Excel.Application();
         private readonly Excel.Workbook gWorkBook;
-        private Excel._Worksheet gWorkSheet;
+        private Excel.Worksheet gWorkSheet;
 
 
         public ExcelIO(string pExcelFile)
@@ -33,7 +33,7 @@ namespace Subs.Data
                 gApp.Visible = false;
                 gApp.Interactive = false;
 
-                gWorkSheet = (Excel._Worksheet)gWorkBook.Worksheets["Sheet1"];
+                gWorkSheet = (Excel.Worksheet)gWorkBook.Worksheets["Sheet1"];
                 gWorkSheet.Activate();
             }
 
@@ -77,7 +77,7 @@ namespace Subs.Data
         {
             try
             {
-                gWorkSheet = (Excel._Worksheet)gWorkBook.Worksheets[pSheet];
+                gWorkSheet = (Excel.Worksheet)gWorkBook.Worksheets[pSheet];
                 gWorkSheet.Activate();
                 return "OK";
             }
@@ -150,13 +150,10 @@ namespace Subs.Data
                 Target.Cells[pRow, pColumn].Value = pContent;
                 return "OK";
             }
-
             catch (Exception ex)
             {
-
                 return ex.Message;
             }
-
         }
 
 
@@ -260,7 +257,38 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "SaveAsPdf", "Stage =  " + lStage);
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "SaveAsCSV", "Stage =  " + lStage);
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                return ex.Message;
+            }
+        }
+
+
+
+
+
+        public string Save()
+        {
+            try
+            {
+                SelectSheet("Sheet1");
+                gWorkBook.Save();
+                //gWorkBook.ExportAsFixedFormat(Excel.XlFixedFormatType.xlTypePDF, gWorkBook.FullName.Replace(".xlsx", ".pdf"));
+                return "OK";
+
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "SaveAsPdf", "");
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
