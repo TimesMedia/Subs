@@ -85,7 +85,7 @@ namespace Subs.Business
                 // Test to see if it refers to a payment before the checkpoint invoice date.
               
 
-                if (pRecord.Date < (myCustomerData.BalanceInvoiceDate?? myCustomerData.CheckpointDateInvoice))
+                if (pRecord.Date.AddDays(5) < (myCustomerData.BalanceInvoiceDate?? myCustomerData.CheckpointDateInvoice)) 
                 {
                     pErrorMessage = "This payment refers too far into the past!";
                     ExceptionData.WriteException(5, "PaymentBeforeBalanceInvoice detected", "CustomerBizStatic", "ValidatePayment", "Reference = " + pRecord.Reference);
