@@ -2243,7 +2243,14 @@ namespace Subs.Data
             {
                 try
                 {
-                    return (DateTime)gCustomerAdapter.BalanceInvoiceDate(BalanceInvoiceId);
+                    if (BalanceInvoiceId == 0)
+                    {
+                        return null;
+                    }
+                    else
+                    { 
+                        return (DateTime)gCustomerAdapter.BalanceInvoiceDate(BalanceInvoiceId);
+                    }
                 }
                 catch (Exception Ex)
                 {
