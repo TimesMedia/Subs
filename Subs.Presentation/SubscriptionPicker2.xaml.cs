@@ -333,9 +333,14 @@ namespace Subs.Presentation
                 // First cancel expirations that have been hanging around for too long.
                 Cursor = Cursors.Wait;
 
-                if (!SubscriptionBiz.CancelExpiredTooLong())
                 {
-                    return;
+                    string lResult;
+
+                    if ((lResult = SubscriptionBiz.CancelExpiredTooLong()) != "OK")
+                    {
+                        MessageBox.Show(lResult);
+                        return;
+                    }
                 }
 
                 Cursor = Cursors.Arrow;

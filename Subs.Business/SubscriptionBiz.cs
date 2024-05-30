@@ -313,11 +313,11 @@ namespace Subs.Business
         {
             CustomerData3 lCustomerData = new CustomerData3(pSubscriptionData.PayerId);
 
-            if (pSubscriptionData.InvoiceId < lCustomerData.BalanceInvoiceId)
+            if (pSubscriptionData.Status != SubStatus.Expired && pSubscriptionData.InvoiceId < lCustomerData.BalanceInvoiceId)
             {
-                return "Invoice is too o9ld to be cancelled";
+                // Allow for expired transactions to be cancelled.
+                return "Invoice is too old to be cancelled";
             }
-
 
             SqlConnection lConnection = new SqlConnection();
             SqlTransaction lTransaction;
@@ -1294,7 +1294,7 @@ namespace Subs.Business
             }
         }
 
-        public static bool CancelExpiredTooLong()
+        public static string CancelExpiredTooLong()
         {
             SubscriptionData3 lSubscriptionData;
             Subs.Data.SubscriptionDoc3.SubscriptionDataTable lSubscriptionTable = new Subs.Data.SubscriptionDoc3.SubscriptionDataTable();
@@ -1317,11 +1317,11 @@ namespace Subs.Business
 
                         if ((lResult = Cancel(lSubscriptionData, "Expired for too long")) != "OK")
                         {
-                            return false;
+                            return lResult;
                         }
                     }
                 } // End of for loop
-                return true;
+                return "OK";
             }
             catch (Exception ex)
             {
@@ -1336,7 +1336,7 @@ namespace Subs.Business
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
-                return false;
+                return "Error in CancelExpiredTooLong";
             }
 
         }
