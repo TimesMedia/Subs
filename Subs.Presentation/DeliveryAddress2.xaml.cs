@@ -606,16 +606,6 @@ namespace Subs.Presentation
                     return;
                 }
 
-
-
-                //if (gDeliveryAddressCurrentRow.IsPostCodeNull())
-                //{
-                //    MessageBox.Show("Please provide me with a postal code.");
-                //    return;
-                //}
-
-               
-
                 TemplateRows lTemplate;
 
                 lTemplate = GetTemplateRows(lStreetRow.StreetId);
@@ -711,132 +701,6 @@ namespace Subs.Presentation
             }
         }
 
-
-        private void buttonUpdateDeliveryRecord_ClickOld(object sender, RoutedEventArgs e)
-        {
-            string lProgress = "Start";
-            try
-            {
-                DataRowView lViewRow = (DataRowView)gDeliveryAddressViewSource.View.CurrentItem;
-                if (lViewRow == null)
-                {
-                    MessageBox.Show("You did not select a deliveryAddress for me to edit");
-                    return;
-                }
-
-                DeliveryAddressDoc.DeliveryAddressRow lRow = (DeliveryAddressDoc.DeliveryAddressRow)lViewRow.Row;
-                DataRowView lView = (DataRowView)gStreetViewSource.View.CurrentItem;
-                DeliveryAddressDoc.StreetRow lStreetRow = (DeliveryAddressDoc.StreetRow)lView.Row;
-
-                if (lStreetRow == null)
-                {
-                    MessageBox.Show("You have not selected a street yet.");
-                    return;
-                }
-
-                if (lRow.IsPostCodeNull())
-                {
-                    MessageBox.Show("Please provide me with a postal code.");
-                    return;
-                }
-
-
-
-                TemplateRows lTemplate;
-
-                lTemplate = GetTemplateRows(lStreetRow.StreetId);
-
-                lProgress = "GetTemplateRows";
-
-                lRow.CountryId = lTemplate.CountryRow.CountryId;
-                lRow.Province = lTemplate.ProvinceRow.ProvinceName;
-                lRow.City = lTemplate.CityRow.CityName;
-
-                lProgress = "CityName";
-
-                lRow.Suburb = lTemplate.SuburbRow.SuburbName;
-                lRow.Street = lTemplate.StreetRow.StreetName;
-
-                lProgress = "StreetName";
-
-                if (lTemplate.StreetRow.IsStreetSuffixNull())
-                {
-                    lRow.StreetSuffix = null;
-                }
-                else
-                {
-                    lRow.StreetSuffix = lTemplate.StreetRow.StreetSuffix;
-                }
-
-
-                if (lTemplate.StreetRow.IsStreetExtensionNull())
-                {
-                    lRow.StreetExtension = null;
-                }
-                else
-                {
-                    lRow.StreetExtension = lTemplate.StreetRow.StreetExtension;
-                }
-
-
-                lProgress = "StreetExtension";
-
-                lRow.StreetId = lTemplate.StreetRow.StreetId;
-                //lRow.Verified = true;
-
-                lProgress = "StreetId";
-
-                lRow.ModifiedBy = System.Environment.UserName;
-                lRow.ModifiedOn = DateTime.Now;
-                lRow.EndEdit();
-
-                lProgress = "EndEdit";
-
-                gDeliveryAddressAdapter.Update(lRow);
-                gDeliveryAddressTable.AcceptChanges();
-
-                // Also update the many to many mapping 
-
-                if (gCustomerData != null)
-                {
-
-                    {
-                        string lResult;
-
-                        if ((lResult = DeliveryAddressData2.Link(lRow.DeliveryAddressId, gCustomerData.CustomerId)) != "OK")
-                        {
-                            MessageBox.Show(lResult);
-                            return;
-                        }
-                    }
-                }
-
-
-                MessageBox.Show("DeliveryAddress successfully updated.");
-
-                gTabControl.SelectedIndex = 0;
-                TabEdit.Visibility = Visibility.Hidden;
-            }
-
-            catch (Exception ex)
-            {
-                //Display all the exceptions
-
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonUpdateDeliveryRecord", "Progress = " + lProgress);
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
-
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-
-
         #endregion
 
         #region Properties
@@ -859,6 +723,5 @@ namespace Subs.Presentation
 
         #endregion
 
-   
     }
 }

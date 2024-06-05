@@ -26,8 +26,8 @@ namespace Subs.Data.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PKLWEBDB01\\mssql2016std;Initial Catalog=tempdb;Integrated Security=Tr" +
-            "ue;Enlist=False;Pooling=True;Max Pool Size=10;Connect Timeout=100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PKLWEBDB01\\mssql2016std;Initial Catalog=MIMS3;Integrated Security=Tru" +
+            "e;Enlist=False;Pooling=True;Max Pool Size=10;Connect Timeout=100")]
         public string MIMSConnectionString {
             get {
                 return ((string)(this["MIMSConnectionString"]));

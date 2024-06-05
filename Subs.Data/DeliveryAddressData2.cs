@@ -26,6 +26,7 @@ namespace Subs.Data
                 //gModified = false;
                 lRow.CountryId = 61;
                 lRow.PostCode = "0000";
+                lRow.MediaDelivery = true;
                 lRow.ModifiedBy = "Initial";
                 lRow.ModifiedOn = DateTime.Now;
                 gTable.AddDeliveryAddressRow(lRow);
@@ -879,6 +880,23 @@ namespace Subs.Data
                 NotifyPropertyChanged(nameof(SDI));
             }
         }
+
+
+        public bool MediaDelivery
+        {
+            get
+            {
+                    return gTable[0].MediaDelivery;
+            }
+
+            set
+            {
+                gTable[0].MediaDelivery = value;
+                NotifyPropertyChanged(nameof(MediaDelivery));
+            }
+        }
+
+
 
         public string ModifiedBy
         {

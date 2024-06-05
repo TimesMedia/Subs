@@ -919,11 +919,7 @@ namespace Subs.Presentation
 
 
                             lNewDeliveryItem.Cell = lCustomerData.CellPhoneNumber;
-
-                            //if (lCustomerData.CellPhoneNumber == "")
-                            //{
-                            //    lNewDeliveryItem.OfficeNumber = lCustomerData.PhoneNumber;
-                            //}
+                                                       
 
                             if (!lRow.IsWeightNull())
                             {

@@ -53,7 +53,8 @@ namespace Subs.Data
         Print = 2,
         Browser = 3,
         Desktop = 4,
-        Tablet = 5
+        Tablet = 5,
+        BrowserApplication = 6
     }
 
     //public enum ProductCategory

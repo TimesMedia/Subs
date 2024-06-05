@@ -280,8 +280,7 @@ namespace Subs.Presentation
                 DeliveryAddressDoc.StreetRow lRow = (DeliveryAddressDoc.StreetRow)lView.Row;
                 gSelectedAddress.StreetId = lRow.StreetId;
                 // Consider clearing out all the superfluous fields.
-
-
+                // Or keep them for backout purposes.
 
                 gSelectedAddress.Update();
                 MessageBox.Show("Address has been standardised successfully.");
