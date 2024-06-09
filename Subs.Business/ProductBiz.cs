@@ -370,14 +370,6 @@ namespace Subs.Business
                     return true;
                 }
 
-                //// Update the Liability
-
-                //if (!CustomerData3.AddToLiability(ref lTransaction, pData.PayerId, -(pData.UnitsPerIssue * pData.UnitPrice)))
-                //{
-                //    lTransaction.Rollback("Deliver");
-                //    return false;
-                //}
-
                 // Update the ProductData
 
                 if (!ProductDataStatic.PostDelivery(ref lTransaction, pData.IssueId, pData.UnitsPerIssue))
@@ -484,7 +476,7 @@ namespace Subs.Business
             }
         }
 
-        public static string FilterOnPayment(bool pPayers, bool pNonPayers, ref DeliveryDoc pDeliveryDoc)
+        public static string Filter(bool pPayers, bool pNonPayers, ref DeliveryDoc pDeliveryDoc, bool pMediaDelivery = false)
         {
             try
             {
@@ -505,7 +497,7 @@ namespace Subs.Business
 
                 // Remove inappropriate records
 
-                if (!pPayers & !pNonPayers)
+                if (!pPayers & !pNonPayers & !pMediaDelivery)
                 {
                     // Leave all records
                     return "OK";
@@ -526,6 +518,15 @@ namespace Subs.Business
                         continue;
                     }
 
+                    if (!lRow.MediaDelivery)
+                    {
+                        // Leave this record to be processed
+                        continue;
+                    }
+
+
+
+
                     // If you get here, the record has to be disregarded as far as 
                     // label printing goes. I do not delete it here, because that disrupts the enumeration
 
@@ -533,7 +534,7 @@ namespace Subs.Business
 
                 }
 
-                // Now delete those records
+                //Now delete those records
                 Data.DeliveryDoc.DeliveryRecordRow[] myRows;
                 myRows = (Data.DeliveryDoc.DeliveryRecordRow[])pDeliveryDoc.DeliveryRecord.Select("ValidationStatus = 'NOLABEL'");
 
@@ -555,7 +556,7 @@ namespace Subs.Business
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "ProductBizStatic", "FilterOnPayment", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "ProductBizStatic", "Filter", "");
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
@@ -563,6 +564,8 @@ namespace Subs.Business
             }
         }
 
+
+ 
         public static string CopyToCollectionList(ref DeliveryDoc pDeliveryDoc)
         {
             try

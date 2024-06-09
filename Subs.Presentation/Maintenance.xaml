@@ -130,7 +130,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="Reverse delivery run" Grid.Row="3" Grid.ColumnSpan="2" BorderBrush="Blue" BorderThickness="2" >
+                <!--<GroupBox Header="Reverse delivery run" Grid.Row="3" Grid.ColumnSpan="2" BorderBrush="Blue" BorderThickness="2" >
                     <StackPanel>
                         <DockPanel>
                             <Label x:Name="labelSelectedReversalIssue" DockPanel.Dock="Right"></Label>
@@ -138,14 +138,14 @@
                         </DockPanel>
 
                         <DockPanel>
-                            <Label Content="Select delivery start time"  Margin="5,0,0,0" DockPanel.Dock="Left"></Label>
-                            <DatePicker x:Name="DateTimePicker" DockPanel.Dock="Right" Margin="15" Width="306" />
+                            <Label Content="provide delivery start time"  Margin="5,0,0,0" DockPanel.Dock="Left"></Label>
+                            <TextBox x:Name="textDateTimePicker" DockPanel.Dock="Right" Margin="15" Width="306" SelectedDateFormat="Short" />
                         </DockPanel>
-                        <!--<Button x:Name="buttonReverse" Content="Reverse" HorizontalAlignment="Left"  Padding="3" Margin="5,0,0,5"
-                        Click="buttonReverse_Click" />   Functionality deliberately suspended.    -->
+                        <Button x:Name="buttonReverse" Content="Reverse" HorizontalAlignment="Left"  Padding="3" Margin="5,0,0,5"
+                        Click="buttonReverse_Click" />  
 
                     </StackPanel>
-                </GroupBox>
+                </GroupBox>-->
 
                 <GroupBox Header="Miscelaneous" Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Blue" BorderThickness="2">
                     <StackPanel Orientation="Horizontal">

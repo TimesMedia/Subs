@@ -770,7 +770,7 @@ namespace Subs.Presentation
                     gProcessedFiles.Items.Add(new ProcessedFile() { FileName = lSelectedFileName, Datum = DateTime.Now });
                 }
 
-                string lResult = ProductBiz.FilterOnPayment((bool)checkPayers.IsChecked, (bool)checkNonPayers.IsChecked, ref gDeliveryDoc);
+                string lResult = ProductBiz.Filter((bool)checkPayers.IsChecked, (bool)checkNonPayers.IsChecked, ref gDeliveryDoc);
                 if (lResult != "OK")
                 {
                     MessageBox.Show(lResult);
@@ -1358,7 +1358,7 @@ namespace Subs.Presentation
                 {
                     string lResult;
 
-                    if ((lResult = ProductBiz.FilterOnPayment((bool)checkPayers.IsChecked, (bool)checkNonPayers.IsChecked, ref gDeliveryDoc)) != "OK")
+                    if ((lResult = ProductBiz.Filter((bool)checkPayers.IsChecked, (bool)checkNonPayers.IsChecked, ref gDeliveryDoc)) != "OK")
                     {
                         MessageBox.Show(lResult);
                         return;
@@ -1471,7 +1471,7 @@ namespace Subs.Presentation
                 {
                     string lResult;
 
-                    if ((lResult = ProductBiz.FilterOnPayment((bool)checkPayers.IsChecked, (bool)checkNonPayers.IsChecked, ref gDeliveryDoc)) != "OK")
+                    if ((lResult = ProductBiz.Filter((bool)checkPayers.IsChecked, (bool)checkNonPayers.IsChecked, ref gDeliveryDoc)) != "OK")
                     {
                         MessageBox.Show(lResult);
                         return;
@@ -1521,104 +1521,7 @@ namespace Subs.Presentation
             }
         }
 
-        private void FormatMagMail(object sender, RoutedEventArgs e)
-        {
-            if (gBackgroundWorker.IsBusy || gBackgroundWorkerPost.IsBusy)
-            {
-                return;
-            }
-            this.Cursor = Cursors.Wait;
-            try
-            {
-                if (checkPayers.IsChecked == false & checkNonPayers.IsChecked == false)
-                {
-                    MessageBox.Show("This way you are not going to get any labels.");
-                    return;
-                }
-
-                OpenFileDialog lFileDialog = new OpenFileDialog();
-
-                lFileDialog.InitialDirectory = Settings.DirectoryPath + "\\Deliveries";
-                lFileDialog.Multiselect = true;
-                lFileDialog.ShowDialog();
-
-                if (lFileDialog.FileNames.Count() == 0)
-                {
-                    MessageBox.Show("You have not selected any files.");
-                    return;
-                }
-
-                foreach (string lFileName in lFileDialog.FileNames)
-                {
-                    if (!lFileName.Contains("\\Mail_"))
-                    {
-                        MessageBox.Show("I can accept only files of which the name starts with 'RegisteredMail_'");
-                        return;
-                    }
-                }
-
-                gDeliveryDoc.DeliveryRecord.Clear();
-
-                foreach (string lFileName in lFileDialog.FileNames)
-                {
-                    //Append all the files into the DeliveryRecord table
-                    gDeliveryDoc.DeliveryRecord.ReadXml(lFileName);
-                }
-
-                {
-                    string lResult;
-
-                    if ((lResult = ProductBiz.FilterOnPayment((bool)checkPayers.IsChecked, (bool)checkNonPayers.IsChecked, ref gDeliveryDoc)) != "OK")
-                    {
-                        MessageBox.Show(lResult);
-                        return;
-                    }
-                }
-
-                // Generate the mag mail list
-
-                //Sort by customerid
-
-                gDeliveryDoc.DeliveryRecord.DefaultView.Sort = "ReceiverId";
-
-                if (!ProductBiz.GenerateRegisteredMail("Surname, Initials", ref gDeliveryDoc))
-                {
-                    return;
-                }
-
-                string OutputFile = Settings.DirectoryPath + "\\Final_MagMailList_" + lFileDialog.SafeFileName;
-                gDeliveryDoc.RegisteredMail.WriteXml(OutputFile);
-
-                MessageBox.Show(gDeliveryDoc.RegisteredMail.Count.ToString() + " Records written to " + OutputFile.ToString());
-
-                OutputFile = OutputFile.Replace("xml", "xsd");
-                gDeliveryDoc.RegisteredMail.WriteXmlSchema(OutputFile);
-
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
-
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "FormatRegisteredMail", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
-
-                MessageBox.Show(ex.Message);
-                return;
-            }
-
-            finally
-            {
-                this.Cursor = Cursors.Arrow;
-            }
-
-        }
-
+    
         private void Click_SubscriptionTransactions(object sender, RoutedEventArgs e)
         {
             System.Data.DataRowView lRowView = (System.Data.DataRowView)gDeliveryRecordViewSource.View.CurrentItem;
@@ -1691,7 +1594,7 @@ namespace Subs.Presentation
             }
         }
         ///MediaFormatCouriierList
-        private void MediaFormatCourierList(object sender, RoutedEventArgs e)
+        private void FormatMediaList(object sender, RoutedEventArgs e)
         {
             if (gBackgroundWorker.IsBusy || gBackgroundWorkerPost.IsBusy)
             {
@@ -1733,12 +1636,16 @@ namespace Subs.Presentation
                     gProcessedFiles.Items.Add(new ProcessedFile() { FileName = lSelectedFileName, Datum = DateTime.Now });
                 }
 
-                string lResult = ProductBiz.FilterOnPayment((bool)checkPayers.IsChecked, (bool)checkNonPayers.IsChecked, ref gDeliveryDoc);
+                string lResult = ProductBiz.Filter((bool)checkPayers.IsChecked, (bool)checkNonPayers.IsChecked, ref gDeliveryDoc, true);
                 if (lResult != "OK")
                 {
                     MessageBox.Show(lResult);
                     return;
                 }
+              
+                // At sthis point, we are left with all Courier records that have true in the MedialDelivery of the corresponding deliveryRecord. 
+                // Since this is the default, it is an optimistic approach.
+                // If a deliveryaddress has been rejected in the past, it will be filtered out at this point in time.
 
                 gDeliveryDoc.DeliveryRecord.DefaultView.Sort = "ReceiverId, IssueId";
 

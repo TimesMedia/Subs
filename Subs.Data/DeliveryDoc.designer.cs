@@ -586,6 +586,8 @@ namespace Subs.Data {
             
             private global::System.Data.DataColumn columnHeight;
             
+            private global::System.Data.DataColumn columnMediaDelivery;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public DeliveryRecordDataTable() {
@@ -869,6 +871,14 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn MediaDeliveryColumn {
+                get {
+                    return this.columnMediaDelivery;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -935,7 +945,8 @@ namespace Subs.Data {
                         decimal Weight, 
                         int Length, 
                         int Width, 
-                        int Height) {
+                        int Height, 
+                        bool MediaDelivery) {
                 DeliveryRecordRow rowDeliveryRecordRow = ((DeliveryRecordRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         SubscriptionId,
@@ -968,7 +979,8 @@ namespace Subs.Data {
                         Weight,
                         Length,
                         Width,
-                        Height};
+                        Height,
+                        MediaDelivery};
                 rowDeliveryRecordRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDeliveryRecordRow);
                 return rowDeliveryRecordRow;
@@ -1022,6 +1034,7 @@ namespace Subs.Data {
                 this.columnLength = base.Columns["Length"];
                 this.columnWidth = base.Columns["Width"];
                 this.columnHeight = base.Columns["Height"];
+                this.columnMediaDelivery = base.Columns["MediaDelivery"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1089,6 +1102,8 @@ namespace Subs.Data {
                 base.Columns.Add(this.columnWidth);
                 this.columnHeight = new global::System.Data.DataColumn("Height", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHeight);
+                this.columnMediaDelivery = new global::System.Data.DataColumn("MediaDelivery", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMediaDelivery);
                 this.columnSubscriptionId.AllowDBNull = false;
                 this.columnDeliveryAddressId.AllowDBNull = false;
                 this.columnDeliveryAddressId.DefaultValue = ((int)(0));
@@ -1098,6 +1113,7 @@ namespace Subs.Data {
                 this.columnLength.DefaultValue = ((int)(0));
                 this.columnWidth.DefaultValue = ((int)(0));
                 this.columnHeight.DefaultValue = ((int)(1));
+                this.columnMediaDelivery.DefaultValue = ((bool)(false));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5785,6 +5801,22 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool MediaDelivery {
+                get {
+                    try {
+                        return ((bool)(this[this.tableDeliveryRecord.MediaDeliveryColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MediaDelivery\' in table \'DeliveryRecord\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryRecord.MediaDeliveryColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsReceiverIdNull() {
                 return this.IsNull(this.tableDeliveryRecord.ReceiverIdColumn);
             }
@@ -6117,6 +6149,18 @@ namespace Subs.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetHeightNull() {
                 this[this.tableDeliveryRecord.HeightColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsMediaDeliveryNull() {
+                return this.IsNull(this.tableDeliveryRecord.MediaDeliveryColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetMediaDeliveryNull() {
+                this[this.tableDeliveryRecord.MediaDeliveryColumn] = global::System.Convert.DBNull;
             }
         }
         

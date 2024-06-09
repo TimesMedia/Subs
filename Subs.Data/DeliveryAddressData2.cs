@@ -133,7 +133,6 @@ namespace Subs.Data
             }
         }
 
-
         public static int CreateCustomersByCityId(int pCityId, string pCityName)
         {
             try 
@@ -225,7 +224,6 @@ namespace Subs.Data
             }
         }
 
-
             #endregion
 
         #region Utilities
@@ -259,7 +257,7 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Load", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Load", "DeliveryAddressId =" + DeliveryAddressId.ToString());
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
@@ -341,7 +339,6 @@ namespace Subs.Data
             }
         }
 
-
         public static string Link(int pDeliveryAddressId, int pCustomerId)
         {
             try
@@ -384,7 +381,6 @@ namespace Subs.Data
                 return " Error in Link: " + ex.Message;
             }
         }
-
 
         #endregion
 
@@ -688,7 +684,6 @@ namespace Subs.Data
             }
         }
 
-
         public string StreetNo
         {
             get
@@ -881,22 +876,34 @@ namespace Subs.Data
             }
         }
 
-
-        public bool MediaDelivery
+        public bool? MediaDelivery
         {
             get
             {
-                    return gTable[0].MediaDelivery;
+                if (gTable[0].IsMediaDeliveryNull())
+                {
+                    return null;
+                }
+                else
+                { 
+                    return (bool)gTable[0].MediaDelivery;
+                }
             }
 
             set
             {
-                gTable[0].MediaDelivery = value;
+                if (!value.HasValue)
+                {
+                    gTable[0].SetMediaDeliveryNull();
+                }
+                else
+                { 
+                    gTable[0].MediaDelivery = (bool)value;
+                }
+
                 NotifyPropertyChanged(nameof(MediaDelivery));
             }
         }
-
-
 
         public string ModifiedBy
         {
@@ -965,7 +972,6 @@ namespace Subs.Data
                 return gFormattedAddress[4];
             }
         }
-
         
         #endregion
 

@@ -80,7 +80,7 @@
                         <DataGridTextColumn x:Name="postCodeColumn" Binding="{Binding PostCode}" Header="Post Code" Width="Auto"
                                             CellStyle="{StaticResource AlignRight}"/>
                         <DataGridTextColumn x:Name="phoneNumberColumn" Binding="{Binding PhoneNumber}" Header="Phone Number" Width="Auto"/>
-                        <DataGridCheckBoxColumn x:Name="mediaDeliveryColumn" Binding="{Binding MediaDelivery}" Header="MediaDelivery" Width="Auto"/>
+                        <DataGridCheckBoxColumn x:Name="mediaDeliveryColumn" Binding="{Binding MediaDelivery}" Header="MediaDelivery" Width="Auto" IsThreeState="True" />
                     </DataGrid.Columns>
                     <DataGrid.ContextMenu>
                         <ContextMenu>
@@ -225,13 +225,31 @@
                     <Label Canvas.Top="336" Canvas.Left="31" RenderTransformOrigin="0.479,-2.308">Delivery instructions</Label>
                     <TextBox x:Name="textSDI" Height="45"   Width="246" Canvas.Top="367" Text="{Binding SDI, Mode=TwoWay}" Canvas.Left="31"/>
 
-                    <CheckBox x:Name="CheckMediaDeliverable" Canvas.Top="450" Canvas.Left="31" Width="Auto" Height="30" IsChecked="{Binding MediaDelivery}" IsThreeState="False">Media delivery</CheckBox>
+                    <CheckBox x:Name="CheckMediaDeliverable" Canvas.Top="450" Canvas.Left="31" Width="Auto" Height="30" IsChecked="{Binding MediaDelivery}" IsThreeState="True">Media delivery</CheckBox>
                     
                     <Button x:Name="buttonUpdateDeliveryRecord" Content="Update" Width="61" Click="buttonUpdateDeliveryAddress_Click" Canvas.Top="500" Canvas.Left="31" Margin="0"/>
                     <Button x:Name="buttonExitEdit" Content="Exit without saving" Width="124" Click="buttonExitEdit_Click" Canvas.Top="500" Canvas.Left="153" Margin="0"/>
                 </Canvas>
             </Grid>
         </TabItem>
+
+        <TabItem Header="Media deliveries">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="600"/>
+                    <ColumnDefinition Width="600"/>
+                </Grid.ColumnDefinitions>
+               
+                <!--<Button x:Name="buttonImport" Content="ImportRejections" Width="300" Click="buttonImportRejections" Margin="0"/>-->
+                <!--<Button x:Name="buttonMark" Content="MarkMediaCandidates" Width="300" Click="buttonMarkMediaCandidates" Grid.Column="1"/>-->
+            </Grid>
+        </TabItem>
+        
+        
+        
     </TabControl>
 
 </Window>

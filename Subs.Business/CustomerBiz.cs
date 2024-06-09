@@ -37,10 +37,26 @@ namespace Subs.Business
             PaymentBeforeBalanceInvoice
         }
 
+        private static List<int> gMediaCities = new List<int>();
+
 
         static CustomerBiz()
         {
-           
+            gMediaCities.Add(323); // Alberton
+            gMediaCities.Add(349); // BoksBurg
+            gMediaCities.Add(304); //Brakpan
+            gMediaCities.Add(344); // Centurion
+            gMediaCities.Add(285); // Edenvale
+            gMediaCities.Add(352); // Johannesburg
+            gMediaCities.Add(311); // Kemptonpark
+            gMediaCities.Add(375); // MIdrand
+            gMediaCities.Add(360); // Pretoria
+            gMediaCities.Add(347); // Randburg
+            gMediaCities.Add(364); // Roodepoort
+            gMediaCities.Add(879); // Capetown
+            gMediaCities.Add(9);   // Gqeberha
+            gMediaCities.Add(457); // Durban
+            gMediaCities.Add(249); // Bloemfontein
         }
         #endregion
      
@@ -578,6 +594,36 @@ namespace Subs.Business
                 lConnection.Close();
             }
         }
+
+
+        public static string SetMediaDeliveryFlag(DeliveryAddressData2 pDeliveryAddressData)
+        {
+            int lCityId = DeliveryAddressStatic.GetCityId((int)pDeliveryAddressData.StreetId);
+
+            if (gMediaCities.Contains(lCityId))
+            {
+                if (pDeliveryAddressData.MediaDelivery == null)
+                {
+                    pDeliveryAddressData.MediaDelivery = true;
+                }
+                // else leave it as is
+            }
+            else
+            {
+                pDeliveryAddressData.MediaDelivery = false;
+            }
+
+            string lResult;
+            if ((lResult = pDeliveryAddressData.Update()) != "OK")
+            {
+                return lResult;
+               
+            }
+            return "OK";
+        }
+
+
+
 
         #endregion
 

@@ -101,14 +101,13 @@
             <Label Canvas.Left="469">Format delivery lists for</Label>
             <CheckBox Content="Payers" Canvas.Left="636" Canvas.Top="7"  Height="16" Name="checkPayers" IsChecked="True" Width="50" />
             <CheckBox Canvas.Left="711" Canvas.Top="8" Content="NonPayers" Height="16" Name="checkNonPayers" IsChecked="True" />
-            <Button  Content="Courier list" Canvas.Left="478" Canvas.Top="38" Click="FormatCourierList" Height="23" Name="buttonFormatCourierList" Width="307"/>
+            <Button  Content="Courier list" Canvas.Left="478" Canvas.Top="81" Click="FormatCourierList" Height="23" Name="buttonFormatCourierList" Width="307"/>
             <Button  Content="Create XSD" Canvas.Left="827" Canvas.Top="38" Click="buttonCreateXSD" Height="23" x:Name="CreateXSD" Width="307"/>
 
-            <Button  Content="Mag mail" Canvas.Left="478" Canvas.Top="78" Click="FormatMagMail" Height="22" Name="buttonFormatMagMail" Width="307"/>
             <Button  Content="Registered mail" Canvas.Left="827" Canvas.Top="82" Click="FormatRegisteredMail" Height="22" Name="buttonFormatRegisteredMail" Width="307" Margin="0"/>
 
             <Button Content="Collection list" Click="FormatCollectionList" Height="23" Name="buttonFormatCollectionList" Width="307" Canvas.Left="478" Canvas.Top="117" />
-            <Button  Content="Media Courier list" Canvas.Left="829" Canvas.Top="118" Click="MediaFormatCourierList" Height="22" x:Name="buttonMediaFormatCourierList_Copy" Width="307"/>
+            <Button  Content="Media Courier list" Canvas.Left="478" Canvas.Top="39" Click="FormatMediaList" Height="22" x:Name="buttonMediaFormatCourierList_Copy" Width="307"/>
         </Canvas>
 
     </Grid>

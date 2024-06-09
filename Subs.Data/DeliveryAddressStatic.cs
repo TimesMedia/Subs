@@ -29,6 +29,8 @@ namespace Subs.Data
             {
                 Loaded = false;
 
+                // Load the tables that represent validated deliveryaddresses.
+
                 DeliveryAddresses.DeliveryAddress.Clear();
                 DeliveryAddresses.Street.Clear();
                 DeliveryAddresses.Suburb.Clear();
@@ -141,6 +143,55 @@ namespace Subs.Data
                 } while (CurrentException != null);
 
                 return (0,"","","","");
+            }
+        }
+
+        public static int GetCityId(int pStreetId)
+        {
+            string lStage = "StreetId = " + pStreetId.ToString();
+            try
+            {
+                if (!DeliveryAddressStatic.Loaded)
+                {
+                    Thread.Sleep(5000);
+                }
+
+                if (!DeliveryAddressStatic.Loaded)
+                {
+                    throw new Exception("DeliveryAddresses not loaded");
+                }
+
+                (string, int) lStreet = DeliveryAddresses.Street.Where(p => p.StreetId == pStreetId).Select(q => (q.StreetName, q.SuburbId)).Single();
+
+                lStage = "Street = " + lStreet.Item2.ToString();
+                (string, int) lSuburb = DeliveryAddresses.Suburb.Where(p => p.SuburbId == lStreet.Item2).Select(q => (q.SuburbName, q.CityId)).Single();
+
+                //lStage = "Suburb = " + lSuburb.Item2.ToString();
+                //(string, int) lCity = DeliveryAddresses.City.Where(p => p.CityId == lSuburb.Item2).Select(q => (q.CityName, q.ProvinceId)).Single();
+
+                //lStage = "City = " + lCity.Item2.ToString();
+                //(string, int) lProvince = DeliveryAddresses.Province.Where(p => p.ProvinceId == lCity.Item2).Select(q => (q.ProvinceName, q.CountryId)).Single();
+                //int lCountryId = lProvince.Item2;
+
+                //lStage = "Province = " + lProvince.Item2.ToString();
+
+                return lSuburb.Item2;
+            }
+
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "DeliveryAddressStatic", "GetCityId", lStage);
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
             }
         }
 

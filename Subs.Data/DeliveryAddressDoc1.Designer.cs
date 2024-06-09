@@ -2151,11 +2151,11 @@ namespace Subs.Data {
             
             private global::System.Data.DataColumn columnSDI;
             
+            private global::System.Data.DataColumn columnMediaDelivery;
+            
             private global::System.Data.DataColumn columnModifiedBy;
             
             private global::System.Data.DataColumn columnModifiedOn;
-            
-            private global::System.Data.DataColumn columnMediaDelivery;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -2320,6 +2320,14 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn MediaDeliveryColumn {
+                get {
+                    return this.columnMediaDelivery;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public global::System.Data.DataColumn ModifiedByColumn {
                 get {
                     return this.columnModifiedBy;
@@ -2331,14 +2339,6 @@ namespace Subs.Data {
             public global::System.Data.DataColumn ModifiedOnColumn {
                 get {
                     return this.columnModifiedOn;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn MediaDeliveryColumn {
-                get {
-                    return this.columnMediaDelivery;
                 }
             }
             
@@ -2395,9 +2395,9 @@ namespace Subs.Data {
                         string Room, 
                         string PostCode, 
                         string SDI, 
+                        bool MediaDelivery, 
                         string ModifiedBy, 
-                        System.DateTime ModifiedOn, 
-                        bool MediaDelivery) {
+                        System.DateTime ModifiedOn) {
                 DeliveryAddressRow rowDeliveryAddressRow = ((DeliveryAddressRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2416,9 +2416,9 @@ namespace Subs.Data {
                         Room,
                         PostCode,
                         SDI,
+                        MediaDelivery,
                         ModifiedBy,
-                        ModifiedOn,
-                        MediaDelivery};
+                        ModifiedOn};
                 if ((parentCountryRowByFK__DeliveryA__Count__6C6E1476 != null)) {
                     columnValuesArray[2] = parentCountryRowByFK__DeliveryA__Count__6C6E1476[0];
                 }
@@ -2470,9 +2470,9 @@ namespace Subs.Data {
                 this.columnRoom = base.Columns["Room"];
                 this.columnPostCode = base.Columns["PostCode"];
                 this.columnSDI = base.Columns["SDI"];
+                this.columnMediaDelivery = base.Columns["MediaDelivery"];
                 this.columnModifiedBy = base.Columns["ModifiedBy"];
                 this.columnModifiedOn = base.Columns["ModifiedOn"];
-                this.columnMediaDelivery = base.Columns["MediaDelivery"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2510,12 +2510,12 @@ namespace Subs.Data {
                 base.Columns.Add(this.columnPostCode);
                 this.columnSDI = new global::System.Data.DataColumn("SDI", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSDI);
+                this.columnMediaDelivery = new global::System.Data.DataColumn("MediaDelivery", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMediaDelivery);
                 this.columnModifiedBy = new global::System.Data.DataColumn("ModifiedBy", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnModifiedBy);
                 this.columnModifiedOn = new global::System.Data.DataColumn("ModifiedOn", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnModifiedOn);
-                this.columnMediaDelivery = new global::System.Data.DataColumn("MediaDelivery", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnMediaDelivery);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnDeliveryAddressId}, true));
                 this.columnDeliveryAddressId.AutoIncrement = true;
@@ -2540,8 +2540,6 @@ namespace Subs.Data {
                 this.columnModifiedBy.AllowDBNull = false;
                 this.columnModifiedBy.MaxLength = 50;
                 this.columnModifiedOn.AllowDBNull = false;
-                this.columnMediaDelivery.AllowDBNull = false;
-                this.columnMediaDelivery.DefaultValue = ((bool)(true));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3609,11 +3607,11 @@ namespace Subs.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string Building {
                 get {
-                    try {
-                        return ((string)(this[this.tableDeliveryAddress.BuildingColumn]));
+                    if (this.IsBuildingNull()) {
+                        return null;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Building\' in table \'DeliveryAddress\' is DBNull.", e);
+                    else {
+                        return ((string)(this[this.tableDeliveryAddress.BuildingColumn]));
                     }
                 }
                 set {
@@ -3673,15 +3671,31 @@ namespace Subs.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string SDI {
                 get {
-                    try {
-                        return ((string)(this[this.tableDeliveryAddress.SDIColumn]));
+                    if (this.IsSDINull()) {
+                        return null;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SDI\' in table \'DeliveryAddress\' is DBNull.", e);
+                    else {
+                        return ((string)(this[this.tableDeliveryAddress.SDIColumn]));
                     }
                 }
                 set {
                     this[this.tableDeliveryAddress.SDIColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool MediaDelivery {
+                get {
+                    try {
+                        return ((bool)(this[this.tableDeliveryAddress.MediaDeliveryColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MediaDelivery\' in table \'DeliveryAddress\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryAddress.MediaDeliveryColumn] = value;
                 }
             }
             
@@ -3704,17 +3718,6 @@ namespace Subs.Data {
                 }
                 set {
                     this[this.tableDeliveryAddress.ModifiedOnColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool MediaDelivery {
-                get {
-                    return ((bool)(this[this.tableDeliveryAddress.MediaDeliveryColumn]));
-                }
-                set {
-                    this[this.tableDeliveryAddress.MediaDeliveryColumn] = value;
                 }
             }
             
@@ -3906,6 +3909,18 @@ namespace Subs.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetSDINull() {
                 this[this.tableDeliveryAddress.SDIColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsMediaDeliveryNull() {
+                return this.IsNull(this.tableDeliveryAddress.MediaDeliveryColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetMediaDeliveryNull() {
+                this[this.tableDeliveryAddress.MediaDeliveryColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -5705,7 +5720,26 @@ SELECT DeliveryCostId, CountryId, DateFrom, Mail1, Mail2, Mail3, Courier1, Couri
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [DeliveryAddress] WHERE (([DeliveryAddressId] = @Original_DeliveryAddressId) AND ((@IsNull_PhoneNumber = 1 AND [PhoneNumber] IS NULL) OR ([PhoneNumber] = @Original_PhoneNumber)) AND ([CountryId] = @Original_CountryId) AND ((@IsNull_Province = 1 AND [Province] IS NULL) OR ([Province] = @Original_Province)) AND ((@IsNull_City = 1 AND [City] IS NULL) OR ([City] = @Original_City)) AND ((@IsNull_Suburb = 1 AND [Suburb] IS NULL) OR ([Suburb] = @Original_Suburb)) AND ((@IsNull_Street = 1 AND [Street] IS NULL) OR ([Street] = @Original_Street)) AND ((@IsNull_StreetExtension = 1 AND [StreetExtension] IS NULL) OR ([StreetExtension] = @Original_StreetExtension)) AND ((@IsNull_StreetSuffix = 1 AND [StreetSuffix] IS NULL) OR ([StreetSuffix] = @Original_StreetSuffix)) AND ((@IsNull_StreetNo = 1 AND [StreetNo] IS NULL) OR ([StreetNo] = @Original_StreetNo)) AND ((@IsNull_StreetId = 1 AND [StreetId] IS NULL) OR ([StreetId] = @Original_StreetId)) AND ((@IsNull_Building = 1 AND [Building] IS NULL) OR ([Building] = @Original_Building)) AND ((@IsNull_FloorNo = 1 AND [FloorNo] IS NULL) OR ([FloorNo] = @Original_FloorNo)) AND ((@IsNull_Room = 1 AND [Room] IS NULL) OR ([Room] = @Original_Room)) AND ((@IsNull_PostCode = 1 AND [PostCode] IS NULL) OR ([PostCode] = @Original_PostCode)) AND ((@IsNull_SDI = 1 AND [SDI] IS NULL) OR ([SDI] = @Original_SDI)) AND ([ModifiedBy] = @Original_ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn) AND ([MediaDelivery] = @Original_MediaDelivery))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [DeliveryAddress] WHERE (([DeliveryAddressId] = @Original_DeliveryAdd" +
+                "ressId) AND ((@IsNull_PhoneNumber = 1 AND [PhoneNumber] IS NULL) OR ([PhoneNumbe" +
+                "r] = @Original_PhoneNumber)) AND ([CountryId] = @Original_CountryId) AND ((@IsNu" +
+                "ll_Province = 1 AND [Province] IS NULL) OR ([Province] = @Original_Province)) AN" +
+                "D ((@IsNull_City = 1 AND [City] IS NULL) OR ([City] = @Original_City)) AND ((@Is" +
+                "Null_Suburb = 1 AND [Suburb] IS NULL) OR ([Suburb] = @Original_Suburb)) AND ((@I" +
+                "sNull_Street = 1 AND [Street] IS NULL) OR ([Street] = @Original_Street)) AND ((@" +
+                "IsNull_StreetExtension = 1 AND [StreetExtension] IS NULL) OR ([StreetExtension] " +
+                "= @Original_StreetExtension)) AND ((@IsNull_StreetSuffix = 1 AND [StreetSuffix] " +
+                "IS NULL) OR ([StreetSuffix] = @Original_StreetSuffix)) AND ((@IsNull_StreetNo = " +
+                "1 AND [StreetNo] IS NULL) OR ([StreetNo] = @Original_StreetNo)) AND ((@IsNull_St" +
+                "reetId = 1 AND [StreetId] IS NULL) OR ([StreetId] = @Original_StreetId)) AND ((@" +
+                "IsNull_Building = 1 AND [Building] IS NULL) OR ([Building] = @Original_Building)" +
+                ") AND ((@IsNull_FloorNo = 1 AND [FloorNo] IS NULL) OR ([FloorNo] = @Original_Flo" +
+                "orNo)) AND ((@IsNull_Room = 1 AND [Room] IS NULL) OR ([Room] = @Original_Room)) " +
+                "AND ((@IsNull_PostCode = 1 AND [PostCode] IS NULL) OR ([PostCode] = @Original_Po" +
+                "stCode)) AND ((@IsNull_SDI = 1 AND [SDI] IS NULL) OR ([SDI] = @Original_SDI)) AN" +
+                "D ((@IsNull_MediaDelivery = 1 AND [MediaDelivery] IS NULL) OR ([MediaDelivery] =" +
+                " @Original_MediaDelivery)) AND ([ModifiedBy] = @Original_ModifiedBy) AND ([Modif" +
+                "iedOn] = @Original_ModifiedOn))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryAddressId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryAddressId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_PhoneNumber", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PhoneNumber", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -5737,13 +5771,14 @@ SELECT DeliveryCostId, CountryId, DateFrom, Mail1, Mail2, Mail3, Courier1, Couri
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PostCode", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostCode", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SDI", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SDI", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SDI", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SDI", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_MediaDelivery", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [DeliveryAddress] ([PhoneNumber], [CountryId], [Province], [City], [Suburb], [Street], [StreetExtension], [StreetSuffix], [StreetNo], [StreetId], [Building], [FloorNo], [Room], [PostCode], [SDI], [ModifiedBy], [ModifiedOn], [MediaDelivery]) VALUES (@PhoneNumber, @CountryId, @Province, @City, @Suburb, @Street, @StreetExtension, @StreetSuffix, @StreetNo, @StreetId, @Building, @FloorNo, @Room, @PostCode, @SDI, @ModifiedBy, @ModifiedOn, @MediaDelivery);
-SELECT DeliveryAddressId, PhoneNumber, CountryId, Province, City, Suburb, Street, StreetExtension, StreetSuffix, StreetNo, StreetId, Building, FloorNo, Room, PostCode, SDI, ModifiedBy, ModifiedOn, MediaDelivery FROM DeliveryAddress WHERE (DeliveryAddressId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [DeliveryAddress] ([PhoneNumber], [CountryId], [Province], [City], [Suburb], [Street], [StreetExtension], [StreetSuffix], [StreetNo], [StreetId], [Building], [FloorNo], [Room], [PostCode], [SDI], [MediaDelivery], [ModifiedBy], [ModifiedOn]) VALUES (@PhoneNumber, @CountryId, @Province, @City, @Suburb, @Street, @StreetExtension, @StreetSuffix, @StreetNo, @StreetId, @Building, @FloorNo, @Room, @PostCode, @SDI, @MediaDelivery, @ModifiedBy, @ModifiedOn);
+SELECT DeliveryAddressId, PhoneNumber, CountryId, Province, City, Suburb, Street, StreetExtension, StreetSuffix, StreetNo, StreetId, Building, FloorNo, Room, PostCode, SDI, MediaDelivery, ModifiedBy, ModifiedOn FROM DeliveryAddress WHERE (DeliveryAddressId = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PhoneNumber", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PhoneNumber", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CountryId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CountryId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -5760,17 +5795,17 @@ SELECT DeliveryAddressId, PhoneNumber, CountryId, Province, City, Suburb, Street
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Room", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Room", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PostCode", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SDI", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SDI", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [DeliveryAddress] SET [PhoneNumber] = @PhoneNumber, [CountryId] = @Country" +
                 "Id, [Province] = @Province, [City] = @City, [Suburb] = @Suburb, [Street] = @Stre" +
                 "et, [StreetExtension] = @StreetExtension, [StreetSuffix] = @StreetSuffix, [Stree" +
                 "tNo] = @StreetNo, [StreetId] = @StreetId, [Building] = @Building, [FloorNo] = @F" +
-                "loorNo, [Room] = @Room, [PostCode] = @PostCode, [SDI] = @SDI, [ModifiedBy] = @Mo" +
-                "difiedBy, [ModifiedOn] = @ModifiedOn, [MediaDelivery] = @MediaDelivery WHERE (([" +
+                "loorNo, [Room] = @Room, [PostCode] = @PostCode, [SDI] = @SDI, [MediaDelivery] = " +
+                "@MediaDelivery, [ModifiedBy] = @ModifiedBy, [ModifiedOn] = @ModifiedOn WHERE (([" +
                 "DeliveryAddressId] = @Original_DeliveryAddressId) AND ((@IsNull_PhoneNumber = 1 " +
                 "AND [PhoneNumber] IS NULL) OR ([PhoneNumber] = @Original_PhoneNumber)) AND ([Cou" +
                 "ntryId] = @Original_CountryId) AND ((@IsNull_Province = 1 AND [Province] IS NULL" +
@@ -5787,12 +5822,13 @@ SELECT DeliveryAddressId, PhoneNumber, CountryId, Province, City, Suburb, Street
                 "No] IS NULL) OR ([FloorNo] = @Original_FloorNo)) AND ((@IsNull_Room = 1 AND [Roo" +
                 "m] IS NULL) OR ([Room] = @Original_Room)) AND ((@IsNull_PostCode = 1 AND [PostCo" +
                 "de] IS NULL) OR ([PostCode] = @Original_PostCode)) AND ((@IsNull_SDI = 1 AND [SD" +
-                "I] IS NULL) OR ([SDI] = @Original_SDI)) AND ([ModifiedBy] = @Original_ModifiedBy" +
-                ") AND ([ModifiedOn] = @Original_ModifiedOn) AND ([MediaDelivery] = @Original_Med" +
-                "iaDelivery));\r\nSELECT DeliveryAddressId, PhoneNumber, CountryId, Province, City," +
-                " Suburb, Street, StreetExtension, StreetSuffix, StreetNo, StreetId, Building, Fl" +
-                "oorNo, Room, PostCode, SDI, ModifiedBy, ModifiedOn, MediaDelivery FROM DeliveryA" +
-                "ddress WHERE (DeliveryAddressId = @DeliveryAddressId)";
+                "I] IS NULL) OR ([SDI] = @Original_SDI)) AND ((@IsNull_MediaDelivery = 1 AND [Med" +
+                "iaDelivery] IS NULL) OR ([MediaDelivery] = @Original_MediaDelivery)) AND ([Modif" +
+                "iedBy] = @Original_ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn));\r\nSELE" +
+                "CT DeliveryAddressId, PhoneNumber, CountryId, Province, City, Suburb, Street, St" +
+                "reetExtension, StreetSuffix, StreetNo, StreetId, Building, FloorNo, Room, PostCo" +
+                "de, SDI, MediaDelivery, ModifiedBy, ModifiedOn FROM DeliveryAddress WHERE (Deliv" +
+                "eryAddressId = @DeliveryAddressId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PhoneNumber", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PhoneNumber", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CountryId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CountryId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -5809,9 +5845,9 @@ SELECT DeliveryAddressId, PhoneNumber, CountryId, Province, City, Suburb, Street
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Room", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Room", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PostCode", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SDI", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SDI", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryAddressId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryAddressId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_PhoneNumber", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PhoneNumber", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PhoneNumber", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PhoneNumber", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -5842,9 +5878,10 @@ SELECT DeliveryAddressId, PhoneNumber, CountryId, Province, City, Suburb, Street
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PostCode", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostCode", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SDI", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SDI", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SDI", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SDI", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_MediaDelivery", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryAddressId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryAddressId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -5863,7 +5900,7 @@ SELECT DeliveryAddressId, PhoneNumber, CountryId, Province, City, Suburb, Street
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        DeliveryAddressId, PhoneNumber, CountryId, Province, City, Suburb, " +
                 "Street, StreetExtension, StreetSuffix, StreetNo, StreetId, Building, FloorNo, Ro" +
-                "om, PostCode, SDI, ModifiedBy, ModifiedOn, MediaDelivery\r\nFROM            Delive" +
+                "om, PostCode, SDI, MediaDelivery, ModifiedBy, ModifiedOn\r\nFROM            Delive" +
                 "ryAddress";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();

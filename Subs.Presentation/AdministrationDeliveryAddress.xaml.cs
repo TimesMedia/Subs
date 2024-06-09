@@ -1,7 +1,9 @@
-﻿using Subs.Data;
+﻿using Subs.Business;
+using Subs.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -42,7 +44,6 @@ namespace Subs.Presentation
 
                 gDeliveryAddressDoc = ((DeliveryAddressDoc)(this.FindResource("deliveryAddressDoc")));
                 gDeliveryAddressViewSource = (CollectionViewSource)(this.FindResource("deliveryAddressViewSource"));
-                //gDeliveryAddressViewSource.Source = DeliveryAddressStatic.DeliveryAddresses;
                 gCountryViewSource = (CollectionViewSource)Resources["countryViewSource"];
                 gCityViewSource = (CollectionViewSource)Resources["provinceCityViewSource"];
                 gSuburbViewSource = (CollectionViewSource)Resources["provinceCitySuburbViewSource"];
@@ -62,6 +63,12 @@ namespace Subs.Presentation
                 } while (CurrentException != null);
             }
         }
+
+        private void SetVisibility(object sender, RoutedEventArgs e)
+        {
+            Utilities.SetVisibility(sender);
+        }
+
 
         private bool ListNonStandardAddresses()
         {
@@ -294,8 +301,66 @@ namespace Subs.Presentation
 
 
 
+
         #endregion
 
-     
+        #region Utilities
+        private void Button_MediaStandardiseAll(object sender, RoutedEventArgs e)
+        {
+            List<int> lDeliveryAddresses = new List<int>();
+            int lCurrentDeliveryAddress = 0;
+            SqlConnection lConnection = new SqlConnection();
+            SqlCommand Command = new SqlCommand();
+            SqlDataAdapter Adaptor = new SqlDataAdapter();
+            lConnection.ConnectionString = Settings.ConnectionString;
+            try 
+            { 
+                lConnection.Open();
+                Command.Connection = lConnection;
+                Command.CommandType = CommandType.Text;
+                Command.CommandText = "select DeliveryAddressId from DeliveryAddress Where StreetId is not null and MediaDelivery is null";
+           
+                SqlDataReader lReader = Command.ExecuteReader();
+                int lCounter = 0;
+
+                this.Cursor = Cursors.Wait;
+                while (lReader.Read())
+                {
+                    lCurrentDeliveryAddress = lReader.GetInt32(0);
+                    DeliveryAddressData2 lDeliveryAddressData = new DeliveryAddressData2(lCurrentDeliveryAddress);
+
+                    string lResult;
+                    if ((lResult = CustomerBiz.SetMediaDeliveryFlag(lDeliveryAddressData)) != "OK")
+                    {
+                        MessageBox.Show(lResult);
+                        return;
+                    }
+                    lCounter++;
+                }
+                MessageBox.Show("I have Media standardised " + lCounter.ToString() + " DeliveryAddresses");
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButttonStandardiseAll", 
+                        "DeliveryAddress "  + lCurrentDeliveryAddress.ToString());
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show("Error in Select");
+            }
+            finally 
+            {
+                this.Cursor = Cursors.Arrow;
+            }
+        }
+
+        #endregion
     }
 }

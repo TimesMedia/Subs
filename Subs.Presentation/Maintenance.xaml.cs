@@ -1247,83 +1247,83 @@ namespace Subs.Presentation
 
         #region Event handlers for reversal of delivery run
 
-        private void buttonSelectReversalIssue_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                IssuePicker2 lIssuePicker = new Subs.Presentation.IssuePicker2();
-                lIssuePicker.ShowDialog();
+        //private void buttonSelectReversalIssue_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        IssuePicker2 lIssuePicker = new Subs.Presentation.IssuePicker2();
+        //        lIssuePicker.ShowDialog();
 
-                if (lIssuePicker.IssueWasSelected)
-                {
-                    gSelectedIssue = lIssuePicker.IssueId;
-                    labelSelectedReversalIssue.Content = lIssuePicker.IssueName;
-                    //buttonReverse.IsEnabled = true;
-                }
-                else
-                {
-                    gSelectedIssue = 0;
-                    MessageBox.Show("Please select an issue.");
-                }
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //        if (lIssuePicker.IssueWasSelected)
+        //        {
+        //            gSelectedIssue = lIssuePicker.IssueId;
+        //            labelSelectedReversalIssue.Content = lIssuePicker.IssueName;
+        //            //buttonReverse.IsEnabled = true;
+        //        }
+        //        else
+        //        {
+        //            gSelectedIssue = 0;
+        //            MessageBox.Show("Please select an issue.");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonInvoiceSelectSkipIssue_Click", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonInvoiceSelectSkipIssue_Click", "");
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-                MessageBox.Show("Error in buttonInvoiceSelectSkipIssue_Click " + ex.Message);
-            }
-        }
+        //        MessageBox.Show("Error in buttonInvoiceSelectSkipIssue_Click " + ex.Message);
+        //    }
+        //}
 
-        private void buttonReverse_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
+        //private void buttonReverse_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
 
-                this.Cursor = Cursors.Wait;
-                DateTime lTime;
-                {
-                    string lResult;
-                    if (DateTimePicker.SelectedDate != null)
-                    {
-                        lTime = (DateTime)DateTimePicker.SelectedDate;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please supply a valid time for the start of the delivery job.");
-                        return;
-                    }
-
-
-                    if ((lResult = DeliveryDataStatic.ReverseDelivery(gSelectedIssue, lTime)) != "OK")
-                    {
-                        MessageBox.Show(lResult);
-                        return;
-                    }
-                }
+        //        this.Cursor = Cursors.Wait;
+        //        DateTime lTime;
+        //        {
+        //            string lResult;
+        //            if (DateTimePicker.SelectedDate != null)
+        //            {
+        //                lTime = (DateTime)DateTimePicker.SelectedDate;
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show("Please supply a valid time for the start of the delivery job.");
+        //                return;
+        //            }
 
 
-                string Message = "Reverse delivery successful for Issue:" + gSelectedIssue.ToString() + ", Time: " + lTime.ToString("yyyymmddHHmmss");
-                MessageBox.Show(Message);
-                ExceptionData.WriteException(3, Message, this.ToString(), "buttonReverseDeliveryRun_Click", " ");
-                MessageBox.Show("Done");
+        //            if ((lResult = DeliveryDataStatic.ReverseDelivery(gSelectedIssue, lTime)) != "OK")
+        //            {
+        //                MessageBox.Show(lResult);
+        //                return;
+        //            }
+        //        }
 
-                //buttonReverse.IsEnabled = false;
-            }
-            finally
-            {
-                this.Cursor = Cursors.Arrow;
 
-            }
-        }
+        //        string Message = "Reverse delivery successful for Issue:" + gSelectedIssue.ToString() + ", Time: " + lTime.ToString("yyyymmddHHmmss");
+        //        MessageBox.Show(Message);
+        //        ExceptionData.WriteException(3, Message, this.ToString(), "buttonReverseDeliveryRun_Click", " ");
+        //        MessageBox.Show("Done");
+
+        //        //buttonReverse.IsEnabled = false;
+        //    }
+        //    finally
+        //    {
+        //        this.Cursor = Cursors.Arrow;
+
+        //    }
+        //}
 
         #endregion
 

@@ -1118,12 +1118,6 @@ namespace Subs.Presentation
 
             Subs.Presentation.DeliveryAddress2 lDeliveryAddress = new Subs.Presentation.DeliveryAddress2(gCurrentCustomer.CustomerId);
             lDeliveryAddress.ShowDialog();
-
-
-            //this.Cursor = Cursors.Wait;
-            //DeliveryAddress lDeliveryAddress = DeliveryAddress.GetSingleton();
-            //this.Cursor = Cursors.Arrow;
-            //lDeliveryAddress.ShowDeliveryAddressDialog();
         }
 
         private void Click_Profile(object sender, RoutedEventArgs e)

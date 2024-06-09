@@ -1,4 +1,5 @@
-﻿using Subs.Data;
+﻿using Subs.Business;
+using Subs.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,7 +41,7 @@ namespace Subs.Presentation
         }
 
         private bool gPhysicalAddressChecked = false;
-
+              
         private readonly CustomerData3 gCustomerData;
 
         #endregion
@@ -81,6 +82,8 @@ namespace Subs.Presentation
                 gCityViewSource.View.SortDescriptions.Add(new System.ComponentModel.SortDescription("CityName", System.ComponentModel.ListSortDirection.Ascending));
                 gSuburbViewSource.View.SortDescriptions.Add(new System.ComponentModel.SortDescription("SuburbName", System.ComponentModel.ListSortDirection.Ascending));
                 gStreetViewSource.View.SortDescriptions.Add(new System.ComponentModel.SortDescription("StreetName", System.ComponentModel.ListSortDirection.Ascending));
+
+         
 
                 return true;
             }
@@ -247,74 +250,91 @@ namespace Subs.Presentation
 
                 lProgress = 1;
 
-                if (!gCurrentDeliveryAddress.StreetId.HasValue )
+                if (gCurrentDeliveryAddress.StreetId.HasValue)
                 {
+                    // This adress has been validated yet, so, initialisation of the template is required.
+                    InitialiseTemplate();
+ 
+                    string lResult;
+                    if ((lResult = CustomerBiz.SetMediaDeliveryFlag(gCurrentDeliveryAddress)) != "OK")
+                    {
+                        MessageBox.Show(lResult);
+
+                    }
                     return;
                 }
-
-                TemplateRows lTemplateRows = GetTemplateRows((int)gCurrentDeliveryAddress.StreetId);
- 
-                foreach (System.Data.DataRowView lViewRow in gCountryViewSource.View)
-                {
-                    if ((int)lViewRow["CountryId"] == lTemplateRows.CountryRow.CountryId)
-                    {
-                        gCountryViewSource.View.MoveCurrentTo(lViewRow);
-                        countryDataGrid.ScrollIntoView(countryDataGrid.SelectedItem);
-                        break;
-                    }
-                }
-
-                lProgress = 2;
-
-                foreach (System.Data.DataRowView lViewRow in gProvinceViewSource.View)
-                {
-                    if ((int)lViewRow["ProvinceId"] == lTemplateRows.ProvinceRow.ProvinceId)
-                    {
-                        gProvinceViewSource.View.MoveCurrentTo(lViewRow);
-                        Province_DataGrid.ScrollIntoView(Province_DataGrid.SelectedItem);
-                        break;
-                    }
-                }
-
-                lProgress = 3;
-
-                foreach (System.Data.DataRowView lViewRow in gCityViewSource.View)
-                {
-                    if ((int)lViewRow["CityId"] == lTemplateRows.CityRow.CityId)
-                    {
-                        gCityViewSource.View.MoveCurrentTo(lViewRow);
-                        City_DataGrid.ScrollIntoView(City_DataGrid.SelectedItem);
-                        break;
-                    }
-                }
-
-                lProgress = 4;
-
-                foreach (System.Data.DataRowView lViewRow in gSuburbViewSource.View)
-                {
-                    if ((int)lViewRow["SuburbId"] == lTemplateRows.SuburbRow.SuburbId)
-                    {
-                        gSuburbViewSource.View.MoveCurrentTo(lViewRow);
-                        Suburb_DataGrid.ScrollIntoView(Suburb_DataGrid.SelectedItem);
-                        break;
-                    }
-                }
-
-                lProgress = 5;
-
-                foreach (System.Data.DataRowView lViewRow in gStreetViewSource.View)
-                {
-                    if ((int)lViewRow["StreetId"] == lTemplateRows.StreetRow.StreetId)
-                    {
-                        gStreetViewSource.View.MoveCurrentTo(lViewRow);
-                        Street_DataGrid.ScrollIntoView(Street_DataGrid.SelectedItem);
-                        break;
-                    }
-                }
-
                 gTabControl.SelectedIndex = 1;
                 TabEdit.Visibility = Visibility.Visible;
 
+                //********************************************************************************************************************************************
+                              
+
+                void InitialiseTemplate()
+                {
+                    // Initialise the Template datagrid
+
+                    TemplateRows lTemplateRows = GetTemplateRows((int)gCurrentDeliveryAddress.StreetId);
+
+                    foreach (System.Data.DataRowView lViewRow in gCountryViewSource.View)
+                    {
+                        if ((int)lViewRow["CountryId"] == lTemplateRows.CountryRow.CountryId)
+                        {
+                            gCountryViewSource.View.MoveCurrentTo(lViewRow);
+                            countryDataGrid.ScrollIntoView(countryDataGrid.SelectedItem);
+                            break;
+                        }
+                    }
+
+                    lProgress = 2;
+
+                    foreach (System.Data.DataRowView lViewRow in gProvinceViewSource.View)
+                    {
+                        if ((int)lViewRow["ProvinceId"] == lTemplateRows.ProvinceRow.ProvinceId)
+                        {
+                            gProvinceViewSource.View.MoveCurrentTo(lViewRow);
+                            Province_DataGrid.ScrollIntoView(Province_DataGrid.SelectedItem);
+                            break;
+                        }
+                    }
+
+                    lProgress = 3;
+
+                    foreach (System.Data.DataRowView lViewRow in gCityViewSource.View)
+                    {
+                        if ((int)lViewRow["CityId"] == lTemplateRows.CityRow.CityId)
+                        {
+                            gCityViewSource.View.MoveCurrentTo(lViewRow);
+                            City_DataGrid.ScrollIntoView(City_DataGrid.SelectedItem);
+                            break;
+                        }
+                    }
+
+                    lProgress = 4;
+
+                    foreach (System.Data.DataRowView lViewRow in gSuburbViewSource.View)
+                    {
+                        if ((int)lViewRow["SuburbId"] == lTemplateRows.SuburbRow.SuburbId)
+                        {
+                            gSuburbViewSource.View.MoveCurrentTo(lViewRow);
+                            Suburb_DataGrid.ScrollIntoView(Suburb_DataGrid.SelectedItem);
+                            break;
+                        }
+                    }
+
+                    lProgress = 5;
+
+                    foreach (System.Data.DataRowView lViewRow in gStreetViewSource.View)
+                    {
+                        if ((int)lViewRow["StreetId"] == lTemplateRows.StreetRow.StreetId)
+                        {
+                            gStreetViewSource.View.MoveCurrentTo(lViewRow);
+                            Street_DataGrid.ScrollIntoView(Street_DataGrid.SelectedItem);
+                            break;
+                        }
+                    }
+                }
+
+                //*********************************************************************************************************************************************************
             }
             catch (Exception ex)
             {
@@ -646,19 +666,8 @@ namespace Subs.Presentation
                 lProgress = "StreetId";
 
                 gCurrentDeliveryAddress.StreetId = lTemplate.StreetRow.StreetId;
-                //lRow.Verified = true;
-
+                
                 lProgress = "StreetId";
-
-                //lRow.ModifiedBy = System.Environment.UserName;
-                //lRow.ModifiedOn = DateTime.Now;
-                //lRow.EndEdit();
-
-                lProgress = "EndEdit";
-
-                //gDeliveryAddressAdapter.Update(lRow);
-                //gDeliveryAddressTable.AcceptChanges();
-
                 gCurrentDeliveryAddress.Update();
 
                 // Also update the many to many mapping 

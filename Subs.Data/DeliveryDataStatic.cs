@@ -10,7 +10,6 @@ namespace Subs.Data
     {
         private static MIMSDataContext gMimsDataContext = new MIMSDataContext(Settings.ConnectionString);
 
-
         public static string LoadActive(ref DeliveryDoc pDeliveryDoc)
         {
             foreach (int lIssueId in ProductDataStatic.CurrentIssues())
@@ -27,9 +26,7 @@ namespace Subs.Data
             }
             return "OK";
         }
-   
-
-
+  
         public static string Load(int IssueId, ref DeliveryDoc pDoc)
         {
             SqlConnection lConnection = new SqlConnection();
@@ -204,53 +201,53 @@ namespace Subs.Data
 
         }
 
-        public static string ReverseDelivery(int IssueToReverseId, DateTime DeliveryDate)
-        {
-            SqlConnection lConnection = new SqlConnection();
-            try
-            {
-                SqlCommand Command = new SqlCommand();
-                lConnection.ConnectionString = Settings.ConnectionString;
-                lConnection.Open();
-                Command.Connection = lConnection;
-                Command.CommandType = CommandType.StoredProcedure;
-                Command.CommandText = "dbo.[MIMS.DeliveryDataStatic.ReverseDelivery]";
-                SqlCommandBuilder.DeriveParameters(Command);
-                //Command.Parameters["@DeliveriesReversed"].Direction = ParameterDirection.Output;
-                //Command.Parameters["@DeliveriesReversed"].IsNullable = false;
+        //public static string ReverseDelivery(int IssueToReverseId, DateTime DeliveryDate)
+        //{
+        //    SqlConnection lConnection = new SqlConnection();
+        //    try
+        //    {
+        //        SqlCommand Command = new SqlCommand();
+        //        lConnection.ConnectionString = Settings.ConnectionString;
+        //        lConnection.Open();
+        //        Command.Connection = lConnection;
+        //        Command.CommandType = CommandType.StoredProcedure;
+        //        Command.CommandText = "dbo.[MIMS.DeliveryDataStatic.ReverseDelivery]";
+        //        SqlCommandBuilder.DeriveParameters(Command);
+        //        //Command.Parameters["@DeliveriesReversed"].Direction = ParameterDirection.Output;
+        //        //Command.Parameters["@DeliveriesReversed"].IsNullable = false;
 
-                Command.Parameters["@IssueToReverseId"].Value = IssueToReverseId;
-                Command.Parameters["@DeliveryDate"].Value = DeliveryDate;
+        //        Command.Parameters["@IssueToReverseId"].Value = IssueToReverseId;
+        //        Command.Parameters["@DeliveryDate"].Value = DeliveryDate;
 
-                Command.ExecuteNonQuery();
+        //        Command.ExecuteNonQuery();
 
-                //int DeliveriesReversed = (int)Command.Parameters["@DeliveriesReversed"].Value;
+        //        //int DeliveriesReversed = (int)Command.Parameters["@DeliveriesReversed"].Value;
 
-                ExceptionData.WriteException(5, "I have reversed all deliveries for issue " + IssueToReverseId.ToString() + " executed on " + DeliveryDate.ToString("yyyymmddHHss"), "DeliveryDataStatic", "ReverseDelivery", "");
-                return "OK";
+        //        ExceptionData.WriteException(5, "I have reversed all deliveries for issue " + IssueToReverseId.ToString() + " executed on " + DeliveryDate.ToString("yyyymmddHHss"), "DeliveryDataStatic", "ReverseDelivery", "");
+        //        return "OK";
 
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "DeliveryDataStatic", "ReverseDelivery", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "DeliveryDataStatic", "ReverseDelivery", "");
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-                return ex.Message;
-            }
+        //        return ex.Message;
+        //    }
 
-            finally
-            {
-                lConnection.Close();
-            }
-        }
+        //    finally
+        //    {
+        //        lConnection.Close();
+        //    }
+        //}
 
         public static List<Dormant> Dormants()
         {

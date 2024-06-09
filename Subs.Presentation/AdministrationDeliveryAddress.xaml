@@ -201,5 +201,16 @@
                 </StackPanel>
             </Grid>
         </TabItem>
+        <TabItem Header="Utilities">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Button Content="Media standardise addresses globally"  Width="auto" Click="Button_MediaStandardiseAll" Margin="10,0,0,0" 
+                         Tag="AuthorityHighest" Loaded="SetVisibility"/>
+
+            </Grid>
+            
+        </TabItem>
     </TabControl>
 </Window>
