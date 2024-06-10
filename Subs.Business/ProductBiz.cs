@@ -78,7 +78,7 @@ namespace Subs.Business
 
 
                     // Check to see if there is a deliveryadress
-                    if (lRow.DeliveryMethod == (int)DeliveryMethod.Courier)
+                    if (lRow.DeliveryMethod == (int)DeliveryMethod.Skynet)
                     {
                         if (lRow.DeliveryAddressId == 0)
                         {
@@ -476,7 +476,7 @@ namespace Subs.Business
             }
         }
 
-        public static string Filter(bool pPayers, bool pNonPayers, ref DeliveryDoc pDeliveryDoc, bool pMediaDelivery = false)
+        public static string Filter(bool pPayers, bool pNonPayers, ref DeliveryDoc pDeliveryDoc)
         {
             try
             {
@@ -497,7 +497,7 @@ namespace Subs.Business
 
                 // Remove inappropriate records
 
-                if (!pPayers & !pNonPayers & !pMediaDelivery)
+                if (!pPayers & !pNonPayers)
                 {
                     // Leave all records
                     return "OK";
@@ -517,15 +517,6 @@ namespace Subs.Business
                         // Leave this record to be processed
                         continue;
                     }
-
-                    if (!lRow.MediaDelivery)
-                    {
-                        // Leave this record to be processed
-                        continue;
-                    }
-
-
-
 
                     // If you get here, the record has to be disregarded as far as 
                     // label printing goes. I do not delete it here, because that disrupts the enumeration

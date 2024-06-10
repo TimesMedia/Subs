@@ -539,7 +539,7 @@ namespace Subs.MimsWeb.Controllers
 
                         // If there are non electronic deliverymethods, you are going to need a deliveryaddress
 
-                        DeliveryMethod[] lMethodsRequiringAddress = { DeliveryMethod.Courier, DeliveryMethod.Mail, DeliveryMethod.RegisteredMail };
+                        DeliveryMethod[] lMethodsRequiringAddress = { DeliveryMethod.Skynet, DeliveryMethod.Mail, DeliveryMethod.RegisteredMail };
 
                         int lPhysicalAddressNeeded = lBasket.BasketItems.Where(p => lMethodsRequiringAddress.Contains(p.Subscription.DeliveryMethod)).Count();
 

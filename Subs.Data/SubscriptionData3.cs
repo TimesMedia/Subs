@@ -465,7 +465,7 @@ namespace Subs.Data
 
             set
             {
-                if (ProductId == 32 && (int)value == (int)DeliveryMethod.Courier)
+                if (ProductId == 32 && (int)value == (int)DeliveryMethod.Skynet)
                 {
                     throw new Exception("You cannot use a courier to deliver an electronic product.");
                 }

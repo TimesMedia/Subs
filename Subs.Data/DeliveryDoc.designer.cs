@@ -24,6 +24,8 @@ namespace Subs.Data {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class DeliveryDoc : global::System.Data.DataSet {
         
+        private DeliveryProposalDataTable tableDeliveryProposal;
+        
         private DeliveryRecordDataTable tableDeliveryRecord;
         
         private DeliveryListNewDataTable tableDeliveryListNew;
@@ -35,8 +37,6 @@ namespace Subs.Data {
         private LabelDataTable tableLabel;
         
         private AccrossDataTable tableAccross;
-        
-        private CourierListOldDataTable tableCourierListOld;
         
         private DeliveryList1DataTable tableDeliveryList1;
         
@@ -68,6 +68,9 @@ namespace Subs.Data {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
+                if ((ds.Tables["DeliveryProposal"] != null)) {
+                    base.Tables.Add(new DeliveryProposalDataTable(ds.Tables["DeliveryProposal"]));
+                }
                 if ((ds.Tables["DeliveryRecord"] != null)) {
                     base.Tables.Add(new DeliveryRecordDataTable(ds.Tables["DeliveryRecord"]));
                 }
@@ -85,9 +88,6 @@ namespace Subs.Data {
                 }
                 if ((ds.Tables["Accross"] != null)) {
                     base.Tables.Add(new AccrossDataTable(ds.Tables["Accross"]));
-                }
-                if ((ds.Tables["CourierListOld"] != null)) {
-                    base.Tables.Add(new CourierListOldDataTable(ds.Tables["CourierListOld"]));
                 }
                 if ((ds.Tables["DeliveryList1"] != null)) {
                     base.Tables.Add(new DeliveryList1DataTable(ds.Tables["DeliveryList1"]));
@@ -108,6 +108,16 @@ namespace Subs.Data {
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
             base.Tables.CollectionChanged += schemaChangedHandler;
             this.Relations.CollectionChanged += schemaChangedHandler;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public DeliveryProposalDataTable DeliveryProposal {
+            get {
+                return this.tableDeliveryProposal;
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -167,16 +177,6 @@ namespace Subs.Data {
         public AccrossDataTable Accross {
             get {
                 return this.tableAccross;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public CourierListOldDataTable CourierListOld {
-            get {
-                return this.tableCourierListOld;
             }
         }
         
@@ -257,6 +257,9 @@ namespace Subs.Data {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
+                if ((ds.Tables["DeliveryProposal"] != null)) {
+                    base.Tables.Add(new DeliveryProposalDataTable(ds.Tables["DeliveryProposal"]));
+                }
                 if ((ds.Tables["DeliveryRecord"] != null)) {
                     base.Tables.Add(new DeliveryRecordDataTable(ds.Tables["DeliveryRecord"]));
                 }
@@ -274,9 +277,6 @@ namespace Subs.Data {
                 }
                 if ((ds.Tables["Accross"] != null)) {
                     base.Tables.Add(new AccrossDataTable(ds.Tables["Accross"]));
-                }
-                if ((ds.Tables["CourierListOld"] != null)) {
-                    base.Tables.Add(new CourierListOldDataTable(ds.Tables["CourierListOld"]));
                 }
                 if ((ds.Tables["DeliveryList1"] != null)) {
                     base.Tables.Add(new DeliveryList1DataTable(ds.Tables["DeliveryList1"]));
@@ -314,6 +314,12 @@ namespace Subs.Data {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         internal void InitVars(bool initTable) {
+            this.tableDeliveryProposal = ((DeliveryProposalDataTable)(base.Tables["DeliveryProposal"]));
+            if ((initTable == true)) {
+                if ((this.tableDeliveryProposal != null)) {
+                    this.tableDeliveryProposal.InitVars();
+                }
+            }
             this.tableDeliveryRecord = ((DeliveryRecordDataTable)(base.Tables["DeliveryRecord"]));
             if ((initTable == true)) {
                 if ((this.tableDeliveryRecord != null)) {
@@ -350,12 +356,6 @@ namespace Subs.Data {
                     this.tableAccross.InitVars();
                 }
             }
-            this.tableCourierListOld = ((CourierListOldDataTable)(base.Tables["CourierListOld"]));
-            if ((initTable == true)) {
-                if ((this.tableCourierListOld != null)) {
-                    this.tableCourierListOld.InitVars();
-                }
-            }
             this.tableDeliveryList1 = ((DeliveryList1DataTable)(base.Tables["DeliveryList1"]));
             if ((initTable == true)) {
                 if ((this.tableDeliveryList1 != null)) {
@@ -372,6 +372,8 @@ namespace Subs.Data {
             this.Namespace = "http://tempuri.org/DeliveryDoc.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
+            this.tableDeliveryProposal = new DeliveryProposalDataTable();
+            base.Tables.Add(this.tableDeliveryProposal);
             this.tableDeliveryRecord = new DeliveryRecordDataTable();
             base.Tables.Add(this.tableDeliveryRecord);
             this.tableDeliveryListNew = new DeliveryListNewDataTable();
@@ -384,10 +386,14 @@ namespace Subs.Data {
             base.Tables.Add(this.tableLabel);
             this.tableAccross = new AccrossDataTable();
             base.Tables.Add(this.tableAccross);
-            this.tableCourierListOld = new CourierListOldDataTable();
-            base.Tables.Add(this.tableCourierListOld);
             this.tableDeliveryList1 = new DeliveryList1DataTable();
             base.Tables.Add(this.tableDeliveryList1);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private bool ShouldSerializeDeliveryProposal() {
+            return false;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -423,12 +429,6 @@ namespace Subs.Data {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private bool ShouldSerializeAccross() {
-            return false;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private bool ShouldSerializeCourierListOld() {
             return false;
         }
         
@@ -494,6 +494,9 @@ namespace Subs.Data {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public delegate void DeliveryProposalRowChangeEventHandler(object sender, DeliveryProposalRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public delegate void DeliveryRecordRowChangeEventHandler(object sender, DeliveryRecordRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -512,10 +515,646 @@ namespace Subs.Data {
         public delegate void AccrossRowChangeEventHandler(object sender, AccrossRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public delegate void CourierListOldRowChangeEventHandler(object sender, CourierListOldRowChangeEvent e);
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public delegate void DeliveryList1RowChangeEventHandler(object sender, DeliveryList1RowChangeEvent e);
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class DeliveryProposalDataTable : global::System.Data.TypedTableBase<DeliveryProposalRow> {
+            
+            private global::System.Data.DataColumn columnDeliveryProposalId;
+            
+            private global::System.Data.DataColumn columnProposalDate;
+            
+            private global::System.Data.DataColumn columnSubscriptionId;
+            
+            private global::System.Data.DataColumn columnIssueId;
+            
+            private global::System.Data.DataColumn columnIssueDescription;
+            
+            private global::System.Data.DataColumn columnDeliveryAddressId;
+            
+            private global::System.Data.DataColumn columnDeliveryMethod;
+            
+            private global::System.Data.DataColumn columnDeliveryMethodString;
+            
+            private global::System.Data.DataColumn columnValidationStatus;
+            
+            private global::System.Data.DataColumn columnValidationReason;
+            
+            private global::System.Data.DataColumn columnPost;
+            
+            private global::System.Data.DataColumn columnPostTransactionId;
+            
+            private global::System.Data.DataColumn columnModifiedOn;
+            
+            private global::System.Data.DataColumn columnModifiedBy;
+            
+            private global::System.Data.DataColumn columnPayerId;
+            
+            private global::System.Data.DataColumn columnRecieverId;
+            
+            private global::System.Data.DataColumn columnUnitPerIssue;
+            
+            private global::System.Data.DataColumn columnUnitPrice;
+            
+            private global::System.Data.DataColumn columnDebitOrder;
+            
+            private global::System.Data.DataColumn columnExpirationDate;
+            
+            private global::System.Data.DataColumn columnInvoiceId;
+            
+            private global::System.Data.DataColumn columnWeight;
+            
+            private global::System.Data.DataColumn columnLength;
+            
+            private global::System.Data.DataColumn columnWidth;
+            
+            private global::System.Data.DataColumn columnHeight;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public DeliveryProposalDataTable() {
+                this.TableName = "DeliveryProposal";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal DeliveryProposalDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected DeliveryProposalDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DeliveryProposalIdColumn {
+                get {
+                    return this.columnDeliveryProposalId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ProposalDateColumn {
+                get {
+                    return this.columnProposalDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SubscriptionIdColumn {
+                get {
+                    return this.columnSubscriptionId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn IssueIdColumn {
+                get {
+                    return this.columnIssueId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn IssueDescriptionColumn {
+                get {
+                    return this.columnIssueDescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DeliveryAddressIdColumn {
+                get {
+                    return this.columnDeliveryAddressId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DeliveryMethodColumn {
+                get {
+                    return this.columnDeliveryMethod;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DeliveryMethodStringColumn {
+                get {
+                    return this.columnDeliveryMethodString;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ValidationStatusColumn {
+                get {
+                    return this.columnValidationStatus;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ValidationReasonColumn {
+                get {
+                    return this.columnValidationReason;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn PostColumn {
+                get {
+                    return this.columnPost;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn PostTransactionIdColumn {
+                get {
+                    return this.columnPostTransactionId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ModifiedOnColumn {
+                get {
+                    return this.columnModifiedOn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ModifiedByColumn {
+                get {
+                    return this.columnModifiedBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn PayerIdColumn {
+                get {
+                    return this.columnPayerId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn RecieverIdColumn {
+                get {
+                    return this.columnRecieverId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn UnitPerIssueColumn {
+                get {
+                    return this.columnUnitPerIssue;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn UnitPriceColumn {
+                get {
+                    return this.columnUnitPrice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DebitOrderColumn {
+                get {
+                    return this.columnDebitOrder;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ExpirationDateColumn {
+                get {
+                    return this.columnExpirationDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn InvoiceIdColumn {
+                get {
+                    return this.columnInvoiceId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn WeightColumn {
+                get {
+                    return this.columnWeight;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn LengthColumn {
+                get {
+                    return this.columnLength;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn WidthColumn {
+                get {
+                    return this.columnWidth;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn HeightColumn {
+                get {
+                    return this.columnHeight;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public DeliveryProposalRow this[int index] {
+                get {
+                    return ((DeliveryProposalRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event DeliveryProposalRowChangeEventHandler DeliveryProposalRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event DeliveryProposalRowChangeEventHandler DeliveryProposalRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event DeliveryProposalRowChangeEventHandler DeliveryProposalRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event DeliveryProposalRowChangeEventHandler DeliveryProposalRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void AddDeliveryProposalRow(DeliveryProposalRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public DeliveryProposalRow AddDeliveryProposalRow(
+                        int DeliveryProposalId, 
+                        System.DateTime ProposalDate, 
+                        int SubscriptionId, 
+                        int IssueId, 
+                        string IssueDescription, 
+                        int DeliveryAddressId, 
+                        int DeliveryMethod, 
+                        string DeliveryMethodString, 
+                        int ValidationStatus, 
+                        string ValidationReason, 
+                        int Post, 
+                        int PostTransactionId, 
+                        System.DateTime ModifiedOn, 
+                        string ModifiedBy, 
+                        int PayerId, 
+                        string RecieverId, 
+                        int UnitPerIssue, 
+                        decimal UnitPrice, 
+                        bool DebitOrder, 
+                        System.DateTime ExpirationDate, 
+                        int InvoiceId, 
+                        decimal Weight, 
+                        int Length, 
+                        int Width, 
+                        int Height) {
+                DeliveryProposalRow rowDeliveryProposalRow = ((DeliveryProposalRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        DeliveryProposalId,
+                        ProposalDate,
+                        SubscriptionId,
+                        IssueId,
+                        IssueDescription,
+                        DeliveryAddressId,
+                        DeliveryMethod,
+                        DeliveryMethodString,
+                        ValidationStatus,
+                        ValidationReason,
+                        Post,
+                        PostTransactionId,
+                        ModifiedOn,
+                        ModifiedBy,
+                        PayerId,
+                        RecieverId,
+                        UnitPerIssue,
+                        UnitPrice,
+                        DebitOrder,
+                        ExpirationDate,
+                        InvoiceId,
+                        Weight,
+                        Length,
+                        Width,
+                        Height};
+                rowDeliveryProposalRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowDeliveryProposalRow);
+                return rowDeliveryProposalRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public DeliveryProposalRow FindByDeliveryProposalId(int DeliveryProposalId) {
+                return ((DeliveryProposalRow)(this.Rows.Find(new object[] {
+                            DeliveryProposalId})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                DeliveryProposalDataTable cln = ((DeliveryProposalDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new DeliveryProposalDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal void InitVars() {
+                this.columnDeliveryProposalId = base.Columns["DeliveryProposalId"];
+                this.columnProposalDate = base.Columns["ProposalDate"];
+                this.columnSubscriptionId = base.Columns["SubscriptionId"];
+                this.columnIssueId = base.Columns["IssueId"];
+                this.columnIssueDescription = base.Columns["IssueDescription"];
+                this.columnDeliveryAddressId = base.Columns["DeliveryAddressId"];
+                this.columnDeliveryMethod = base.Columns["DeliveryMethod"];
+                this.columnDeliveryMethodString = base.Columns["DeliveryMethodString"];
+                this.columnValidationStatus = base.Columns["ValidationStatus"];
+                this.columnValidationReason = base.Columns["ValidationReason"];
+                this.columnPost = base.Columns["Post"];
+                this.columnPostTransactionId = base.Columns["PostTransactionId"];
+                this.columnModifiedOn = base.Columns["ModifiedOn"];
+                this.columnModifiedBy = base.Columns["ModifiedBy"];
+                this.columnPayerId = base.Columns["PayerId"];
+                this.columnRecieverId = base.Columns["RecieverId"];
+                this.columnUnitPerIssue = base.Columns["UnitPerIssue"];
+                this.columnUnitPrice = base.Columns["UnitPrice"];
+                this.columnDebitOrder = base.Columns["DebitOrder"];
+                this.columnExpirationDate = base.Columns["ExpirationDate"];
+                this.columnInvoiceId = base.Columns["InvoiceId"];
+                this.columnWeight = base.Columns["Weight"];
+                this.columnLength = base.Columns["Length"];
+                this.columnWidth = base.Columns["Width"];
+                this.columnHeight = base.Columns["Height"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            private void InitClass() {
+                this.columnDeliveryProposalId = new global::System.Data.DataColumn("DeliveryProposalId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeliveryProposalId);
+                this.columnProposalDate = new global::System.Data.DataColumn("ProposalDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProposalDate);
+                this.columnSubscriptionId = new global::System.Data.DataColumn("SubscriptionId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSubscriptionId);
+                this.columnIssueId = new global::System.Data.DataColumn("IssueId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIssueId);
+                this.columnIssueDescription = new global::System.Data.DataColumn("IssueDescription", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIssueDescription);
+                this.columnDeliveryAddressId = new global::System.Data.DataColumn("DeliveryAddressId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeliveryAddressId);
+                this.columnDeliveryMethod = new global::System.Data.DataColumn("DeliveryMethod", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeliveryMethod);
+                this.columnDeliveryMethodString = new global::System.Data.DataColumn("DeliveryMethodString", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeliveryMethodString);
+                this.columnValidationStatus = new global::System.Data.DataColumn("ValidationStatus", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnValidationStatus);
+                this.columnValidationReason = new global::System.Data.DataColumn("ValidationReason", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnValidationReason);
+                this.columnPost = new global::System.Data.DataColumn("Post", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPost);
+                this.columnPostTransactionId = new global::System.Data.DataColumn("PostTransactionId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPostTransactionId);
+                this.columnModifiedOn = new global::System.Data.DataColumn("ModifiedOn", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnModifiedOn);
+                this.columnModifiedBy = new global::System.Data.DataColumn("ModifiedBy", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnModifiedBy);
+                this.columnPayerId = new global::System.Data.DataColumn("PayerId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPayerId);
+                this.columnRecieverId = new global::System.Data.DataColumn("RecieverId", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRecieverId);
+                this.columnUnitPerIssue = new global::System.Data.DataColumn("UnitPerIssue", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUnitPerIssue);
+                this.columnUnitPrice = new global::System.Data.DataColumn("UnitPrice", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUnitPrice);
+                this.columnDebitOrder = new global::System.Data.DataColumn("DebitOrder", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDebitOrder);
+                this.columnExpirationDate = new global::System.Data.DataColumn("ExpirationDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnExpirationDate);
+                this.columnInvoiceId = new global::System.Data.DataColumn("InvoiceId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnInvoiceId);
+                this.columnWeight = new global::System.Data.DataColumn("Weight", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWeight);
+                this.columnLength = new global::System.Data.DataColumn("Length", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLength);
+                this.columnWidth = new global::System.Data.DataColumn("Width", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWidth);
+                this.columnHeight = new global::System.Data.DataColumn("Height", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHeight);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnDeliveryProposalId}, true));
+                this.columnDeliveryProposalId.AllowDBNull = false;
+                this.columnDeliveryProposalId.Unique = true;
+                this.columnProposalDate.AllowDBNull = false;
+                this.columnSubscriptionId.AllowDBNull = false;
+                this.columnIssueId.AllowDBNull = false;
+                this.columnIssueDescription.AllowDBNull = false;
+                this.columnIssueDescription.MaxLength = 50;
+                this.columnDeliveryAddressId.AllowDBNull = false;
+                this.columnDeliveryMethod.AllowDBNull = false;
+                this.columnDeliveryMethodString.AllowDBNull = false;
+                this.columnDeliveryMethodString.MaxLength = 50;
+                this.columnValidationStatus.AllowDBNull = false;
+                this.columnValidationReason.MaxLength = 50;
+                this.columnModifiedOn.AllowDBNull = false;
+                this.columnModifiedBy.AllowDBNull = false;
+                this.columnModifiedBy.MaxLength = 50;
+                this.columnPayerId.AllowDBNull = false;
+                this.columnRecieverId.AllowDBNull = false;
+                this.columnRecieverId.MaxLength = 10;
+                this.columnUnitPerIssue.AllowDBNull = false;
+                this.columnUnitPrice.AllowDBNull = false;
+                this.columnInvoiceId.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public DeliveryProposalRow NewDeliveryProposalRow() {
+                return ((DeliveryProposalRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new DeliveryProposalRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(DeliveryProposalRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.DeliveryProposalRowChanged != null)) {
+                    this.DeliveryProposalRowChanged(this, new DeliveryProposalRowChangeEvent(((DeliveryProposalRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.DeliveryProposalRowChanging != null)) {
+                    this.DeliveryProposalRowChanging(this, new DeliveryProposalRowChangeEvent(((DeliveryProposalRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.DeliveryProposalRowDeleted != null)) {
+                    this.DeliveryProposalRowDeleted(this, new DeliveryProposalRowChangeEvent(((DeliveryProposalRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.DeliveryProposalRowDeleting != null)) {
+                    this.DeliveryProposalRowDeleting(this, new DeliveryProposalRowChangeEvent(((DeliveryProposalRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void RemoveDeliveryProposalRow(DeliveryProposalRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DeliveryDoc ds = new DeliveryDoc();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "DeliveryProposalDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -3970,650 +4609,6 @@ namespace Subs.Data {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class CourierListOldDataTable : global::System.Data.TypedTableBase<CourierListOldRow> {
-            
-            private global::System.Data.DataColumn columnCompany;
-            
-            private global::System.Data.DataColumn columnContact_NameAndSurname;
-            
-            private global::System.Data.DataColumn _columnContactWork_Cell_Phonenumber;
-            
-            private global::System.Data.DataColumn columnEmailAddress;
-            
-            private global::System.Data.DataColumn columnAddress1_UnitorComplexName;
-            
-            private global::System.Data.DataColumn columnAddress2;
-            
-            private global::System.Data.DataColumn columnAddress3_Suburb;
-            
-            private global::System.Data.DataColumn columnAddress4_City;
-            
-            private global::System.Data.DataColumn columnWaybillNumber;
-            
-            private global::System.Data.DataColumn columnDate;
-            
-            private global::System.Data.DataColumn columnPostalCode;
-            
-            private global::System.Data.DataColumn columnCountry;
-            
-            private global::System.Data.DataColumn columnWeight;
-            
-            private global::System.Data.DataColumn columnLength;
-            
-            private global::System.Data.DataColumn columnWidth;
-            
-            private global::System.Data.DataColumn columnHeight;
-            
-            private global::System.Data.DataColumn columnValue;
-            
-            private global::System.Data.DataColumn columnWeekendDelivery;
-            
-            private global::System.Data.DataColumn columnInsured;
-            
-            private global::System.Data.DataColumn columnIsCollection;
-            
-            private global::System.Data.DataColumn columnUniqueReferenceNumber;
-            
-            private global::System.Data.DataColumn columnPieces;
-            
-            private global::System.Data.DataColumn columnSpecial_Instructions;
-            
-            private global::System.Data.DataColumn columnProductName;
-            
-            private global::System.Data.DataColumn columnClassification;
-            
-            private global::System.Data.DataColumn columnCustomerId;
-            
-            private global::System.Data.DataColumn columnExpirationDate;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public CourierListOldDataTable() {
-                this.TableName = "CourierListOld";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            internal CourierListOldDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected CourierListOldDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn CompanyColumn {
-                get {
-                    return this.columnCompany;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Contact_NameAndSurnameColumn {
-                get {
-                    return this.columnContact_NameAndSurname;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn _ContactWork_Cell_PhonenumberColumn {
-                get {
-                    return this._columnContactWork_Cell_Phonenumber;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn EmailAddressColumn {
-                get {
-                    return this.columnEmailAddress;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Address1_UnitorComplexNameColumn {
-                get {
-                    return this.columnAddress1_UnitorComplexName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Address2Column {
-                get {
-                    return this.columnAddress2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Address3_SuburbColumn {
-                get {
-                    return this.columnAddress3_Suburb;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Address4_CityColumn {
-                get {
-                    return this.columnAddress4_City;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn WaybillNumberColumn {
-                get {
-                    return this.columnWaybillNumber;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn DateColumn {
-                get {
-                    return this.columnDate;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn PostalCodeColumn {
-                get {
-                    return this.columnPostalCode;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn CountryColumn {
-                get {
-                    return this.columnCountry;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn WeightColumn {
-                get {
-                    return this.columnWeight;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn LengthColumn {
-                get {
-                    return this.columnLength;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn WidthColumn {
-                get {
-                    return this.columnWidth;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn HeightColumn {
-                get {
-                    return this.columnHeight;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ValueColumn {
-                get {
-                    return this.columnValue;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn WeekendDeliveryColumn {
-                get {
-                    return this.columnWeekendDelivery;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn InsuredColumn {
-                get {
-                    return this.columnInsured;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn IsCollectionColumn {
-                get {
-                    return this.columnIsCollection;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn UniqueReferenceNumberColumn {
-                get {
-                    return this.columnUniqueReferenceNumber;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn PiecesColumn {
-                get {
-                    return this.columnPieces;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Special_InstructionsColumn {
-                get {
-                    return this.columnSpecial_Instructions;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ProductNameColumn {
-                get {
-                    return this.columnProductName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ClassificationColumn {
-                get {
-                    return this.columnClassification;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn CustomerIdColumn {
-                get {
-                    return this.columnCustomerId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ExpirationDateColumn {
-                get {
-                    return this.columnExpirationDate;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public CourierListOldRow this[int index] {
-                get {
-                    return ((CourierListOldRow)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event CourierListOldRowChangeEventHandler CourierListOldRowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event CourierListOldRowChangeEventHandler CourierListOldRowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event CourierListOldRowChangeEventHandler CourierListOldRowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event CourierListOldRowChangeEventHandler CourierListOldRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void AddCourierListOldRow(CourierListOldRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public CourierListOldRow AddCourierListOldRow(
-                        string Company, 
-                        string Contact_NameAndSurname, 
-                        string _ContactWork_Cell_Phonenumber, 
-                        string EmailAddress, 
-                        string Address1_UnitorComplexName, 
-                        string Address2, 
-                        string Address3_Suburb, 
-                        string Address4_City, 
-                        string WaybillNumber, 
-                        string Date, 
-                        string PostalCode, 
-                        string Country, 
-                        decimal Weight, 
-                        int Length, 
-                        int Width, 
-                        int Height, 
-                        decimal Value, 
-                        string WeekendDelivery, 
-                        string Insured, 
-                        string IsCollection, 
-                        string UniqueReferenceNumber, 
-                        int Pieces, 
-                        string Special_Instructions, 
-                        string ProductName, 
-                        string Classification, 
-                        int CustomerId, 
-                        System.DateTime ExpirationDate) {
-                CourierListOldRow rowCourierListOldRow = ((CourierListOldRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        Company,
-                        Contact_NameAndSurname,
-                        _ContactWork_Cell_Phonenumber,
-                        EmailAddress,
-                        Address1_UnitorComplexName,
-                        Address2,
-                        Address3_Suburb,
-                        Address4_City,
-                        WaybillNumber,
-                        Date,
-                        PostalCode,
-                        Country,
-                        Weight,
-                        Length,
-                        Width,
-                        Height,
-                        Value,
-                        WeekendDelivery,
-                        Insured,
-                        IsCollection,
-                        UniqueReferenceNumber,
-                        Pieces,
-                        Special_Instructions,
-                        ProductName,
-                        Classification,
-                        CustomerId,
-                        ExpirationDate};
-                rowCourierListOldRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowCourierListOldRow);
-                return rowCourierListOldRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                CourierListOldDataTable cln = ((CourierListOldDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new CourierListOldDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            internal void InitVars() {
-                this.columnCompany = base.Columns["Company"];
-                this.columnContact_NameAndSurname = base.Columns["Contact NameAndSurname"];
-                this._columnContactWork_Cell_Phonenumber = base.Columns["ContactWork/Cell Phonenumber"];
-                this.columnEmailAddress = base.Columns["EmailAddress"];
-                this.columnAddress1_UnitorComplexName = base.Columns["Address1 UnitorComplexName"];
-                this.columnAddress2 = base.Columns["Address2"];
-                this.columnAddress3_Suburb = base.Columns["Address3 Suburb"];
-                this.columnAddress4_City = base.Columns["Address4 City"];
-                this.columnWaybillNumber = base.Columns["WaybillNumber"];
-                this.columnDate = base.Columns["Date"];
-                this.columnPostalCode = base.Columns["PostalCode"];
-                this.columnCountry = base.Columns["Country"];
-                this.columnWeight = base.Columns["Weight"];
-                this.columnLength = base.Columns["Length"];
-                this.columnWidth = base.Columns["Width"];
-                this.columnHeight = base.Columns["Height"];
-                this.columnValue = base.Columns["Value"];
-                this.columnWeekendDelivery = base.Columns["WeekendDelivery"];
-                this.columnInsured = base.Columns["Insured"];
-                this.columnIsCollection = base.Columns["IsCollection"];
-                this.columnUniqueReferenceNumber = base.Columns["UniqueReferenceNumber"];
-                this.columnPieces = base.Columns["Pieces"];
-                this.columnSpecial_Instructions = base.Columns["Special Instructions"];
-                this.columnProductName = base.Columns["ProductName"];
-                this.columnClassification = base.Columns["Classification"];
-                this.columnCustomerId = base.Columns["CustomerId"];
-                this.columnExpirationDate = base.Columns["ExpirationDate"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            private void InitClass() {
-                this.columnCompany = new global::System.Data.DataColumn("Company", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCompany);
-                this.columnContact_NameAndSurname = new global::System.Data.DataColumn("Contact NameAndSurname", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnContact_NameAndSurname);
-                this._columnContactWork_Cell_Phonenumber = new global::System.Data.DataColumn("ContactWork/Cell Phonenumber", typeof(string), null, global::System.Data.MappingType.Element);
-                this._columnContactWork_Cell_Phonenumber.ExtendedProperties.Add("Generator_ColumnVarNameInTable", "_columnContactWork_Cell_Phonenumber");
-                this._columnContactWork_Cell_Phonenumber.ExtendedProperties.Add("Generator_UserColumnName", "ContactWork/Cell Phonenumber");
-                base.Columns.Add(this._columnContactWork_Cell_Phonenumber);
-                this.columnEmailAddress = new global::System.Data.DataColumn("EmailAddress", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEmailAddress);
-                this.columnAddress1_UnitorComplexName = new global::System.Data.DataColumn("Address1 UnitorComplexName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAddress1_UnitorComplexName);
-                this.columnAddress2 = new global::System.Data.DataColumn("Address2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAddress2);
-                this.columnAddress3_Suburb = new global::System.Data.DataColumn("Address3 Suburb", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAddress3_Suburb);
-                this.columnAddress4_City = new global::System.Data.DataColumn("Address4 City", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAddress4_City);
-                this.columnWaybillNumber = new global::System.Data.DataColumn("WaybillNumber", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWaybillNumber);
-                this.columnDate = new global::System.Data.DataColumn("Date", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDate);
-                this.columnPostalCode = new global::System.Data.DataColumn("PostalCode", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPostalCode);
-                this.columnCountry = new global::System.Data.DataColumn("Country", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCountry);
-                this.columnWeight = new global::System.Data.DataColumn("Weight", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWeight);
-                this.columnLength = new global::System.Data.DataColumn("Length", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLength);
-                this.columnWidth = new global::System.Data.DataColumn("Width", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWidth);
-                this.columnHeight = new global::System.Data.DataColumn("Height", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnHeight);
-                this.columnValue = new global::System.Data.DataColumn("Value", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnValue);
-                this.columnWeekendDelivery = new global::System.Data.DataColumn("WeekendDelivery", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWeekendDelivery);
-                this.columnInsured = new global::System.Data.DataColumn("Insured", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnInsured);
-                this.columnIsCollection = new global::System.Data.DataColumn("IsCollection", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnIsCollection);
-                this.columnUniqueReferenceNumber = new global::System.Data.DataColumn("UniqueReferenceNumber", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnUniqueReferenceNumber);
-                this.columnPieces = new global::System.Data.DataColumn("Pieces", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPieces);
-                this.columnSpecial_Instructions = new global::System.Data.DataColumn("Special Instructions", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSpecial_Instructions);
-                this.columnProductName = new global::System.Data.DataColumn("ProductName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnProductName);
-                this.columnClassification = new global::System.Data.DataColumn("Classification", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnClassification);
-                this.columnCustomerId = new global::System.Data.DataColumn("CustomerId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCustomerId);
-                this.columnExpirationDate = new global::System.Data.DataColumn("ExpirationDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnExpirationDate);
-                this.columnWaybillNumber.DefaultValue = ((string)("  "));
-                this.columnWeekendDelivery.DefaultValue = ((string)("No"));
-                this.columnInsured.DefaultValue = ((string)("No"));
-                this.columnIsCollection.DefaultValue = ((string)("No"));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public CourierListOldRow NewCourierListOldRow() {
-                return ((CourierListOldRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new CourierListOldRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(CourierListOldRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.CourierListOldRowChanged != null)) {
-                    this.CourierListOldRowChanged(this, new CourierListOldRowChangeEvent(((CourierListOldRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.CourierListOldRowChanging != null)) {
-                    this.CourierListOldRowChanging(this, new CourierListOldRowChangeEvent(((CourierListOldRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.CourierListOldRowDeleted != null)) {
-                    this.CourierListOldRowDeleted(this, new CourierListOldRowChangeEvent(((CourierListOldRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.CourierListOldRowDeleting != null)) {
-                    this.CourierListOldRowDeleting(this, new CourierListOldRowChangeEvent(((CourierListOldRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void RemoveCourierListOldRow(CourierListOldRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DeliveryDoc ds = new DeliveryDoc();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "CourierListOldDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class DeliveryList1DataTable : global::System.Data.TypedTableBase<DeliveryList1Row> {
             
             private global::System.Data.DataColumn columnWaybillNumber;
@@ -5301,6 +5296,449 @@ namespace Subs.Data {
                 }
                 xs.Add(dsSchema);
                 return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class DeliveryProposalRow : global::System.Data.DataRow {
+            
+            private DeliveryProposalDataTable tableDeliveryProposal;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal DeliveryProposalRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableDeliveryProposal = ((DeliveryProposalDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int DeliveryProposalId {
+                get {
+                    return ((int)(this[this.tableDeliveryProposal.DeliveryProposalIdColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.DeliveryProposalIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public System.DateTime ProposalDate {
+                get {
+                    return ((global::System.DateTime)(this[this.tableDeliveryProposal.ProposalDateColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.ProposalDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int SubscriptionId {
+                get {
+                    return ((int)(this[this.tableDeliveryProposal.SubscriptionIdColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.SubscriptionIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int IssueId {
+                get {
+                    return ((int)(this[this.tableDeliveryProposal.IssueIdColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.IssueIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string IssueDescription {
+                get {
+                    return ((string)(this[this.tableDeliveryProposal.IssueDescriptionColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.IssueDescriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int DeliveryAddressId {
+                get {
+                    return ((int)(this[this.tableDeliveryProposal.DeliveryAddressIdColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.DeliveryAddressIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int DeliveryMethod {
+                get {
+                    return ((int)(this[this.tableDeliveryProposal.DeliveryMethodColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.DeliveryMethodColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string DeliveryMethodString {
+                get {
+                    return ((string)(this[this.tableDeliveryProposal.DeliveryMethodStringColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.DeliveryMethodStringColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int ValidationStatus {
+                get {
+                    return ((int)(this[this.tableDeliveryProposal.ValidationStatusColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.ValidationStatusColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string ValidationReason {
+                get {
+                    try {
+                        return ((string)(this[this.tableDeliveryProposal.ValidationReasonColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ValidationReason\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryProposal.ValidationReasonColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int Post {
+                get {
+                    try {
+                        return ((int)(this[this.tableDeliveryProposal.PostColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Post\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryProposal.PostColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int PostTransactionId {
+                get {
+                    try {
+                        return ((int)(this[this.tableDeliveryProposal.PostTransactionIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PostTransactionId\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryProposal.PostTransactionIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public System.DateTime ModifiedOn {
+                get {
+                    return ((global::System.DateTime)(this[this.tableDeliveryProposal.ModifiedOnColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.ModifiedOnColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string ModifiedBy {
+                get {
+                    return ((string)(this[this.tableDeliveryProposal.ModifiedByColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.ModifiedByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int PayerId {
+                get {
+                    return ((int)(this[this.tableDeliveryProposal.PayerIdColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.PayerIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string RecieverId {
+                get {
+                    return ((string)(this[this.tableDeliveryProposal.RecieverIdColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.RecieverIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int UnitPerIssue {
+                get {
+                    return ((int)(this[this.tableDeliveryProposal.UnitPerIssueColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.UnitPerIssueColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal UnitPrice {
+                get {
+                    return ((decimal)(this[this.tableDeliveryProposal.UnitPriceColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.UnitPriceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool DebitOrder {
+                get {
+                    try {
+                        return ((bool)(this[this.tableDeliveryProposal.DebitOrderColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DebitOrder\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryProposal.DebitOrderColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public System.DateTime ExpirationDate {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableDeliveryProposal.ExpirationDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ExpirationDate\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryProposal.ExpirationDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int InvoiceId {
+                get {
+                    return ((int)(this[this.tableDeliveryProposal.InvoiceIdColumn]));
+                }
+                set {
+                    this[this.tableDeliveryProposal.InvoiceIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal Weight {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableDeliveryProposal.WeightColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Weight\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryProposal.WeightColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int Length {
+                get {
+                    try {
+                        return ((int)(this[this.tableDeliveryProposal.LengthColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Length\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryProposal.LengthColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int Width {
+                get {
+                    try {
+                        return ((int)(this[this.tableDeliveryProposal.WidthColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Width\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryProposal.WidthColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int Height {
+                get {
+                    try {
+                        return ((int)(this[this.tableDeliveryProposal.HeightColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Height\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryProposal.HeightColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsValidationReasonNull() {
+                return this.IsNull(this.tableDeliveryProposal.ValidationReasonColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetValidationReasonNull() {
+                this[this.tableDeliveryProposal.ValidationReasonColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsPostNull() {
+                return this.IsNull(this.tableDeliveryProposal.PostColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetPostNull() {
+                this[this.tableDeliveryProposal.PostColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsPostTransactionIdNull() {
+                return this.IsNull(this.tableDeliveryProposal.PostTransactionIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetPostTransactionIdNull() {
+                this[this.tableDeliveryProposal.PostTransactionIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsDebitOrderNull() {
+                return this.IsNull(this.tableDeliveryProposal.DebitOrderColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetDebitOrderNull() {
+                this[this.tableDeliveryProposal.DebitOrderColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsExpirationDateNull() {
+                return this.IsNull(this.tableDeliveryProposal.ExpirationDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetExpirationDateNull() {
+                this[this.tableDeliveryProposal.ExpirationDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsWeightNull() {
+                return this.IsNull(this.tableDeliveryProposal.WeightColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetWeightNull() {
+                this[this.tableDeliveryProposal.WeightColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsLengthNull() {
+                return this.IsNull(this.tableDeliveryProposal.LengthColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetLengthNull() {
+                this[this.tableDeliveryProposal.LengthColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsWidthNull() {
+                return this.IsNull(this.tableDeliveryProposal.WidthColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetWidthNull() {
+                this[this.tableDeliveryProposal.WidthColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsHeightNull() {
+                return this.IsNull(this.tableDeliveryProposal.HeightColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetHeightNull() {
+                this[this.tableDeliveryProposal.HeightColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -8975,781 +9413,6 @@ namespace Subs.Data {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class CourierListOldRow : global::System.Data.DataRow {
-            
-            private CourierListOldDataTable tableCourierListOld;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            internal CourierListOldRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableCourierListOld = ((CourierListOldDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Company {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.CompanyColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Company\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.CompanyColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Contact_NameAndSurname {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.Contact_NameAndSurnameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Contact NameAndSurname\' in table \'CourierListOld\' is DBNull" +
-                                ".", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.Contact_NameAndSurnameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string _ContactWork_Cell_Phonenumber {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld._ContactWork_Cell_PhonenumberColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ContactWork/Cell Phonenumber\' in table \'CourierListOld\' is " +
-                                "DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld._ContactWork_Cell_PhonenumberColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string EmailAddress {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.EmailAddressColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'EmailAddress\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.EmailAddressColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Address1_UnitorComplexName {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.Address1_UnitorComplexNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Address1 UnitorComplexName\' in table \'CourierListOld\' is DB" +
-                                "Null.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.Address1_UnitorComplexNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Address2 {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.Address2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Address2\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.Address2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Address3_Suburb {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.Address3_SuburbColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Address3 Suburb\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.Address3_SuburbColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Address4_City {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.Address4_CityColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Address4 City\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.Address4_CityColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string WaybillNumber {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.WaybillNumberColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'WaybillNumber\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.WaybillNumberColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Date {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.DateColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Date\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.DateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string PostalCode {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.PostalCodeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PostalCode\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.PostalCodeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Country {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.CountryColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Country\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.CountryColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public decimal Weight {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableCourierListOld.WeightColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Weight\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.WeightColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int Length {
-                get {
-                    try {
-                        return ((int)(this[this.tableCourierListOld.LengthColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Length\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.LengthColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int Width {
-                get {
-                    try {
-                        return ((int)(this[this.tableCourierListOld.WidthColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Width\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.WidthColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int Height {
-                get {
-                    try {
-                        return ((int)(this[this.tableCourierListOld.HeightColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Height\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.HeightColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public decimal Value {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableCourierListOld.ValueColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Value\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.ValueColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string WeekendDelivery {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.WeekendDeliveryColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'WeekendDelivery\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.WeekendDeliveryColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Insured {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.InsuredColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Insured\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.InsuredColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string IsCollection {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.IsCollectionColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'IsCollection\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.IsCollectionColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string UniqueReferenceNumber {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.UniqueReferenceNumberColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'UniqueReferenceNumber\' in table \'CourierListOld\' is DBNull." +
-                                "", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.UniqueReferenceNumberColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int Pieces {
-                get {
-                    try {
-                        return ((int)(this[this.tableCourierListOld.PiecesColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Pieces\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.PiecesColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Special_Instructions {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.Special_InstructionsColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Special Instructions\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.Special_InstructionsColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string ProductName {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.ProductNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ProductName\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.ProductNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Classification {
-                get {
-                    try {
-                        return ((string)(this[this.tableCourierListOld.ClassificationColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Classification\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.ClassificationColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int CustomerId {
-                get {
-                    try {
-                        return ((int)(this[this.tableCourierListOld.CustomerIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CustomerId\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.CustomerIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public System.DateTime ExpirationDate {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableCourierListOld.ExpirationDateColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ExpirationDate\' in table \'CourierListOld\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCourierListOld.ExpirationDateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsCompanyNull() {
-                return this.IsNull(this.tableCourierListOld.CompanyColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetCompanyNull() {
-                this[this.tableCourierListOld.CompanyColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsContact_NameAndSurnameNull() {
-                return this.IsNull(this.tableCourierListOld.Contact_NameAndSurnameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetContact_NameAndSurnameNull() {
-                this[this.tableCourierListOld.Contact_NameAndSurnameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool Is_ContactWork_Cell_PhonenumberNull() {
-                return this.IsNull(this.tableCourierListOld._ContactWork_Cell_PhonenumberColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void Set_ContactWork_Cell_PhonenumberNull() {
-                this[this.tableCourierListOld._ContactWork_Cell_PhonenumberColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsEmailAddressNull() {
-                return this.IsNull(this.tableCourierListOld.EmailAddressColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetEmailAddressNull() {
-                this[this.tableCourierListOld.EmailAddressColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsAddress1_UnitorComplexNameNull() {
-                return this.IsNull(this.tableCourierListOld.Address1_UnitorComplexNameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetAddress1_UnitorComplexNameNull() {
-                this[this.tableCourierListOld.Address1_UnitorComplexNameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsAddress2Null() {
-                return this.IsNull(this.tableCourierListOld.Address2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetAddress2Null() {
-                this[this.tableCourierListOld.Address2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsAddress3_SuburbNull() {
-                return this.IsNull(this.tableCourierListOld.Address3_SuburbColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetAddress3_SuburbNull() {
-                this[this.tableCourierListOld.Address3_SuburbColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsAddress4_CityNull() {
-                return this.IsNull(this.tableCourierListOld.Address4_CityColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetAddress4_CityNull() {
-                this[this.tableCourierListOld.Address4_CityColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsWaybillNumberNull() {
-                return this.IsNull(this.tableCourierListOld.WaybillNumberColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetWaybillNumberNull() {
-                this[this.tableCourierListOld.WaybillNumberColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsDateNull() {
-                return this.IsNull(this.tableCourierListOld.DateColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetDateNull() {
-                this[this.tableCourierListOld.DateColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsPostalCodeNull() {
-                return this.IsNull(this.tableCourierListOld.PostalCodeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetPostalCodeNull() {
-                this[this.tableCourierListOld.PostalCodeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsCountryNull() {
-                return this.IsNull(this.tableCourierListOld.CountryColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetCountryNull() {
-                this[this.tableCourierListOld.CountryColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsWeightNull() {
-                return this.IsNull(this.tableCourierListOld.WeightColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetWeightNull() {
-                this[this.tableCourierListOld.WeightColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsLengthNull() {
-                return this.IsNull(this.tableCourierListOld.LengthColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetLengthNull() {
-                this[this.tableCourierListOld.LengthColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsWidthNull() {
-                return this.IsNull(this.tableCourierListOld.WidthColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetWidthNull() {
-                this[this.tableCourierListOld.WidthColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsHeightNull() {
-                return this.IsNull(this.tableCourierListOld.HeightColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetHeightNull() {
-                this[this.tableCourierListOld.HeightColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsValueNull() {
-                return this.IsNull(this.tableCourierListOld.ValueColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetValueNull() {
-                this[this.tableCourierListOld.ValueColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsWeekendDeliveryNull() {
-                return this.IsNull(this.tableCourierListOld.WeekendDeliveryColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetWeekendDeliveryNull() {
-                this[this.tableCourierListOld.WeekendDeliveryColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsInsuredNull() {
-                return this.IsNull(this.tableCourierListOld.InsuredColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetInsuredNull() {
-                this[this.tableCourierListOld.InsuredColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsIsCollectionNull() {
-                return this.IsNull(this.tableCourierListOld.IsCollectionColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetIsCollectionNull() {
-                this[this.tableCourierListOld.IsCollectionColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsUniqueReferenceNumberNull() {
-                return this.IsNull(this.tableCourierListOld.UniqueReferenceNumberColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetUniqueReferenceNumberNull() {
-                this[this.tableCourierListOld.UniqueReferenceNumberColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsPiecesNull() {
-                return this.IsNull(this.tableCourierListOld.PiecesColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetPiecesNull() {
-                this[this.tableCourierListOld.PiecesColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsSpecial_InstructionsNull() {
-                return this.IsNull(this.tableCourierListOld.Special_InstructionsColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetSpecial_InstructionsNull() {
-                this[this.tableCourierListOld.Special_InstructionsColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsProductNameNull() {
-                return this.IsNull(this.tableCourierListOld.ProductNameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetProductNameNull() {
-                this[this.tableCourierListOld.ProductNameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsClassificationNull() {
-                return this.IsNull(this.tableCourierListOld.ClassificationColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetClassificationNull() {
-                this[this.tableCourierListOld.ClassificationColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsCustomerIdNull() {
-                return this.IsNull(this.tableCourierListOld.CustomerIdColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetCustomerIdNull() {
-                this[this.tableCourierListOld.CustomerIdColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsExpirationDateNull() {
-                return this.IsNull(this.tableCourierListOld.ExpirationDateColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetExpirationDateNull() {
-                this[this.tableCourierListOld.ExpirationDateColumn] = global::System.Convert.DBNull;
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
         public partial class DeliveryList1Row : global::System.Data.DataRow {
             
             private DeliveryList1DataTable tableDeliveryList1;
@@ -10608,6 +10271,40 @@ namespace Subs.Data {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public class DeliveryProposalRowChangeEvent : global::System.EventArgs {
+            
+            private DeliveryProposalRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public DeliveryProposalRowChangeEvent(DeliveryProposalRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public DeliveryProposalRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public class DeliveryRecordRowChangeEvent : global::System.EventArgs {
             
             private DeliveryRecordRow eventRow;
@@ -10812,40 +10509,6 @@ namespace Subs.Data {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public class CourierListOldRowChangeEvent : global::System.EventArgs {
-            
-            private CourierListOldRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public CourierListOldRowChangeEvent(CourierListOldRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public CourierListOldRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public class DeliveryList1RowChangeEvent : global::System.EventArgs {
             
             private DeliveryList1Row eventRow;
@@ -10874,6 +10537,1024 @@ namespace Subs.Data {
                     return this.eventAction;
                 }
             }
+        }
+    }
+}
+namespace Subs.Data.DeliveryDocTableAdapters {
+    
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class DeliveryProposalTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public DeliveryProposalTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "DeliveryProposal";
+            tableMapping.ColumnMappings.Add("DeliveryProposalId", "DeliveryProposalId");
+            tableMapping.ColumnMappings.Add("ProposalDate", "ProposalDate");
+            tableMapping.ColumnMappings.Add("SubscriptionId", "SubscriptionId");
+            tableMapping.ColumnMappings.Add("IssueId", "IssueId");
+            tableMapping.ColumnMappings.Add("IssueDescription", "IssueDescription");
+            tableMapping.ColumnMappings.Add("DeliveryAddressId", "DeliveryAddressId");
+            tableMapping.ColumnMappings.Add("DeliveryMethod", "DeliveryMethod");
+            tableMapping.ColumnMappings.Add("DeliveryMethodString", "DeliveryMethodString");
+            tableMapping.ColumnMappings.Add("ValidationStatus", "ValidationStatus");
+            tableMapping.ColumnMappings.Add("ValidationReason", "ValidationReason");
+            tableMapping.ColumnMappings.Add("Post", "Post");
+            tableMapping.ColumnMappings.Add("PostTransactionId", "PostTransactionId");
+            tableMapping.ColumnMappings.Add("ModifiedOn", "ModifiedOn");
+            tableMapping.ColumnMappings.Add("ModifiedBy", "ModifiedBy");
+            tableMapping.ColumnMappings.Add("PayerId", "PayerId");
+            tableMapping.ColumnMappings.Add("RecieverId", "RecieverId");
+            tableMapping.ColumnMappings.Add("UnitPerIssue", "UnitPerIssue");
+            tableMapping.ColumnMappings.Add("UnitPrice", "UnitPrice");
+            tableMapping.ColumnMappings.Add("DebitOrder", "DebitOrder");
+            tableMapping.ColumnMappings.Add("ExpirationDate", "ExpirationDate");
+            tableMapping.ColumnMappings.Add("InvoiceId", "InvoiceId");
+            tableMapping.ColumnMappings.Add("Weight", "Weight");
+            tableMapping.ColumnMappings.Add("Length", "Length");
+            tableMapping.ColumnMappings.Add("Width", "Width");
+            tableMapping.ColumnMappings.Add("Height", "Height");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[DeliveryProposal] WHERE (([DeliveryProposalId] = @Original_Del" +
+                "iveryProposalId) AND ([ProposalDate] = @Original_ProposalDate) AND ([Subscriptio" +
+                "nId] = @Original_SubscriptionId) AND ([IssueId] = @Original_IssueId) AND ([Issue" +
+                "Description] = @Original_IssueDescription) AND ([DeliveryAddressId] = @Original_" +
+                "DeliveryAddressId) AND ([DeliveryMethod] = @Original_DeliveryMethod) AND ([Deliv" +
+                "eryMethodString] = @Original_DeliveryMethodString) AND ([ValidationStatus] = @Or" +
+                "iginal_ValidationStatus) AND ((@IsNull_ValidationReason = 1 AND [ValidationReaso" +
+                "n] IS NULL) OR ([ValidationReason] = @Original_ValidationReason)) AND ((@IsNull_" +
+                "Post = 1 AND [Post] IS NULL) OR ([Post] = @Original_Post)) AND ((@IsNull_PostTra" +
+                "nsactionId = 1 AND [PostTransactionId] IS NULL) OR ([PostTransactionId] = @Origi" +
+                "nal_PostTransactionId)) AND ([ModifiedOn] = @Original_ModifiedOn) AND ([Modified" +
+                "By] = @Original_ModifiedBy) AND ([PayerId] = @Original_PayerId) AND ([RecieverId" +
+                "] = @Original_RecieverId) AND ([UnitPerIssue] = @Original_UnitPerIssue) AND ([Un" +
+                "itPrice] = @Original_UnitPrice) AND ((@IsNull_DebitOrder = 1 AND [DebitOrder] IS" +
+                " NULL) OR ([DebitOrder] = @Original_DebitOrder)) AND ((@IsNull_ExpirationDate = " +
+                "1 AND [ExpirationDate] IS NULL) OR ([ExpirationDate] = @Original_ExpirationDate)" +
+                ") AND ([InvoiceId] = @Original_InvoiceId) AND ((@IsNull_Weight = 1 AND [Weight] " +
+                "IS NULL) OR ([Weight] = @Original_Weight)) AND ((@IsNull_Length = 1 AND [Length]" +
+                " IS NULL) OR ([Length] = @Original_Length)) AND ((@IsNull_Width = 1 AND [Width] " +
+                "IS NULL) OR ([Width] = @Original_Width)) AND ((@IsNull_Height = 1 AND [Height] I" +
+                "S NULL) OR ([Height] = @Original_Height)))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryProposalId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryProposalId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProposalDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProposalDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SubscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SubscriptionId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IssueDescription", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueDescription", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryAddressId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryAddressId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryMethod", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethod", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryMethodString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethodString", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ValidationStatus", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ValidationReason", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ValidationReason", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Post", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Post", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Post", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Post", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_PostTransactionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostTransactionId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PostTransactionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostTransactionId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RecieverId", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecieverId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UnitPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitPerIssue", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UnitPrice", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "UnitPrice", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DebitOrder", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DebitOrder", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExpirationDate", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExpirationDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_InvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Weight", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Weight", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Weight", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 2, "Weight", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Length", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Length", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Width", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Width", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Width", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Width", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[DeliveryProposal] ([DeliveryProposalId], [ProposalDate], [SubscriptionId], [IssueId], [IssueDescription], [DeliveryAddressId], [DeliveryMethod], [DeliveryMethodString], [ValidationStatus], [ValidationReason], [Post], [PostTransactionId], [ModifiedOn], [ModifiedBy], [PayerId], [RecieverId], [UnitPerIssue], [UnitPrice], [DebitOrder], [ExpirationDate], [InvoiceId], [Weight], [Length], [Width], [Height]) VALUES (@DeliveryProposalId, @ProposalDate, @SubscriptionId, @IssueId, @IssueDescription, @DeliveryAddressId, @DeliveryMethod, @DeliveryMethodString, @ValidationStatus, @ValidationReason, @Post, @PostTransactionId, @ModifiedOn, @ModifiedBy, @PayerId, @RecieverId, @UnitPerIssue, @UnitPrice, @DebitOrder, @ExpirationDate, @InvoiceId, @Weight, @Length, @Width, @Height);
+SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescription, DeliveryAddressId, DeliveryMethod, DeliveryMethodString, ValidationStatus, ValidationReason, Post, PostTransactionId, ModifiedOn, ModifiedBy, PayerId, RecieverId, UnitPerIssue, UnitPrice, DebitOrder, ExpirationDate, InvoiceId, Weight, Length, Width, Height FROM DeliveryProposal WHERE (DeliveryProposalId = @DeliveryProposalId)";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryProposalId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryProposalId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProposalDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProposalDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SubscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SubscriptionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueDescription", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueDescription", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryAddressId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryAddressId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryMethod", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethod", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryMethodString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethodString", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ValidationStatus", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ValidationReason", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Post", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Post", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PostTransactionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostTransactionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RecieverId", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecieverId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UnitPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitPerIssue", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UnitPrice", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "UnitPrice", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DebitOrder", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExpirationDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@InvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Weight", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 2, "Weight", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Length", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Width", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Width", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[DeliveryProposal] SET [DeliveryProposalId] = @DeliveryProposalId, [" +
+                "ProposalDate] = @ProposalDate, [SubscriptionId] = @SubscriptionId, [IssueId] = @" +
+                "IssueId, [IssueDescription] = @IssueDescription, [DeliveryAddressId] = @Delivery" +
+                "AddressId, [DeliveryMethod] = @DeliveryMethod, [DeliveryMethodString] = @Deliver" +
+                "yMethodString, [ValidationStatus] = @ValidationStatus, [ValidationReason] = @Val" +
+                "idationReason, [Post] = @Post, [PostTransactionId] = @PostTransactionId, [Modifi" +
+                "edOn] = @ModifiedOn, [ModifiedBy] = @ModifiedBy, [PayerId] = @PayerId, [Reciever" +
+                "Id] = @RecieverId, [UnitPerIssue] = @UnitPerIssue, [UnitPrice] = @UnitPrice, [De" +
+                "bitOrder] = @DebitOrder, [ExpirationDate] = @ExpirationDate, [InvoiceId] = @Invo" +
+                "iceId, [Weight] = @Weight, [Length] = @Length, [Width] = @Width, [Height] = @Hei" +
+                "ght WHERE (([DeliveryProposalId] = @Original_DeliveryProposalId) AND ([ProposalD" +
+                "ate] = @Original_ProposalDate) AND ([SubscriptionId] = @Original_SubscriptionId)" +
+                " AND ([IssueId] = @Original_IssueId) AND ([IssueDescription] = @Original_IssueDe" +
+                "scription) AND ([DeliveryAddressId] = @Original_DeliveryAddressId) AND ([Deliver" +
+                "yMethod] = @Original_DeliveryMethod) AND ([DeliveryMethodString] = @Original_Del" +
+                "iveryMethodString) AND ([ValidationStatus] = @Original_ValidationStatus) AND ((@" +
+                "IsNull_ValidationReason = 1 AND [ValidationReason] IS NULL) OR ([ValidationReaso" +
+                "n] = @Original_ValidationReason)) AND ((@IsNull_Post = 1 AND [Post] IS NULL) OR " +
+                "([Post] = @Original_Post)) AND ((@IsNull_PostTransactionId = 1 AND [PostTransact" +
+                "ionId] IS NULL) OR ([PostTransactionId] = @Original_PostTransactionId)) AND ([Mo" +
+                "difiedOn] = @Original_ModifiedOn) AND ([ModifiedBy] = @Original_ModifiedBy) AND " +
+                "([PayerId] = @Original_PayerId) AND ([RecieverId] = @Original_RecieverId) AND ([" +
+                "UnitPerIssue] = @Original_UnitPerIssue) AND ([UnitPrice] = @Original_UnitPrice) " +
+                "AND ((@IsNull_DebitOrder = 1 AND [DebitOrder] IS NULL) OR ([DebitOrder] = @Origi" +
+                "nal_DebitOrder)) AND ((@IsNull_ExpirationDate = 1 AND [ExpirationDate] IS NULL) " +
+                "OR ([ExpirationDate] = @Original_ExpirationDate)) AND ([InvoiceId] = @Original_I" +
+                "nvoiceId) AND ((@IsNull_Weight = 1 AND [Weight] IS NULL) OR ([Weight] = @Origina" +
+                "l_Weight)) AND ((@IsNull_Length = 1 AND [Length] IS NULL) OR ([Length] = @Origin" +
+                "al_Length)) AND ((@IsNull_Width = 1 AND [Width] IS NULL) OR ([Width] = @Original" +
+                "_Width)) AND ((@IsNull_Height = 1 AND [Height] IS NULL) OR ([Height] = @Original" +
+                "_Height)));\r\nSELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, I" +
+                "ssueDescription, DeliveryAddressId, DeliveryMethod, DeliveryMethodString, Valida" +
+                "tionStatus, ValidationReason, Post, PostTransactionId, ModifiedOn, ModifiedBy, P" +
+                "ayerId, RecieverId, UnitPerIssue, UnitPrice, DebitOrder, ExpirationDate, Invoice" +
+                "Id, Weight, Length, Width, Height FROM DeliveryProposal WHERE (DeliveryProposalI" +
+                "d = @DeliveryProposalId)";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryProposalId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryProposalId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProposalDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProposalDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SubscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SubscriptionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueDescription", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueDescription", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryAddressId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryAddressId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryMethod", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethod", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryMethodString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethodString", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ValidationStatus", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ValidationReason", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Post", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Post", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PostTransactionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostTransactionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RecieverId", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecieverId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UnitPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitPerIssue", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UnitPrice", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "UnitPrice", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DebitOrder", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExpirationDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@InvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Weight", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 2, "Weight", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Length", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Width", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Width", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryProposalId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryProposalId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProposalDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProposalDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SubscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SubscriptionId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IssueDescription", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueDescription", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryAddressId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryAddressId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryMethod", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethod", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryMethodString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethodString", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ValidationStatus", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ValidationReason", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ValidationReason", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Post", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Post", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Post", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Post", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_PostTransactionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostTransactionId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PostTransactionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostTransactionId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RecieverId", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecieverId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UnitPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitPerIssue", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UnitPrice", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "UnitPrice", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DebitOrder", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DebitOrder", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExpirationDate", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExpirationDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_InvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Weight", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Weight", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Weight", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 2, "Weight", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Length", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Length", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Width", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Width", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Width", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Width", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = global::Subs.Data.Properties.Settings.Default.MIMSConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = @"SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescription, DeliveryAddressId, DeliveryMethod, DeliveryMethodString, ValidationStatus, ValidationReason, Post, PostTransactionId, ModifiedOn, ModifiedBy, PayerId, RecieverId, UnitPerIssue, UnitPrice, DebitOrder, ExpirationDate, InvoiceId, Weight, Length, Width, Height FROM dbo.DeliveryProposal";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "dbo.[MIMS.DeliveryDoc.DeliveryProposal.FillBy]";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Type", global::System.Data.SqlDbType.NVarChar, 20, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(DeliveryDoc.DeliveryProposalDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillBy(DeliveryDoc.DeliveryProposalDataTable dataTable, global::System.Nullable<int> IssueId, string Type) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((IssueId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(IssueId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((Type == null)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(Type));
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(DeliveryDoc.DeliveryProposalDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(DeliveryDoc dataSet) {
+            return this.Adapter.Update(dataSet, "DeliveryProposal");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(
+                    int Original_DeliveryProposalId, 
+                    System.DateTime Original_ProposalDate, 
+                    int Original_SubscriptionId, 
+                    int Original_IssueId, 
+                    string Original_IssueDescription, 
+                    int Original_DeliveryAddressId, 
+                    int Original_DeliveryMethod, 
+                    string Original_DeliveryMethodString, 
+                    int Original_ValidationStatus, 
+                    string Original_ValidationReason, 
+                    global::System.Nullable<int> Original_Post, 
+                    global::System.Nullable<int> Original_PostTransactionId, 
+                    System.DateTime Original_ModifiedOn, 
+                    string Original_ModifiedBy, 
+                    int Original_PayerId, 
+                    string Original_RecieverId, 
+                    int Original_UnitPerIssue, 
+                    decimal Original_UnitPrice, 
+                    global::System.Nullable<bool> Original_DebitOrder, 
+                    global::System.Nullable<global::System.DateTime> Original_ExpirationDate, 
+                    int Original_InvoiceId, 
+                    global::System.Nullable<decimal> Original_Weight, 
+                    global::System.Nullable<int> Original_Length, 
+                    global::System.Nullable<int> Original_Width, 
+                    global::System.Nullable<int> Original_Height) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_DeliveryProposalId));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((System.DateTime)(Original_ProposalDate));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_SubscriptionId));
+            this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(Original_IssueId));
+            if ((Original_IssueDescription == null)) {
+                throw new global::System.ArgumentNullException("Original_IssueDescription");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_IssueDescription));
+            }
+            this.Adapter.DeleteCommand.Parameters[5].Value = ((int)(Original_DeliveryAddressId));
+            this.Adapter.DeleteCommand.Parameters[6].Value = ((int)(Original_DeliveryMethod));
+            if ((Original_DeliveryMethodString == null)) {
+                throw new global::System.ArgumentNullException("Original_DeliveryMethodString");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((string)(Original_DeliveryMethodString));
+            }
+            this.Adapter.DeleteCommand.Parameters[8].Value = ((int)(Original_ValidationStatus));
+            if ((Original_ValidationReason == null)) {
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[10].Value = ((string)(Original_ValidationReason));
+            }
+            if ((Original_Post.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[12].Value = ((int)(Original_Post.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            if ((Original_PostTransactionId.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[14].Value = ((int)(Original_PostTransactionId.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[14].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.DeleteCommand.Parameters[15].Value = ((System.DateTime)(Original_ModifiedOn));
+            if ((Original_ModifiedBy == null)) {
+                throw new global::System.ArgumentNullException("Original_ModifiedBy");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[16].Value = ((string)(Original_ModifiedBy));
+            }
+            this.Adapter.DeleteCommand.Parameters[17].Value = ((int)(Original_PayerId));
+            if ((Original_RecieverId == null)) {
+                throw new global::System.ArgumentNullException("Original_RecieverId");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[18].Value = ((string)(Original_RecieverId));
+            }
+            this.Adapter.DeleteCommand.Parameters[19].Value = ((int)(Original_UnitPerIssue));
+            this.Adapter.DeleteCommand.Parameters[20].Value = ((decimal)(Original_UnitPrice));
+            if ((Original_DebitOrder.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[21].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[22].Value = ((bool)(Original_DebitOrder.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[21].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[22].Value = global::System.DBNull.Value;
+            }
+            if ((Original_ExpirationDate.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[23].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[24].Value = ((System.DateTime)(Original_ExpirationDate.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[23].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[24].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.DeleteCommand.Parameters[25].Value = ((int)(Original_InvoiceId));
+            if ((Original_Weight.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[26].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[27].Value = ((decimal)(Original_Weight.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[26].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[27].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Length.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[28].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[29].Value = ((int)(Original_Length.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[28].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[29].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Width.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[30].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[31].Value = ((int)(Original_Width.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[30].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[31].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Height.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[32].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[33].Value = ((int)(Original_Height.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[32].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[33].Value = global::System.DBNull.Value;
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(
+                    int DeliveryProposalId, 
+                    System.DateTime ProposalDate, 
+                    int SubscriptionId, 
+                    int IssueId, 
+                    string IssueDescription, 
+                    int DeliveryAddressId, 
+                    int DeliveryMethod, 
+                    string DeliveryMethodString, 
+                    int ValidationStatus, 
+                    string ValidationReason, 
+                    global::System.Nullable<int> Post, 
+                    global::System.Nullable<int> PostTransactionId, 
+                    System.DateTime ModifiedOn, 
+                    string ModifiedBy, 
+                    int PayerId, 
+                    string RecieverId, 
+                    int UnitPerIssue, 
+                    decimal UnitPrice, 
+                    global::System.Nullable<bool> DebitOrder, 
+                    global::System.Nullable<global::System.DateTime> ExpirationDate, 
+                    int InvoiceId, 
+                    global::System.Nullable<decimal> Weight, 
+                    global::System.Nullable<int> Length, 
+                    global::System.Nullable<int> Width, 
+                    global::System.Nullable<int> Height) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(DeliveryProposalId));
+            this.Adapter.InsertCommand.Parameters[1].Value = ((System.DateTime)(ProposalDate));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(SubscriptionId));
+            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(IssueId));
+            if ((IssueDescription == null)) {
+                throw new global::System.ArgumentNullException("IssueDescription");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(IssueDescription));
+            }
+            this.Adapter.InsertCommand.Parameters[5].Value = ((int)(DeliveryAddressId));
+            this.Adapter.InsertCommand.Parameters[6].Value = ((int)(DeliveryMethod));
+            if ((DeliveryMethodString == null)) {
+                throw new global::System.ArgumentNullException("DeliveryMethodString");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[7].Value = ((string)(DeliveryMethodString));
+            }
+            this.Adapter.InsertCommand.Parameters[8].Value = ((int)(ValidationStatus));
+            if ((ValidationReason == null)) {
+                this.Adapter.InsertCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[9].Value = ((string)(ValidationReason));
+            }
+            if ((Post.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[10].Value = ((int)(Post.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            if ((PostTransactionId.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[11].Value = ((int)(PostTransactionId.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.InsertCommand.Parameters[12].Value = ((System.DateTime)(ModifiedOn));
+            if ((ModifiedBy == null)) {
+                throw new global::System.ArgumentNullException("ModifiedBy");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[13].Value = ((string)(ModifiedBy));
+            }
+            this.Adapter.InsertCommand.Parameters[14].Value = ((int)(PayerId));
+            if ((RecieverId == null)) {
+                throw new global::System.ArgumentNullException("RecieverId");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[15].Value = ((string)(RecieverId));
+            }
+            this.Adapter.InsertCommand.Parameters[16].Value = ((int)(UnitPerIssue));
+            this.Adapter.InsertCommand.Parameters[17].Value = ((decimal)(UnitPrice));
+            if ((DebitOrder.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[18].Value = ((bool)(DebitOrder.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[18].Value = global::System.DBNull.Value;
+            }
+            if ((ExpirationDate.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[19].Value = ((System.DateTime)(ExpirationDate.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[19].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.InsertCommand.Parameters[20].Value = ((int)(InvoiceId));
+            if ((Weight.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[21].Value = ((decimal)(Weight.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[21].Value = global::System.DBNull.Value;
+            }
+            if ((Length.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[22].Value = ((int)(Length.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[22].Value = global::System.DBNull.Value;
+            }
+            if ((Width.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[23].Value = ((int)(Width.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[23].Value = global::System.DBNull.Value;
+            }
+            if ((Height.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[24].Value = ((int)(Height.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[24].Value = global::System.DBNull.Value;
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(
+                    int DeliveryProposalId, 
+                    System.DateTime ProposalDate, 
+                    int SubscriptionId, 
+                    int IssueId, 
+                    string IssueDescription, 
+                    int DeliveryAddressId, 
+                    int DeliveryMethod, 
+                    string DeliveryMethodString, 
+                    int ValidationStatus, 
+                    string ValidationReason, 
+                    global::System.Nullable<int> Post, 
+                    global::System.Nullable<int> PostTransactionId, 
+                    System.DateTime ModifiedOn, 
+                    string ModifiedBy, 
+                    int PayerId, 
+                    string RecieverId, 
+                    int UnitPerIssue, 
+                    decimal UnitPrice, 
+                    global::System.Nullable<bool> DebitOrder, 
+                    global::System.Nullable<global::System.DateTime> ExpirationDate, 
+                    int InvoiceId, 
+                    global::System.Nullable<decimal> Weight, 
+                    global::System.Nullable<int> Length, 
+                    global::System.Nullable<int> Width, 
+                    global::System.Nullable<int> Height, 
+                    int Original_DeliveryProposalId, 
+                    System.DateTime Original_ProposalDate, 
+                    int Original_SubscriptionId, 
+                    int Original_IssueId, 
+                    string Original_IssueDescription, 
+                    int Original_DeliveryAddressId, 
+                    int Original_DeliveryMethod, 
+                    string Original_DeliveryMethodString, 
+                    int Original_ValidationStatus, 
+                    string Original_ValidationReason, 
+                    global::System.Nullable<int> Original_Post, 
+                    global::System.Nullable<int> Original_PostTransactionId, 
+                    System.DateTime Original_ModifiedOn, 
+                    string Original_ModifiedBy, 
+                    int Original_PayerId, 
+                    string Original_RecieverId, 
+                    int Original_UnitPerIssue, 
+                    decimal Original_UnitPrice, 
+                    global::System.Nullable<bool> Original_DebitOrder, 
+                    global::System.Nullable<global::System.DateTime> Original_ExpirationDate, 
+                    int Original_InvoiceId, 
+                    global::System.Nullable<decimal> Original_Weight, 
+                    global::System.Nullable<int> Original_Length, 
+                    global::System.Nullable<int> Original_Width, 
+                    global::System.Nullable<int> Original_Height) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(DeliveryProposalId));
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTime)(ProposalDate));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(SubscriptionId));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(IssueId));
+            if ((IssueDescription == null)) {
+                throw new global::System.ArgumentNullException("IssueDescription");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(IssueDescription));
+            }
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(DeliveryAddressId));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(DeliveryMethod));
+            if ((DeliveryMethodString == null)) {
+                throw new global::System.ArgumentNullException("DeliveryMethodString");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(DeliveryMethodString));
+            }
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(ValidationStatus));
+            if ((ValidationReason == null)) {
+                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(ValidationReason));
+            }
+            if ((Post.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Post.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            if ((PostTransactionId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(PostTransactionId.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[12].Value = ((System.DateTime)(ModifiedOn));
+            if ((ModifiedBy == null)) {
+                throw new global::System.ArgumentNullException("ModifiedBy");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(ModifiedBy));
+            }
+            this.Adapter.UpdateCommand.Parameters[14].Value = ((int)(PayerId));
+            if ((RecieverId == null)) {
+                throw new global::System.ArgumentNullException("RecieverId");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(RecieverId));
+            }
+            this.Adapter.UpdateCommand.Parameters[16].Value = ((int)(UnitPerIssue));
+            this.Adapter.UpdateCommand.Parameters[17].Value = ((decimal)(UnitPrice));
+            if ((DebitOrder.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((bool)(DebitOrder.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
+            }
+            if ((ExpirationDate.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((System.DateTime)(ExpirationDate.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[20].Value = ((int)(InvoiceId));
+            if ((Weight.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((decimal)(Weight.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[21].Value = global::System.DBNull.Value;
+            }
+            if ((Length.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((int)(Length.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
+            }
+            if ((Width.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[23].Value = ((int)(Width.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
+            }
+            if ((Height.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[24].Value = ((int)(Height.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[25].Value = ((int)(Original_DeliveryProposalId));
+            this.Adapter.UpdateCommand.Parameters[26].Value = ((System.DateTime)(Original_ProposalDate));
+            this.Adapter.UpdateCommand.Parameters[27].Value = ((int)(Original_SubscriptionId));
+            this.Adapter.UpdateCommand.Parameters[28].Value = ((int)(Original_IssueId));
+            if ((Original_IssueDescription == null)) {
+                throw new global::System.ArgumentNullException("Original_IssueDescription");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[29].Value = ((string)(Original_IssueDescription));
+            }
+            this.Adapter.UpdateCommand.Parameters[30].Value = ((int)(Original_DeliveryAddressId));
+            this.Adapter.UpdateCommand.Parameters[31].Value = ((int)(Original_DeliveryMethod));
+            if ((Original_DeliveryMethodString == null)) {
+                throw new global::System.ArgumentNullException("Original_DeliveryMethodString");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[32].Value = ((string)(Original_DeliveryMethodString));
+            }
+            this.Adapter.UpdateCommand.Parameters[33].Value = ((int)(Original_ValidationStatus));
+            if ((Original_ValidationReason == null)) {
+                this.Adapter.UpdateCommand.Parameters[34].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[35].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[34].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[35].Value = ((string)(Original_ValidationReason));
+            }
+            if ((Original_Post.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[36].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[37].Value = ((int)(Original_Post.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[36].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[37].Value = global::System.DBNull.Value;
+            }
+            if ((Original_PostTransactionId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[38].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[39].Value = ((int)(Original_PostTransactionId.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[38].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[39].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[40].Value = ((System.DateTime)(Original_ModifiedOn));
+            if ((Original_ModifiedBy == null)) {
+                throw new global::System.ArgumentNullException("Original_ModifiedBy");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[41].Value = ((string)(Original_ModifiedBy));
+            }
+            this.Adapter.UpdateCommand.Parameters[42].Value = ((int)(Original_PayerId));
+            if ((Original_RecieverId == null)) {
+                throw new global::System.ArgumentNullException("Original_RecieverId");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[43].Value = ((string)(Original_RecieverId));
+            }
+            this.Adapter.UpdateCommand.Parameters[44].Value = ((int)(Original_UnitPerIssue));
+            this.Adapter.UpdateCommand.Parameters[45].Value = ((decimal)(Original_UnitPrice));
+            if ((Original_DebitOrder.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[46].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[47].Value = ((bool)(Original_DebitOrder.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[46].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[47].Value = global::System.DBNull.Value;
+            }
+            if ((Original_ExpirationDate.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[48].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[49].Value = ((System.DateTime)(Original_ExpirationDate.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[48].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[49].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[50].Value = ((int)(Original_InvoiceId));
+            if ((Original_Weight.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[51].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[52].Value = ((decimal)(Original_Weight.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[51].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[52].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Length.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[53].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[54].Value = ((int)(Original_Length.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[53].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[54].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Width.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[55].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[56].Value = ((int)(Original_Width.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[55].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[56].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Height.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[57].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[58].Value = ((int)(Original_Height.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[57].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[58].Value = global::System.DBNull.Value;
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(
+                    System.DateTime ProposalDate, 
+                    int SubscriptionId, 
+                    int IssueId, 
+                    string IssueDescription, 
+                    int DeliveryAddressId, 
+                    int DeliveryMethod, 
+                    string DeliveryMethodString, 
+                    int ValidationStatus, 
+                    string ValidationReason, 
+                    global::System.Nullable<int> Post, 
+                    global::System.Nullable<int> PostTransactionId, 
+                    System.DateTime ModifiedOn, 
+                    string ModifiedBy, 
+                    int PayerId, 
+                    string RecieverId, 
+                    int UnitPerIssue, 
+                    decimal UnitPrice, 
+                    global::System.Nullable<bool> DebitOrder, 
+                    global::System.Nullable<global::System.DateTime> ExpirationDate, 
+                    int InvoiceId, 
+                    global::System.Nullable<decimal> Weight, 
+                    global::System.Nullable<int> Length, 
+                    global::System.Nullable<int> Width, 
+                    global::System.Nullable<int> Height, 
+                    int Original_DeliveryProposalId, 
+                    System.DateTime Original_ProposalDate, 
+                    int Original_SubscriptionId, 
+                    int Original_IssueId, 
+                    string Original_IssueDescription, 
+                    int Original_DeliveryAddressId, 
+                    int Original_DeliveryMethod, 
+                    string Original_DeliveryMethodString, 
+                    int Original_ValidationStatus, 
+                    string Original_ValidationReason, 
+                    global::System.Nullable<int> Original_Post, 
+                    global::System.Nullable<int> Original_PostTransactionId, 
+                    System.DateTime Original_ModifiedOn, 
+                    string Original_ModifiedBy, 
+                    int Original_PayerId, 
+                    string Original_RecieverId, 
+                    int Original_UnitPerIssue, 
+                    decimal Original_UnitPrice, 
+                    global::System.Nullable<bool> Original_DebitOrder, 
+                    global::System.Nullable<global::System.DateTime> Original_ExpirationDate, 
+                    int Original_InvoiceId, 
+                    global::System.Nullable<decimal> Original_Weight, 
+                    global::System.Nullable<int> Original_Length, 
+                    global::System.Nullable<int> Original_Width, 
+                    global::System.Nullable<int> Original_Height) {
+            return this.Update(Original_DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescription, DeliveryAddressId, DeliveryMethod, DeliveryMethodString, ValidationStatus, ValidationReason, Post, PostTransactionId, ModifiedOn, ModifiedBy, PayerId, RecieverId, UnitPerIssue, UnitPrice, DebitOrder, ExpirationDate, InvoiceId, Weight, Length, Width, Height, Original_DeliveryProposalId, Original_ProposalDate, Original_SubscriptionId, Original_IssueId, Original_IssueDescription, Original_DeliveryAddressId, Original_DeliveryMethod, Original_DeliveryMethodString, Original_ValidationStatus, Original_ValidationReason, Original_Post, Original_PostTransactionId, Original_ModifiedOn, Original_ModifiedBy, Original_PayerId, Original_RecieverId, Original_UnitPerIssue, Original_UnitPrice, Original_DebitOrder, Original_ExpirationDate, Original_InvoiceId, Original_Weight, Original_Length, Original_Width, Original_Height);
         }
     }
 }

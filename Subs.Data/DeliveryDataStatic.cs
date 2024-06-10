@@ -71,6 +71,53 @@ namespace Subs.Data
             }
         }
 
+        public static string LoadMedia(int IssueId, ref DeliveryDoc pDoc)
+        {
+            SqlConnection lConnection = new SqlConnection();
+            try
+            {
+                // Get new data
+
+                SqlCommand lCommand = new SqlCommand();
+                SqlDataAdapter lAdaptor = new SqlDataAdapter();
+                lConnection.ConnectionString = Settings.ConnectionString;
+                lConnection.Open();
+                lCommand.Connection = lConnection;
+                lCommand.CommandType = CommandType.StoredProcedure;
+                lCommand.CommandText = "dbo.[MIMS.DeliveryDataStatic.LoadMedia]";
+                SqlCommandBuilder.DeriveParameters(lCommand);
+                lAdaptor.SelectCommand = lCommand;
+                lCommand.Parameters["@IssueId"].Value = IssueId;
+                lCommand.Parameters["@Status"].Value = SubStatus.Deliverable;
+
+                lAdaptor.Fill(pDoc.DeliveryRecord);
+
+                return "OK";
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "DeliveryDataStatic", "LoadMedia", "IssueId = " + IssueId.ToString());
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                return ex.Message;
+            }
+            finally
+            {
+                lConnection.Close();
+            }
+        }
+
+
+
+
         public static bool LoadLabelBySubscription(int SubscriptionId, ref DeliveryDoc pDeliveryDoc)
         {
             SqlConnection lConnection = new SqlConnection(Settings.ConnectionString);

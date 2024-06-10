@@ -229,9 +229,10 @@ namespace Subs.Data
     {
         Mail = 1,
         Collect = 2,
-        Courier = 4,
+        Skynet = 4,
         RegisteredMail = 8,
         ElectronicSingle = 16,
-        ElectronicMultiple = 32
+        ElectronicMultiple = 32,
+        Media = 64
     }
 }

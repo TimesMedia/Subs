@@ -39,7 +39,7 @@ namespace Subs.Presentation
                 {
                     // This is an international customer, therefore international mail is not allowed for a delivery option.
                     lDictionary.Remove((int)DeliveryMethod.Mail);
-                    gBasketItem.Subscription.DeliveryMethod = DeliveryMethod.Courier;
+                    gBasketItem.Subscription.DeliveryMethod = DeliveryMethod.Skynet;
                 }
 
                 ComboDeliveryMethod.ItemsSource = (Dictionary<int, string>)lDictionary;

@@ -76,8 +76,6 @@ namespace Subs.Presentation
         {
             public string Title;
             public string CompanyName;
-            public string Designation;
-            public string Sector;
             public string ClientName;
             public string ClientSurname;
             public string WorkPhone;
@@ -91,12 +89,13 @@ namespace Subs.Presentation
             public string Suburb;
             public string City;
             public string Province;
+            public string PostalCode;
             public string PublicationName;
             public int Quantity;
             public int SubscriptionNumber;
-            public string PostalCode;
-            public string SDI;
             public int CustomerId;
+            public string Name;
+            public int DeliveryAddressId;
 
 
         }
@@ -294,6 +293,73 @@ namespace Subs.Presentation
                 this.Cursor = Cursors.Arrow;
             }
         }
+
+        private void buttonProposalMedia(object sender, RoutedEventArgs e)
+        {
+            Cursor = Cursors.Wait;
+            gCurrentProduct = "";
+            // Get an Issueid
+            frmIssuePicker = new Subs.Presentation.IssuePicker2();
+            frmIssuePicker.ShowDialog();
+
+            if (frmIssuePicker.IssueWasSelected)
+            {
+                labelProduct.Content = frmIssuePicker.ProductNaam;
+                labelIssue.Content = frmIssuePicker.IssueName;
+                gIssueId = frmIssuePicker.IssueId;
+            }
+            else
+            {
+                MessageBox.Show("You have not selected an issue. Please try again.");
+                return;
+            }
+
+            try
+            {
+                // Ok if you got this far you have a valid issueid - so you can continue
+
+                gDeliveryDoc.Clear();
+
+                {
+                    string lResult;
+
+                    if ((lResult = DeliveryDataStatic.LoadMedia(gIssueId, ref gDeliveryDoc)) != "OK")
+                    {
+                        MessageBox.Show(lResult);
+                        return;
+                    }
+                    else
+                    {
+                        int lUnits = gDeliveryDoc.DeliveryRecord.Sum(p => p.UnitsPerIssue);
+                        MessageBox.Show("I have generated " + gDeliveryDoc.DeliveryRecord.Count.ToString() + " proposals for Media for " + lUnits.ToString() + " units.");
+                    }
+                }
+                gCurrentProduct = frmIssuePicker.IssueName;
+            }
+
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonProposalMedia", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            finally
+            {
+                this.Cursor = Cursors.Arrow;
+            }
+        }
+        
 
         private void buttonProposalActive(object sender, RoutedEventArgs e)
         {
@@ -540,8 +606,6 @@ namespace Subs.Presentation
 
         }
 
-
-
         #endregion
 
         #region Post
@@ -633,7 +697,6 @@ namespace Subs.Presentation
         {
             ProgressBar1.Value = e.ProgressPercentage;
         }
-
 
         #endregion
 
@@ -1593,7 +1656,7 @@ namespace Subs.Presentation
                 MessageBox.Show(ex.Message);
             }
         }
-        ///MediaFormatCouriierList
+
         private void FormatMediaList(object sender, RoutedEventArgs e)
         {
             if (gBackgroundWorker.IsBusy || gBackgroundWorkerPost.IsBusy)
@@ -1636,22 +1699,18 @@ namespace Subs.Presentation
                     gProcessedFiles.Items.Add(new ProcessedFile() { FileName = lSelectedFileName, Datum = DateTime.Now });
                 }
 
-                string lResult = ProductBiz.Filter((bool)checkPayers.IsChecked, (bool)checkNonPayers.IsChecked, ref gDeliveryDoc, true);
+                string lResult = ProductBiz.Filter((bool)checkPayers.IsChecked, (bool)checkNonPayers.IsChecked, ref gDeliveryDoc);
                 if (lResult != "OK")
                 {
                     MessageBox.Show(lResult);
                     return;
                 }
               
-                // At sthis point, we are left with all Courier records that have true in the MedialDelivery of the corresponding deliveryRecord. 
-                // Since this is the default, it is an optimistic approach.
-                // If a deliveryaddress has been rejected in the past, it will be filtered out at this point in time.
-
                 gDeliveryDoc.DeliveryRecord.DefaultView.Sort = "ReceiverId, IssueId";
 
                 CreateRawMediaDeliveryList();
 
-                ConsolidateRawMediaDeliveryList();
+                //ConsolidateRawMediaDeliveryList();
 
                 //SplitDeliveryListByDeliveryMethod(); //Its for InternationalCountries
 
@@ -1692,9 +1751,9 @@ namespace Subs.Presentation
 
                     foreach (string lFileName in lFileDialog.FileNames)
                     {
-                        if (!lFileName.Contains("\\Courier_"))
+                        if (!lFileName.Contains("\\Media_"))
                         {
-                            MessageBox.Show("I can accept only files of which the name starts with 'Courier'");
+                            MessageBox.Show("I can accept only files of which the name starts with 'Media'");
                             return false;
                         }
 
@@ -1746,19 +1805,15 @@ namespace Subs.Presentation
                                 return;
                             }
 
-                            lNewDeliveryItem.CustomerId = lRow.ReceiverId;
-                            if (!lRow.IsCompanyNull())
-                            {
-                                lNewDeliveryItem.CompanyName = lRow.Company;
-                            }
-                            lNewDeliveryItem.Designation = lCustomerData.ClassificationId1.ToString()+" "+ lCustomerData.ClassificationId2.ToString();
-                            lNewDeliveryItem.Sector = lCustomerData.Department;
-
-
-                            //lNewDeliveryItem.Date = DateTime.Now.ToString("ddMMyyyy");
-                            lNewDeliveryItem.ClientName = lRow.Title + " " + lRow.Initials + " " +   lRow.Surname;
-
-                           
+                            lNewDeliveryItem.Title = lCustomerData.Title;
+                            lNewDeliveryItem.CompanyName = lCustomerData.CompanyName;
+     
+                            lNewDeliveryItem.ClientName = lCustomerData.FirstName;
+                            lNewDeliveryItem.ClientSurname = lRow.Surname;
+                            lNewDeliveryItem.WorkPhone = lCustomerData.PhoneNumber;
+                            lNewDeliveryItem.HomePhone = lCustomerData.CellPhoneNumber;
+                            lNewDeliveryItem.CellNumber = lCustomerData.CellPhoneNumber;
+                            lNewDeliveryItem.Email = lRow.EmailAddress;
 
                             DeliveryAddressData2 lDeliveryAddressData = new DeliveryAddressData2(lRow.DeliveryAddressId);
 
@@ -1772,34 +1827,23 @@ namespace Subs.Presentation
                                     {
                                         lNewDeliveryItem.ComplexNumberandName = lNewDeliveryItem.ComplexNumberandName + " Room: " + lDeliveryAddressData.Room;
                                     }
-                                };
+                                }    
                             }
+                            lNewDeliveryItem.FloorNr = lDeliveryAddressData.FloorNo;
+                            lNewDeliveryItem.StreetNr = lDeliveryAddressData.StreetNo;
+                            lNewDeliveryItem.StreetName = lDeliveryAddressData.Street;
 
 
-                            
                             lNewDeliveryItem.Suburb = lDeliveryAddressData.Suburb;
                             lNewDeliveryItem.City = lDeliveryAddressData.City;
                             lNewDeliveryItem.Province = lDeliveryAddressData.Province;
-
                             lNewDeliveryItem.PostalCode = lDeliveryAddressData.PostCode;
-                            //lNewDeliveryItem.Country = lDeliveryAddressData.CountryName;
-
-                            lNewDeliveryItem.WorkPhone = lCustomerData.PhoneNumber;
-                            lNewDeliveryItem.HomePhone = lDeliveryAddressData.PhoneNumber;
-                            lNewDeliveryItem.CellNumber = lCustomerData.CellPhoneNumber;
-                            lNewDeliveryItem.Email = lRow.EmailAddress;
-                            lNewDeliveryItem.StreetNr = lDeliveryAddressData.StreetNo + " " + lNewDeliveryItem.StreetName + " " + lDeliveryAddressData.StreetExtension
-                                                                            + " " + lDeliveryAddressData.StreetSuffix;
-                            lNewDeliveryItem.Quantity = lCustomerData.NumberOfActiveSubscriptions;
                             lNewDeliveryItem.PublicationName = lRow.Product;
+                            lNewDeliveryItem.Quantity = lRow.UnitsPerIssue;
                             lNewDeliveryItem.SubscriptionNumber = lRow.SubscriptionId;
-                            lNewDeliveryItem.SDI = lDeliveryAddressData.SDI;
-
-
-                            //if (lCustomerData.CellPhoneNumber == "")
-                            //{
-                            //    lNewDeliveryItem.OfficeNumber = lCustomerData.PhoneNumber;
-                            //}
+                            lNewDeliveryItem.CustomerId = lRow.ReceiverId;
+                            lNewDeliveryItem.Name = lRow.Title + " " + lCustomerData.FirstName + " " + lRow.Surname;
+                            lNewDeliveryItem.DeliveryAddressId = lRow.DeliveryAddressId;
 
                             //if (!lRow.IsWeightNull())
                             //{
@@ -1842,101 +1886,10 @@ namespace Subs.Presentation
                         this.Cursor = Cursors.Arrow;
                     }
                 }
+              
+              
 
-
-                void ConsolidateRawMediaDeliveryList()
-                {
-                    try
-                    {
-                        // Consolidate the raw DeliveryItems by CustomerId
-
-                        var lCustomerGroups = gDeliveryItemsRaw.GroupBy(p => p.CustomerId);
-
-                        foreach (IGrouping<int, MediaSupportDeliveryItem> lCustomerGroup in lCustomerGroups)
-                        {
-                            MediaSupportDeliveryItem lNewItem = lCustomerGroup.ElementAt(0);
-
-                            //lNewItem.Weight = lCustomerGroup.Sum(p => p.Weight);
-                            //lNewItem.Price = lCustomerGroup.Sum(p => p.Price);
-
-                            //lNewItem.Length = lCustomerGroup.Max(p => p.Length);
-                            //lNewItem.Width = lCustomerGroup.Max(p => p.Width);
-                            //lNewItem.Height = lCustomerGroup.Max(p => p.Height);
-
-                            //int lUnitsPerIssue = 0;
-                            //string lProductString = "";
-                            //var lProductGroups = lCustomerGroup.GroupBy(p => p.Product);
-                            //foreach (IGrouping<string, DeliveryItem> lProductGroup in lProductGroups)
-                            //{
-                            //    lUnitsPerIssue = lProductGroup.Sum(p => p.Pieces);
-                            //    lProductString = lProductString + lProductGroup.ElementAt(0).Product + " X " + lUnitsPerIssue.ToString() + "; ";
-                            //}
-
-                            //lNewItem.Product = lProductString;
-                            //lNewItem.Pieces = lCustomerGroup.Sum(p => p.Pieces);
-                            //gDeliveryItems.Add(lNewItem);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        //Display all the exceptions
-
-                        Exception CurrentException = ex;
-                        int ExceptionLevel = 0;
-                        do
-                        {
-                            ExceptionLevel++;
-                            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "local ConsolidateRawDeliveryLis", "CurrentReceiverId = " + lCurrentReceiverId.ToString());
-                            CurrentException = CurrentException.InnerException;
-                        } while (CurrentException != null);
-
-                        MessageBox.Show(ex.Message);
-                        throw ex;
-                    }
-                    finally
-                    {
-                        this.Cursor = Cursors.Arrow;
-                    }
-                }
-
-                //void SplitDeliveryListByDeliveryMethod()
-                //{
-                //    try
-                //    {
-                //        foreach (MediaSupportDeliveryItem lItem in gDeliveryItems)
-                //        {
-                //            //if (lItem != "RSA")
-                //            {
-                //                International.Add(lItem);
-                //            }
-                //            else
-                //            {
-                //                Economy.Add(lItem);
-                //            }
-                //        }
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        //Display all the exceptions
-
-                //        Exception CurrentException = ex;
-                //        int ExceptionLevel = 0;
-                //        do
-                //        {
-                //            ExceptionLevel++;
-                //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "local SplitDeliveryListByDeliveryMethod", "CurrentReceiverId = " + lCurrentReceiverId.ToString());
-                //            CurrentException = CurrentException.InnerException;
-                //        } while (CurrentException != null);
-
-                //        MessageBox.Show(ex.Message);
-                //        throw ex;
-                //    }
-                //    finally
-                //    {
-                //        this.Cursor = Cursors.Arrow;
-                //    }
-                //}
-
+             
                 void BuildInventoryMediaForAll()
                 {
                     try
@@ -2056,7 +2009,7 @@ namespace Subs.Presentation
                 //Display all the exceptions
 
                 Exception CurrentException = ex;
-        int ExceptionLevel = 0;
+                int ExceptionLevel = 0;
                 do
                 {
                     ExceptionLevel++;
@@ -2068,9 +2021,14 @@ namespace Subs.Presentation
                 return;
             }
             finally
-{
-    this.Cursor = Cursors.Arrow;
-}
+            {
+                this.Cursor = Cursors.Arrow;
+            }
+        }
+
+        private void buttonCreateXSDMedia(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Under construction");
         }
     }
 }
