@@ -39,7 +39,7 @@
         <Label Content="}" Height="122" Canvas.Left="427" Canvas.Top="36" Width="46" FontSize="80"/>
 
         <Label Content="From" Canvas.Left="10" Canvas.Top="91"/>
-        <Label Content="to" Canvas.Left="229" Canvas.Top="94" RenderTransformOrigin="10.102,0.457"/>
+        <Label Content="to" Canvas.Left="229" Canvas.Top="94"/>
 
         <DataGrid x:Name="FNBBankStatementDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="554" ItemsSource="{Binding}" Canvas.Left="10" SelectionUnit="CellOrRowHeader" 
                   Canvas.Top="187" Width="Auto" IsSynchronizedWithCurrentItem="True" MouseRightButtonUp="FNBBankStatementDataGrid_MouseRightButtonUp" CanUserAddRows="False" CanUserDeleteRows="False">

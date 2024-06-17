@@ -38,7 +38,6 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
-                <Button Click="buttonProposalMedia" Content="Generate an issue specific proposal for Media" HorizontalAlignment="Left"  Margin="10,0,10,0"/>
                 <Button Click="buttonProposal" Content="Generate an issue specific proposal" HorizontalAlignment="Left" />
                 <Label x:Name="labelProduct" Background="Yellow">Product</Label>
                 <Label x:Name="labelIssue" Background="Orange">Issue</Label>
@@ -98,19 +97,13 @@
             <Button  Content="Skip the marked entries" Click="Skip" Canvas.Left="25" Canvas.Top="120"  Height="22" Name="buttonSkip" Width="150"/>
 
             <Button  Content="Post" Canvas.Left="218" Canvas.Top="78" Click="buttonPost_Click" Height="22" Name="buttonPost" Width="150"/>
-            <Button  Content="Split by deliverymethod"  Canvas.Left="218" Canvas.Top="120" Click="ButtonSplitByDeliveryMethod" Height="23" Name="buttonGenerateXML" Width="150"/>
+            <Button  Content="Save by deliverymethod"  Canvas.Left="218" Canvas.Top="120" Click="ButtonSplitByDeliveryMethod" Height="23" Name="buttonGenerateXML" Width="150"/>
             <Label Canvas.Left="469">Format delivery lists for</Label>
             <CheckBox Content="Payers" Canvas.Left="636" Canvas.Top="7"  Height="16" Name="checkPayers" IsChecked="True" Width="50" />
             <CheckBox Canvas.Left="711" Canvas.Top="8" Content="NonPayers" Height="16" Name="checkNonPayers" IsChecked="True" />
-            <Button  Content="Courier list" Canvas.Left="478" Canvas.Top="81" Click="FormatCourierList" Height="23" Name="buttonFormatCourierList" Width="307"/>
-            <Button  Content="Create XSD for Courier" Canvas.Left="827" Canvas.Top="82" Click="buttonCreateXSD" Height="23" x:Name="CreateXSD" Width="307"/>
-            <Button  Content="Create XSD for Media" Canvas.Left="827" Canvas.Top="40" Click="buttonCreateXSDMedia" Height="23" x:Name="CreateXSDMedia" Width="307"/>
-
-
-            <Button  Content="Registered mail" Canvas.Left="827" Canvas.Top="118" Click="FormatRegisteredMail" Height="22" Name="buttonFormatRegisteredMail" Width="307" Margin="0"/>
-
+            <Button  Content="Courier list" Canvas.Left="478" Canvas.Top="38" Click="FormatCourierList" Height="23" Name="buttonFormatCourierList" Width="307"/>
+            <Button  Content="Create XSD" Canvas.Left="827" Canvas.Top="38" Click="buttonCreateXSD" Height="23" x:Name="CreateXSD" Width="307"/>
             <Button Content="Collection list" Click="FormatCollectionList" Height="23" Name="buttonFormatCollectionList" Width="307" Canvas.Left="478" Canvas.Top="117" />
-            <Button  Content="Media Courier list" Canvas.Left="478" Canvas.Top="39" Click="FormatMediaList" Height="22" x:Name="buttonMediaFormatCourierList_Copy" Width="307"/>
         </Canvas>
 
     </Grid>

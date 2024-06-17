@@ -1,0 +1,123 @@
+﻿<Window x:Class="Subs.Presentation.Deliver2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Subs.Presentation" WindowStartupLocation="Manual"
+        xmlns:cm="clr-namespace:System.ComponentModel;assembly=System"
+        Title="Delivery processing" Height="764" Width="1170">
+    <Window.Resources>
+        <CollectionViewSource x:Key="deliveryProposalViewSource" Source="{Binding Path=DeliveryProposal}" />
+        <local:RandConverter x:Key="lRandConverter"/>
+        <local:DateConverter x:Key="lDateConverter"/>
+        <Style x:Key="AlignRight" TargetType="FrameworkElement">
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+        </Style>
+        <cm:BackgroundWorker x:Key="backgroundWorker"
+          WorkerReportsProgress="True" 
+          DoWork="backgroundWorker_DoWork" 
+          ProgressChanged="backgroundWorker_ProgressChanged" 
+          RunWorkerCompleted="backgroundWorker_RunWorkerCompleted"></cm:BackgroundWorker>
+        <cm:BackgroundWorker x:Key="backgroundWorkerPost"
+          WorkerReportsProgress="True" 
+          DoWork="backgroundWorkerPost_DoWork" 
+          ProgressChanged="backgroundWorkerPost_ProgressChanged" 
+          RunWorkerCompleted="backgroundWorkerPost_RunWorkerCompleted"></cm:BackgroundWorker>
+    </Window.Resources>
+
+
+    <Grid DataContext="{StaticResource deliveryProposalViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <!--Row 0-->
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+            <Button Click="buttonProposalMedia" Content="Generate an issue specific proposal for Media" HorizontalAlignment="Left"  Margin="10,0,10,0" />
+            <!--<Button Click="buttonProposal" Content="Generate an issue specific proposal" HorizontalAlignment="Left" />-->
+            <Label x:Name="labelProduct" Background="Yellow" Margin="30,0,0,0">Product</Label>
+            <Label x:Name="labelIssue" Background="Orange">Issue</Label>
+        </StackPanel>
+
+        <!--<Button Grid.Column="1" Grid.Row="0" Click="buttonProposalActive" Content="Generate a proposal for all active products" Width="300" HorizontalAlignment="Left" Margin="20,0,0,0"/>-->
+
+        <!--Row 1-->
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10,10,0,10">
+            <Label Content="From" />
+            <DatePicker Name ="pickerStartDate" Margin="0,0,0,0"/>
+
+            <Label Content="to" Margin="20,0,0,0"/>
+            <DatePicker Name ="pickerEndDate" Margin="0,0,0,0"/>
+
+            <Button Content="Load an existing proposal" Click="buttonLoadProposal" Margin="40,0,0,0"/>
+        </StackPanel>
+
+        <Button  Content="Save proposal" Click="buttonSave_Click" Name="buttonSave" Width="150" Grid.Row="1" Grid.Column="1" Height="30" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+
+        <Button  Content="Post proposal" Click="buttonPost_Click" Name="buttonPost" Width="150" Grid.Row="1" Grid.Column="2" Height="30"/>
+
+        <!--Row 2-->
+
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" VerticalAlignment="Stretch" ItemsSource="{Binding}" 
+                  Name="deliveryRecordDataGrid" IsSynchronizedWithCurrentItem="True" Height ="500"
+                  RowHeight="30"    RowDetailsVisibilityMode="VisibleWhenSelected" CanUserDeleteRows="True" CanUserAddRows="False" Grid.Row="2" Grid.ColumnSpan="3">
+            <DataGrid.RowHeaderStyle>
+                <Style TargetType="{x:Type DataGridRowHeader}">
+                    <Setter Property="Background"  Value="Yellow"/>
+                    <Setter Property="Width"  Value="30"/>
+                    <Setter Property="BorderBrush" Value="Red" />
+                    <Setter Property="BorderThickness"  Value="3" />
+                </Style>
+            </DataGrid.RowHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn x:Name="skipColumn" Binding="{Binding Path=Skip}" Header="Skip" Width="40" />
+                <DataGridTextColumn x:Name="DeliveryProposalDateColumn" Binding="{Binding Path=ProposalDate}" Header="ProposalDate" Width="SizeToHeader" />
+                <DataGridTextColumn Binding="{Binding Path=IssueDescription}" Header="Issue description" Width="auto" />
+                <DataGridTextColumn x:Name="unitsperissueColumn" Binding="{Binding Path=UnitsPerIssue}" Header="UnitsPerIssue" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="subscriptionIdColumn" Binding="{Binding Path=SubscriptionId}" Header="SubscriptionId" Width="SizeToHeader" />
+                <DataGridCheckBoxColumn x:Name="DebitOrder" Binding="{Binding Path=DebitOrder}" Header="Debitorder" Width="SizeToHeader" IsReadOnly="True" CanUserSort="True" />
+                <DataGridTextColumn x:Name="receiverIdColumn" Binding="{Binding Path=ReceiverId}" Header="Receiver Id" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="validationStatusColumn" Binding="{Binding Path=ValidationStatus}" Header="Validation Status" Width="Auto" />
+                <DataGridTextColumn x:Name="validationReasonColumn" Binding="{Binding Path=ValidationReason}" Header="Validation Reason" Width="Auto" />
+                <DataGridTextColumn x:Name="deliveryMethodStringColumn" Binding="{Binding Path=DeliveryMethodString}" Header="DeliveryMethod" Width="Auto" />
+                <DataGridTextColumn x:Name="deliveryaddressColumn" Binding="{Binding Path=DeliveryAddressId}" Header="DeliveryAddressId" Width="Auto" />
+                <!--<DataGridTextColumn x:Name="descriptionColumn" Binding="{Binding Path=Description}" Header="Description" Width="SizeToHeader" />-->
+                <DataGridCheckBoxColumn x:Name="PostColumn" Binding="{Binding Path=Post}" Header="Post" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="postTransactionIdColumn" Binding="{Binding Path=PostTransactionId}" Header="PostTransactionId" Width="SizeToHeader" />
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Subscription transactions" Click="Click_SubscriptionTransactions" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+
+        <!--Row 3-->
+
+
+        <Canvas Height="Auto" Grid.Row="3">
+
+            <Label Canvas.Left="25">Progress bar</Label>
+            <Button  Content="Validate the proposal" Click="buttonValidate_Click" Canvas.Left="25" Canvas.Top="78"  Height="23" Name="buttonValidate" Width="150"/>
+            <ProgressBar x:Name="ProgressBar1" Height="20" Canvas.Left="25" Canvas.Top="38" Width="343" Minimum="0" Maximum="100"></ProgressBar>
+            <Button  Content="Skip the marked entries" Click="Skip" Canvas.Left="25" Canvas.Top="120"  Height="22" Name="buttonSkip" Width="150"/>
+            <Label Canvas.Left="469">Format delivery lists for</Label>
+            <CheckBox Content="Payers" Canvas.Left="636" Canvas.Top="7"  Height="16" Name="checkPayers" IsChecked="True" Width="50" />
+            <CheckBox Canvas.Left="711" Canvas.Top="8" Content="NonPayers" Height="16" Name="checkNonPayers" IsChecked="True" />
+            <!--<Button  Content="Skynet Courier list" Canvas.Left="478" Canvas.Top="81" Click="FormatCourierList" Height="23" Name="buttonFormatCourierList" Width="307"/>-->
+            <!--<Button  Content="Registered mail" Canvas.Left="827" Canvas.Top="118" Click="FormatRegisteredMail" Height="22" Name="buttonFormatRegisteredMail" Width="307" Margin="0"/>-->
+            <Button  Content="Media Courier list" Canvas.Left="478" Canvas.Top="39" Click="buttonFormatMediaList" Height="22" Width="307"/>
+        </Canvas>
+
+    </Grid>
+
+</Window>

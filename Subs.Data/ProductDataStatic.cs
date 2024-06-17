@@ -25,7 +25,9 @@ namespace Subs.Data
             try
             {
                 // Set the connectionString for this object
+ 
                 gConnection.ConnectionString = Settings.ConnectionString;
+                //gConnection.Open();
 
                 // Attach connection to adapters
 
@@ -120,13 +122,16 @@ namespace Subs.Data
 
         public static bool CheckStockBalance(int IssueId, ref int Balance)
         {
+            SqlConnection lConnection = new SqlConnection(Settings.ConnectionString);
+
+
             try
             {
-                gConnection.Open();
+                lConnection.Open();
 
                 SqlCommand Command = new SqlCommand();
 
-                Command.Connection = gConnection;
+                Command.Connection = lConnection;
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = "dbo.[MIMS.ProductData.CheckStockBalance]";
                 SqlCommandBuilder.DeriveParameters(Command);
@@ -162,7 +167,7 @@ namespace Subs.Data
             }
             finally
             {
-                gConnection.Close();
+                lConnection.Close();
             }
 
         }

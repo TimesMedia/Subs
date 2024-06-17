@@ -122,7 +122,7 @@ namespace Subs.Business
 
                 // Check deliverymethods
 
-                DeliveryMethod[] lMethodsRequiringAddress = { DeliveryMethod.Skynet, DeliveryMethod.Mail, DeliveryMethod.RegisteredMail };
+                DeliveryMethod[] lMethodsRequiringAddress = { DeliveryMethod.Courier, DeliveryMethod.Mail, DeliveryMethod.RegisteredMail };
                 if (lMethodsRequiringAddress.Contains(pSubscriptionData.DeliveryMethod) && pSubscriptionData.DeliveryAddressId == null)
                 {
                     return new MimsValidationResult() { Message = "I need a delivery address." };
@@ -606,7 +606,7 @@ namespace Subs.Business
                     return lCostRow.Mail3;
                 }
 
-                if (pDeliveryMethod == DeliveryMethod.Skynet)
+                if (pDeliveryMethod == DeliveryMethod.Courier)
                 {
                     if (pWeight < 1)
                     {

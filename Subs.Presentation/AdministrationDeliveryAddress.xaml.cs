@@ -14,16 +14,14 @@ namespace Subs.Presentation
 
     public partial class AdministrationDeliveryAddress : Window
     {
+        #region Globals
         MIMSDataContext gContext = new MIMSDataContext(Settings.ConnectionString);
-          
         private readonly Subs.Data.DeliveryAddressDocTableAdapters.DeliveryAddressTableAdapter gDeliveryAddressAdapter = new Subs.Data.DeliveryAddressDocTableAdapters.DeliveryAddressTableAdapter();
-        
         private readonly Subs.Data.DeliveryAddressDocTableAdapters.CountryTableAdapter gCountryTableAdapter = new Subs.Data.DeliveryAddressDocTableAdapters.CountryTableAdapter();
         private readonly Subs.Data.DeliveryAddressDocTableAdapters.ProvinceTableAdapter gProvinceTableAdapter = new Subs.Data.DeliveryAddressDocTableAdapters.ProvinceTableAdapter();
         private readonly Subs.Data.DeliveryAddressDocTableAdapters.CityTableAdapter gCityTableAdapter = new Subs.Data.DeliveryAddressDocTableAdapters.CityTableAdapter();
         private readonly Subs.Data.DeliveryAddressDocTableAdapters.SuburbTableAdapter gSuburbTableAdapter = new Subs.Data.DeliveryAddressDocTableAdapters.SuburbTableAdapter();
         private readonly Subs.Data.DeliveryAddressDocTableAdapters.StreetTableAdapter gStreetTableAdapter = new Subs.Data.DeliveryAddressDocTableAdapters.StreetTableAdapter();
-
 
         private Subs.Data.DeliveryAddressDoc gDeliveryAddressDoc;
         private CollectionViewSource gDeliveryAddressViewSource;
@@ -32,10 +30,11 @@ namespace Subs.Presentation
         private CollectionViewSource gSuburbViewSource;
         private CollectionViewSource gStreetViewSource;
 
+        private DeliveryAddressData2 gSelectedAddress;
 
-        DeliveryAddressData2 gSelectedAddress;
+        #endregion
 
-
+        #region Constructor and utilities
         public AdministrationDeliveryAddress()
         {
             try
@@ -69,11 +68,11 @@ namespace Subs.Presentation
             Utilities.SetVisibility(sender);
         }
 
-
         private bool ListNonStandardAddresses()
         {
             // List the non standard deliveryaddresses
             List<MIMS_DeliveryAddressDoc_DeliveryAddress_NonStandardResult> lDeliveryAddressIds = gContext.MIMS_DeliveryAddressDoc_DeliveryAddress_NonStandard().ToList();
+            
             List<DeliveryAddressData2> lDeliveryAddresses = new List<DeliveryAddressData2>();
             foreach (var item in lDeliveryAddressIds)
             {
@@ -101,7 +100,6 @@ namespace Subs.Presentation
                 gCityTableAdapter.AttachConnection();
                 gSuburbTableAdapter.AttachConnection();
                 gStreetTableAdapter.AttachConnection();
-
 
                 gCountryTableAdapter.Fill(gDeliveryAddressDoc.Country);
                 gProvinceTableAdapter.Fill(gDeliveryAddressDoc.Province);
@@ -132,6 +130,8 @@ namespace Subs.Presentation
                 MessageBox.Show("Error in Window_Loaded");
             }
         }
+
+        #endregion
 
         #region Non standard deliveryaddresses
 
@@ -179,7 +179,6 @@ namespace Subs.Presentation
             }
         }
 
-
         private void Click_GoToCustomer(object sender, RoutedEventArgs e)
         {
             gSelectedAddress = (DeliveryAddressData2)gDeliveryAddressViewSource.View.CurrentItem;
@@ -188,9 +187,7 @@ namespace Subs.Presentation
             lPicker.ShowDialog();
         }
 
-
         #endregion
-
 
         #region Address Template
 
@@ -205,7 +202,6 @@ namespace Subs.Presentation
             gProvinceTableAdapter.Update(gDeliveryAddressDoc.Province);
             gProvinceTableAdapter.Fill(gDeliveryAddressDoc.Province);
         }
-
 
         private void SubmitCity(object sender, RoutedEventArgs e)
         {
@@ -298,9 +294,6 @@ namespace Subs.Presentation
                 TabControl.SelectedIndex = 0;
             }
         }
-
-
-
 
         #endregion
 

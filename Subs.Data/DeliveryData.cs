@@ -5,57 +5,90 @@ using System.Data.SqlClient;
 
 namespace Subs.Data
 {
-    /// <summary>
-    /// Summary description for LedgerData.
-    /// </summary>
     public class DeliveryData
     {
-        private readonly SqlConnection Connection = new SqlConnection();
+        private  Subs.Data.DeliveryDocTableAdapters.DeliveryProposalTableAdapter gDeliveryProposalAdapter = new DeliveryDocTableAdapters.DeliveryProposalTableAdapter();
+ 
+        public DeliveryDoc gDoc = new DeliveryDoc();
+        
+        public Subs.Data.DeliveryDoc.DeliveryProposalDataTable gDeliveryProposal;
+        public Subs.Data.DeliveryDoc.CollectionListDataTable gCollectionList = new DeliveryDoc.CollectionListDataTable();
 
         public DeliveryData()
         {
-            // Set the connectionString for this object
-            ;
-            if (Settings.ConnectionString == "")
-            {
-                // This makes it possible to use the Visual studio designer.
-                Connection.ConnectionString = global::Subs.Data.Properties.Settings.Default.MIMSConnectionString;
-            }
-            else
-            {
-                Connection.ConnectionString = Settings.ConnectionString;
-            }
+            gDeliveryProposal = gDoc.DeliveryProposal;
+            gCollectionList = gDoc.CollectionList;
+            gDeliveryProposalAdapter.AttachConnection();
         }
 
-        public bool LoadLabelByCustomer(int CustomerId, ref Data.DeliveryDoc pDeliveryDoc)
+        public void Propose(int pIssueId, string pType)
         {
             try
             {
-                // Cleanup before you start a new one
+                gDeliveryProposal.Clear();
 
-                pDeliveryDoc.Label.Clear();
+                // Do the query with a DataReader
 
-                // Get new data
+
+
+                SqlConnection lConnection = new SqlConnection();
                 SqlCommand Command = new SqlCommand();
                 SqlDataAdapter Adaptor = new SqlDataAdapter();
-                Connection.Open();
-                Command.Connection = Connection;
+                lConnection.ConnectionString = Settings.ConnectionString;
+                lConnection.Open();
+                Command.Connection = lConnection;
                 Command.CommandType = CommandType.StoredProcedure;
-                Command.CommandText = "dbo.[MIMS.DeliveryData.LoadLabelByCustomer]";
-                SqlCommandBuilder.DeriveParameters(Command);
-                Adaptor.SelectCommand = Command;
-                Command.Parameters["@Type"].Value = "ByCustomer";
-                Command.Parameters["@Id"].Value = CustomerId;
-                Adaptor.Fill(pDeliveryDoc.Label);
 
-                if (pDeliveryDoc.Label.Rows.Count == 0)
+                Command.CommandText = "[dbo].[MIMS.DeliveryData.ProposeMedia]";
+
+                SqlParameter lParameter1 = Command.CreateParameter();
+                lParameter1.ParameterName = "@IssueId";
+                lParameter1.DbType = System.Data.DbType.Int32;
+                lParameter1.Value = pIssueId;
+                Command.Parameters.Add(lParameter1);
+
+                SqlDataReader lReader = Command.ExecuteReader();
+
+                if (lReader.HasRows)
                 {
-                    ExceptionData.WriteException(3, "There are no labels for " + CustomerId.ToString(), this.ToString(), "LoadLabelByCustomer", "");
-                    return false;
-                }
-                else return true;
-            }
+                    while (lReader.Read())
+                    {
+                        DeliveryDoc.DeliveryProposalRow lRow = gDeliveryProposal.NewDeliveryProposalRow();
+                        lRow.ProposalDate = lReader.GetDateTime(0);
+                        lRow.SubscriptionId = lReader.GetInt32(1);
+                        lRow.IssueId = lReader.GetInt32(2);
+                        lRow.IssueDescription = lReader.GetString(3);
+                        lRow.DeliveryAddressId = lReader.GetInt32(4);
+                        lRow.DeliveryMethod = lReader.GetInt32(5);
+                        lRow.DeliveryMethodString = lReader.GetString(6);
+                        lRow.ValidationStatus = lReader.GetString(7);
+                        lRow.ModifiedBy = lReader.GetString(8);
+                        lRow.ModifiedOn = lReader.GetDateTime(9);
+                        lRow.PayerId = lReader.GetInt32(10);
+                        lRow.ReceiverId = lReader.GetInt32(11);
+                        lRow.UnitsPerIssue = lReader.GetInt32(12);
+                        lRow.UnitPrice = (decimal)lReader.GetDecimal(13);
+                        lRow.DebitOrder = (bool)lReader.GetBoolean(14);
+                        lRow.ExpirationDate = lReader.GetDateTime(15);
 
+                        if (!lReader.IsDBNull(16))
+                        {
+                            lRow.InvoiceId = lReader.GetInt32(16);
+                        }
+
+                        lRow.Weight = (decimal)lReader.GetDecimal(17);
+                        lRow.Length = lReader.GetInt32(18);
+                        lRow.Width = lReader.GetInt32(19);
+                        lRow.Height = lReader.GetInt32(20);
+                        lRow.MediaDelivery = lReader.GetBoolean(21);
+
+                        gDeliveryProposal.AddDeliveryProposalRow(lRow);
+                    }
+                    gDeliveryProposalAdapter.Update(gDeliveryProposal);
+                    gDeliveryProposal.AcceptChanges();
+
+                }
+            }
             catch (Exception ex)
             {
                 //Display all the exceptions
@@ -65,150 +98,46 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "LoadLabelByCustomer", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ProposeMedia", pIssueId.ToString());
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
-                return false;
-            }
-
-            finally
-            {
-                Connection.Close();
+                throw ex;
             }
 
         }
 
-        public bool DefragSingleLabel(ref DeliveryDoc pDeliveryDoc)
+        //public void ProposeSkynet(int pIssueId)
+        //{
+        //    gDeliveryProposal.Clear();
+        //    gDeliveryProposalAdapter.Propose(gDeliveryProposal, pIssueId, "Skynet");
+        //}
+
+        //public string ProposeActiveActive(ref DeliveryDoc pDeliveryDoc)
+        //{
+        //    foreach (int lIssueId in ProductDataStatic.CurrentIssues())
+        //    {
+
+        //        {
+        //            string lResult;
+
+        //            if ((lResult = Propose(lIssueId)) != "OK")
+        //            {
+        //                return lResult;
+        //            }
+        //        }
+        //    }
+        //    return "OK";
+        //}
+
+        public void LoadProposal(DateTime pStartDate, DateTime pEndDate)
         {
-            int y = 0;  // y for column 
-            int yMax = 8; //Maximum index for the array
-
-            Array myArray = Array.CreateInstance(typeof(string), yMax + 1);
-            myArray.Initialize();
-
             try
             {
-                // Start with a clean slate
-                pDeliveryDoc.Accross.Clear();
+                gDeliveryProposalAdapter.AttachConnection();
+                gDeliveryProposalAdapter.FillBy(gDeliveryProposal, pStartDate, pEndDate);
 
-                // Get the first and only row
-
-                DeliveryDoc.LabelRow myRow = (DeliveryDoc.LabelRow)pDeliveryDoc.Label.Rows[0];
-
-                // Load the appropriate column
-
-                if (!myRow.IsCompanyNull())
-                {
-                    if (myRow.Company != "[None]")
-                    {
-                        myArray.SetValue(myRow.Company.Trim(), y);
-                        y++;
-                    }
-                }
-
-                if (!myRow.IsDepartmentNull())
-                {
-                    if (myRow.Department.Trim() != "")
-                    {
-                        myArray.SetValue(myRow.Department.Trim(), y);
-                        y++;
-                    }
-                }
-
-
-                if (!myRow.IsTitleNull())
-                {
-                    if (myRow.Title != "[None]")
-                        myArray.SetValue(myRow.Title.Trim() + " ", y);
-                }
-
-                if (!myRow.IsInitialsNull())
-                    myArray.SetValue(myArray.GetValue(y) + myRow.Initials.Trim() + " ", y);
-
-                if (!myRow.IsSurnameNull())
-                    myArray.SetValue(myArray.GetValue(y) + myRow.Surname.Trim() + " ", y);
-
-                if (myArray.GetValue(y) != null) y++;
-
-
-                if (!myRow.IsAddress1Null())
-                {
-                    if (myRow.Address1.Trim() != "")
-                    {
-                        myArray.SetValue(myRow.Address1.Trim(), y);
-                        y++;
-                    }
-                }
-
-                if (!myRow.IsAddress2Null())
-                {
-                    if (myRow.Address2.Trim() != "")
-                    {
-                        myArray.SetValue(myRow.Address2.Trim(), y);
-                        y++;
-                    }
-                }
-
-                if (!myRow.IsAddress3Null())
-                {
-                    if (myRow.Address3.Trim() != "")
-                    {
-                        myArray.SetValue(myRow.Address3.Trim(), y);
-                        y++;
-                    }
-                }
-
-                if (!myRow.IsAddress4Null())
-                {
-                    if (myRow.Address4.Trim() != "")
-                    {
-                        myArray.SetValue(myRow.Address4.Trim(), y);
-                        y++;
-                    }
-                }
-
-                if (!myRow.IsCountryNull())
-                {
-                    if (myRow.Country != "[None]")
-                    {
-                        myArray.SetValue(myRow.Country.Trim(), y);
-                        y++;
-                    }
-                }
-
-                if (!myRow.IsAddress5Null())
-                {
-                    if (myRow.Address5.Trim() != "")
-                    {
-                        myArray.SetValue(myRow.Address5.Trim(), y);
-                        y++;
-                    }
-                }
-
-                //Test for overflow. At this point y will be ready for the next entry.
-                // So decrement it
-                y--;
-                if (y > yMax)
-                {
-                    throw new Exception("You are trying to generate too many lines for this label.");
-                }
-
-
-                // Create a new row
-
-                DeliveryDoc.AccrossRow NewRow = pDeliveryDoc.Accross.NewAccrossRow();
-
-                for (int Row = 0; Row <= y; Row++)
-                {
-                    NewRow[Row * 3] = myArray.GetValue(Row);
-                }
-
-                pDeliveryDoc.Accross.AddAccrossRow(NewRow);
-
-                return true;
             }
-
             catch (Exception ex)
             {
                 //Display all the exceptions
@@ -218,13 +147,35 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "DefragSingleLabel", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "DeliveryDataStatic", "LoadProposal", "");
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
-                return false;
+                throw ex;
             }
+        }
 
+        public void SaveProposal()
+        {
+            try
+            {
+                  gDeliveryProposalAdapter.Update(gDeliveryProposal);
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "DeliveryDataStatic", "SaveProposal", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
+            }
         }
     }
 }

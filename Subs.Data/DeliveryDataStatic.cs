@@ -10,6 +10,10 @@ namespace Subs.Data
     {
         private static MIMSDataContext gMimsDataContext = new MIMSDataContext(Settings.ConnectionString);
 
+
+        #region Generate deliverylists
+
+
         public static string LoadActive(ref DeliveryDoc pDeliveryDoc)
         {
             foreach (int lIssueId in ProductDataStatic.CurrentIssues())
@@ -26,7 +30,7 @@ namespace Subs.Data
             }
             return "OK";
         }
-  
+
         public static string Load(int IssueId, ref DeliveryDoc pDoc)
         {
             SqlConnection lConnection = new SqlConnection();
@@ -70,53 +74,6 @@ namespace Subs.Data
                 lConnection.Close();
             }
         }
-
-        public static string LoadMedia(int IssueId, ref DeliveryDoc pDoc)
-        {
-            SqlConnection lConnection = new SqlConnection();
-            try
-            {
-                // Get new data
-
-                SqlCommand lCommand = new SqlCommand();
-                SqlDataAdapter lAdaptor = new SqlDataAdapter();
-                lConnection.ConnectionString = Settings.ConnectionString;
-                lConnection.Open();
-                lCommand.Connection = lConnection;
-                lCommand.CommandType = CommandType.StoredProcedure;
-                lCommand.CommandText = "dbo.[MIMS.DeliveryDataStatic.LoadMedia]";
-                SqlCommandBuilder.DeriveParameters(lCommand);
-                lAdaptor.SelectCommand = lCommand;
-                lCommand.Parameters["@IssueId"].Value = IssueId;
-                lCommand.Parameters["@Status"].Value = SubStatus.Deliverable;
-
-                lAdaptor.Fill(pDoc.DeliveryRecord);
-
-                return "OK";
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
-
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "DeliveryDataStatic", "LoadMedia", "IssueId = " + IssueId.ToString());
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
-
-                return ex.Message;
-            }
-            finally
-            {
-                lConnection.Close();
-            }
-        }
-
-
-
 
         public static bool LoadLabelBySubscription(int SubscriptionId, ref DeliveryDoc pDeliveryDoc)
         {
@@ -248,6 +205,8 @@ namespace Subs.Data
 
         }
 
+        #endregion
+
         //public static string ReverseDelivery(int IssueToReverseId, DateTime DeliveryDate)
         //{
         //    SqlConnection lConnection = new SqlConnection();
@@ -321,7 +280,6 @@ namespace Subs.Data
                 return lResult;
             }
         }
-
 
         public static bool StandarizePostCodes()
         {

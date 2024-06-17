@@ -229,7 +229,7 @@ namespace Subs.Data
     {
         Mail = 1,
         Collect = 2,
-        Skynet = 4,
+        Courier = 4,
         RegisteredMail = 8,
         ElectronicSingle = 16,
         ElectronicMultiple = 32,

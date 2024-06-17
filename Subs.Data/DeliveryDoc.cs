@@ -1,20 +1,57 @@
-﻿namespace Subs.Data
+﻿using System;
+using System.Data.SqlClient;
+
+namespace Subs.Data
 {
-    public partial class DeliveryDoc
+}
+
+namespace Subs.Data.DeliveryDocTableAdapters
+{
+    public partial class DeliveryProposalTableAdapter
     {
-        partial class DeliveryRecordDataTable
-        {
-        }
+        private readonly SqlConnection lConnection = new SqlConnection();
 
-        partial class DeliveryList1DataTable
+        public bool AttachConnection()
         {
-        }
+            try
+            {
+                // Set the connectionString for this object
 
-        partial class DeliveryListNewDataTable
-        {
-        }
+                lConnection.ConnectionString = Settings.ConnectionString;
 
-        public partial class CourierListOldDataTable
+
+                // Replace the designer's connection with yor own one.
+                foreach (SqlCommand myCommand in CommandCollection)
+                {
+                    myCommand.Connection = lConnection;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "AttachConnection", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                return false;
+            }
+        }
+    }
+}
+namespace Subs.Data
+{
+
+
+    partial class DeliveryDoc
+    {
+        partial class DeliveryProposalDataTable
         {
         }
     }

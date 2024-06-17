@@ -524,8 +524,6 @@ namespace Subs.Data {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class DeliveryProposalDataTable : global::System.Data.TypedTableBase<DeliveryProposalRow> {
             
-            private global::System.Data.DataColumn columnDeliveryProposalId;
-            
             private global::System.Data.DataColumn columnProposalDate;
             
             private global::System.Data.DataColumn columnSubscriptionId;
@@ -554,9 +552,9 @@ namespace Subs.Data {
             
             private global::System.Data.DataColumn columnPayerId;
             
-            private global::System.Data.DataColumn columnRecieverId;
+            private global::System.Data.DataColumn columnReceiverId;
             
-            private global::System.Data.DataColumn columnUnitPerIssue;
+            private global::System.Data.DataColumn columnUnitsPerIssue;
             
             private global::System.Data.DataColumn columnUnitPrice;
             
@@ -573,6 +571,10 @@ namespace Subs.Data {
             private global::System.Data.DataColumn columnWidth;
             
             private global::System.Data.DataColumn columnHeight;
+            
+            private global::System.Data.DataColumn columnMediaDelivery;
+            
+            private global::System.Data.DataColumn columnSkip;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -605,14 +607,6 @@ namespace Subs.Data {
             protected DeliveryProposalDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn DeliveryProposalIdColumn {
-                get {
-                    return this.columnDeliveryProposalId;
-                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -729,17 +723,17 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn RecieverIdColumn {
+            public global::System.Data.DataColumn ReceiverIdColumn {
                 get {
-                    return this.columnRecieverId;
+                    return this.columnReceiverId;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn UnitPerIssueColumn {
+            public global::System.Data.DataColumn UnitsPerIssueColumn {
                 get {
-                    return this.columnUnitPerIssue;
+                    return this.columnUnitsPerIssue;
                 }
             }
             
@@ -809,6 +803,22 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn MediaDeliveryColumn {
+                get {
+                    return this.columnMediaDelivery;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SkipColumn {
+                get {
+                    return this.columnSkip;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -845,7 +855,6 @@ namespace Subs.Data {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public DeliveryProposalRow AddDeliveryProposalRow(
-                        int DeliveryProposalId, 
                         System.DateTime ProposalDate, 
                         int SubscriptionId, 
                         int IssueId, 
@@ -853,15 +862,15 @@ namespace Subs.Data {
                         int DeliveryAddressId, 
                         int DeliveryMethod, 
                         string DeliveryMethodString, 
-                        int ValidationStatus, 
+                        string ValidationStatus, 
                         string ValidationReason, 
-                        int Post, 
+                        bool Post, 
                         int PostTransactionId, 
                         System.DateTime ModifiedOn, 
                         string ModifiedBy, 
                         int PayerId, 
-                        string RecieverId, 
-                        int UnitPerIssue, 
+                        int ReceiverId, 
+                        int UnitsPerIssue, 
                         decimal UnitPrice, 
                         bool DebitOrder, 
                         System.DateTime ExpirationDate, 
@@ -869,10 +878,11 @@ namespace Subs.Data {
                         decimal Weight, 
                         int Length, 
                         int Width, 
-                        int Height) {
+                        int Height, 
+                        bool MediaDelivery, 
+                        bool Skip) {
                 DeliveryProposalRow rowDeliveryProposalRow = ((DeliveryProposalRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        DeliveryProposalId,
                         ProposalDate,
                         SubscriptionId,
                         IssueId,
@@ -887,8 +897,8 @@ namespace Subs.Data {
                         ModifiedOn,
                         ModifiedBy,
                         PayerId,
-                        RecieverId,
-                        UnitPerIssue,
+                        ReceiverId,
+                        UnitsPerIssue,
                         UnitPrice,
                         DebitOrder,
                         ExpirationDate,
@@ -896,7 +906,9 @@ namespace Subs.Data {
                         Weight,
                         Length,
                         Width,
-                        Height};
+                        Height,
+                        MediaDelivery,
+                        Skip};
                 rowDeliveryProposalRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDeliveryProposalRow);
                 return rowDeliveryProposalRow;
@@ -904,9 +916,10 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public DeliveryProposalRow FindByDeliveryProposalId(int DeliveryProposalId) {
+            public DeliveryProposalRow FindBySubscriptionIdIssueId(int SubscriptionId, int IssueId) {
                 return ((DeliveryProposalRow)(this.Rows.Find(new object[] {
-                            DeliveryProposalId})));
+                            SubscriptionId,
+                            IssueId})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -926,7 +939,6 @@ namespace Subs.Data {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             internal void InitVars() {
-                this.columnDeliveryProposalId = base.Columns["DeliveryProposalId"];
                 this.columnProposalDate = base.Columns["ProposalDate"];
                 this.columnSubscriptionId = base.Columns["SubscriptionId"];
                 this.columnIssueId = base.Columns["IssueId"];
@@ -941,8 +953,8 @@ namespace Subs.Data {
                 this.columnModifiedOn = base.Columns["ModifiedOn"];
                 this.columnModifiedBy = base.Columns["ModifiedBy"];
                 this.columnPayerId = base.Columns["PayerId"];
-                this.columnRecieverId = base.Columns["RecieverId"];
-                this.columnUnitPerIssue = base.Columns["UnitPerIssue"];
+                this.columnReceiverId = base.Columns["ReceiverId"];
+                this.columnUnitsPerIssue = base.Columns["UnitsPerIssue"];
                 this.columnUnitPrice = base.Columns["UnitPrice"];
                 this.columnDebitOrder = base.Columns["DebitOrder"];
                 this.columnExpirationDate = base.Columns["ExpirationDate"];
@@ -951,13 +963,13 @@ namespace Subs.Data {
                 this.columnLength = base.Columns["Length"];
                 this.columnWidth = base.Columns["Width"];
                 this.columnHeight = base.Columns["Height"];
+                this.columnMediaDelivery = base.Columns["MediaDelivery"];
+                this.columnSkip = base.Columns["Skip"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             private void InitClass() {
-                this.columnDeliveryProposalId = new global::System.Data.DataColumn("DeliveryProposalId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDeliveryProposalId);
                 this.columnProposalDate = new global::System.Data.DataColumn("ProposalDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnProposalDate);
                 this.columnSubscriptionId = new global::System.Data.DataColumn("SubscriptionId", typeof(int), null, global::System.Data.MappingType.Element);
@@ -972,11 +984,11 @@ namespace Subs.Data {
                 base.Columns.Add(this.columnDeliveryMethod);
                 this.columnDeliveryMethodString = new global::System.Data.DataColumn("DeliveryMethodString", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDeliveryMethodString);
-                this.columnValidationStatus = new global::System.Data.DataColumn("ValidationStatus", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnValidationStatus = new global::System.Data.DataColumn("ValidationStatus", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnValidationStatus);
                 this.columnValidationReason = new global::System.Data.DataColumn("ValidationReason", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnValidationReason);
-                this.columnPost = new global::System.Data.DataColumn("Post", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnPost = new global::System.Data.DataColumn("Post", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPost);
                 this.columnPostTransactionId = new global::System.Data.DataColumn("PostTransactionId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPostTransactionId);
@@ -986,10 +998,10 @@ namespace Subs.Data {
                 base.Columns.Add(this.columnModifiedBy);
                 this.columnPayerId = new global::System.Data.DataColumn("PayerId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPayerId);
-                this.columnRecieverId = new global::System.Data.DataColumn("RecieverId", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnRecieverId);
-                this.columnUnitPerIssue = new global::System.Data.DataColumn("UnitPerIssue", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnUnitPerIssue);
+                this.columnReceiverId = new global::System.Data.DataColumn("ReceiverId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReceiverId);
+                this.columnUnitsPerIssue = new global::System.Data.DataColumn("UnitsPerIssue", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUnitsPerIssue);
                 this.columnUnitPrice = new global::System.Data.DataColumn("UnitPrice", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnUnitPrice);
                 this.columnDebitOrder = new global::System.Data.DataColumn("DebitOrder", typeof(bool), null, global::System.Data.MappingType.Element);
@@ -1006,10 +1018,13 @@ namespace Subs.Data {
                 base.Columns.Add(this.columnWidth);
                 this.columnHeight = new global::System.Data.DataColumn("Height", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHeight);
+                this.columnMediaDelivery = new global::System.Data.DataColumn("MediaDelivery", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMediaDelivery);
+                this.columnSkip = new global::System.Data.DataColumn("Skip", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSkip);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnDeliveryProposalId}, true));
-                this.columnDeliveryProposalId.AllowDBNull = false;
-                this.columnDeliveryProposalId.Unique = true;
+                                this.columnSubscriptionId,
+                                this.columnIssueId}, true));
                 this.columnProposalDate.AllowDBNull = false;
                 this.columnSubscriptionId.AllowDBNull = false;
                 this.columnIssueId.AllowDBNull = false;
@@ -1019,17 +1034,15 @@ namespace Subs.Data {
                 this.columnDeliveryMethod.AllowDBNull = false;
                 this.columnDeliveryMethodString.AllowDBNull = false;
                 this.columnDeliveryMethodString.MaxLength = 50;
-                this.columnValidationStatus.AllowDBNull = false;
                 this.columnValidationReason.MaxLength = 50;
                 this.columnModifiedOn.AllowDBNull = false;
                 this.columnModifiedBy.AllowDBNull = false;
                 this.columnModifiedBy.MaxLength = 50;
                 this.columnPayerId.AllowDBNull = false;
-                this.columnRecieverId.AllowDBNull = false;
-                this.columnRecieverId.MaxLength = 10;
-                this.columnUnitPerIssue.AllowDBNull = false;
+                this.columnReceiverId.AllowDBNull = false;
+                this.columnUnitsPerIssue.AllowDBNull = false;
                 this.columnUnitPrice.AllowDBNull = false;
-                this.columnInvoiceId.AllowDBNull = false;
+                this.columnSkip.DefaultValue = ((bool)(false));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5315,17 +5328,6 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int DeliveryProposalId {
-                get {
-                    return ((int)(this[this.tableDeliveryProposal.DeliveryProposalIdColumn]));
-                }
-                set {
-                    this[this.tableDeliveryProposal.DeliveryProposalIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public System.DateTime ProposalDate {
                 get {
                     return ((global::System.DateTime)(this[this.tableDeliveryProposal.ProposalDateColumn]));
@@ -5403,9 +5405,14 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int ValidationStatus {
+            public string ValidationStatus {
                 get {
-                    return ((int)(this[this.tableDeliveryProposal.ValidationStatusColumn]));
+                    try {
+                        return ((string)(this[this.tableDeliveryProposal.ValidationStatusColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ValidationStatus\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableDeliveryProposal.ValidationStatusColumn] = value;
@@ -5430,10 +5437,10 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int Post {
+            public bool Post {
                 get {
                     try {
-                        return ((int)(this[this.tableDeliveryProposal.PostColumn]));
+                        return ((bool)(this[this.tableDeliveryProposal.PostColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'Post\' in table \'DeliveryProposal\' is DBNull.", e);
@@ -5495,23 +5502,23 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string RecieverId {
+            public int ReceiverId {
                 get {
-                    return ((string)(this[this.tableDeliveryProposal.RecieverIdColumn]));
+                    return ((int)(this[this.tableDeliveryProposal.ReceiverIdColumn]));
                 }
                 set {
-                    this[this.tableDeliveryProposal.RecieverIdColumn] = value;
+                    this[this.tableDeliveryProposal.ReceiverIdColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int UnitPerIssue {
+            public int UnitsPerIssue {
                 get {
-                    return ((int)(this[this.tableDeliveryProposal.UnitPerIssueColumn]));
+                    return ((int)(this[this.tableDeliveryProposal.UnitsPerIssueColumn]));
                 }
                 set {
-                    this[this.tableDeliveryProposal.UnitPerIssueColumn] = value;
+                    this[this.tableDeliveryProposal.UnitsPerIssueColumn] = value;
                 }
             }
             
@@ -5562,7 +5569,12 @@ namespace Subs.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public int InvoiceId {
                 get {
-                    return ((int)(this[this.tableDeliveryProposal.InvoiceIdColumn]));
+                    try {
+                        return ((int)(this[this.tableDeliveryProposal.InvoiceIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'InvoiceId\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableDeliveryProposal.InvoiceIdColumn] = value;
@@ -5635,6 +5647,50 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool MediaDelivery {
+                get {
+                    try {
+                        return ((bool)(this[this.tableDeliveryProposal.MediaDeliveryColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MediaDelivery\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryProposal.MediaDeliveryColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool Skip {
+                get {
+                    try {
+                        return ((bool)(this[this.tableDeliveryProposal.SkipColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Skip\' in table \'DeliveryProposal\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryProposal.SkipColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsValidationStatusNull() {
+                return this.IsNull(this.tableDeliveryProposal.ValidationStatusColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetValidationStatusNull() {
+                this[this.tableDeliveryProposal.ValidationStatusColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsValidationReasonNull() {
                 return this.IsNull(this.tableDeliveryProposal.ValidationReasonColumn);
             }
@@ -5695,6 +5751,18 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsInvoiceIdNull() {
+                return this.IsNull(this.tableDeliveryProposal.InvoiceIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetInvoiceIdNull() {
+                this[this.tableDeliveryProposal.InvoiceIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsWeightNull() {
                 return this.IsNull(this.tableDeliveryProposal.WeightColumn);
             }
@@ -5739,6 +5807,30 @@ namespace Subs.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetHeightNull() {
                 this[this.tableDeliveryProposal.HeightColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsMediaDeliveryNull() {
+                return this.IsNull(this.tableDeliveryProposal.MediaDeliveryColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetMediaDeliveryNull() {
+                this[this.tableDeliveryProposal.MediaDeliveryColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsSkipNull() {
+                return this.IsNull(this.tableDeliveryProposal.SkipColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetSkipNull() {
+                this[this.tableDeliveryProposal.SkipColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -10636,7 +10728,6 @@ namespace Subs.Data.DeliveryDocTableAdapters {
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "DeliveryProposal";
-            tableMapping.ColumnMappings.Add("DeliveryProposalId", "DeliveryProposalId");
             tableMapping.ColumnMappings.Add("ProposalDate", "ProposalDate");
             tableMapping.ColumnMappings.Add("SubscriptionId", "SubscriptionId");
             tableMapping.ColumnMappings.Add("IssueId", "IssueId");
@@ -10651,8 +10742,8 @@ namespace Subs.Data.DeliveryDocTableAdapters {
             tableMapping.ColumnMappings.Add("ModifiedOn", "ModifiedOn");
             tableMapping.ColumnMappings.Add("ModifiedBy", "ModifiedBy");
             tableMapping.ColumnMappings.Add("PayerId", "PayerId");
-            tableMapping.ColumnMappings.Add("RecieverId", "RecieverId");
-            tableMapping.ColumnMappings.Add("UnitPerIssue", "UnitPerIssue");
+            tableMapping.ColumnMappings.Add("ReceiverId", "ReceiverId");
+            tableMapping.ColumnMappings.Add("UnitsPerIssue", "UnitsPerIssue");
             tableMapping.ColumnMappings.Add("UnitPrice", "UnitPrice");
             tableMapping.ColumnMappings.Add("DebitOrder", "DebitOrder");
             tableMapping.ColumnMappings.Add("ExpirationDate", "ExpirationDate");
@@ -10661,32 +10752,36 @@ namespace Subs.Data.DeliveryDocTableAdapters {
             tableMapping.ColumnMappings.Add("Length", "Length");
             tableMapping.ColumnMappings.Add("Width", "Width");
             tableMapping.ColumnMappings.Add("Height", "Height");
+            tableMapping.ColumnMappings.Add("Skip", "Skip");
+            tableMapping.ColumnMappings.Add("MediaDelivery", "MediaDelivery");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[DeliveryProposal] WHERE (([DeliveryProposalId] = @Original_Del" +
-                "iveryProposalId) AND ([ProposalDate] = @Original_ProposalDate) AND ([Subscriptio" +
-                "nId] = @Original_SubscriptionId) AND ([IssueId] = @Original_IssueId) AND ([Issue" +
-                "Description] = @Original_IssueDescription) AND ([DeliveryAddressId] = @Original_" +
-                "DeliveryAddressId) AND ([DeliveryMethod] = @Original_DeliveryMethod) AND ([Deliv" +
-                "eryMethodString] = @Original_DeliveryMethodString) AND ([ValidationStatus] = @Or" +
-                "iginal_ValidationStatus) AND ((@IsNull_ValidationReason = 1 AND [ValidationReaso" +
-                "n] IS NULL) OR ([ValidationReason] = @Original_ValidationReason)) AND ((@IsNull_" +
-                "Post = 1 AND [Post] IS NULL) OR ([Post] = @Original_Post)) AND ((@IsNull_PostTra" +
-                "nsactionId = 1 AND [PostTransactionId] IS NULL) OR ([PostTransactionId] = @Origi" +
-                "nal_PostTransactionId)) AND ([ModifiedOn] = @Original_ModifiedOn) AND ([Modified" +
-                "By] = @Original_ModifiedBy) AND ([PayerId] = @Original_PayerId) AND ([RecieverId" +
-                "] = @Original_RecieverId) AND ([UnitPerIssue] = @Original_UnitPerIssue) AND ([Un" +
-                "itPrice] = @Original_UnitPrice) AND ((@IsNull_DebitOrder = 1 AND [DebitOrder] IS" +
-                " NULL) OR ([DebitOrder] = @Original_DebitOrder)) AND ((@IsNull_ExpirationDate = " +
-                "1 AND [ExpirationDate] IS NULL) OR ([ExpirationDate] = @Original_ExpirationDate)" +
-                ") AND ([InvoiceId] = @Original_InvoiceId) AND ((@IsNull_Weight = 1 AND [Weight] " +
-                "IS NULL) OR ([Weight] = @Original_Weight)) AND ((@IsNull_Length = 1 AND [Length]" +
-                " IS NULL) OR ([Length] = @Original_Length)) AND ((@IsNull_Width = 1 AND [Width] " +
-                "IS NULL) OR ([Width] = @Original_Width)) AND ((@IsNull_Height = 1 AND [Height] I" +
-                "S NULL) OR ([Height] = @Original_Height)))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [DeliveryProposal] WHERE (([ProposalDate] = @Original_ProposalDate) A" +
+                "ND ([SubscriptionId] = @Original_SubscriptionId) AND ([IssueId] = @Original_Issu" +
+                "eId) AND ([IssueDescription] = @Original_IssueDescription) AND ([DeliveryAddress" +
+                "Id] = @Original_DeliveryAddressId) AND ([DeliveryMethod] = @Original_DeliveryMet" +
+                "hod) AND ([DeliveryMethodString] = @Original_DeliveryMethodString) AND ((@IsNull" +
+                "_ValidationStatus = 1 AND [ValidationStatus] IS NULL) OR ([ValidationStatus] = @" +
+                "Original_ValidationStatus)) AND ((@IsNull_ValidationReason = 1 AND [ValidationRe" +
+                "ason] IS NULL) OR ([ValidationReason] = @Original_ValidationReason)) AND ((@IsNu" +
+                "ll_Post = 1 AND [Post] IS NULL) OR ([Post] = @Original_Post)) AND ((@IsNull_Post" +
+                "TransactionId = 1 AND [PostTransactionId] IS NULL) OR ([PostTransactionId] = @Or" +
+                "iginal_PostTransactionId)) AND ([ModifiedOn] = @Original_ModifiedOn) AND ([Modif" +
+                "iedBy] = @Original_ModifiedBy) AND ([PayerId] = @Original_PayerId) AND ([Receive" +
+                "rId] = @Original_ReceiverId) AND ([UnitsPerIssue] = @Original_UnitsPerIssue) AND" +
+                " ([UnitPrice] = @Original_UnitPrice) AND ((@IsNull_DebitOrder = 1 AND [DebitOrde" +
+                "r] IS NULL) OR ([DebitOrder] = @Original_DebitOrder)) AND ((@IsNull_ExpirationDa" +
+                "te = 1 AND [ExpirationDate] IS NULL) OR ([ExpirationDate] = @Original_Expiration" +
+                "Date)) AND ((@IsNull_InvoiceId = 1 AND [InvoiceId] IS NULL) OR ([InvoiceId] = @O" +
+                "riginal_InvoiceId)) AND ((@IsNull_Weight = 1 AND [Weight] IS NULL) OR ([Weight] " +
+                "= @Original_Weight)) AND ((@IsNull_Length = 1 AND [Length] IS NULL) OR ([Length]" +
+                " = @Original_Length)) AND ((@IsNull_Width = 1 AND [Width] IS NULL) OR ([Width] =" +
+                " @Original_Width)) AND ((@IsNull_Height = 1 AND [Height] IS NULL) OR ([Height] =" +
+                " @Original_Height)) AND ((@IsNull_MediaDelivery = 1 AND [MediaDelivery] IS NULL)" +
+                " OR ([MediaDelivery] = @Original_MediaDelivery)) AND ((@IsNull_Skip = 1 AND [Ski" +
+                "p] IS NULL) OR ([Skip] = @Original_Skip)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryProposalId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryProposalId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProposalDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProposalDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SubscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SubscriptionId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -10694,7 +10789,8 @@ namespace Subs.Data.DeliveryDocTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryAddressId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryAddressId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryMethod", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethod", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryMethodString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethodString", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ValidationStatus", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ValidationStatus", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ValidationStatus", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ValidationReason", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ValidationReason", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Post", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Post", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -10704,13 +10800,14 @@ namespace Subs.Data.DeliveryDocTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RecieverId", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecieverId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UnitPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitPerIssue", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ReceiverId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReceiverId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UnitsPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitsPerIssue", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UnitPrice", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "UnitPrice", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DebitOrder", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DebitOrder", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExpirationDate", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExpirationDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_InvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_InvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Weight", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Weight", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Weight", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 2, "Weight", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -10720,12 +10817,15 @@ namespace Subs.Data.DeliveryDocTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Width", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Width", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_MediaDelivery", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Skip", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Skip", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Skip", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Skip", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[DeliveryProposal] ([DeliveryProposalId], [ProposalDate], [SubscriptionId], [IssueId], [IssueDescription], [DeliveryAddressId], [DeliveryMethod], [DeliveryMethodString], [ValidationStatus], [ValidationReason], [Post], [PostTransactionId], [ModifiedOn], [ModifiedBy], [PayerId], [RecieverId], [UnitPerIssue], [UnitPrice], [DebitOrder], [ExpirationDate], [InvoiceId], [Weight], [Length], [Width], [Height]) VALUES (@DeliveryProposalId, @ProposalDate, @SubscriptionId, @IssueId, @IssueDescription, @DeliveryAddressId, @DeliveryMethod, @DeliveryMethodString, @ValidationStatus, @ValidationReason, @Post, @PostTransactionId, @ModifiedOn, @ModifiedBy, @PayerId, @RecieverId, @UnitPerIssue, @UnitPrice, @DebitOrder, @ExpirationDate, @InvoiceId, @Weight, @Length, @Width, @Height);
-SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescription, DeliveryAddressId, DeliveryMethod, DeliveryMethodString, ValidationStatus, ValidationReason, Post, PostTransactionId, ModifiedOn, ModifiedBy, PayerId, RecieverId, UnitPerIssue, UnitPrice, DebitOrder, ExpirationDate, InvoiceId, Weight, Length, Width, Height FROM DeliveryProposal WHERE (DeliveryProposalId = @DeliveryProposalId)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [DeliveryProposal] ([ProposalDate], [SubscriptionId], [IssueId], [IssueDescription], [DeliveryAddressId], [DeliveryMethod], [DeliveryMethodString], [ValidationStatus], [ValidationReason], [Post], [PostTransactionId], [ModifiedOn], [ModifiedBy], [PayerId], [ReceiverId], [UnitsPerIssue], [UnitPrice], [DebitOrder], [ExpirationDate], [InvoiceId], [Weight], [Length], [Width], [Height], [MediaDelivery], [Skip]) VALUES (@ProposalDate, @SubscriptionId, @IssueId, @IssueDescription, @DeliveryAddressId, @DeliveryMethod, @DeliveryMethodString, @ValidationStatus, @ValidationReason, @Post, @PostTransactionId, @ModifiedOn, @ModifiedBy, @PayerId, @ReceiverId, @UnitsPerIssue, @UnitPrice, @DebitOrder, @ExpirationDate, @InvoiceId, @Weight, @Length, @Width, @Height, @MediaDelivery, @Skip);
+SELECT ProposalDate, SubscriptionId, IssueId, IssueDescription, DeliveryAddressId, DeliveryMethod, DeliveryMethodString, ValidationStatus, ValidationReason, Post, PostTransactionId, ModifiedOn, ModifiedBy, PayerId, ReceiverId, UnitsPerIssue, UnitPrice, DebitOrder, ExpirationDate, InvoiceId, Weight, Length, Width, Height, MediaDelivery, Skip FROM DeliveryProposal WHERE (IssueId = @IssueId) AND (SubscriptionId = @SubscriptionId)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryProposalId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryProposalId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProposalDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProposalDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SubscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SubscriptionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -10733,15 +10833,15 @@ SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescripti
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryAddressId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryAddressId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryMethod", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethod", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryMethodString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethodString", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ValidationStatus", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ValidationStatus", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ValidationReason", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Post", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Post", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PostTransactionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostTransactionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RecieverId", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecieverId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UnitPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitPerIssue", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReceiverId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReceiverId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UnitsPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitsPerIssue", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UnitPrice", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "UnitPrice", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DebitOrder", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExpirationDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -10750,46 +10850,50 @@ SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescripti
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Length", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Width", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Width", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Skip", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Skip", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[DeliveryProposal] SET [DeliveryProposalId] = @DeliveryProposalId, [" +
-                "ProposalDate] = @ProposalDate, [SubscriptionId] = @SubscriptionId, [IssueId] = @" +
-                "IssueId, [IssueDescription] = @IssueDescription, [DeliveryAddressId] = @Delivery" +
-                "AddressId, [DeliveryMethod] = @DeliveryMethod, [DeliveryMethodString] = @Deliver" +
-                "yMethodString, [ValidationStatus] = @ValidationStatus, [ValidationReason] = @Val" +
-                "idationReason, [Post] = @Post, [PostTransactionId] = @PostTransactionId, [Modifi" +
-                "edOn] = @ModifiedOn, [ModifiedBy] = @ModifiedBy, [PayerId] = @PayerId, [Reciever" +
-                "Id] = @RecieverId, [UnitPerIssue] = @UnitPerIssue, [UnitPrice] = @UnitPrice, [De" +
-                "bitOrder] = @DebitOrder, [ExpirationDate] = @ExpirationDate, [InvoiceId] = @Invo" +
-                "iceId, [Weight] = @Weight, [Length] = @Length, [Width] = @Width, [Height] = @Hei" +
-                "ght WHERE (([DeliveryProposalId] = @Original_DeliveryProposalId) AND ([ProposalD" +
-                "ate] = @Original_ProposalDate) AND ([SubscriptionId] = @Original_SubscriptionId)" +
-                " AND ([IssueId] = @Original_IssueId) AND ([IssueDescription] = @Original_IssueDe" +
-                "scription) AND ([DeliveryAddressId] = @Original_DeliveryAddressId) AND ([Deliver" +
-                "yMethod] = @Original_DeliveryMethod) AND ([DeliveryMethodString] = @Original_Del" +
-                "iveryMethodString) AND ([ValidationStatus] = @Original_ValidationStatus) AND ((@" +
-                "IsNull_ValidationReason = 1 AND [ValidationReason] IS NULL) OR ([ValidationReaso" +
-                "n] = @Original_ValidationReason)) AND ((@IsNull_Post = 1 AND [Post] IS NULL) OR " +
-                "([Post] = @Original_Post)) AND ((@IsNull_PostTransactionId = 1 AND [PostTransact" +
-                "ionId] IS NULL) OR ([PostTransactionId] = @Original_PostTransactionId)) AND ([Mo" +
-                "difiedOn] = @Original_ModifiedOn) AND ([ModifiedBy] = @Original_ModifiedBy) AND " +
-                "([PayerId] = @Original_PayerId) AND ([RecieverId] = @Original_RecieverId) AND ([" +
-                "UnitPerIssue] = @Original_UnitPerIssue) AND ([UnitPrice] = @Original_UnitPrice) " +
-                "AND ((@IsNull_DebitOrder = 1 AND [DebitOrder] IS NULL) OR ([DebitOrder] = @Origi" +
-                "nal_DebitOrder)) AND ((@IsNull_ExpirationDate = 1 AND [ExpirationDate] IS NULL) " +
-                "OR ([ExpirationDate] = @Original_ExpirationDate)) AND ([InvoiceId] = @Original_I" +
-                "nvoiceId) AND ((@IsNull_Weight = 1 AND [Weight] IS NULL) OR ([Weight] = @Origina" +
-                "l_Weight)) AND ((@IsNull_Length = 1 AND [Length] IS NULL) OR ([Length] = @Origin" +
-                "al_Length)) AND ((@IsNull_Width = 1 AND [Width] IS NULL) OR ([Width] = @Original" +
-                "_Width)) AND ((@IsNull_Height = 1 AND [Height] IS NULL) OR ([Height] = @Original" +
-                "_Height)));\r\nSELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, I" +
-                "ssueDescription, DeliveryAddressId, DeliveryMethod, DeliveryMethodString, Valida" +
-                "tionStatus, ValidationReason, Post, PostTransactionId, ModifiedOn, ModifiedBy, P" +
-                "ayerId, RecieverId, UnitPerIssue, UnitPrice, DebitOrder, ExpirationDate, Invoice" +
-                "Id, Weight, Length, Width, Height FROM DeliveryProposal WHERE (DeliveryProposalI" +
-                "d = @DeliveryProposalId)";
+            this._adapter.UpdateCommand.CommandText = "UPDATE [DeliveryProposal] SET [ProposalDate] = @ProposalDate, [SubscriptionId] = " +
+                "@SubscriptionId, [IssueId] = @IssueId, [IssueDescription] = @IssueDescription, [" +
+                "DeliveryAddressId] = @DeliveryAddressId, [DeliveryMethod] = @DeliveryMethod, [De" +
+                "liveryMethodString] = @DeliveryMethodString, [ValidationStatus] = @ValidationSta" +
+                "tus, [ValidationReason] = @ValidationReason, [Post] = @Post, [PostTransactionId]" +
+                " = @PostTransactionId, [ModifiedOn] = @ModifiedOn, [ModifiedBy] = @ModifiedBy, [" +
+                "PayerId] = @PayerId, [ReceiverId] = @ReceiverId, [UnitsPerIssue] = @UnitsPerIssu" +
+                "e, [UnitPrice] = @UnitPrice, [DebitOrder] = @DebitOrder, [ExpirationDate] = @Exp" +
+                "irationDate, [InvoiceId] = @InvoiceId, [Weight] = @Weight, [Length] = @Length, [" +
+                "Width] = @Width, [Height] = @Height, [MediaDelivery] = @MediaDelivery, [Skip] = " +
+                "@Skip WHERE (([ProposalDate] = @Original_ProposalDate) AND ([SubscriptionId] = @" +
+                "Original_SubscriptionId) AND ([IssueId] = @Original_IssueId) AND ([IssueDescript" +
+                "ion] = @Original_IssueDescription) AND ([DeliveryAddressId] = @Original_Delivery" +
+                "AddressId) AND ([DeliveryMethod] = @Original_DeliveryMethod) AND ([DeliveryMetho" +
+                "dString] = @Original_DeliveryMethodString) AND ((@IsNull_ValidationStatus = 1 AN" +
+                "D [ValidationStatus] IS NULL) OR ([ValidationStatus] = @Original_ValidationStatu" +
+                "s)) AND ((@IsNull_ValidationReason = 1 AND [ValidationReason] IS NULL) OR ([Vali" +
+                "dationReason] = @Original_ValidationReason)) AND ((@IsNull_Post = 1 AND [Post] I" +
+                "S NULL) OR ([Post] = @Original_Post)) AND ((@IsNull_PostTransactionId = 1 AND [P" +
+                "ostTransactionId] IS NULL) OR ([PostTransactionId] = @Original_PostTransactionId" +
+                ")) AND ([ModifiedOn] = @Original_ModifiedOn) AND ([ModifiedBy] = @Original_Modif" +
+                "iedBy) AND ([PayerId] = @Original_PayerId) AND ([ReceiverId] = @Original_Receive" +
+                "rId) AND ([UnitsPerIssue] = @Original_UnitsPerIssue) AND ([UnitPrice] = @Origina" +
+                "l_UnitPrice) AND ((@IsNull_DebitOrder = 1 AND [DebitOrder] IS NULL) OR ([DebitOr" +
+                "der] = @Original_DebitOrder)) AND ((@IsNull_ExpirationDate = 1 AND [ExpirationDa" +
+                "te] IS NULL) OR ([ExpirationDate] = @Original_ExpirationDate)) AND ((@IsNull_Inv" +
+                "oiceId = 1 AND [InvoiceId] IS NULL) OR ([InvoiceId] = @Original_InvoiceId)) AND " +
+                "((@IsNull_Weight = 1 AND [Weight] IS NULL) OR ([Weight] = @Original_Weight)) AND" +
+                " ((@IsNull_Length = 1 AND [Length] IS NULL) OR ([Length] = @Original_Length)) AN" +
+                "D ((@IsNull_Width = 1 AND [Width] IS NULL) OR ([Width] = @Original_Width)) AND (" +
+                "(@IsNull_Height = 1 AND [Height] IS NULL) OR ([Height] = @Original_Height)) AND " +
+                "((@IsNull_MediaDelivery = 1 AND [MediaDelivery] IS NULL) OR ([MediaDelivery] = @" +
+                "Original_MediaDelivery)) AND ((@IsNull_Skip = 1 AND [Skip] IS NULL) OR ([Skip] =" +
+                " @Original_Skip)));\r\nSELECT ProposalDate, SubscriptionId, IssueId, IssueDescript" +
+                "ion, DeliveryAddressId, DeliveryMethod, DeliveryMethodString, ValidationStatus, " +
+                "ValidationReason, Post, PostTransactionId, ModifiedOn, ModifiedBy, PayerId, Rece" +
+                "iverId, UnitsPerIssue, UnitPrice, DebitOrder, ExpirationDate, InvoiceId, Weight," +
+                " Length, Width, Height, MediaDelivery, Skip FROM DeliveryProposal WHERE (IssueId" +
+                " = @IssueId) AND (SubscriptionId = @SubscriptionId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryProposalId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryProposalId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProposalDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProposalDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SubscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SubscriptionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -10797,15 +10901,15 @@ SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescripti
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryAddressId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryAddressId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryMethod", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethod", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DeliveryMethodString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethodString", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ValidationStatus", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ValidationStatus", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ValidationReason", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Post", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Post", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PostTransactionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PostTransactionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RecieverId", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecieverId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UnitPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitPerIssue", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReceiverId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReceiverId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UnitsPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitsPerIssue", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UnitPrice", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "UnitPrice", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DebitOrder", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExpirationDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -10814,7 +10918,8 @@ SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescripti
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Length", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Width", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Width", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryProposalId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryProposalId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Skip", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Skip", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProposalDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProposalDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SubscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SubscriptionId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -10822,7 +10927,8 @@ SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescripti
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryAddressId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryAddressId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryMethod", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethod", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DeliveryMethodString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DeliveryMethodString", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ValidationStatus", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ValidationStatus", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ValidationStatus", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationStatus", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ValidationReason", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ValidationReason", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ValidationReason", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Post", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Post", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -10832,13 +10938,14 @@ SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescripti
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PayerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PayerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RecieverId", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecieverId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UnitPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitPerIssue", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ReceiverId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReceiverId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UnitsPerIssue", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UnitsPerIssue", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UnitPrice", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "UnitPrice", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DebitOrder", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DebitOrder", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DebitOrder", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExpirationDate", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExpirationDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExpirationDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_InvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_InvoiceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Weight", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Weight", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Weight", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 2, "Weight", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -10848,6 +10955,10 @@ SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescripti
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Width", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Width", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_MediaDelivery", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MediaDelivery", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MediaDelivery", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Skip", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Skip", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Skip", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Skip", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10863,15 +10974,15 @@ SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescripti
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescription, DeliveryAddressId, DeliveryMethod, DeliveryMethodString, ValidationStatus, ValidationReason, Post, PostTransactionId, ModifiedOn, ModifiedBy, PayerId, RecieverId, UnitPerIssue, UnitPrice, DebitOrder, ExpirationDate, InvoiceId, Weight, Length, Width, Height FROM dbo.DeliveryProposal";
+            this._commandCollection[0].CommandText = @"SELECT ProposalDate, SubscriptionId, IssueId, IssueDescription, DeliveryAddressId, DeliveryMethod, DeliveryMethodString, ValidationStatus, ValidationReason, Post, PostTransactionId, ModifiedOn, ModifiedBy, PayerId, ReceiverId, UnitsPerIssue, UnitPrice, DebitOrder, ExpirationDate, InvoiceId, Weight, Length, Width, Height, MediaDelivery, Skip FROM DeliveryProposal";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
             this._commandCollection[1].CommandText = "dbo.[MIMS.DeliveryDoc.DeliveryProposal.FillBy]";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Type", global::System.Data.SqlDbType.NVarChar, 20, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StartDate", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EndDate", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10891,19 +11002,19 @@ SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescripti
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillBy(DeliveryDoc.DeliveryProposalDataTable dataTable, global::System.Nullable<int> IssueId, string Type) {
+        public virtual int FillBy(DeliveryDoc.DeliveryProposalDataTable dataTable, global::System.Nullable<global::System.DateTime> StartDate, global::System.Nullable<global::System.DateTime> EndDate) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            if ((IssueId.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(IssueId.Value));
+            if ((StartDate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(StartDate.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            if ((Type == null)) {
-                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            if ((EndDate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(EndDate.Value));
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(Type));
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -10939,622 +11050,6 @@ SELECT DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescripti
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(global::System.Data.DataRow[] dataRows) {
             return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(
-                    int Original_DeliveryProposalId, 
-                    System.DateTime Original_ProposalDate, 
-                    int Original_SubscriptionId, 
-                    int Original_IssueId, 
-                    string Original_IssueDescription, 
-                    int Original_DeliveryAddressId, 
-                    int Original_DeliveryMethod, 
-                    string Original_DeliveryMethodString, 
-                    int Original_ValidationStatus, 
-                    string Original_ValidationReason, 
-                    global::System.Nullable<int> Original_Post, 
-                    global::System.Nullable<int> Original_PostTransactionId, 
-                    System.DateTime Original_ModifiedOn, 
-                    string Original_ModifiedBy, 
-                    int Original_PayerId, 
-                    string Original_RecieverId, 
-                    int Original_UnitPerIssue, 
-                    decimal Original_UnitPrice, 
-                    global::System.Nullable<bool> Original_DebitOrder, 
-                    global::System.Nullable<global::System.DateTime> Original_ExpirationDate, 
-                    int Original_InvoiceId, 
-                    global::System.Nullable<decimal> Original_Weight, 
-                    global::System.Nullable<int> Original_Length, 
-                    global::System.Nullable<int> Original_Width, 
-                    global::System.Nullable<int> Original_Height) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_DeliveryProposalId));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((System.DateTime)(Original_ProposalDate));
-            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_SubscriptionId));
-            this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(Original_IssueId));
-            if ((Original_IssueDescription == null)) {
-                throw new global::System.ArgumentNullException("Original_IssueDescription");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_IssueDescription));
-            }
-            this.Adapter.DeleteCommand.Parameters[5].Value = ((int)(Original_DeliveryAddressId));
-            this.Adapter.DeleteCommand.Parameters[6].Value = ((int)(Original_DeliveryMethod));
-            if ((Original_DeliveryMethodString == null)) {
-                throw new global::System.ArgumentNullException("Original_DeliveryMethodString");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[7].Value = ((string)(Original_DeliveryMethodString));
-            }
-            this.Adapter.DeleteCommand.Parameters[8].Value = ((int)(Original_ValidationStatus));
-            if ((Original_ValidationReason == null)) {
-                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[10].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[10].Value = ((string)(Original_ValidationReason));
-            }
-            if ((Original_Post.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[12].Value = ((int)(Original_Post.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[12].Value = global::System.DBNull.Value;
-            }
-            if ((Original_PostTransactionId.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[14].Value = ((int)(Original_PostTransactionId.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[14].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.DeleteCommand.Parameters[15].Value = ((System.DateTime)(Original_ModifiedOn));
-            if ((Original_ModifiedBy == null)) {
-                throw new global::System.ArgumentNullException("Original_ModifiedBy");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[16].Value = ((string)(Original_ModifiedBy));
-            }
-            this.Adapter.DeleteCommand.Parameters[17].Value = ((int)(Original_PayerId));
-            if ((Original_RecieverId == null)) {
-                throw new global::System.ArgumentNullException("Original_RecieverId");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[18].Value = ((string)(Original_RecieverId));
-            }
-            this.Adapter.DeleteCommand.Parameters[19].Value = ((int)(Original_UnitPerIssue));
-            this.Adapter.DeleteCommand.Parameters[20].Value = ((decimal)(Original_UnitPrice));
-            if ((Original_DebitOrder.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[21].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[22].Value = ((bool)(Original_DebitOrder.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[21].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[22].Value = global::System.DBNull.Value;
-            }
-            if ((Original_ExpirationDate.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[23].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[24].Value = ((System.DateTime)(Original_ExpirationDate.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[23].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[24].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.DeleteCommand.Parameters[25].Value = ((int)(Original_InvoiceId));
-            if ((Original_Weight.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[26].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[27].Value = ((decimal)(Original_Weight.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[26].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[27].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Length.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[28].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[29].Value = ((int)(Original_Length.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[28].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[29].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Width.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[30].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[31].Value = ((int)(Original_Width.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[30].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[31].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Height.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[32].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[33].Value = ((int)(Original_Height.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[32].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[33].Value = global::System.DBNull.Value;
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
-            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.DeleteCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.DeleteCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(
-                    int DeliveryProposalId, 
-                    System.DateTime ProposalDate, 
-                    int SubscriptionId, 
-                    int IssueId, 
-                    string IssueDescription, 
-                    int DeliveryAddressId, 
-                    int DeliveryMethod, 
-                    string DeliveryMethodString, 
-                    int ValidationStatus, 
-                    string ValidationReason, 
-                    global::System.Nullable<int> Post, 
-                    global::System.Nullable<int> PostTransactionId, 
-                    System.DateTime ModifiedOn, 
-                    string ModifiedBy, 
-                    int PayerId, 
-                    string RecieverId, 
-                    int UnitPerIssue, 
-                    decimal UnitPrice, 
-                    global::System.Nullable<bool> DebitOrder, 
-                    global::System.Nullable<global::System.DateTime> ExpirationDate, 
-                    int InvoiceId, 
-                    global::System.Nullable<decimal> Weight, 
-                    global::System.Nullable<int> Length, 
-                    global::System.Nullable<int> Width, 
-                    global::System.Nullable<int> Height) {
-            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(DeliveryProposalId));
-            this.Adapter.InsertCommand.Parameters[1].Value = ((System.DateTime)(ProposalDate));
-            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(SubscriptionId));
-            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(IssueId));
-            if ((IssueDescription == null)) {
-                throw new global::System.ArgumentNullException("IssueDescription");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(IssueDescription));
-            }
-            this.Adapter.InsertCommand.Parameters[5].Value = ((int)(DeliveryAddressId));
-            this.Adapter.InsertCommand.Parameters[6].Value = ((int)(DeliveryMethod));
-            if ((DeliveryMethodString == null)) {
-                throw new global::System.ArgumentNullException("DeliveryMethodString");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[7].Value = ((string)(DeliveryMethodString));
-            }
-            this.Adapter.InsertCommand.Parameters[8].Value = ((int)(ValidationStatus));
-            if ((ValidationReason == null)) {
-                this.Adapter.InsertCommand.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[9].Value = ((string)(ValidationReason));
-            }
-            if ((Post.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[10].Value = ((int)(Post.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
-            }
-            if ((PostTransactionId.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[11].Value = ((int)(PostTransactionId.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.InsertCommand.Parameters[12].Value = ((System.DateTime)(ModifiedOn));
-            if ((ModifiedBy == null)) {
-                throw new global::System.ArgumentNullException("ModifiedBy");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[13].Value = ((string)(ModifiedBy));
-            }
-            this.Adapter.InsertCommand.Parameters[14].Value = ((int)(PayerId));
-            if ((RecieverId == null)) {
-                throw new global::System.ArgumentNullException("RecieverId");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[15].Value = ((string)(RecieverId));
-            }
-            this.Adapter.InsertCommand.Parameters[16].Value = ((int)(UnitPerIssue));
-            this.Adapter.InsertCommand.Parameters[17].Value = ((decimal)(UnitPrice));
-            if ((DebitOrder.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[18].Value = ((bool)(DebitOrder.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[18].Value = global::System.DBNull.Value;
-            }
-            if ((ExpirationDate.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[19].Value = ((System.DateTime)(ExpirationDate.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[19].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.InsertCommand.Parameters[20].Value = ((int)(InvoiceId));
-            if ((Weight.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[21].Value = ((decimal)(Weight.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[21].Value = global::System.DBNull.Value;
-            }
-            if ((Length.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[22].Value = ((int)(Length.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[22].Value = global::System.DBNull.Value;
-            }
-            if ((Width.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[23].Value = ((int)(Width.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[23].Value = global::System.DBNull.Value;
-            }
-            if ((Height.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[24].Value = ((int)(Height.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[24].Value = global::System.DBNull.Value;
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(
-                    int DeliveryProposalId, 
-                    System.DateTime ProposalDate, 
-                    int SubscriptionId, 
-                    int IssueId, 
-                    string IssueDescription, 
-                    int DeliveryAddressId, 
-                    int DeliveryMethod, 
-                    string DeliveryMethodString, 
-                    int ValidationStatus, 
-                    string ValidationReason, 
-                    global::System.Nullable<int> Post, 
-                    global::System.Nullable<int> PostTransactionId, 
-                    System.DateTime ModifiedOn, 
-                    string ModifiedBy, 
-                    int PayerId, 
-                    string RecieverId, 
-                    int UnitPerIssue, 
-                    decimal UnitPrice, 
-                    global::System.Nullable<bool> DebitOrder, 
-                    global::System.Nullable<global::System.DateTime> ExpirationDate, 
-                    int InvoiceId, 
-                    global::System.Nullable<decimal> Weight, 
-                    global::System.Nullable<int> Length, 
-                    global::System.Nullable<int> Width, 
-                    global::System.Nullable<int> Height, 
-                    int Original_DeliveryProposalId, 
-                    System.DateTime Original_ProposalDate, 
-                    int Original_SubscriptionId, 
-                    int Original_IssueId, 
-                    string Original_IssueDescription, 
-                    int Original_DeliveryAddressId, 
-                    int Original_DeliveryMethod, 
-                    string Original_DeliveryMethodString, 
-                    int Original_ValidationStatus, 
-                    string Original_ValidationReason, 
-                    global::System.Nullable<int> Original_Post, 
-                    global::System.Nullable<int> Original_PostTransactionId, 
-                    System.DateTime Original_ModifiedOn, 
-                    string Original_ModifiedBy, 
-                    int Original_PayerId, 
-                    string Original_RecieverId, 
-                    int Original_UnitPerIssue, 
-                    decimal Original_UnitPrice, 
-                    global::System.Nullable<bool> Original_DebitOrder, 
-                    global::System.Nullable<global::System.DateTime> Original_ExpirationDate, 
-                    int Original_InvoiceId, 
-                    global::System.Nullable<decimal> Original_Weight, 
-                    global::System.Nullable<int> Original_Length, 
-                    global::System.Nullable<int> Original_Width, 
-                    global::System.Nullable<int> Original_Height) {
-            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(DeliveryProposalId));
-            this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTime)(ProposalDate));
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(SubscriptionId));
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(IssueId));
-            if ((IssueDescription == null)) {
-                throw new global::System.ArgumentNullException("IssueDescription");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(IssueDescription));
-            }
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(DeliveryAddressId));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(DeliveryMethod));
-            if ((DeliveryMethodString == null)) {
-                throw new global::System.ArgumentNullException("DeliveryMethodString");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(DeliveryMethodString));
-            }
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(ValidationStatus));
-            if ((ValidationReason == null)) {
-                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(ValidationReason));
-            }
-            if ((Post.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Post.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
-            }
-            if ((PostTransactionId.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(PostTransactionId.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[12].Value = ((System.DateTime)(ModifiedOn));
-            if ((ModifiedBy == null)) {
-                throw new global::System.ArgumentNullException("ModifiedBy");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(ModifiedBy));
-            }
-            this.Adapter.UpdateCommand.Parameters[14].Value = ((int)(PayerId));
-            if ((RecieverId == null)) {
-                throw new global::System.ArgumentNullException("RecieverId");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(RecieverId));
-            }
-            this.Adapter.UpdateCommand.Parameters[16].Value = ((int)(UnitPerIssue));
-            this.Adapter.UpdateCommand.Parameters[17].Value = ((decimal)(UnitPrice));
-            if ((DebitOrder.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((bool)(DebitOrder.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
-            }
-            if ((ExpirationDate.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((System.DateTime)(ExpirationDate.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[20].Value = ((int)(InvoiceId));
-            if ((Weight.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((decimal)(Weight.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[21].Value = global::System.DBNull.Value;
-            }
-            if ((Length.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[22].Value = ((int)(Length.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
-            }
-            if ((Width.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((int)(Width.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
-            }
-            if ((Height.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((int)(Height.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[25].Value = ((int)(Original_DeliveryProposalId));
-            this.Adapter.UpdateCommand.Parameters[26].Value = ((System.DateTime)(Original_ProposalDate));
-            this.Adapter.UpdateCommand.Parameters[27].Value = ((int)(Original_SubscriptionId));
-            this.Adapter.UpdateCommand.Parameters[28].Value = ((int)(Original_IssueId));
-            if ((Original_IssueDescription == null)) {
-                throw new global::System.ArgumentNullException("Original_IssueDescription");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[29].Value = ((string)(Original_IssueDescription));
-            }
-            this.Adapter.UpdateCommand.Parameters[30].Value = ((int)(Original_DeliveryAddressId));
-            this.Adapter.UpdateCommand.Parameters[31].Value = ((int)(Original_DeliveryMethod));
-            if ((Original_DeliveryMethodString == null)) {
-                throw new global::System.ArgumentNullException("Original_DeliveryMethodString");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[32].Value = ((string)(Original_DeliveryMethodString));
-            }
-            this.Adapter.UpdateCommand.Parameters[33].Value = ((int)(Original_ValidationStatus));
-            if ((Original_ValidationReason == null)) {
-                this.Adapter.UpdateCommand.Parameters[34].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[35].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[34].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[35].Value = ((string)(Original_ValidationReason));
-            }
-            if ((Original_Post.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[36].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[37].Value = ((int)(Original_Post.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[36].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[37].Value = global::System.DBNull.Value;
-            }
-            if ((Original_PostTransactionId.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[38].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[39].Value = ((int)(Original_PostTransactionId.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[38].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[39].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[40].Value = ((System.DateTime)(Original_ModifiedOn));
-            if ((Original_ModifiedBy == null)) {
-                throw new global::System.ArgumentNullException("Original_ModifiedBy");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[41].Value = ((string)(Original_ModifiedBy));
-            }
-            this.Adapter.UpdateCommand.Parameters[42].Value = ((int)(Original_PayerId));
-            if ((Original_RecieverId == null)) {
-                throw new global::System.ArgumentNullException("Original_RecieverId");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[43].Value = ((string)(Original_RecieverId));
-            }
-            this.Adapter.UpdateCommand.Parameters[44].Value = ((int)(Original_UnitPerIssue));
-            this.Adapter.UpdateCommand.Parameters[45].Value = ((decimal)(Original_UnitPrice));
-            if ((Original_DebitOrder.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[46].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[47].Value = ((bool)(Original_DebitOrder.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[46].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[47].Value = global::System.DBNull.Value;
-            }
-            if ((Original_ExpirationDate.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[48].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[49].Value = ((System.DateTime)(Original_ExpirationDate.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[48].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[49].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[50].Value = ((int)(Original_InvoiceId));
-            if ((Original_Weight.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[51].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[52].Value = ((decimal)(Original_Weight.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[51].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[52].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Length.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[53].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[54].Value = ((int)(Original_Length.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[53].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[54].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Width.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[55].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[56].Value = ((int)(Original_Width.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[55].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[56].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Height.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[57].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[58].Value = ((int)(Original_Height.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[57].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[58].Value = global::System.DBNull.Value;
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
-            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.UpdateCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.UpdateCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(
-                    System.DateTime ProposalDate, 
-                    int SubscriptionId, 
-                    int IssueId, 
-                    string IssueDescription, 
-                    int DeliveryAddressId, 
-                    int DeliveryMethod, 
-                    string DeliveryMethodString, 
-                    int ValidationStatus, 
-                    string ValidationReason, 
-                    global::System.Nullable<int> Post, 
-                    global::System.Nullable<int> PostTransactionId, 
-                    System.DateTime ModifiedOn, 
-                    string ModifiedBy, 
-                    int PayerId, 
-                    string RecieverId, 
-                    int UnitPerIssue, 
-                    decimal UnitPrice, 
-                    global::System.Nullable<bool> DebitOrder, 
-                    global::System.Nullable<global::System.DateTime> ExpirationDate, 
-                    int InvoiceId, 
-                    global::System.Nullable<decimal> Weight, 
-                    global::System.Nullable<int> Length, 
-                    global::System.Nullable<int> Width, 
-                    global::System.Nullable<int> Height, 
-                    int Original_DeliveryProposalId, 
-                    System.DateTime Original_ProposalDate, 
-                    int Original_SubscriptionId, 
-                    int Original_IssueId, 
-                    string Original_IssueDescription, 
-                    int Original_DeliveryAddressId, 
-                    int Original_DeliveryMethod, 
-                    string Original_DeliveryMethodString, 
-                    int Original_ValidationStatus, 
-                    string Original_ValidationReason, 
-                    global::System.Nullable<int> Original_Post, 
-                    global::System.Nullable<int> Original_PostTransactionId, 
-                    System.DateTime Original_ModifiedOn, 
-                    string Original_ModifiedBy, 
-                    int Original_PayerId, 
-                    string Original_RecieverId, 
-                    int Original_UnitPerIssue, 
-                    decimal Original_UnitPrice, 
-                    global::System.Nullable<bool> Original_DebitOrder, 
-                    global::System.Nullable<global::System.DateTime> Original_ExpirationDate, 
-                    int Original_InvoiceId, 
-                    global::System.Nullable<decimal> Original_Weight, 
-                    global::System.Nullable<int> Original_Length, 
-                    global::System.Nullable<int> Original_Width, 
-                    global::System.Nullable<int> Original_Height) {
-            return this.Update(Original_DeliveryProposalId, ProposalDate, SubscriptionId, IssueId, IssueDescription, DeliveryAddressId, DeliveryMethod, DeliveryMethodString, ValidationStatus, ValidationReason, Post, PostTransactionId, ModifiedOn, ModifiedBy, PayerId, RecieverId, UnitPerIssue, UnitPrice, DebitOrder, ExpirationDate, InvoiceId, Weight, Length, Width, Height, Original_DeliveryProposalId, Original_ProposalDate, Original_SubscriptionId, Original_IssueId, Original_IssueDescription, Original_DeliveryAddressId, Original_DeliveryMethod, Original_DeliveryMethodString, Original_ValidationStatus, Original_ValidationReason, Original_Post, Original_PostTransactionId, Original_ModifiedOn, Original_ModifiedBy, Original_PayerId, Original_RecieverId, Original_UnitPerIssue, Original_UnitPrice, Original_DebitOrder, Original_ExpirationDate, Original_InvoiceId, Original_Weight, Original_Length, Original_Width, Original_Height);
         }
     }
 }

@@ -362,14 +362,17 @@ namespace Subs.Presentation
 
         private void Click_Deliver(object sender, RoutedEventArgs e)
         {
-            //Subs.Presentation.Product frmDeliver = new Product();
-            //frmDeliver.SelectTab(Subs.Presentation.Product.Tabs.Generate);
-            //frmDeliver.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            //frmDeliver.ShowDialog();
-
             Subs.Presentation.Deliver frmDeliver = new Deliver();
             frmDeliver.ShowDialog();
         }
+
+        private void Click_DeliverMedia(object sender, RoutedEventArgs e)
+        {
+            Subs.Presentation.Deliver2 frmDeliver = new Deliver2();
+            frmDeliver.ShowDialog();
+
+        }
+
 
         private void DeliveryReversal(object sender, RoutedEventArgs e)
         {
@@ -599,9 +602,8 @@ namespace Subs.Presentation
                 MessageBox.Show("Exception throwed");
             }
         }
-  
 
-      
+    
     }
 }
 
