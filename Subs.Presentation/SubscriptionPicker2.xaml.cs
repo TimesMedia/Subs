@@ -658,98 +658,89 @@ namespace Subs.Presentation
 
         }
 
-        //private void buttonBulkCreateProForma_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // Target parameters ***************************
-           
-        //    //int pStartIssue = 1033;
-        //    //int pNumberOfIssues = 2;
-        //    ////string pOrderNumber = "Bulk";
-        //    //DeliveryMethod lDeliveryMethod = DeliveryMethod.ElectronicSingle;
+        private void buttonBulkCreateProForma_Click(object sender, RoutedEventArgs e)
+        {
+ 
+            int lCurrentSubscriptionId = 0;
+            try
+            {
+                ElicitRichText lElicit = new ElicitRichText("Please provide me with a list of source SUBSCRIPTION ids. ");
+                lElicit.ShowDialog();
+                List<int> lListOfIntegers = lElicit.ListOfIntegers;
+                lElicit.Close();
+                int lCounter = 0;
+                MainWindow.Refresh();
+                Cursor = Cursors.Wait;
 
-        //    // *********************************************
+                foreach (int lItem in lListOfIntegers)
+                {
+                    SubscriptionData3 lSourceSubscription = new SubscriptionData3(lItem);
+                    lCurrentSubscriptionId = lSourceSubscription.SubscriptionId;
 
-        //    int lCurrentSubscriptionId = 0;
-        //    try
-        //    {
-        //        ElicitRichText lElicit = new ElicitRichText("Please provide me with a list of source SUBSCRIPTION ids. ");
-        //        lElicit.ShowDialog();
-        //        List<int> lListOfIntegers = lElicit.ListOfIntegers;
-        //        lElicit.Close();
-        //        MainWindow.Refresh();
-        //        int lCounter = 0;
-        //        Cursor = Cursors.Wait;
+                    SubscriptionData3 lTargetSubscription = new SubscriptionData3();
 
-        //        foreach (int lItem in lListOfIntegers)
-        //        {
-        //            SubscriptionData3 lSourceSubscription = new SubscriptionData3(lItem);
-        //            lCurrentSubscriptionId = lSourceSubscription.SubscriptionId;
+                    lTargetSubscription.PayerId = lSourceSubscription.PayerId;
+                    lTargetSubscription.ReceiverId = lSourceSubscription.ReceiverId;
+                    lTargetSubscription.ProductId = lSourceSubscription.ProductId;
 
-        //            SubscriptionData3 lTargetSubscription = new SubscriptionData3();
+                    lTargetSubscription.DeliveryMethod = lSourceSubscription.DeliveryMethod;
+                    lTargetSubscription.DeliveryAddressId = lSourceSubscription.DeliveryAddressId;
+                    lTargetSubscription.RenewalNotice = false;
+                    lTargetSubscription.UnitsPerIssue = lSourceSubscription.UnitsPerIssue;
+                    lTargetSubscription.NumberOfIssues = lSourceSubscription.NumberOfIssues;
 
-        //            lTargetSubscription.PayerId = lSourceSubscription.PayerId;
-        //            lTargetSubscription.ReceiverId = lSourceSubscription.ReceiverId;
-        //            lTargetSubscription.ProductId = ProductDataStatic.GetProductId(pStartIssue);
-
-        //            lTargetSubscription.DeliveryMethod = lDeliveryMethod;
-        //            lTargetSubscription.DeliveryAddressId = lSourceSubscription.DeliveryAddressId;
-        //            lTargetSubscription.RenewalNotice = false;
-        //            lTargetSubscription.UnitsPerIssue = lSourceSubscription.UnitsPerIssue;
-        //            lTargetSubscription.NumberOfIssues = pNumberOfIssues;
-
-        //            lTargetSubscription.ProposedStartIssue = pStartIssue;
-        //            lTargetSubscription.ProposedStartSequence = IssueBiz.GetSequenceNumber(pStartIssue);
-        //            lTargetSubscription.ProposedLastSequence = lTargetSubscription.ProposedStartSequence + pNumberOfIssues - 1;
-        //            lTargetSubscription.ProposedLastIssue = IssueBiz.GetIssueId(lTargetSubscription.ProductId, lTargetSubscription.ProposedLastSequence);
-        //            lTargetSubscription.Status =  SubStatus.Proposed;
-        //            //lTargetSubscription.OrderNumber = pOrderNumber;
-
-        //            // Because this subscription is not initialised, the BaseRate defaults to 0;
-
-        //            ObservableCollection<BasketItem> lBasket = new ObservableCollection<BasketItem>();
-
-        //            BasketItem lBasketItem = new BasketItem() { Subscription = lTargetSubscription};
-        //            lBasketItem.ExplicitDiscountPercentage = 100M;
-
-
-        //            lBasket.Add(lBasketItem);
-
-        //            if (!SubscriptionBiz.CalculateBasket(lBasket))
-        //            {
-        //                return;
-        //            }
-
-        //            SubscriptionsCapture.SubmitBasket(lBasket); 
-
-        //            lCounter++;
-        //        }
-
-        //        MessageBox.Show(lCounter.ToString() + " subscriptions created in bulk. Nothing delivered yet.");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonBulkCreate_Click",
-        //                                         "SourceSubscriptionId = " + lCurrentSubscriptionId.ToString());
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        Cursor = Cursors.Arrow;
-        //    }
-        //}
+                    lTargetSubscription.ProposedStartIssue = IssueBiz.GetStartIssueForRenewal(lSourceSubscription.SubscriptionId, lSourceSubscription.ProductId);
+                    lTargetSubscription.ProposedStartSequence = IssueBiz.GetSequenceNumber(lTargetSubscription.ProposedStartIssue);
+                    lTargetSubscription.ProposedLastSequence = lTargetSubscription.ProposedStartSequence + lSourceSubscription.NumberOfIssues - 1;
+                    lTargetSubscription.ProposedLastIssue = IssueBiz.GetIssueId(lTargetSubscription.ProductId, lTargetSubscription.ProposedLastSequence);
+                    lTargetSubscription.Status = SubStatus.Proposed;
+                                     
 
 
 
+                    lTargetSubscription.SetBaseRateVatPercentage(DateTime.Now); 
+
+                    //lTargetSubscription.OrderNumber = pOrderNumber;
+                
+                    ObservableCollection<BasketItem> lBasket = new ObservableCollection<BasketItem>();
+
+                    BasketItem lBasketItem = new BasketItem() { Subscription = lTargetSubscription };
+                    
+                    lBasket.Add(lBasketItem);
+
+                    if (!SubscriptionBiz.CalculateBasket(lBasket))
+                    {
+                        return;
+                    }
+
+                    SubscriptionsCapture.SubmitBasket(lBasket);
+  
+                    lCounter++;
+                }
+
+                MessageBox.Show(lCounter.ToString() + " pro-forma subscriptions created in bulk. Nothing delivered yet.");
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonBulkCreatProForma_Click",
+                                                 "SourceSubscriptionId = " + lCurrentSubscriptionId.ToString());
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                Cursor = Cursors.Arrow;
+            }
+        }
 
         #endregion
 
@@ -846,7 +837,7 @@ namespace Subs.Presentation
 
                 if (IssueBiz.GetUnitsLeft(gSubscriptionData.SubscriptionId) < (gSubscriptionData.UnitsPerIssue * gSubscriptionData.NumberOfIssues))
                 {
-                    if (MessageBoxResult.Yes == MessageBox.Show("Some units have already been delivered. Do you wish to return or write them off first before cancelling?",
+                    if (MessageBoxResult.Yes == MessageBox.Show("Some units have already been delivered. Do you wish to first return them or write them off first before cancelling?",
                     "Warning", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning))
                     {
                         return;
@@ -1644,6 +1635,7 @@ namespace Subs.Presentation
         {
             DisplayStatusAndHistory();
         }
+
         private void Click_GenerateRenewalNotices(object sender, RoutedEventArgs e)
         {
             try
@@ -1875,11 +1867,7 @@ namespace Subs.Presentation
             }
         }
 
-
-
-
         #endregion
-
-      
+    
     }
 }

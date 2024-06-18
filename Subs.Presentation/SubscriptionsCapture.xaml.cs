@@ -88,6 +88,8 @@ namespace Subs.Presentation
 
             try
             {
+                // Populate the controls of SubscriptionCapture, using information in the gTemplateSubscription
+                
                 // Populate the payer and receiver and reneval indicators
 
                 gReceiver = new CustomerData3(gTemplateSubscription.ReceiverId);
@@ -104,13 +106,6 @@ namespace Subs.Presentation
                 // Transfer the product selection
 
                 Subs.Data.DeskTopProduct lProduct = (DeskTopProduct)gProduct.DesktopProducts.Where(p => p.ProductId == gTemplateSubscription.ProductId).Single();
-
-                //if (!gProductViewSource.View.MoveCurrentTo(lProduct))
-                //{
-                //    MessageBox.Show("MoveCurrentToFirst failed.");
-                //}
-
-                //MessageBox.Show("Current position is " + gProductViewSource.View.CurrentPosition.ToString());
 
                 gProductViewSource.View.MoveCurrentToFirst();
 
@@ -293,6 +288,8 @@ namespace Subs.Presentation
 
                 foreach (DeskTopProduct lProduct in product2DataGrid.SelectedItems.Cast<DeskTopProduct>())
                 {
+                    // In the case of a renewal, there will be only one new subscription
+
                     SubscriptionData3 lSubscription = new Subs.Data.SubscriptionData3();
 
                     lSubscription.PayerId = gPayer.CustomerId;
@@ -306,6 +303,7 @@ namespace Subs.Presentation
                         lSubscription.DeliveryMethod = gTemplateSubscription.DeliveryMethod;
                         lSubscription.DeliveryAddressId = gTemplateSubscription.DeliveryAddressId;
                         int lStartIssue = gTemplateSubscription.NextIssue;
+                        lSubscription.NumberOfIssues = gTemplateSubscription.NumberOfIssues;
                         if (lStartIssue != 0)
                         {
                             gProposedStartIssue = lStartIssue;
@@ -329,10 +327,13 @@ namespace Subs.Presentation
                     return;
                 }
                 // Display the basket
+                // Note that it contains only proposed values for the issues.
+                // You have not yet calculated any unitprice of discounts.
+
 
                 BasketGrid.ItemsSource = gBasket;
 
-                TabControl.SelectedIndex = 1;
+                TabControl.SelectedIndex = (int)Tabs.Basket;
 
                 return;
             }

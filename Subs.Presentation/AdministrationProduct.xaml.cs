@@ -518,14 +518,6 @@ namespace Subs.Presentation
 
                 lUnitPrice = lElicitUnitPrice.Answer / gCurrentProductRow.DefaultNumberOfIssues;
 
-                //ElicitInteger lElicitUnitsPerIssue = new ElicitInteger("How many Issues per subscriptionIssue");
-                //lElicitUnitsPerIssue.ShowDialog();
-                //if (lElicitUnitPrice.Answer == 0M)
-                //{
-                //    System.Windows.MessageBox.Show("You have not supplied me with a valid number of units per issue! Please try again.");
-                //    return;
-                //}
-
                 int lUnitsPerIssue = 1;
 
                 decimal lDeliveryCost = SubscriptionBiz.GetDeliveryCost(61, gCurrentProductRow.Weight * lUnitsPerIssue, (DeliveryMethod)Enum.ToObject(typeof(DeliveryMethod), gCurrentProductRow.DefaultDeliveryOption))

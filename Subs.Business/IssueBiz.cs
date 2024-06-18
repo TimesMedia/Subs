@@ -279,6 +279,34 @@ namespace Subs.Business
             }
         }
 
+
+        public static int GetStartIssueForRenewal(int pSubscriptionId, int pProductId)
+        {
+            try
+            {
+                int lNextSequenceNumber = GetSequenceNumber(GetLastIssue(pSubscriptionId) + 1);
+   
+                return GetIssueId(pProductId, lNextSequenceNumber);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    ExceptionData.WriteException(1, ex.Message, "static IssueBiz", "GetStartIssue", "");
+                    throw new Exception("static IssueBiz" + " : " + "GetStartIssue" + " : ", ex);
+                }
+                else
+                {
+                    throw ex; // Just bubble it up
+                }
+            }
+        }
+
+
+
+
+
+
         public static bool Deliver(ref SqlTransaction myTransaction, int SubscriptionId, int IssueId, out bool Expired, out bool Deliverable)
         {
             Expired = false;

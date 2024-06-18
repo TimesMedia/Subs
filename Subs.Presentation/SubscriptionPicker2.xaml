@@ -58,10 +58,10 @@
                                 Tag="AuthorityMedium" Loaded="SetVisibility" Width="157"/>
                         <Button x:Name="ButtonBulkReturn"  Content="Return a list of subscription - issues" Canvas.Left="318" Canvas.Top="93" Click="BulkReturn_Click" Margin="0"
                                 Tag="AuthorityHighest" Loaded="SetVisibility" Width="240"/>
-                        <Button Content="Activate list of proforma"  Click="BulkActivate_Click" 
+                        <Button Content="Bulk activate list of proforma"  Click="BulkActivate_Click" 
                                 Tag="AuthorityHigh" Loaded="SetVisibility" Width="157" Canvas.Top="59" 
                                 Canvas.Left="594"/>
-                        <!--<Button x:Name="buttonBulkRenew"  Content="Create pro-forma subs" Canvas.Left="594" Canvas.Top="93" Click="buttonBulkCreateProForma_Click" Margin="0"
+                        <!--<Button x:Name="buttonBulkRenew"  Content="Bulk create pro-forma subs" Canvas.Left="594" Canvas.Top="93" Click="buttonBulkCreateProForma_Click" Margin="0"
                                 Tag="AuthorityHigh" Loaded="SetVisibility" Width="157" ToolTip="Create pro forma invoices from a list of existing subscriptions"/>-->
                     </Canvas>
                 </GroupBox>

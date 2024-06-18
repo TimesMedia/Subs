@@ -1529,8 +1529,6 @@ namespace Subs.Data {
             
             private global::System.Data.DataColumn columnValue;
             
-            private global::System.Data.DataColumn columnProductionRate;
-            
             private global::System.Data.DataColumn columnModifiedBy;
             
             private global::System.Data.DataColumn columnModifiedOn;
@@ -1594,14 +1592,6 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ProductionRateColumn {
-                get {
-                    return this.columnProductionRate;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public global::System.Data.DataColumn ModifiedByColumn {
                 get {
                     return this.columnModifiedBy;
@@ -1653,13 +1643,12 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public BaseRateRow AddBaseRateRow(System.DateTime DateFrom, Product2Row parentProduct2RowByProduct2_BaseRate, decimal Value, decimal ProductionRate, string ModifiedBy, System.DateTime ModifiedOn) {
+            public BaseRateRow AddBaseRateRow(System.DateTime DateFrom, Product2Row parentProduct2RowByProduct2_BaseRate, decimal Value, string ModifiedBy, System.DateTime ModifiedOn) {
                 BaseRateRow rowBaseRateRow = ((BaseRateRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         DateFrom,
                         null,
                         Value,
-                        ProductionRate,
                         ModifiedBy,
                         ModifiedOn};
                 if ((parentProduct2RowByProduct2_BaseRate != null)) {
@@ -1698,7 +1687,6 @@ namespace Subs.Data {
                 this.columnDateFrom = base.Columns["DateFrom"];
                 this.columnProductId = base.Columns["ProductId"];
                 this.columnValue = base.Columns["Value"];
-                this.columnProductionRate = base.Columns["ProductionRate"];
                 this.columnModifiedBy = base.Columns["ModifiedBy"];
                 this.columnModifiedOn = base.Columns["ModifiedOn"];
             }
@@ -1712,8 +1700,6 @@ namespace Subs.Data {
                 base.Columns.Add(this.columnProductId);
                 this.columnValue = new global::System.Data.DataColumn("Value", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnValue);
-                this.columnProductionRate = new global::System.Data.DataColumn("ProductionRate", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnProductionRate);
                 this.columnModifiedBy = new global::System.Data.DataColumn("ModifiedBy", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnModifiedBy);
                 this.columnModifiedOn = new global::System.Data.DataColumn("ModifiedOn", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
@@ -1724,7 +1710,6 @@ namespace Subs.Data {
                 this.columnDateFrom.AllowDBNull = false;
                 this.columnProductId.AllowDBNull = false;
                 this.columnValue.AllowDBNull = false;
-                this.columnProductionRate.DefaultValue = ((decimal)(0m));
                 this.columnModifiedBy.AllowDBNull = false;
                 this.columnModifiedBy.MaxLength = 50;
                 this.columnModifiedOn.AllowDBNull = false;
@@ -2559,22 +2544,6 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public decimal ProductionRate {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableBaseRate.ProductionRateColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ProductionRate\' in table \'BaseRate\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableBaseRate.ProductionRateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string ModifiedBy {
                 get {
                     return ((string)(this[this.tableBaseRate.ModifiedByColumn]));
@@ -2604,18 +2573,6 @@ namespace Subs.Data {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["Product2_BaseRate"]);
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsProductionRateNull() {
-                return this.IsNull(this.tableBaseRate.ProductionRateColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetProductionRateNull() {
-                this[this.tableBaseRate.ProductionRateColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3479,48 +3436,43 @@ SELECT IssueId, ProductId, IssueDescription, Year, No, Sequence, PromotionPrice,
             tableMapping.ColumnMappings.Add("DateFrom", "DateFrom");
             tableMapping.ColumnMappings.Add("ProductId", "ProductId");
             tableMapping.ColumnMappings.Add("Value", "Value");
-            tableMapping.ColumnMappings.Add("ProductionRate", "ProductionRate");
             tableMapping.ColumnMappings.Add("ModifiedBy", "ModifiedBy");
             tableMapping.ColumnMappings.Add("ModifiedOn", "ModifiedOn");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[BaseRate] WHERE (([DateFrom] = @Original_DateFrom) AND ([ProductId] = @Original_ProductId) AND ([Value] = @Original_Value) AND ((@IsNull_ProductionRate = 1 AND [ProductionRate] IS NULL) OR ([ProductionRate] = @Original_ProductionRate)) AND ([ModifiedBy] = @Original_ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [BaseRate] WHERE (([DateFrom] = @Original_DateFrom) AND ([ProductId] " +
+                "= @Original_ProductId) AND ([Value] = @Original_Value) AND ([ModifiedBy] = @Orig" +
+                "inal_ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateFrom", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateFrom", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Value", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 12, 6, "Value", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ProductionRate", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductionRate", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProductionRate", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "ProductionRate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[BaseRate] ([DateFrom], [ProductId], [Value], [ProductionRate], [ModifiedBy], [ModifiedOn]) VALUES (@DateFrom, @ProductId, @Value, @ProductionRate, @ModifiedBy, @ModifiedOn);
-SELECT DateFrom, ProductId, Value, ProductionRate, ModifiedBy, ModifiedOn FROM BaseRate WHERE (DateFrom = @DateFrom) AND (ProductId = @ProductId)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [BaseRate] ([DateFrom], [ProductId], [Value], [ModifiedBy], [ModifiedOn]) VALUES (@DateFrom, @ProductId, @Value, @ModifiedBy, @ModifiedOn);
+SELECT DateFrom, ProductId, Value, ModifiedBy, ModifiedOn FROM BaseRate WHERE (DateFrom = @DateFrom) AND (ProductId = @ProductId)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateFrom", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateFrom", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Value", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 12, 6, "Value", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProductionRate", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "ProductionRate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[BaseRate] SET [DateFrom] = @DateFrom, [ProductId] = @ProductId, [Value] = @Value, [ProductionRate] = @ProductionRate, [ModifiedBy] = @ModifiedBy, [ModifiedOn] = @ModifiedOn WHERE (([DateFrom] = @Original_DateFrom) AND ([ProductId] = @Original_ProductId) AND ([Value] = @Original_Value) AND ((@IsNull_ProductionRate = 1 AND [ProductionRate] IS NULL) OR ([ProductionRate] = @Original_ProductionRate)) AND ([ModifiedBy] = @Original_ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn));
-SELECT DateFrom, ProductId, Value, ProductionRate, ModifiedBy, ModifiedOn FROM BaseRate WHERE (DateFrom = @DateFrom) AND (ProductId = @ProductId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [BaseRate] SET [DateFrom] = @DateFrom, [ProductId] = @ProductId, [Value] = @Value, [ModifiedBy] = @ModifiedBy, [ModifiedOn] = @ModifiedOn WHERE (([DateFrom] = @Original_DateFrom) AND ([ProductId] = @Original_ProductId) AND ([Value] = @Original_Value) AND ([ModifiedBy] = @Original_ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn));
+SELECT DateFrom, ProductId, Value, ModifiedBy, ModifiedOn FROM BaseRate WHERE (DateFrom = @DateFrom) AND (ProductId = @ProductId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateFrom", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateFrom", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Value", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 12, 6, "Value", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProductionRate", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "ProductionRate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateFrom", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateFrom", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Value", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 12, 6, "Value", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ProductionRate", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductionRate", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProductionRate", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 6, "ProductionRate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedBy", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ModifiedOn", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ModifiedOn", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
@@ -3529,7 +3481,7 @@ SELECT DateFrom, ProductId, Value, ProductionRate, ModifiedBy, ModifiedOn FROM B
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::Subs.Data.Properties.Settings.Default.MIMS3ConnectionString;
+            this._connection.ConnectionString = global::Subs.Data.Properties.Settings.Default.MIMSConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3538,11 +3490,10 @@ SELECT DateFrom, ProductId, Value, ProductionRate, ModifiedBy, ModifiedOn FROM B
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT DateFrom, ProductId, Value, ProductionRate, ModifiedBy, ModifiedOn FROM db" +
-                "o.BaseRate";
+            this._commandCollection[0].CommandText = "SELECT DateFrom, ProductId, Value, ModifiedBy, ModifiedOn FROM BaseRate";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].Connection = new global::System.Data.SqlClient.SqlConnection(global::Subs.Data.Properties.Settings.Default.MIMS3ConnectionString);
             this._commandCollection[1].CommandText = "dbo.[MIMS.ProductDoc.BaseRate.FillById]";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
