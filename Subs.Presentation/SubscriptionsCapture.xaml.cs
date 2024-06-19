@@ -84,7 +84,7 @@ namespace Subs.Presentation
 
             InitializeComponent();
             SubscriptionCaptureGeneral();
-            gTemplateSubscription = pSubscriptionData;
+            gTemplateSubscription = pSubscriptionData;  // Used to initialise some controls on SubscriptionCapture
 
             try
             {
@@ -282,7 +282,7 @@ namespace Subs.Presentation
                     return;
                 }
 
-                // Create template subscriptions for the selected products
+                // Create subscriptions for the selected products
 
                 gBasket.Clear();
 

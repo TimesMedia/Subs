@@ -61,8 +61,8 @@
                         <Button Content="Bulk activate list of proforma"  Click="BulkActivate_Click" 
                                 Tag="AuthorityHigh" Loaded="SetVisibility" Width="157" Canvas.Top="59" 
                                 Canvas.Left="594"/>
-                        <!--<Button x:Name="buttonBulkRenew"  Content="Bulk create pro-forma subs" Canvas.Left="594" Canvas.Top="93" Click="buttonBulkCreateProForma_Click" Margin="0"
-                                Tag="AuthorityHigh" Loaded="SetVisibility" Width="157" ToolTip="Create pro forma invoices from a list of existing subscriptions"/>-->
+                        <Button x:Name="buttonBulkRenew"  Content="Bulk create pro-forma subs" Canvas.Left="594" Canvas.Top="93" Click="buttonBulkCreateProForma_Click" Margin="0"
+                                Tag="AuthorityHigh" Loaded="SetVisibility" Width="157" ToolTip="Create pro forma invoices from a list of existing subscriptions"/>
                     </Canvas>
                 </GroupBox>
                 <UserControl x:Name="SubscriptionGrid" Grid.Row="1" Height="auto" VerticalAlignment="Stretch"    Margin="0,10,0,0"/>

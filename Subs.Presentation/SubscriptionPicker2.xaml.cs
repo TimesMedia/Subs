@@ -695,18 +695,26 @@ namespace Subs.Presentation
                     lTargetSubscription.ProposedLastIssue = IssueBiz.GetIssueId(lTargetSubscription.ProductId, lTargetSubscription.ProposedLastSequence);
                     lTargetSubscription.Status = SubStatus.Proposed;
                                      
-
-
-
-                    lTargetSubscription.SetBaseRateVatPercentage(DateTime.Now); 
-
-                    //lTargetSubscription.OrderNumber = pOrderNumber;
+                    //lTargetSubscription.OrderNumber = pOrderNumber. Proposal does not have an order number.
                 
                     ObservableCollection<BasketItem> lBasket = new ObservableCollection<BasketItem>();
 
                     BasketItem lBasketItem = new BasketItem() { Subscription = lTargetSubscription };
                     
                     lBasket.Add(lBasketItem);
+
+                    MimsValidationResult lResult;
+
+                    if ((lResult = SubscriptionBiz.SetInitialValues(lBasket[0].Subscription, DateTime.Now)).Message != "OK")
+                    {
+                        if (lResult.Prompt)
+                        {
+                            if (MessageBoxResult.No == MessageBox.Show(lResult.Message, "Warning", MessageBoxButton.YesNo))
+                            {
+                                return;
+                            }
+                        }
+                    }
 
                     if (!SubscriptionBiz.CalculateBasket(lBasket))
                     {
@@ -1237,7 +1245,7 @@ namespace Subs.Presentation
                     return;
                 }
 
-                SubscriptionData3 lSourceSubscriptionData = new SubscriptionData3(lCurrentSubscriptionId);
+                SubscriptionData3 lSourceSubscriptionData = new SubscriptionData3(lCurrentSubscriptionId); // Used to initialise controls on SubscriptionCapture
 
                 Subs.Presentation.SubscriptionsCapture lSubscriptionsCapture = new Subs.Presentation.SubscriptionsCapture(lSourceSubscriptionData);
                 lSubscriptionsCapture.ShowDialog();
