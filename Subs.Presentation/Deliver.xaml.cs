@@ -42,7 +42,7 @@ namespace Subs.Presentation
             public string FromAdress2= "16 Empire Road";
             public string FromAdress3 = "JOHANNESBURG";
             public string FromSuburb = "PARKTOWN";
-            public string FromPostalCodde = "2193";
+            public string FromPostalCode = "2193";
             public string Cell;
             public decimal? Length;
             public decimal? Width;
@@ -53,6 +53,7 @@ namespace Subs.Presentation
             public string WayBillReference;
 
             public string ToName;
+            public string Company;
             public string ToAdress1;
             public string ToAdress2; 
             public string ToAdress3;
@@ -850,12 +851,12 @@ namespace Subs.Presentation
                         lNewDeliveryItem.Date = DateTime.Now.ToString("ddMMyyyy");
                         lNewDeliveryItem.ToName = lRow.Title + " " + lRow.Initials + " " + lRow.Surname;
 
-                        //if (!lRow.IsCompanyNull())
-                        //{
-                        //    lNewDeliveryItem.Company = lRow.Company;
-                        //}
+                        if (!lRow.IsCompanyNull())
+                        {
+                            lNewDeliveryItem.Company = lRow.Company;
+                        }
 
-                       DeliveryAddressData2 lDeliveryAddressData = new DeliveryAddressData2(lRow.DeliveryAddressId);
+                        DeliveryAddressData2 lDeliveryAddressData = new DeliveryAddressData2(lRow.DeliveryAddressId);
 
                         //if (lDeliveryAddressData.Building != "")
                         //{
