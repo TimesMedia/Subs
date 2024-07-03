@@ -62,6 +62,7 @@ namespace Subs.Presentation
             public int CustomerId;
             public string Name;
             public int DeliveryAddressId;
+            public int UnitsPerissue;
         }
 
         public class ProcessedFile

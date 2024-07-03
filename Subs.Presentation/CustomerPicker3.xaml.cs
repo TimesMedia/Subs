@@ -2522,7 +2522,6 @@ namespace Subs.Presentation
 
                 try
                 {
-  
                     gCurrentCustomer.BalanceInvoiceId = gCurrentCustomer.PreviousCheckpoint;
                     gCurrentCustomer.Update();
                     LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, gCurrentCustomer.BalanceInvoiceId, lCurrentBalanceInvoiceId, lOriginalBalance);
@@ -2573,7 +2572,6 @@ namespace Subs.Presentation
                     return;
                 }
 
-                //Try to set a new checkpoint
                 // Save originals
                 int lOriginalBalanceInvoiceId = gCurrentCustomer.BalanceInvoiceId;
                 decimal lOriginalBalance = gCurrentCustomer.Balance;
@@ -2582,50 +2580,33 @@ namespace Subs.Presentation
 
                 try
                 {
-                    // if (MessageBoxResult.No == MessageBox.Show("Do you want to provide your own starting balance?",
-                    //"Warning", MessageBoxButton.YesNo))
-                    // {
-
-                    //     if (Math.Abs(lNewBalance) < 1M)
-                    //     {
-                    //         lNewBalance = 0;   // Get rid of decimal point variations
-                    //     }
-
-                    //     if (lNewBalance > 0)
-                    //     {
-                    //         MessageBox.Show("No can do, you first have to write off " + lNewBalance.ToString("######0.######") + " from some of the previous invoices.");
-                    //         return;
-                    //     }
-
-                    //     if (lNewBalance < 0)
-                    //     {
-                    //         MessageBox.Show("No can do, you first have to refund " + lNewBalance.ToString("######0.######") +
-                    //             " or get the client to do a reduced payment.");
-                    //         return;
-                    //     }
-
-                    //     gCurrentCustomer.Balance = lNewBalance;
-                    // }
-
-                    // else
-                    // {
-                    //     // Override the past by providing your own balance value
-                    //     ElicitDecimal lElicitDecimal = new ElicitDecimal("What should the new starting balance be?");
-                    //     lElicitDecimal.ShowDialog();
-                    //     gCurrentCustomer.Balance = lElicitDecimal.Answer;  
-                    // }
+                    // Change the checkpoint on a provisional basis
 
                     gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
                     gCurrentCustomer.Update();
-                    LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lOriginalBalance);
 
-                    // Select the customer again.
+                    if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M)
+                    {
+                        LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lOriginalBalance);
+                        SetCurrentCustomer(gCurrentCustomer.CustomerId);
+                        GoToStatement();  //Refresh the displayed statement
+                        MessageBox.Show("Checkpoints successfully changed changed to " + gCurrentCustomer.BalanceInvoiceId.ToString());
 
-                    SetCurrentCustomer(gCurrentCustomer.CustomerId);
-                    GoToStatement();
+                    }
+                    else
+                    {
+                        // Restore to the previous BalanceInvoiceId
+                        gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
+                        gCurrentCustomer.Balance = lOriginalBalance;
+                        gCurrentCustomer.Update();
+                        ExceptionData.WriteException(1, "Difference in due values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCurrentCustomer.CustomerId.ToString()
+                            + "New = " + gCurrentCustomer.Due.ToString("#0.000000")
+                            + " Original = " + lOriginalDue.ToString("#0.000000"));
 
-                    MessageBox.Show("Checkpoints successfully changed changed to " + gCurrentCustomer.BalanceInvoiceId.ToString() + " by force.");
-                }
+                        MessageBox.Show("Checkpoints change failed. No changes made to database. First do some writeoffs or refunds.");
+                        return;
+                    }
+                  }
                 catch (Exception InnerException)
                 {
                     gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
@@ -2633,24 +2614,7 @@ namespace Subs.Presentation
                     gCurrentCustomer.Update();
                     throw InnerException;
                 }
-
-                //if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M)
-                //{
-                //    GoToStatement();  //Refresh the displayed statement
-                //    MessageBox.Show("Checkpoints successfully changed.");
-
-                //}
-                //else
-                //{
-                //    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
-                //    gCurrentCustomer.Balance = lOriginalBalance;
-                //    gCurrentCustomer.Update();
-                //    ExceptionData.WriteException(1, "Difference in due values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCurrentCustomer.CustomerId.ToString()
-                //        + "New = " + gCurrentCustomer.Due.ToString("#0.000000")
-                //        + " Original = " + lOriginalDue.ToString("#0.000000"));
-
-                //    MessageBox.Show("Checkpoints change failed. No changes made to database.");
-                //}
+                
                 return;
             }
             catch (Exception ex)
@@ -2674,7 +2638,6 @@ namespace Subs.Presentation
             }
 
         }
-
 
         #endregion
     }
