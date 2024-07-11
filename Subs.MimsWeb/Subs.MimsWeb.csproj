@@ -362,6 +362,7 @@
     <Content Include="Content\EBooks\oncology3.pdf" />
     <Content Include="Content\EBooks\IVS Vol 62 No1 FINAL.pdf" />
     <Content Include="Content\EBooks\IVS1050.pdf" />
+    <Content Include="Content\EBooks\IVS1051.pdf" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Properties\PublishProfiles\IISProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\IISProfile2.pubxml" />

@@ -2001,6 +2001,7 @@ namespace Subs.Presentation
 
                     //AutomaticAllocate();
                     MessageBox.Show("Done");
+                    SelectCurrentCustomer();
                     GoToStatement();
                 }
                 else
@@ -2329,9 +2330,19 @@ namespace Subs.Presentation
             lPaymentAllocation.ShowDialog();
         }
 
+
+        private void Click_CancelSubscription(object sender, RoutedEventArgs e)
+        {
+            SelectedSubscription lSubscription = (SelectedSubscription)gSubscriptionsViewSource.View.CurrentItem;
+            SubscriptionPicker2 lSubscriptionPicker = new SubscriptionPicker2();
+            lSubscriptionPicker.SelectById(lSubscription.SubscriptionId);
+            lSubscriptionPicker.ShowDialog();
+        }
+
+
         #endregion
-      
-       
+
+
 
         #region Over paid delivered tab
 
@@ -2576,6 +2587,7 @@ namespace Subs.Presentation
                 int lOriginalBalanceInvoiceId = gCurrentCustomer.BalanceInvoiceId;
                 decimal lOriginalBalance = gCurrentCustomer.Balance;
                 decimal lOriginalDue = gCurrentCustomer.Due;
+                decimal lOriginalLiability = gCurrentCustomer.Liability;
                 //decimal lNewBalance = gCurrentCustomer.CalculateBalanceByInvoice(lInvoice.InvoiceId);
 
                 try
@@ -2585,13 +2597,13 @@ namespace Subs.Presentation
                     gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
                     gCurrentCustomer.Update();
 
-                    if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M)
+                    if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M && Math.Abs(gCurrentCustomer.Liability - lOriginalLiability) < 1M)
                     {
                         LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lOriginalBalance);
                         SetCurrentCustomer(gCurrentCustomer.CustomerId);
+                        SelectCurrentCustomer();
                         GoToStatement();  //Refresh the displayed statement
                         MessageBox.Show("Checkpoints successfully changed changed to " + gCurrentCustomer.BalanceInvoiceId.ToString());
-
                     }
                     else
                     {
@@ -2599,11 +2611,16 @@ namespace Subs.Presentation
                         gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
                         gCurrentCustomer.Balance = lOriginalBalance;
                         gCurrentCustomer.Update();
-                        ExceptionData.WriteException(1, "Difference in due values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCurrentCustomer.CustomerId.ToString()
-                            + "New = " + gCurrentCustomer.Due.ToString("#0.000000")
-                            + " Original = " + lOriginalDue.ToString("#0.000000"));
+                        string lComment = "Checkpoint change proposal failed. No changes made to database. First do some writeoffs or refunds. \r\n"
+                            + "Proposed due= " + gCurrentCustomer.Due.ToString("#0.000000")
+                            + " Original due= " + lOriginalDue.ToString("#0.000000") + "\r\n"
+                            + "Proposed liability = " + gCurrentCustomer.Liability.ToString("#0.000000")
+                            + " Original liability= " + lOriginalLiability.ToString("#0.000000");
 
-                        MessageBox.Show("Checkpoints change failed. No changes made to database. First do some writeoffs or refunds.");
+                        ExceptionData.WriteException(1, "Difference in final values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCurrentCustomer.CustomerId.ToString() + " "
+                            + lComment
+                            );
+
                         return;
                     }
                   }
@@ -2640,6 +2657,7 @@ namespace Subs.Presentation
         }
 
         #endregion
+  
     }
 }
 

@@ -63,6 +63,7 @@ namespace Subs.Presentation
             public string Name;
             public int DeliveryAddressId;
             public int UnitsPerissue;
+            public string DeliveryMethod;
         }
 
         public class ProcessedFile
@@ -1180,6 +1181,8 @@ namespace Subs.Presentation
                             lMediaDeliveryItem.CustomerId = lRow.ReceiverId;
                             lMediaDeliveryItem.Name = lCustomerData.Title + " " + lCustomerData.FirstName + " " + lCustomerData.Surname;
                             lMediaDeliveryItem.DeliveryAddressId = lRow.DeliveryAddressId;
+                            lMediaDeliveryItem.DeliveryMethod = lRow.DeliveryMethodString;
+
 
                             gMediaDeliveryItemsRaw.Add(lMediaDeliveryItem);
 

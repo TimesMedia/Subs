@@ -338,6 +338,7 @@
                         <DataGrid.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Status and history" Click="Click_StatusAndHistory" />
+                                <MenuItem Header="Cancel" Click="Click_CancelSubscription" Tag="AuthorityMedium" Loaded="SetVisibility"/>
                                 <MenuItem Header="Deliver on credit" Click="Click_DeliverOnCredit" Tag="AuthorityMedium" Loaded="SetVisibility"/>
 
                             </ContextMenu>

@@ -843,30 +843,44 @@ namespace Subs.Presentation
 
                 // Check for deliveries.
 
-                if (IssueBiz.GetUnitsLeft(gSubscriptionData.SubscriptionId) < (gSubscriptionData.UnitsPerIssue * gSubscriptionData.NumberOfIssues))
+                int lUnitLeft = gSubscriptionData.SubscriptionId;
+
+                if (lUnitLeft > 0)
                 {
-                    if (MessageBoxResult.Yes == MessageBox.Show("Some units have already been delivered. Do you wish to first return them or write them off first before cancelling?",
-                    "Warning", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning))
+                    if (IssueBiz.GetUnitsLeft(gSubscriptionData.SubscriptionId) < (gSubscriptionData.UnitsPerIssue * gSubscriptionData.NumberOfIssues))
                     {
-                        return;
+                        if (MessageBoxResult.Yes == MessageBox.Show("Some units have already been delivered. Do you wish to first return them or write them off first before cancelling?",
+                        "Warning", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning))
+                        {
+                            return;
+                        }
                     }
                 }
 
-                // Get the reason
-                ElicitString lElicitString = new ElicitString("Why do you want to cancel this subscription?");
-                lElicitString.ShowDialog();
-                if (lElicitString.Answer.Length == 0)
-                {
-                    MessageBox.Show("I cannot cancel this subscription without a reason.");
-                    return;
-                }
+                string lCancelReason = "";
 
+                if (lUnitLeft == 0)
+                {
+                    lCancelReason = "Expired";
+                }
+                else
+                { 
+                    // Get the reason
+                    ElicitString lElicitString = new ElicitString("Why do you want to cancel this subscription?");
+                    lElicitString.ShowDialog();
+                    if (lElicitString.Answer.Length == 0)
+                    {
+                        MessageBox.Show("I cannot cancel this subscription without a reason.");
+                        return;
+                    }
+                    else {lCancelReason = lElicitString.Answer; }
+                }
                 // OK, proceed with the operation
 
                 {
                     string lResult;
 
-                    if ((lResult = SubscriptionBiz.Cancel(gSubscriptionData, lElicitString.Answer)) != "OK")
+                    if ((lResult = SubscriptionBiz.Cancel(gSubscriptionData, lCancelReason)) != "OK")
                     {
                         MessageBox.Show(lResult);
                         return;
