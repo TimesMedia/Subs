@@ -423,8 +423,9 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 
-                <Button Click="ButtonResetCheckpoint_Click" Margin="10,10,0,10" HorizontalAlignment="Left"   Width="100" Tag="AuthorityHigh" Loaded="SetVisibility">Reset Checkpoint</Button>
-               
+                <Button Click="ButtonResetCheckpoint_Click" Margin="200,10,0,10" HorizontalAlignment="Left"   Width="150" Tag="AuthorityHigh" Loaded="SetVisibility">Reset Checkpoint</Button>
+                <Button Click="ButtonShowInExcel" Margin="10,10,0,10" HorizontalAlignment="Left"   Width="100" Tag="AuthorityHigh" Loaded="SetVisibility">Show in Excel</Button>
+
                 <DataGrid x:Name="DueDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch" Grid.Row="1"
                                   Margin="0,0,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Left" RowHeight="30"
                                   MouseDoubleClick="DisplayStatusAndHistory" SelectionUnit="CellOrRowHeader"  SelectionMode="Single" CanUserSortColumns="False">

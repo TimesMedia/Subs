@@ -2522,6 +2522,40 @@ namespace Subs.Presentation
         #endregion
 
         #region Due calculation
+
+        private void ButtonShowInExcel(object sender, RoutedEventArgs e)
+        {
+            ExcelIO lExcel = new ExcelIO(@"c:\Subs\Due.xlsx");
+            try 
+            { 
+                lExcel.IsVisible = true;
+                lExcel.SelectSheet("Sheet1");
+
+                for (int i = 1; i < gDue.Count; i++)
+                {
+                    InvoiceAndPayment lRow = gDue[i];
+                    lExcel.PutCellDate("Items",i,1, lRow.CaptureDate);
+                    lExcel.PutCellString("Items", i, 2, lRow.Operation);
+                    lExcel.PutCellInteger("Items", i, 3, lRow.InvoiceId);
+                    lExcel.PutCellDecimal("Items", i, 4, lRow.Value);
+                    lExcel.PutCellDecimal("Items", i, 5, lRow.DueValue);
+                }
+            }
+            catch(Exception ex)
+            { 
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            { 
+                lExcel.Save();
+                //lExcel.Close();
+            }
+
+
+
+        }
+
+
         private void ButtonResetCheckpoint_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -2657,7 +2691,8 @@ namespace Subs.Presentation
         }
 
         #endregion
-  
+
+       
     }
 }
 
