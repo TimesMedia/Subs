@@ -1022,6 +1022,8 @@ namespace Subs.Data {
             
             private global::System.Data.DataColumn columnEBookImage;
             
+            private global::System.Data.DataColumn columnYearEndSale;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public IssueDataTable() {
@@ -1201,6 +1203,14 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn YearEndSaleColumn {
+                get {
+                    return this.columnYearEndSale;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1253,7 +1263,8 @@ namespace Subs.Data {
                         System.DateTime EndDate, 
                         int SellOption, 
                         string EBookURL, 
-                        byte[] EBookImage) {
+                        byte[] EBookImage, 
+                        bool YearEndSale) {
                 IssueRow rowIssueRow = ((IssueRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1273,7 +1284,8 @@ namespace Subs.Data {
                         EndDate,
                         SellOption,
                         EBookURL,
-                        EBookImage};
+                        EBookImage,
+                        YearEndSale};
                 if ((parentProduct2RowByProduct2_Issue != null)) {
                     columnValuesArray[1] = parentProduct2RowByProduct2_Issue[0];
                 }
@@ -1324,6 +1336,7 @@ namespace Subs.Data {
                 this.columnSellOption = base.Columns["SellOption"];
                 this.columnEBookURL = base.Columns["EBookURL"];
                 this.columnEBookImage = base.Columns["EBookImage"];
+                this.columnYearEndSale = base.Columns["YearEndSale"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1365,6 +1378,8 @@ namespace Subs.Data {
                 base.Columns.Add(this.columnEBookURL);
                 this.columnEBookImage = new global::System.Data.DataColumn("EBookImage", typeof(byte[]), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEBookImage);
+                this.columnYearEndSale = new global::System.Data.DataColumn("YearEndSale", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnYearEndSale);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnIssueId}, true));
                 this.columnIssueId.AutoIncrement = true;
@@ -1390,6 +1405,7 @@ namespace Subs.Data {
                 this.columnStartDate.AllowDBNull = false;
                 this.columnEndDate.AllowDBNull = false;
                 this.columnSellOption.AllowDBNull = false;
+                this.columnYearEndSale.DefaultValue = ((bool)(false));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2449,6 +2465,22 @@ namespace Subs.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool YearEndSale {
+                get {
+                    try {
+                        return ((bool)(this[this.tableIssue.YearEndSaleColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'YearEndSale\' in table \'Issue\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableIssue.YearEndSaleColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public Product2Row Product2Row {
                 get {
                     return ((Product2Row)(this.GetParentRow(this.Table.ParentRelations["Product2_Issue"])));
@@ -2492,6 +2524,18 @@ namespace Subs.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetEBookImageNull() {
                 this[this.tableIssue.EBookImageColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsYearEndSaleNull() {
+                return this.IsNull(this.tableIssue.YearEndSaleColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetYearEndSaleNull() {
+                this[this.tableIssue.YearEndSaleColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3137,10 +3181,11 @@ FROM            Product2";
             tableMapping.ColumnMappings.Add("EBook", "EBookURL");
             tableMapping.ColumnMappings.Add("EBookURL", "EBookURL");
             tableMapping.ColumnMappings.Add("EBookImage", "EBookImage");
+            tableMapping.ColumnMappings.Add("YearEndSale", "YearEndSale");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Issue] WHERE (([IssueId] = @Original_IssueId) AND ([ProductId] = @Original_ProductId) AND ([IssueDescription] = @Original_IssueDescription) AND ([Year] = @Original_Year) AND ([No] = @Original_No) AND ([Sequence] = @Original_Sequence) AND ((@IsNull_PromotionPrice = 1 AND [PromotionPrice] IS NULL) OR ([PromotionPrice] = @Original_PromotionPrice)) AND ([ModifiedBy] = @Original_ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn) AND ([StockProduced] = @Original_StockProduced) AND ([StockDelivered] = @Original_StockDelivered) AND ([StockLost] = @Original_StockLost) AND ([StockReturned] = @Original_StockReturned) AND ([StartDate] = @Original_StartDate) AND ([EndDate] = @Original_EndDate) AND ([SellOption] = @Original_SellOption) AND ((@IsNull_EBookURL = 1 AND [EBookURL] IS NULL) OR ([EBookURL] = @Original_EBookURL)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Issue] WHERE (([IssueId] = @Original_IssueId) AND ([ProductId] = @Original_ProductId) AND ([IssueDescription] = @Original_IssueDescription) AND ([Year] = @Original_Year) AND ([No] = @Original_No) AND ([Sequence] = @Original_Sequence) AND ((@IsNull_PromotionPrice = 1 AND [PromotionPrice] IS NULL) OR ([PromotionPrice] = @Original_PromotionPrice)) AND ([ModifiedBy] = @Original_ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn) AND ([StockProduced] = @Original_StockProduced) AND ([StockDelivered] = @Original_StockDelivered) AND ([StockLost] = @Original_StockLost) AND ([StockReturned] = @Original_StockReturned) AND ([StartDate] = @Original_StartDate) AND ([EndDate] = @Original_EndDate) AND ([SellOption] = @Original_SellOption) AND ((@IsNull_EBookURL = 1 AND [EBookURL] IS NULL) OR ([EBookURL] = @Original_EBookURL)) AND ((@IsNull_YearEndSale = 1 AND [YearEndSale] IS NULL) OR ([YearEndSale] = @Original_YearEndSale)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -3161,10 +3206,12 @@ FROM            Product2";
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SellOption", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SellOption", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_EBookURL", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EBookURL", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EBookURL", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EBookURL", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_YearEndSale", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "YearEndSale", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_YearEndSale", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "YearEndSale", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Issue] ([ProductId], [IssueDescription], [Year], [No], [Sequence], [PromotionPrice], [ModifiedBy], [ModifiedOn], [StockProduced], [StockDelivered], [StockLost], [StockReturned], [StartDate], [EndDate], [SellOption], [EBookURL], [EBookImage]) VALUES (@ProductId, @IssueDescription, @Year, @No, @Sequence, @PromotionPrice, @ModifiedBy, @ModifiedOn, @StockProduced, @StockDelivered, @StockLost, @StockReturned, @StartDate, @EndDate, @SellOption, @EBookURL, @EBookImage);
-SELECT IssueId, ProductId, IssueDescription, Year, No, Sequence, PromotionPrice, ModifiedBy, ModifiedOn, StockProduced, StockDelivered, StockLost, StockReturned, StartDate, EndDate, SellOption, EBookURL, EBookImage FROM Issue WHERE (IssueId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Issue] ([ProductId], [IssueDescription], [Year], [No], [Sequence], [PromotionPrice], [ModifiedBy], [ModifiedOn], [StockProduced], [StockDelivered], [StockLost], [StockReturned], [StartDate], [EndDate], [SellOption], [EBookURL], [EBookImage], [YearEndSale]) VALUES (@ProductId, @IssueDescription, @Year, @No, @Sequence, @PromotionPrice, @ModifiedBy, @ModifiedOn, @StockProduced, @StockDelivered, @StockLost, @StockReturned, @StartDate, @EndDate, @SellOption, @EBookURL, @EBookImage, @YearEndSale);
+SELECT IssueId, ProductId, IssueDescription, Year, No, Sequence, PromotionPrice, ModifiedBy, ModifiedOn, StockProduced, StockDelivered, StockLost, StockReturned, StartDate, EndDate, SellOption, EBookURL, EBookImage, YearEndSale FROM Issue WHERE (IssueId = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueDescription", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueDescription", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3183,6 +3230,7 @@ SELECT IssueId, ProductId, IssueDescription, Year, No, Sequence, PromotionPrice,
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SellOption", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SellOption", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EBookURL", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EBookURL", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EBookImage", global::System.Data.SqlDbType.Image, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EBookImage", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@YearEndSale", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "YearEndSale", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [Issue] SET [ProductId] = @ProductId, [IssueDescription] = @IssueDescripti" +
@@ -3191,20 +3239,22 @@ SELECT IssueId, ProductId, IssueDescription, Year, No, Sequence, PromotionPrice,
                 "ed] = @StockProduced, [StockDelivered] = @StockDelivered, [StockLost] = @StockLo" +
                 "st, [StockReturned] = @StockReturned, [StartDate] = @StartDate, [EndDate] = @End" +
                 "Date, [SellOption] = @SellOption, [EBookURL] = @EBookURL, [EBookImage] = @EBookI" +
-                "mage WHERE (([IssueId] = @Original_IssueId) AND ([ProductId] = @Original_Product" +
-                "Id) AND ([IssueDescription] = @Original_IssueDescription) AND ([Year] = @Origina" +
-                "l_Year) AND ([No] = @Original_No) AND ([Sequence] = @Original_Sequence) AND ((@I" +
-                "sNull_PromotionPrice = 1 AND [PromotionPrice] IS NULL) OR ([PromotionPrice] = @O" +
-                "riginal_PromotionPrice)) AND ([ModifiedBy] = @Original_ModifiedBy) AND ([Modifie" +
-                "dOn] = @Original_ModifiedOn) AND ([StockProduced] = @Original_StockProduced) AND" +
-                " ([StockDelivered] = @Original_StockDelivered) AND ([StockLost] = @Original_Stoc" +
-                "kLost) AND ([StockReturned] = @Original_StockReturned) AND ([StartDate] = @Origi" +
-                "nal_StartDate) AND ([EndDate] = @Original_EndDate) AND ([SellOption] = @Original" +
-                "_SellOption) AND ((@IsNull_EBookURL = 1 AND [EBookURL] IS NULL) OR ([EBookURL] =" +
-                " @Original_EBookURL)));\r\nSELECT IssueId, ProductId, IssueDescription, Year, No, " +
-                "Sequence, PromotionPrice, ModifiedBy, ModifiedOn, StockProduced, StockDelivered," +
-                " StockLost, StockReturned, StartDate, EndDate, SellOption, EBookURL, EBookImage " +
-                "FROM Issue WHERE (IssueId = @IssueId)";
+                "mage, [YearEndSale] = @YearEndSale WHERE (([IssueId] = @Original_IssueId) AND ([" +
+                "ProductId] = @Original_ProductId) AND ([IssueDescription] = @Original_IssueDescr" +
+                "iption) AND ([Year] = @Original_Year) AND ([No] = @Original_No) AND ([Sequence] " +
+                "= @Original_Sequence) AND ((@IsNull_PromotionPrice = 1 AND [PromotionPrice] IS N" +
+                "ULL) OR ([PromotionPrice] = @Original_PromotionPrice)) AND ([ModifiedBy] = @Orig" +
+                "inal_ModifiedBy) AND ([ModifiedOn] = @Original_ModifiedOn) AND ([StockProduced] " +
+                "= @Original_StockProduced) AND ([StockDelivered] = @Original_StockDelivered) AND" +
+                " ([StockLost] = @Original_StockLost) AND ([StockReturned] = @Original_StockRetur" +
+                "ned) AND ([StartDate] = @Original_StartDate) AND ([EndDate] = @Original_EndDate)" +
+                " AND ([SellOption] = @Original_SellOption) AND ((@IsNull_EBookURL = 1 AND [EBook" +
+                "URL] IS NULL) OR ([EBookURL] = @Original_EBookURL)) AND ((@IsNull_YearEndSale = " +
+                "1 AND [YearEndSale] IS NULL) OR ([YearEndSale] = @Original_YearEndSale)));\r\nSELE" +
+                "CT IssueId, ProductId, IssueDescription, Year, No, Sequence, PromotionPrice, Mod" +
+                "ifiedBy, ModifiedOn, StockProduced, StockDelivered, StockLost, StockReturned, St" +
+                "artDate, EndDate, SellOption, EBookURL, EBookImage, YearEndSale FROM Issue WHERE" +
+                " (IssueId = @IssueId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueDescription", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueDescription", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3223,6 +3273,7 @@ SELECT IssueId, ProductId, IssueDescription, Year, No, Sequence, PromotionPrice,
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SellOption", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SellOption", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EBookURL", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EBookURL", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EBookImage", global::System.Data.SqlDbType.Image, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EBookImage", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@YearEndSale", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "YearEndSale", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IssueId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProductId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProductId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IssueDescription", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IssueDescription", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -3242,6 +3293,8 @@ SELECT IssueId, ProductId, IssueDescription, Year, No, Sequence, PromotionPrice,
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SellOption", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SellOption", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_EBookURL", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EBookURL", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EBookURL", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EBookURL", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_YearEndSale", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "YearEndSale", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_YearEndSale", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "YearEndSale", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IssueId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "IssueId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -3258,10 +3311,9 @@ SELECT IssueId, ProductId, IssueDescription, Year, No, Sequence, PromotionPrice,
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        IssueId, ProductId, IssueDescription, Year, No, Sequence, Promotion" +
-                "Price, ModifiedBy, ModifiedOn, StockProduced, StockDelivered, StockLost, StockRe" +
-                "turned, StartDate, EndDate, SellOption, EBookURL, EBookImage\r\nFROM            Is" +
-                "sue";
+            this._commandCollection[0].CommandText = @"SELECT        IssueId, ProductId, IssueDescription, Year, No, Sequence, PromotionPrice, ModifiedBy, ModifiedOn, StockProduced, StockDelivered, StockLost, StockReturned, StartDate, EndDate, SellOption, EBookURL, EBookImage, 
+                         YearEndSale
+FROM            Issue";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;

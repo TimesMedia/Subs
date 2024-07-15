@@ -442,6 +442,7 @@
                         <DataGridTextColumn  Header="Date" Width="80" Binding="{Binding Date, Converter={StaticResource lDateConverter}}"/>
                         <DataGridTextColumn Binding="{Binding Operation}" Header="Operation" Width="105"/>
                         <DataGridTextColumn Binding="{Binding InvoiceId}" Header="InvoiceId" Width="105"/>
+                        <DataGridTextColumn Binding="{Binding Reference2}" Header="Reference" Width="105"/>
                         <DataGridTextColumn Binding="{Binding Value, Converter={StaticResource lRandConverter}}" Header="Value" Width="70" CellStyle="{StaticResource AlignRight}"/>
                         <DataGridTextColumn Binding="{Binding DueValue, Converter={StaticResource lRandConverter}}" Header="Balance" Width="70" CellStyle="{StaticResource AlignRight}"/>
 

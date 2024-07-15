@@ -2001,7 +2001,7 @@ namespace Subs.Presentation
 
                     //AutomaticAllocate();
                     MessageBox.Show("Done");
-                    SelectCurrentCustomer();
+                    SetCurrentCustomer(gCurrentCustomer.CustomerId);
                     GoToStatement();
                 }
                 else
@@ -2534,11 +2534,13 @@ namespace Subs.Presentation
                 for (int i = 1; i < gDue.Count; i++)
                 {
                     InvoiceAndPayment lRow = gDue[i];
-                    lExcel.PutCellDate("Items",i,1, lRow.CaptureDate);
+                    lExcel.PutCellInteger("Items", i, 0, lRow.TransactionId);
+                    lExcel.PutCellDate("Items",i,1, lRow.Date);
                     lExcel.PutCellString("Items", i, 2, lRow.Operation);
                     lExcel.PutCellInteger("Items", i, 3, lRow.InvoiceId);
-                    lExcel.PutCellDecimal("Items", i, 4, lRow.Value);
-                    lExcel.PutCellDecimal("Items", i, 5, lRow.DueValue);
+                    lExcel.PutCellString("Items", i, 4, lRow.Reference2);
+                    lExcel.PutCellDecimal("Items", i, 5, lRow.Value);
+                    lExcel.PutCellDecimal("Items", i, 6, lRow.DueValue);
                 }
             }
             catch(Exception ex)
