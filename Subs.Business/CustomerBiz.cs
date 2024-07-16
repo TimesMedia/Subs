@@ -302,12 +302,6 @@ namespace Subs.Business
 
         public static string Refund(int pPaymentTransactionId, CustomerData3 pCustomerData, decimal pRefundAmount, DateTime pEffectiveDate)
         {
-            if (pCustomerData.BalanceInvoiceTransactionId >= pPaymentTransactionId)
-            {
-                return "Payment too old to be refunded";
-            }
-
-
             // Start the transaction
             SqlTransaction lSqlTransaction;
             SqlConnection lConnection = new SqlConnection();

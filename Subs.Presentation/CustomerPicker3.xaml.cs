@@ -1788,7 +1788,7 @@ namespace Subs.Presentation
             {
                 // Check that you are standing on a payment line.
                 InvoiceAndPayment lInvoice = (InvoiceAndPayment)gPaymentViewSource.View.CurrentItem;
-                if (lInvoice.Operation != "Payment")
+                if (lInvoice.Operation != "Pay")
                 {
                     MessageBox.Show("Sorry, I respond only to payment lines");
                     return;

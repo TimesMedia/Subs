@@ -67,8 +67,8 @@ namespace Subs.Presentation
             public string EmailAddress;
             public string Product;
             public int Pieces;
-                       
             public int CustomerId;
+            public int DeliveryAddressId;
         }
 
         [Serializable]
@@ -903,7 +903,7 @@ namespace Subs.Presentation
                         lNewDeliveryItem.Price = lRow.UnitPrice * lRow.UnitsPerIssue;
                         lNewDeliveryItem.Pieces = lRow.UnitsPerIssue;
                         lNewDeliveryItem.EmailAddress = lRow.EmailAddress;
- 
+                        lNewDeliveryItem.DeliveryAddressId = lRow.DeliveryAddressId;
                         gPackageCounters.Add(new PackageCounter() { CustomerId = lRow.ReceiverId, IssueDescription = lRow.IssueDescription, UnitsPerIssue = lRow.UnitsPerIssue });
                     } // End of foreach loop
                     }
