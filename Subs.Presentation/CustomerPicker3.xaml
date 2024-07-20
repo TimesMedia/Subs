@@ -60,8 +60,11 @@
                     			Click="buttonSearchEmail_Click"/>
                         <Button Grid.Column="1" Content="Search by Invoice" Height="22" x:Name="buttonSearchInvoice" Width="147" Canvas.Left="197" Canvas.Top="112"
                     			Click="buttonSearchInvoice_Click"/>
-                        <Button Grid.Column="1" Content="Load from existing list" Height="22" x:Name="buttonLoad" Width="163" Canvas.Left="376" 
+                        <Button Grid.Column="1" Content="Search by dormant" Height="22" x:Name="SearchByDormant" Width="163" Canvas.Left="376" 
                                     Canvas.Top="63"
+                    			    Click="buttonSearchByDormant"/>
+                        <Button Grid.Column="1" Content="Load from existing list" Height="22" x:Name="buttonLoad" Width="163" Canvas.Left="376" 
+                                    Canvas.Top="112"
                     			Click="buttonLoad_Click"/>
                         <WindowsFormsHost Canvas.Left="197" Canvas.Top="12" Height="26" Width="342" >
                             <wf:ComboBox x:Name="comboCompany" Enabled="True" DropDownHeight="300" />
@@ -415,20 +418,24 @@
             </Grid>
         </TabItem>
 
-      
+
         <TabItem Header="Due calculation" x:Name="tabDue"  TabIndex="4">
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="324*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
-                <Button Click="ButtonResetCheckpoint_Click" Margin="200,10,0,10" HorizontalAlignment="Left"   Width="150" Tag="AuthorityHigh" Loaded="SetVisibility">Reset Checkpoint</Button>
-                <Button Click="ButtonShowInExcel" Margin="10,10,0,10" HorizontalAlignment="Left"   Width="100" Tag="AuthorityHigh" Loaded="SetVisibility">Show in Excel</Button>
+
+                <Button Click="ButtonResetCheckpoint_Click" Margin="180,10,0,10" HorizontalAlignment="Left"   Width="150" Tag="AuthorityHigh" Loaded="SetVisibility" Grid.Column="1">Reset Checkpoint</Button>
+                <Button Click="ButtonShowInExcel" Margin="10,10,0,10" HorizontalAlignment="Left"   Width="100" Tag="AuthorityHigh" Loaded="SetVisibility" Grid.ColumnSpan="2">Show in Excel</Button>
 
                 <DataGrid x:Name="DueDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch" Grid.Row="1"
                                   Margin="0,0,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Left" RowHeight="30"
-                                  MouseDoubleClick="DisplayStatusAndHistory" SelectionUnit="CellOrRowHeader"  SelectionMode="Single" CanUserSortColumns="False">
+                                  MouseDoubleClick="DisplayStatusAndHistory" SelectionUnit="CellOrRowHeader"  SelectionMode="Single" CanUserSortColumns="False" Grid.ColumnSpan="2">
                     <DataGrid.RowHeaderStyle>
                         <Style TargetType="{x:Type DataGridRowHeader}">
                             <Setter Property="Background"  Value="Yellow"/>
