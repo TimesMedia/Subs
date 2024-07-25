@@ -518,7 +518,7 @@ namespace Subs.Data
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.Connection = myTransaction.Connection;
                 Command.Transaction = myTransaction;
-                Command.CommandText = "dbo.[MIMS.LedgerData.Update]";
+                Command.CommandText = "dbo.[MIMS.LedgerData.WriteOffMoney]";
 
                 Command.Parameters.Add("@PayerId", SqlDbType.Int);
                 Command.Parameters.Add("@Operation", SqlDbType.Int);
@@ -526,7 +526,6 @@ namespace Subs.Data
                 Command.Parameters.Add("@Value", SqlDbType.Decimal);
                 Command.Parameters.Add("@Explanation", SqlDbType.NVarChar, 200);
                 Command.Parameters.Add("@InvoiceId", SqlDbType.NVarChar, 80);
-                Command.Parameters.Add("@DateFrom", SqlDbType.DateTime);
 
                 Command.Parameters["@PayerId"].Value = myRecord.CustomerId;
                 Command.Parameters["@Operation"].Value = Operation.WriteOffMoney;
@@ -534,7 +533,7 @@ namespace Subs.Data
                 Command.Parameters["@Value"].Value = -myRecord.Amount;
                 Command.Parameters["@Explanation"].Value = myRecord.Explanation;
                 Command.Parameters["@InvoiceId"].Value = myRecord.InvoiceId;
-                Command.Parameters["@DateFrom"].Value = System.DateTime.Now;
+
 
                 //Command.ExecuteNonQuery();
                 int? Result = (int?)Command.ExecuteScalar();

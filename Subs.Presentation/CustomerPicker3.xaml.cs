@@ -2666,42 +2666,42 @@ namespace Subs.Presentation
                 decimal lOriginalBalance = gCurrentCustomer.Balance;
                 decimal lOriginalDue = gCurrentCustomer.Due;
                 decimal lOriginalLiability = gCurrentCustomer.Liability;
-                //decimal lNewBalance = gCurrentCustomer.CalculateBalanceByInvoice(lInvoice.InvoiceId);
 
                 try
                 {
                     // Change the checkpoint on a provisional basis
 
                     gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
-                    gCurrentCustomer.Update();
+                    gCurrentCustomer.Update(); // Assuming that this will include acceptchanges.
 
-                    if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M && Math.Abs(gCurrentCustomer.Liability - lOriginalLiability) < 1M)
-                    {
+
+                    //if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M && Math.Abs(gCurrentCustomer.Liability - lOriginalLiability) < 1M)
+                    //{
                         LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lOriginalBalance);
-                        SetCurrentCustomer(gCurrentCustomer.CustomerId);
-                        SelectCurrentCustomer();
                         GoToStatement();  //Refresh the displayed statement
                         MessageBox.Show("Checkpoints successfully changed changed to " + gCurrentCustomer.BalanceInvoiceId.ToString());
-                    }
-                    else
-                    {
-                        // Restore to the previous BalanceInvoiceId
-                        gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
-                        gCurrentCustomer.Balance = lOriginalBalance;
-                        gCurrentCustomer.Update();
-                        string lComment = "Checkpoint change proposal failed. No changes made to database. First do some writeoffs or refunds. \r\n"
-                            + "Proposed due= " + gCurrentCustomer.Due.ToString("#0.000000")
-                            + " Original due= " + lOriginalDue.ToString("#0.000000") + "\r\n"
-                            + "Proposed liability = " + gCurrentCustomer.Liability.ToString("#0.000000")
-                            + " Original liability= " + lOriginalLiability.ToString("#0.000000");
+                    //}
+                    //else
+                    //{
+                    //    // Restore to the previous BalanceInvoiceId
+                    //    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
+                    //    gCurrentCustomer.Balance = lOriginalBalance;
+                    //    gCurrentCustomer.Update();
+                    //    string lComment = "Checkpoint change proposal failed. No changes made to database. First do some writeoffs or refunds. \r\n"
+                    //        + "Proposed due= " + gCurrentCustomer.Due.ToString("#0.000000")
+                    //        + " Original due= " + lOriginalDue.ToString("#0.000000") + "\r\n"
+                    //        + "Proposed liability = " + gCurrentCustomer.Liability.ToString("#0.000000")
+                    //        + " Original liability= " + lOriginalLiability.ToString("#0.000000");
 
-                        ExceptionData.WriteException(1, "Difference in final values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCurrentCustomer.CustomerId.ToString() + " "
-                            + lComment
-                            );
+                    //    MessageBox.Show(lComment);
 
-                        return;
-                    }
-                  }
+                    //    ExceptionData.WriteException(1, "Difference in final values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCurrentCustomer.CustomerId.ToString() + " "
+                    //        + lComment
+                    //        );
+
+                    //    return;
+                    //}
+                }
                 catch (Exception InnerException)
                 {
                     gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
@@ -2709,7 +2709,7 @@ namespace Subs.Presentation
                     gCurrentCustomer.Update();
                     throw InnerException;
                 }
-                
+
                 return;
             }
             catch (Exception ex)
@@ -2737,7 +2737,7 @@ namespace Subs.Presentation
 
         #endregion
 
-      
+
     }
 }
 

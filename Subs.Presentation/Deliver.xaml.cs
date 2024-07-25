@@ -59,7 +59,7 @@ namespace Subs.Presentation
             public string ToAdress3;
             public string ToSuburb;
             public string BuildingComplex;
-            public string ToPostalCodde;
+            public string ToPostalCode;
             public string AccountNumber2;
             public decimal Price;
             public string City;
@@ -878,7 +878,7 @@ namespace Subs.Presentation
                         lNewDeliveryItem.City = lDeliveryAddressData.City;
                         lNewDeliveryItem.Province = lDeliveryAddressData.Province;
 
-                        lNewDeliveryItem.ToPostalCodde = lDeliveryAddressData.PostCode;
+                        lNewDeliveryItem.ToPostalCode = lDeliveryAddressData.PostCode;
                         lNewDeliveryItem.Country = lDeliveryAddressData.CountryName;
 
                         lNewDeliveryItem.Cell = lCustomerData.CellPhoneNumber;

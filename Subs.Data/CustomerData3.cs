@@ -58,8 +58,6 @@ namespace Subs.Data
         private List<InvoiceAndPayment> gInvoiceAllocations = new List<InvoiceAndPayment>();
         private List<InvoiceAndPayment> gAllInvoiceAndPayment = new List<InvoiceAndPayment>();
   
-
-  
         #endregion
 
         #region Constructors
@@ -1805,7 +1803,7 @@ namespace Subs.Data
         {
             get
             {
-                return Deliverable - Due;
+                  return Deliverable - Due;
             }
         }
 
@@ -1842,7 +1840,8 @@ namespace Subs.Data
             {
                 try
                 {
-                    return (decimal)gCustomerAdapter.DueSum(CustomerId);
+                    decimal lDue = (decimal)gCustomerAdapter.DueSum(CustomerId);
+                    return lDue;
                 }
                 catch (Exception Ex)
                 {

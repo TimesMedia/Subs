@@ -174,7 +174,7 @@
                     </StackPanel>
                     <DatePicker x:Name="PaymentDatePicker"></DatePicker>
                     <Label VerticalAlignment="Center">Amount:</Label>
-                    <TextBox x:Name="textPaymentLeft" VerticalAlignment="Center" Width="60"
+                    <TextBox x:Name="textPaymentLeft" VerticalAlignment="Center" Width="80"
                                 Text="{Binding Path=PaymentAmount, Converter={StaticResource lRandConverter}, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                     <Label Name="comboMethod" VerticalAlignment="Center" Content="Payment method" ></Label>
 
