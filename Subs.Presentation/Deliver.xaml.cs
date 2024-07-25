@@ -58,6 +58,7 @@ namespace Subs.Presentation
             public string ToAdress2; 
             public string ToAdress3;
             public string ToSuburb;
+            public string BuildingComplex;
             public string ToPostalCodde;
             public string AccountNumber2;
             public decimal Price;
@@ -858,20 +859,20 @@ namespace Subs.Presentation
 
                         DeliveryAddressData2 lDeliveryAddressData = new DeliveryAddressData2(lRow.DeliveryAddressId);
 
-                        //if (lDeliveryAddressData.Building != "")
-                        //{
-                        //    lNewDeliveryItem.BuildingComplex = "Building: " + lDeliveryAddressData.Building;
-                        //    if (lDeliveryAddressData.FloorNo != "")
-                        //    {
-                        //        lNewDeliveryItem.BuildingComplex = lNewDeliveryItem.BuildingComplex + " Floor: " + lDeliveryAddressData.FloorNo;
-                        //        if (lDeliveryAddressData.Room != "")
-                        //        {
-                        //            lNewDeliveryItem.BuildingComplex = lNewDeliveryItem.BuildingComplex + " Room: " + lDeliveryAddressData.Room;
-                        //        }
-                        //    };
-                        //}
+                            if (lDeliveryAddressData.Building != "")
+                            {
+                                lNewDeliveryItem.BuildingComplex = "Building: " + lDeliveryAddressData.Building;
+                                if (lDeliveryAddressData.FloorNo != "")
+                                {
+                                    lNewDeliveryItem.BuildingComplex = lNewDeliveryItem.BuildingComplex + " Floor: " + lDeliveryAddressData.FloorNo;
+                                    if (lDeliveryAddressData.Room != "")
+                                    {
+                                        lNewDeliveryItem.BuildingComplex = lNewDeliveryItem.BuildingComplex + " Room: " + lDeliveryAddressData.Room;
+                                    }
+                                };
+                            }
 
-                        lNewDeliveryItem.ToAdress1 = lDeliveryAddressData.StreetNo + " " + lDeliveryAddressData.Street + " " + lDeliveryAddressData.StreetExtension
+                            lNewDeliveryItem.ToAdress1 = lDeliveryAddressData.StreetNo + " " + lDeliveryAddressData.Street + " " + lDeliveryAddressData.StreetExtension
                                                                             + " " + lDeliveryAddressData.StreetSuffix;
                         lNewDeliveryItem.ToSuburb = lDeliveryAddressData.Suburb;
                         lNewDeliveryItem.City = lDeliveryAddressData.City;
