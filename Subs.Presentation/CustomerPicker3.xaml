@@ -458,6 +458,7 @@
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Use this as a new checkpoint" Click="Click_Checkpoint" />
+                            <MenuItem Header="Archive" Click="Click_Archive" />
                         </ContextMenu>
                     </DataGrid.ContextMenu>
 

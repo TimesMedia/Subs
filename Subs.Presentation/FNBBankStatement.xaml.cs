@@ -756,7 +756,19 @@ namespace Subs.Presentation
                 lRow.Message = "Internal transfer";
             }
         }
-    
+
+        private void MarkAsPaymentForAnotherBankAccount_Click(object sender, RoutedEventArgs e)
+        {
+            if (Settings.Authority >= 2)
+            {
+                DataRowView lRowView = (DataRowView)gCollectionViewSource.View.CurrentItem;
+                PaymentDoc.FNBBankStatementRow lRow = (PaymentDoc.FNBBankStatementRow)lRowView.Row;
+                lRow.PaymentState = (int)PaymentData.PaymentState.PaymentForAnotherBankAccount;
+                lRow.Message = "PaymentForAnotherBankAccount";
+            }
+        }
+
+
         private void MarkAsMultiplePayer_Click(object sender, RoutedEventArgs e)
         {
             if (Settings.Authority >= 2)
@@ -837,9 +849,10 @@ namespace Subs.Presentation
             }
         }
 
+
+
         #endregion
 
-
-
+     
     }
 }

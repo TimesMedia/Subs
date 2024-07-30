@@ -108,7 +108,7 @@
                     <MenuItem Header="Find customer by Statement" Click="FindCustomerByStatement_Click" />
                     <MenuItem Header="Mark as incorrectly deposited" Click="MarkAsIncorrectlyDeposited_Click" />
                     <MenuItem Header="Mark as internal transfer" Click="MarkAsInternalTransfer_Click"/>
-                    <MenuItem Header="Mark as transfer between banks" Click="MarkAsInternalTransfer_Click"/>
+                    <MenuItem Header="Mark as payment for another bank account" Click="MarkAsPaymentForAnotherBankAccount_Click"/>
                     <MenuItem Header="Mark as multiple payers" Click="MarkAsMultiplePayer_Click"/>
                     <MenuItem Header="Mark as debitorders" Click="MarkAsDebitOrder_Click"/>
                     <MenuItem Header="Mark as bank fees" Click="MarkAsBankFees_Click"/>

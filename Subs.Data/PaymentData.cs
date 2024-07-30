@@ -86,7 +86,8 @@ namespace Subs.Data
             BouncedPayment = 9,
             IncorrectlyDeposited = 10,
             Reversable = 11,
-            Overridden = 12
+            Overridden = 12,
+            PaymentForAnotherBankAccount = 13
         }
 
 

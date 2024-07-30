@@ -998,18 +998,15 @@ namespace Subs.Presentation
                     
                     int lCustomerId = lInvoiceList[0].PayerId;
                     CustomerData3 lCustomerData = new CustomerData3(lCustomerId);
-                    if (lCustomerData.BalanceInvoiceId == 0)
+                    if (lCustomerData.BalanceInvoiceId == null)
                     {
+                        // This is a dormant customer - so start from scratch
                         lCustomerData.BalanceInvoiceId = lInvoiceList[0].InvoiceId;
                         lCustomerData.Balance = 0.0M;
-                        lCustomerData.Update();
                     }
+                        
+                    lCustomerData.Update();
                 }
-
-
-
-
-
             }
             catch (Exception ex)
             {

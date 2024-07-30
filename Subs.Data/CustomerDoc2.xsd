@@ -505,7 +505,7 @@ SELECT CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.BalanceInvoiceTransactionId]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="BalanceInvoiceTransactionId" Modifier="Public" Name="BalanceInvoiceTransactionId" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy8" UserSourceName="BalanceInvoiceTransactionId">
+              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.BalanceInvoiceTransactionId]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="BalanceInvoiceTransactionId" Modifier="Public" Name="BalanceInvoiceTransactionId" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="BalanceInvoiceTransactionId">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.[MIMS.CustomerDoc.BalanceInvoiceTransactionId]</CommandText>
@@ -516,7 +516,7 @@ SELECT CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.Deliverable]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="Deliverable" Modifier="Public" Name="Deliverable" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="Deliverable">
+              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.Deliverable]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="Deliverable" Modifier="Public" Name="Deliverable" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="Deliverable">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.[MIMS.CustomerDoc.Deliverable]</CommandText>
@@ -527,7 +527,7 @@ SELECT CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerData.Destroy]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="Destroy" Modifier="Public" Name="Destroy" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="Destroy">
+              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerData.Destroy]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="Destroy" Modifier="Public" Name="Destroy" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="Destroy">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.[MIMS.CustomerData.Destroy]</CommandText>
@@ -538,7 +538,7 @@ SELECT CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.DueSum]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="DueSum" Modifier="Public" Name="DueSum" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="DueSum">
+              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.DueSum]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="DueSum" Modifier="Public" Name="DueSum" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy4" UserSourceName="DueSum">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.[MIMS.CustomerDoc.DueSum]</CommandText>
@@ -549,7 +549,7 @@ SELECT CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.Customer.Exists]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="Exists" Modifier="Public" Name="Exists" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy4" UserSourceName="Exists">
+              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.Customer.Exists]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="Exists" Modifier="Public" Name="Exists" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy5" UserSourceName="Exists">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.[MIMS.CustomerDoc.Customer.Exists]</CommandText>
@@ -560,7 +560,7 @@ SELECT CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.Customer.FillById]" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="FillById" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillById" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy5" UserSourceName="FillById">
+              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.Customer.FillById]" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="FillById" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillById" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy6" UserSourceName="FillById">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.[MIMS.CustomerDoc.Customer.FillById]</CommandText>
@@ -573,7 +573,7 @@ SELECT CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerData.GetPreviousCheckpoint]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="GetPreviousCheckpoint" Modifier="Public" Name="GetPreviousCheckpoint" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy6" UserSourceName="GetPreviousCheckpoint">
+              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerData.GetPreviousCheckpoint]" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="GetPreviousCheckpoint" Modifier="Public" Name="GetPreviousCheckpoint" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy7" UserSourceName="GetPreviousCheckpoint">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.[MIMS.CustomerData.GetPreviousCheckpoint]</CommandText>
@@ -584,7 +584,7 @@ SELECT CustomerId, Password1, TitleId, Initials, FirstName, Surname, NationalId1
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.Customer.Like]" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Like" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="Like" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy7" UserSourceName="Like">
+              <DbSource ConnectionRef="MIMS3ConnectionString (Settings)" DbObjectName="MIMS3.dbo.[MIMS.CustomerDoc.Customer.Like]" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Like" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="Like" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy8" UserSourceName="Like">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.[MIMS.CustomerDoc.Customer.Like]</CommandText>

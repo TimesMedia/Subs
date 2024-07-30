@@ -2604,16 +2604,21 @@ namespace Subs.Presentation
         {
             try
             {
-                // Save the current
-                int lCurrentBalanceInvoiceId = gCurrentCustomer.BalanceInvoiceId;
-                decimal lOriginalBalance = gCurrentCustomer.Balance;
+                if (!gCurrentCustomer.BalanceInvoiceId.HasValue)
+                {
+                    MessageBox.Show("This is a dormant customer. The only way to assign a checkpoint to it is to create an invoice on it.");
+                    return;
+                }
 
+                // Save the current
+                int lCurrentBalanceInvoiceId = (int)gCurrentCustomer.BalanceInvoiceId;
+                decimal lOriginalBalance = gCurrentCustomer.Balance;
 
                 try
                 {
                     gCurrentCustomer.BalanceInvoiceId = gCurrentCustomer.PreviousCheckpoint;
                     gCurrentCustomer.Update();
-                    LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, gCurrentCustomer.BalanceInvoiceId, lCurrentBalanceInvoiceId, lOriginalBalance);
+                    LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, (int)gCurrentCustomer.BalanceInvoiceId, lCurrentBalanceInvoiceId, lOriginalBalance);
 
                     // Select the customer again.
 
@@ -2651,6 +2656,7 @@ namespace Subs.Presentation
 
         private void Click_Checkpoint(object sender, RoutedEventArgs e)
         {
+            int lOriginalBalanceInvoiceId;
             try
             {
                 this.Cursor = Cursors.Wait;
@@ -2661,15 +2667,33 @@ namespace Subs.Presentation
                     return;
                 }
 
+                if (lInvoice.InvoiceId == CustomerData3.GetLastInvoiceId(gCurrentCustomer.CustomerId))
+                {
+
+                    MessageBox.Show("Since this is the last invoice, it cannot be set as a checkpoint. Consider archiving.");
+                    return;
+                }
+
                 // Save originals
-                int lOriginalBalanceInvoiceId = gCurrentCustomer.BalanceInvoiceId;
+                if (gCurrentCustomer.BalanceInvoiceId.HasValue)
+                {
+                    // This is a dormant that has received an invoice
+                    lOriginalBalanceInvoiceId = (int)gCurrentCustomer.BalanceInvoiceId;
+
+                }
+                else
+                {
+                    // This is a dormant that has received an invoice
+                    lOriginalBalanceInvoiceId = (int)Math.Pow(2,31);
+                }
+
                 decimal lOriginalBalance = gCurrentCustomer.Balance;
                 decimal lOriginalDue = gCurrentCustomer.Due;
                 decimal lOriginalLiability = gCurrentCustomer.Liability;
 
                 try
                 {
-                    // Change the checkpoint on a provisional basis
+                    // Change the checkpoint
 
                     gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
                     gCurrentCustomer.Update(); // Assuming that this will include acceptchanges.
@@ -2701,6 +2725,81 @@ namespace Subs.Presentation
 
                     //    return;
                     //}
+                }
+                catch (Exception InnerException)
+                {
+                    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
+                    gCurrentCustomer.Balance = lOriginalBalance;
+                    gCurrentCustomer.Update();
+                    throw InnerException;
+                }
+
+                return;
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Click_Checkpoint", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show("Error in Click_Checkpoint " + ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Arrow;
+            }
+
+        }
+
+
+        private void Click_Archive(object sender, RoutedEventArgs e)
+        {
+            int lOriginalBalanceInvoiceId;
+            try
+            {
+                this.Cursor = Cursors.Wait;
+                InvoiceAndPayment lInvoice = (InvoiceAndPayment)gDueViewSource.View.CurrentItem;
+                if (lInvoice.OperationId != (int)Operation.VATInvoice)
+                {
+                    MessageBox.Show("Sorry, I respond only to invoice lines");
+                    return;
+                }
+
+                // Save originals
+                if (gCurrentCustomer.BalanceInvoiceId.HasValue)
+                {
+                    // This is a dormant that has received an invoice
+                    lOriginalBalanceInvoiceId = (int)gCurrentCustomer.BalanceInvoiceId;
+
+                }
+                else
+                {
+                    // This is a dormant that has received an invoice
+                    lOriginalBalanceInvoiceId = (int)Math.Pow(2, 31);
+                }
+
+                decimal lOriginalBalance = gCurrentCustomer.Balance;
+                decimal lOriginalDue = gCurrentCustomer.Due;
+                decimal lOriginalLiability = gCurrentCustomer.Liability;
+
+                try
+                {
+                    // Change the checkpoint
+
+                    gCurrentCustomer.BalanceInvoiceId = null;
+                    gCurrentCustomer.Due = 0;
+                    gCurrentCustomer.Update(); // Assuming that this will include acceptchanges.
+
+                    LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, 0, lOriginalBalanceInvoiceId, lOriginalBalance);
+                    GoToStatement();  //Refresh the displayed statement
+                    MessageBox.Show("Customer successfully archived");
                 }
                 catch (Exception InnerException)
                 {

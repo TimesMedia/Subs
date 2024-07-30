@@ -83,7 +83,8 @@ namespace Subs.Data
             myRow.CellPhoneNumber = "000000000";
             myRow.Reserved = 0;
             myRow.Correspondence2 = 1;
-            myRow.CheckpointDateInvoice = DateTime.Parse("2017/06/01");
+            myRow.CheckpointDateInvoice = DateTime.Now;  //DateTime.Parse("2017/06/01");
+            myRow.BalanceInvoiceId = 0;
             myRow.AutomaticPaymentAllocation = true;
             myRow.Marketing = true;
             myRow.SetPhysicalAddressIdNull();
@@ -1860,6 +1861,11 @@ namespace Subs.Data
                 }
 
             }
+            set
+            {
+                    gTable[0].Due = value;
+            }
+
         }
 
         public int PreviousCheckpoint
@@ -2213,24 +2219,31 @@ namespace Subs.Data
         }
 
 
-        public int BalanceInvoiceId
+        public int? BalanceInvoiceId
         {
             get
             {
                 if (gTable[0].IsBalanceInvoiceIdNull())
                 {
-                    return 0;
+                    // This is a dormant customer
+                    return null;
                 }
-                else 
+                else
                 { 
-                
-                return gTable[0].BalanceInvoiceId;
-                } 
+                    return gTable[0].BalanceInvoiceId;
+                }
             }
 
             set
-            { 
-                gTable[0].BalanceInvoiceId = value;
+            {
+                if (!value.HasValue)
+                {
+                    gTable[0].SetBalanceInvoiceIdNull();
+                }
+                else
+                { 
+                    gTable[0].BalanceInvoiceId = (int)value;
+                }
                 NotifyPropertyChanged("BalanceInvoiceId");
             }
         }
@@ -2983,6 +2996,54 @@ namespace Subs.Data
                 throw ex;
             }
         }
+
+
+
+        public static int GetLastInvoiceId(int pPayerId)
+        {
+            try
+            {
+                SqlConnection lConnection = new SqlConnection();
+                SqlCommand Command = new SqlCommand();
+                SqlDataAdapter Adaptor = new SqlDataAdapter();
+                lConnection.ConnectionString = Settings.ConnectionString;
+                lConnection.Open();
+                Command.Connection = lConnection;
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = "[dbo].[MIMS.CustomerData.GetLastInvoiceId]";
+
+                SqlParameter lParameter2 = Command.CreateParameter();
+                lParameter2.ParameterName = "@PayerId";
+                lParameter2.DbType = DbType.Int32;
+                lParameter2.Value = pPayerId;
+                Command.Parameters.Add(lParameter2);
+
+                SqlDataReader lReader = Command.ExecuteReader();
+                if (!lReader.HasRows)
+                {
+                    return 0;
+                }
+
+                lReader.Read();
+                return (lReader.GetInt32(0));
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomersData", "GetLastPayment", pPayerId.ToString());
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
+            }
+        }
+
 
         public static (DateTime CheckpointDatePayment, DateTime CheckpointDateInvoice) CalculateCheckpoint(int pInvoiceId)
         {

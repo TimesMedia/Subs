@@ -149,23 +149,6 @@ namespace Subs.Business
         {
             pTransactionId = 0;
 
-            //CustomerData3 lCustomerData = new CustomerData3(pRecord.CustomerId);
-            //DateTime lFirstPaymentDate; 
-
-
-            //if (lCustomerData.BalanceInvoice == 0)
-            //{
-            //    lFirstPaymentDate = lCustomerData.CheckpointDateInvoice;
-            //}
-            //else
-            //{
-            //    lFirstPaymentDate = FirstInvoiceDate;
-            //}
-
-
-
-
-
             if (LedgerData.DuplicatePayment(pRecord.CustomerId, pRecord.Reference, pRecord.Amount) > 0)
             {
                 return "Duplicate payment not allowed";
@@ -179,20 +162,12 @@ namespace Subs.Business
 
             try
             {
-
                 if (pRecord.Amount < 0)
                 {
                     // This is a bogus payment
                     lTransaction.Rollback("Pay");
                     return "What kind of payment is this? I accept only positive numbers.";
                 }
-
-                //// Update the liability on the payer
-                //if (!CustomerData3.AddToLiability(ref lTransaction, pRecord.CustomerId, pRecord.Amount))
-                //{
-                //    lTransaction.Rollback("Pay");
-                //    return "Error in updating liability";
-                //}
 
                 pTransactionId = LedgerData.Pay(ref lTransaction, pRecord);
 
