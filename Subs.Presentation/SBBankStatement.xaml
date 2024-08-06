@@ -103,7 +103,7 @@
                     <MenuItem Header="Mark as multiple payers" Click="MarkAsMultiplePayer_Click"/>
                     <MenuItem Header="Mark as debitorders" Click="MarkAsDebitOrder_Click"/>
                     <MenuItem Header="Mark as bank fees" Click="MarkAsBankFees_Click"/>
-                    <MenuItem Header="Mark as reversible payment" Click="MarkAsBounced_Click"/>
+                    <MenuItem Header="Mark as reversible payment" Click="MarkAsReversible_Click"/>
                     <MenuItem Header="Mark as incorrectly deposited" Click="MarkAsIncorrectlyDeposited_Click"/>
                     <MenuItem Header="Subset a multiple payment" Click="AddAPayer_Click"/>
                     <MenuItem Header="Mark as posted" Click="MarkAsPosted_Click"/>

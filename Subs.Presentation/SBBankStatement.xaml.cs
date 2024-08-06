@@ -351,17 +351,12 @@ namespace Subs.Presentation
 
         private bool ValidatePayment(ref PaymentData.PaymentRecord PaymentRecord, out string ErrorMessage)
         {
-
+            CustomerBiz.PaymentValidationResult lValidationResult = new CustomerBiz.PaymentValidationResult();
             ErrorMessage = "OK";
 
             try
             {
-                // Validate the rest of the stuff
-
-                CustomerBiz.PaymentValidationResult lValidationResult = new CustomerBiz.PaymentValidationResult();
-
-
-                {
+                 {
                     string lResult;
 
                     if ((lResult = CustomerBiz.ValidatePayment(ref PaymentRecord, ref lValidationResult, ref ErrorMessage)) != "OK")
@@ -410,7 +405,7 @@ namespace Subs.Presentation
                     }
 
                     if (lRow.PaymentState == (int)PaymentData.PaymentState.AllocatedToPayer
-                        || lRow.PaymentState == (int)PaymentData.PaymentState.BouncedPayment
+                        //|| lRow.PaymentState == (int)PaymentData.PaymentState.Reversable
                         || lRow.PaymentState == (int)PaymentData.PaymentState.Debitorders
                         || lRow.PaymentState == (int)PaymentData.PaymentState.TransferBetweenBanks
                         || lRow.PaymentState == (int)PaymentData.PaymentState.BankCharges)
@@ -448,7 +443,7 @@ namespace Subs.Presentation
                     {
                         lRow.PaymentState = (int)PaymentData.PaymentState.Postable;
                     }
-
+ 
                 } // End of for loop
 
                 // Write the stuff to disk
@@ -501,7 +496,7 @@ namespace Subs.Presentation
 
                     // See what is eligible for posting
 
-                    if (lBankStatementRow.PaymentState == (int)PaymentData.PaymentState.AllocatedToPayer || lBankStatementRow.PaymentState == (int)PaymentData.PaymentState.BouncedPayment)
+                    if (lBankStatementRow.PaymentState == (int)PaymentData.PaymentState.AllocatedToPayer)
                     {
                         // This  has already been posted
                         continue;
@@ -510,40 +505,40 @@ namespace Subs.Presentation
 
                     // Bounced
 
-                    if (lBankStatementRow.PaymentState == (int)PaymentData.PaymentState.Reversable)
-                    {
-                        CustomerData3 lCustomerData = new CustomerData3(lBankStatementRow.CustomerId);
+                    //if (lBankStatementRow.PaymentState == (int)PaymentData.PaymentState.Reversable)
+                    //{
+                    //    CustomerData3 lCustomerData = new CustomerData3(lBankStatementRow.CustomerId);
 
-                        // Find the PaymentTransactionId
+                    //    // Find the PaymentTransactionId
 
-                        Subs.Data.PaymentDocTableAdapters.DebitOrderBankStatementTableAdapter lStatementAdapter = new Subs.Data.PaymentDocTableAdapters.DebitOrderBankStatementTableAdapter();
-                        lStatementAdapter.AttachConnection();
-                        int lPaymentTransactionId = (int)lStatementAdapter.GetPaymentTransactionId(lBankStatementRow.CustomerId, -lBankStatementRow.Amount, lBankStatementRow.TransactionDate);
+                    //    Subs.Data.PaymentDocTableAdapters.DebitOrderBankStatementTableAdapter lStatementAdapter = new Subs.Data.PaymentDocTableAdapters.DebitOrderBankStatementTableAdapter();
+                    //    lStatementAdapter.AttachConnection();
+                    //    int lPaymentTransactionId = (int)lStatementAdapter.GetPaymentTransactionId(lBankStatementRow.CustomerId, -lBankStatementRow.Amount, lBankStatementRow.TransactionDate);
 
-                        if (lPaymentTransactionId == 0)
-                        {
-                            lBankStatementRow.Message = "I could not find the payment transactionid to be bounced.";
-                            continue;
-                        }
+                    //    if (lPaymentTransactionId == 0)
+                    //    {
+                    //        lBankStatementRow.Message = "I could not find the payment transactionid of the right amount to be bounced.";
+                    //        continue;
+                    //    }
 
-                        int lReverseTransactionId = 0;
+                    //    int lReverseTransactionId = 0;
 
-                        {
-                            string lResult;
-                            if ((lResult = CustomerBiz.ReversePayment(lCustomerData, lPaymentTransactionId, lBankStatementRow.Amount, "Debitorder bounced", out lReverseTransactionId)) != "OK")
-                            {
-                                lBankStatementRow.Message = lResult;
-                                continue;
-                            }
-                            else
-                            {
-                                lBankStatementRow.Message = "";
-                                lBankStatementRow.PaymentTransactionId = lReverseTransactionId;
-                                lBankStatementRow.PaymentState = (int)PaymentData.PaymentState.AllocatedToPayer;
-                                lSubmitted++;
-                            }
-                        }
-                    }
+                    //    {
+                    //        string lResult;
+                    //        if ((lResult = CustomerBiz.ReversePayment(lCustomerData, lPaymentTransactionId, lBankStatementRow.Amount, "Debitorder bounced", out lReverseTransactionId)) != "OK")
+                    //        {
+                    //            lBankStatementRow.Message = lResult;
+                    //            continue;
+                    //        }
+                    //        else
+                    //        {
+                    //            lBankStatementRow.Message = "";
+                    //            lBankStatementRow.PaymentTransactionId = lReverseTransactionId;
+                    //            lBankStatementRow.PaymentState = (int)PaymentData.PaymentState.AllocatedToPayer;
+                    //            lSubmitted++;
+                    //        }
+                    //    }
+                    //}
 
 
                     // Postable
@@ -585,11 +580,11 @@ namespace Subs.Presentation
                             MessageBox.Show(lResult3);
                             return;
                         }
-                    } // End of foreach loop
+                    }
+                        gBankStatementAdapter.Update(lBankStatementRow);
 
-                    gBankStatementAdapter.Update(lBankStatementRow);
-                    MessageBox.Show("I have submitted " + lSubmitted.ToString() + " payments or reversals");
-                }
+                } // End of foreach loop
+                MessageBox.Show("I have posted " + lSubmitted.ToString() + " payments");
             }
 
             catch (Exception ex)
@@ -871,13 +866,13 @@ namespace Subs.Presentation
             }
         }
 
-        private void MarkAsBounced_Click(object sender, RoutedEventArgs e)
+        private void MarkAsReversible_Click(object sender, RoutedEventArgs e)
         {
             if (Settings.Authority >= 2)
             {
                 DataRowView lRowView = (DataRowView)gSBBankStatementViewSource.View.CurrentItem;
                 PaymentDoc.SBBankStatementRow lRow = (PaymentDoc.SBBankStatementRow)lRowView.Row;
-                lRow.Message = "";
+                lRow.Message = "This payment will automatically be reversed when you post.";
                 lRow.PaymentState = (int)PaymentData.PaymentState.Reversable;
             }
         }

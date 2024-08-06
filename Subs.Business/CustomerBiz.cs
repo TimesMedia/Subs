@@ -70,8 +70,8 @@ namespace Subs.Business
 
                 if (pRecord.Amount < 0)
                 {
-                    pErrorMessage = "If this is a bounced payment, please mark it as such. ";
-                    pResult = PaymentValidationResult.NegativeNumber;
+                    pErrorMessage = "This is a negative value. Possible bounce.";
+                    pResult = PaymentValidationResult.NegativeNumber; // Not used at the moment.
                     return "OK";
                 }
 

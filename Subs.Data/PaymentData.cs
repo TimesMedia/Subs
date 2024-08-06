@@ -83,7 +83,7 @@ namespace Subs.Data
             ApplicableToMultiplePayers = 6,
             Debitorders = 7,
             BankCharges = 8,
-            BouncedPayment = 9,
+            //BouncedPayment = 9,
             IncorrectlyDeposited = 10,
             Reversable = 11,
             Overridden = 12,
