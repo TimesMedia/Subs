@@ -13,6 +13,17 @@ using System.Text.RegularExpressions;
 
 namespace Subs.Data
 {
+    public class Discrepancy
+    {
+        public int CustomerId { get; set; }
+        public string FirstName { get; set; }
+        public string Surname { get; set; }
+        public decimal Due { get; set; }
+        public decimal Liable { get; set; }
+    }
+
+
+
     public class InvoiceAndPayment
     {
         public int TransactionId {get; set;}
@@ -702,12 +713,6 @@ namespace Subs.Data
                 throw ex;
             }
         }
-
-
-
-
-
-
 
         public decimal CalculateBalanceByInvoice(int pInvoiceId)
         {
@@ -2507,7 +2512,76 @@ namespace Subs.Data
 
         #region Direct static queries on the data
 
- 
+        public static List<Discrepancy> GetDiscrepancy(int pAbsoluteValue)
+        {
+            SqlConnection lConnection = new SqlConnection();
+            int lCurrentCustomerId = 0;
+            try
+            {
+                List<Discrepancy> lDiscrepancies = new List<Discrepancy>();
+                
+                SqlCommand Command = new SqlCommand();
+                SqlDataAdapter Adaptor = new SqlDataAdapter();
+                lConnection.ConnectionString = Settings.ConnectionString;
+                lConnection.Open();
+                Command.Connection = lConnection;
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = "[dbo].[MIMS.CustomerData.GetDiscrepancy]";
+
+                Command.Parameters.Add("@AbsoluteValue", SqlDbType.Int);
+                Command.Parameters["@AbsoluteValue"].Value = pAbsoluteValue;
+
+                SqlDataReader lReader = Command.ExecuteReader();
+
+                while (lReader.Read())
+                {
+                    Discrepancy lDiscrepancy = new Discrepancy();
+                    lDiscrepancy.CustomerId = lReader.GetInt32(0);
+                    lCurrentCustomerId = lDiscrepancy.CustomerId;
+                    lDiscrepancy.FirstName = lReader.GetString(1);
+                    lDiscrepancy.Surname= lReader.GetString(2);
+                    lDiscrepancy.Due = lReader.GetDecimal(3);
+                    lDiscrepancy.Liable = lReader.GetDecimal(4);
+                    lDiscrepancies.Add(lDiscrepancy);
+                }
+
+                return lDiscrepancies;
+                   
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomersData", "GetDiscrepancy", "Customer = " + lCurrentCustomerId.ToString());
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
+            }
+            finally
+            {
+                if (lConnection.State != ConnectionState.Closed)
+                {
+                    lConnection.Close();
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
         public string CalculateLiability2(ref List<LiabilityRecord> pLiabilityList, ref decimal pLiability)
         {
             try

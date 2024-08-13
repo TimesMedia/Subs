@@ -94,14 +94,13 @@ namespace Subs.Presentation
         private readonly System.Windows.Data.CollectionViewSource gInvoiceAndPaymentViewSource;
         private System.Windows.Data.CollectionViewSource gPaymentViewSource = new CollectionViewSource();
         private System.Windows.Data.CollectionViewSource gInvoiceViewSource = new CollectionViewSource();
-        private readonly System.Windows.Data.CollectionViewSource gTooMuchTooLittleViewSource;
+        private readonly System.Windows.Data.CollectionViewSource gDiscrepancyViewSource;
         private readonly System.Windows.Data.CollectionViewSource gLiabilityRecordsViewSource;
         private readonly System.Windows.Data.CollectionViewSource gDueViewSource;
 
         private readonly System.Windows.Data.CollectionViewSource gSubscriptionsViewSource;
 
         private int gConsolidateCustomerSource = 0;
-        private int gHits = 0;
         public CustomerPickerViewModel gCustomerPickerViewModel = new CustomerPickerViewModel();
 
         private readonly Dictionary<int, string> gPaymentMethodDictionary = new Dictionary<int, string>();
@@ -118,6 +117,8 @@ namespace Subs.Presentation
         //private List<Subs.Data.InvoicesAndPayments> gPayment = new List<InvoicesAndPayments>();
 
 
+
+        private List<Discrepancy> gDiscrepancy = new List<Discrepancy>();  
         private List<Subs.Data.InvoiceAndPayment> gInvoiceAndPaymentCopy = new List<InvoiceAndPayment>();
         private List<Subs.Data.InvoiceAndPayment> gInvoiceAndPayment2 = new List<InvoiceAndPayment>();
         private List<Subs.Data.InvoiceAndPayment> gInvoice2 = new List<InvoiceAndPayment>();
@@ -165,7 +166,7 @@ namespace Subs.Presentation
 
 
             gSubscriptionsViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["SubscriptionsViewSource"];
-            gTooMuchTooLittleViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["TooMuchTooLittleViewSource"];
+            gDiscrepancyViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["DiscrepancyViewSource"];
             gLiabilityRecordsViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["LiabilityRecordsViewSource"];
             gDueViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["DueViewSource"];
 
@@ -2386,42 +2387,29 @@ namespace Subs.Presentation
 
 
 
-        #region Over paid delivered tab
+        #region Over paid and over delivered tab
 
-        private void buttonPaidTooMuch_Click(object sender, RoutedEventArgs e)
+       
+        private void buttonDiscrepancy_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (!Functions.IsDecimal(this.textOverPaid.Text))
+                if (!Functions.IsInteger(this.textAbsoluteValue.Text))
                 {
-                    MessageBox.Show("Sorry, this has to be a decimal number.");
+                    MessageBox.Show("Sorry, this has to be an integer number.");
                     return;
                 }
 
-                decimal lAbsoluteValue = Convert.ToDecimal(this.textOverPaid.Text);
+                int lAbsoluteValue = Convert.ToInt32(this.textAbsoluteValue.Text);
 
                 if (lAbsoluteValue < 0)
                 {
                     MessageBox.Show("Sorry, this has to be a positive number.");
                     return;
                 }
+        
 
-
-                // OK do the job
-
-                CustomerDoc2 lCustomerDoc = new CustomerDoc2();
-
-                Subs.Data.CustomerDoc2TableAdapters.DiscrepanciesTableAdapter lDiscrepancyAdapter = new Subs.Data.CustomerDoc2TableAdapters.DiscrepanciesTableAdapter();
-                lDiscrepancyAdapter.AttachConnection();
-
-                lDiscrepancyAdapter.FillBy(lCustomerDoc.Discrepancies, lAbsoluteValue, "Creditor");
-
-                OverDeliveredDataGrid.Visibility = Visibility.Hidden;
-                PaidTooMuchDataGrid.Visibility = Visibility.Visible;
-
-                gTooMuchTooLittleViewSource.Source = lCustomerDoc.Discrepancies;
-
-                //MessageBox.Show("Written to " + FileName.ToString());
+               gDiscrepancyViewSource.Source = CustomerData3.GetDiscrepancy(lAbsoluteValue);
 
             }
             catch (Exception ex)
@@ -2433,7 +2421,7 @@ namespace Subs.Presentation
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonPaidTooMuch_Click", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonDiscrepancy_Click", "");
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
@@ -2443,94 +2431,100 @@ namespace Subs.Presentation
 
         }
 
-        private void buttonOverDelivered_Click(object sender, RoutedEventArgs e)
+        //private void buttonOverDelivered_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //    try
+        //    {
+        //        if (!Functions.IsDecimal(this.textOverDelivered.Text))
+        //        {
+        //            MessageBox.Show("Sorry, this has to be a decimal number.");
+        //            return;
+        //        }
+
+        //        decimal lAbsoluteValue = Convert.ToDecimal(this.textOverDelivered.Text);
+
+        //        if (lAbsoluteValue < 0)
+        //        {
+        //            MessageBox.Show("Sorry, this has to be a positive number.");
+        //            return;
+        //        }
+
+        //        // OK do the job
+
+        //        CustomerDoc2 lCustomerDoc = new CustomerDoc2();
+
+        //        Subs.Data.CustomerDoc2TableAdapters.DiscrepanciesTableAdapter lDiscrepancyAdapter = new Subs.Data.CustomerDoc2TableAdapters.DiscrepanciesTableAdapter();
+        //        lDiscrepancyAdapter.AttachConnection();
+
+        //        lDiscrepancyAdapter.FillBy(lCustomerDoc.Discrepancies, lAbsoluteValue, "Debtor");
+
+        //        PaidTooMuchDataGrid.Visibility = Visibility.Hidden;
+        //        OverDeliveredDataGrid.Visibility = Visibility.Visible;
+
+
+        //        foreach (CustomerDoc2.DiscrepanciesRow lRow in lCustomerDoc.Discrepancies)
+        //        {
+        //            lRow.Liability = -lRow.Liability;
+        //        }
+
+
+        //        gTooMuchTooLittleViewSource.Source = lCustomerDoc.Discrepancies;
+        //        // MessageBox.Show("Written to " + FileName.ToString());
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
+
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonOverDelivered_Click", "");
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
+
+        //        MessageBox.Show(ex.Message);
+        //    }
+
+
+        //}
+
+        private void Discrepancy_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
-            try
-            {
-                if (!Functions.IsDecimal(this.textOverDelivered.Text))
-                {
-                    MessageBox.Show("Sorry, this has to be a decimal number.");
-                    return;
-                }
-
-                decimal lAbsoluteValue = Convert.ToDecimal(this.textOverDelivered.Text);
-
-                if (lAbsoluteValue < 0)
-                {
-                    MessageBox.Show("Sorry, this has to be a positive number.");
-                    return;
-                }
-
-                // OK do the job
-
-                CustomerDoc2 lCustomerDoc = new CustomerDoc2();
-
-                Subs.Data.CustomerDoc2TableAdapters.DiscrepanciesTableAdapter lDiscrepancyAdapter = new Subs.Data.CustomerDoc2TableAdapters.DiscrepanciesTableAdapter();
-                lDiscrepancyAdapter.AttachConnection();
-
-                lDiscrepancyAdapter.FillBy(lCustomerDoc.Discrepancies, lAbsoluteValue, "Debtor");
-
-                PaidTooMuchDataGrid.Visibility = Visibility.Hidden;
-                OverDeliveredDataGrid.Visibility = Visibility.Visible;
+            DiscrepancySelect();
+            //gCurrentCustomer = (CustomerData3)gCollectionViewSourceCustomer.View.CurrentItem;
+            //Settings.CurrentCustomerId = gCurrentCustomer.CustomerId;
 
 
-                foreach (CustomerDoc2.DiscrepanciesRow lRow in lCustomerDoc.Discrepancies)
-                {
-                    lRow.Liability = -lRow.Liability;
-                }
-
-
-                gTooMuchTooLittleViewSource.Source = lCustomerDoc.Discrepancies;
-                // MessageBox.Show("Written to " + FileName.ToString());
-
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
-
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonOverDelivered_Click", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
-
-                MessageBox.Show(ex.Message);
-            }
-
-
+            //SelectCurrentCustomer();
+            //GoToStatement();
         }
 
-        private void OverPaidDelivered_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+
+        private void Discrepancy_Statement_Click(object sender, RoutedEventArgs e)
         {
-            OverPaidDeliveredSelect();
-            SelectCurrentCustomer();
-            GoToStatement();
+            DiscrepancySelect();
+            //SelectCurrentCustomer();
+            //GoToStatement();
         }
 
-        private void OverPaidDeliveredSelect()
+
+
+        private void DiscrepancySelect()
         {
             try
             {
-                DataRowView lRowView = (DataRowView)gTooMuchTooLittleViewSource.View.CurrentItem;
-                CustomerDoc2.DiscrepanciesRow lRow = (CustomerDoc2.DiscrepanciesRow)lRowView.Row;
-                if (lRow == null) return;
-
-                gHits = gCustomerAdapter.FillById(gCustomer, "CustomerId", (int)lRow.CustomerId, "");
-
-                // At this point, one search should have been done.
-
-                if (gHits == 0)
+                Discrepancy lDiscrepancy = (Discrepancy)gDiscrepancyViewSource.View.CurrentItem;
+                if (!SetCurrentCustomer(lDiscrepancy.CustomerId))
                 {
                     MessageBox.Show("No customer found");
                     return;
                 }
-
-                gCollectionViewSourceCustomer.Source = gCustomer;
-                gCollectionViewSourceCustomer.View.MoveCurrentToFirst();
+   
+                GoToStatement();
             }
 
             catch (Exception ex)
@@ -2542,24 +2536,14 @@ namespace Subs.Presentation
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "DebtorCreditorSelect", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "DiscrepancySelectSelect", "");
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
-                MessageBox.Show("Error in DebtorCreditorSelect " + ex.Message);
+                MessageBox.Show("Error in DiscrepancySelectSelect " + ex.Message);
             }
 
         }
-
-        private void Click_TooMuchTooLittleInvoice(object sender, RoutedEventArgs e)
-        {
-            OverPaidDeliveredSelect();
-            SelectCurrentCustomer();
-            GoToStatement();
-        }
-
-
-
 
         #endregion
 
@@ -2834,9 +2818,11 @@ namespace Subs.Presentation
         }
 
 
+
+
         #endregion
 
-
+     
     }
 }
 
