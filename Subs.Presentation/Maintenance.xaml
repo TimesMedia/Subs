@@ -147,15 +147,15 @@
                     </StackPanel>
                 </GroupBox>-->
 
-                <GroupBox Header="Miscelaneous" Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Blue" BorderThickness="2">
+                <!--<GroupBox Header="Miscelaneous" Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Blue" BorderThickness="2">
                     <StackPanel Orientation="Horizontal">
-                        <Button x:Name="buttonLiability" Content="Liability audit" HorizontalAlignment="Left"  Padding="3" Margin="5"
-                        Click="buttonLiabilities_Click" Tag="AuthorityHighest" Loaded="SetVisibility"/>
+                        --><!--<Button x:Name="buttonLiability" Content="Liability audit" HorizontalAlignment="Left"  Padding="3" Margin="5"
+                        Click="buttonLiabilities_Click" Tag="AuthorityHighest" Loaded="SetVisibility"/>-->
                         <!--<Button x:Name="buttonFindInNvalidCheckpoints" Content="FindInvalidCheckpoints" HorizontalAlignment="Left"  Padding="3" Margin="5"
-                        Click="buttonFindInvalidCheckpoints" Tag="AuthorityHighest" Loaded="SetVisibility"/>-->
+                        Click="buttonFindInvalidCheckpoints" Tag="AuthorityHighest" Loaded="SetVisibility"/>--><!--
 
                     </StackPanel>
-                </GroupBox>
+                </GroupBox>-->
 
 
             </Grid>

@@ -105,10 +105,13 @@
                         <DataGridTextColumn x:Name="countryNameColumn" Binding="{Binding CountryName}" Header="Country Name"  />
                         <DataGridTextColumn x:Name="phoneNumberColumn" Binding="{Binding PhoneNumber}" Header="Phone Number"  />
                         <DataGridTextColumn x:Name="cellPhoneNumberColumn" Binding="{Binding CellPhoneNumber}" Header="Cell Phone Number"  />
-                        <DataGridTextColumn x:Name="liabilityColumn" Binding="{Binding Liability, StringFormat={}{0: ### ### ##0.00}}" 
+                        <DataGridTextColumn x:Name="deliverableColumn" Binding="{Binding Deliverable, StringFormat={}{0: ### ### ##0.00}}" 
                                                     CellStyle="{StaticResource AlignRight}" Header="Liability"  />
                         <DataGridTextColumn x:Name="dueColumn" Binding="{Binding Due, StringFormat={}{0:### ### ##0.00}}" 
                                                     CellStyle="{StaticResource AlignRight}" Header="Due"  />
+                        <DataGridTextColumn x:Name="deliverableMinusDueColumn" Binding="{Binding DeliverableMinusDue, StringFormat={}{0: ### ### ##0.00}}" 
+                                                    CellStyle="{StaticResource AlignRight}" Header="DeliverableMinusDue"  />
+
                         <DataGridTextColumn x:Name="emailAddressColumn" Binding="{Binding EmailAddress}" Header="Email Address"  />
                         <DataGridTextColumn x:Name="companyNameColumn" Binding="{Binding CompanyName}" Header="Company Name" />
                         <DataGridTextColumn Binding="{Binding CheckpointDatePayment,Converter={StaticResource lDateConverter}}" Header="CPPaymentDate" />
@@ -359,18 +362,25 @@
 
         <TabItem Header="Over payments and deliveries"  TabIndex="3" Height="23" VerticalAlignment="Bottom">
             <Grid>
-               
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="65*"/>
+                    <ColumnDefinition Width="1251*"/>
+                </Grid.ColumnDefinitions>
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal">   
-                <Button Content="Calculate discrepancies"  Click="buttonDiscrepancy_Click"  Height="40" VerticalAlignment="Center" Margin="5" Padding="5"/>
-                <Label  Content="In excess of" Height="28" x:Name="label2"  Margin="10" />
-                <TextBox x:Name="textAbsoluteValue"  Height="23" Width="120" TextAlignment="Right" HorizontalAlignment="Left" Margin="0,9,0,8" Text="1000"/>
-            </StackPanel>
-            <DataGrid x:Name="DiscrepancyDataGrid" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False" RowHeight="30" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch"
-                          ItemsSource="{Binding Source={StaticResource DiscrepancyViewSource}}" MouseDoubleClick="Discrepancy_MouseDoubleClick">
+                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                    <Button Content="Calculate discrepancies"  Click="buttonDiscrepancy_Click"  Height="40" VerticalAlignment="Center" Margin="5" Padding="5"/>
+                    <Label  Content="In excess of" Height="28" x:Name="label2"  Margin="10" />
+                    <TextBox x:Name="textAbsoluteValue"  Height="23" Width="120" TextAlignment="Right" HorizontalAlignment="Left" Margin="0,9,0,8" Text="10000"/>
+                    <Button Content="Select over Payments"  Click="buttonOverPayments_Click"  Height="40" VerticalAlignment="Center" Margin="5" Padding="5"/>
+                    <Button Content="Select over deliveries"  Click="buttonOverDeliveries_Click"  Height="40" VerticalAlignment="Center" Margin="5" Padding="5"/>
+
+                </StackPanel>
+                <DataGrid x:Name="DiscrepancyDataGrid" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False" RowHeight="30" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch"
+                          ItemsSource="{Binding Source={StaticResource DiscrepancyViewSource}}" MouseDoubleClick="Discrepancy_MouseDoubleClick" Grid.ColumnSpan="2">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding CustomerId}" Header="Customer"  Width="Auto"/>
                         <DataGridTextColumn Binding="{Binding FirstName}" Header="FirstName"  Width="Auto" />
@@ -379,8 +389,9 @@
                         <DataGridTextColumn Binding="{Binding Due,Converter={StaticResource lRandConverter}}" 
                                                     CellStyle="{StaticResource AlignRight}" Header="Over payment"  Width="Auto"/>
 
-                        <DataGridTextColumn Binding="{Binding Liable,Converter={StaticResource lRandConverter}}" 
+                        <DataGridTextColumn Binding="{Binding DeliverableMinusDue,Converter={StaticResource lRandConverter}}" 
                                                     CellStyle="{StaticResource AlignRight}" Header="Over delivery"  Width="Auto"/>
+                        <DataGridTextColumn Binding="{Binding LastActivity,Converter={StaticResource lDateConverter}}" Header="LastActivity" />
 
                     </DataGrid.Columns>
                     <DataGrid.ContextMenu>

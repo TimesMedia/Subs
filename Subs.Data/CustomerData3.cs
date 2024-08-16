@@ -19,7 +19,8 @@ namespace Subs.Data
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public decimal Due { get; set; }
-        public decimal Liable { get; set; }
+        public decimal DeliverableMinusDue { get; set; }
+        public DateTime LastActivity { get; set; }
     }
 
 
@@ -1805,7 +1806,7 @@ namespace Subs.Data
             }
         }
 
-        public decimal Liability
+        public decimal DeliverableMinusDue
         {
             get
             {
@@ -2541,7 +2542,8 @@ namespace Subs.Data
                     lDiscrepancy.FirstName = lReader.GetString(1);
                     lDiscrepancy.Surname= lReader.GetString(2);
                     lDiscrepancy.Due = lReader.GetDecimal(3);
-                    lDiscrepancy.Liable = lReader.GetDecimal(4);
+                    lDiscrepancy.DeliverableMinusDue = lReader.GetDecimal(4);
+                    lDiscrepancy.LastActivity = lReader.GetDateTime(5);
                     lDiscrepancies.Add(lDiscrepancy);
                 }
 

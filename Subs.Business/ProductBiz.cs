@@ -65,7 +65,7 @@ namespace Subs.Business
                         localCustomerData = new CustomerData3(lRow.Payer);
 
                         CurrentPayer = lRow.Payer;
-                        CurrentLiability = localCustomerData.Liability;
+                        CurrentLiability = localCustomerData.DeliverableMinusDue;
                     }
 
                     // Check to see if there is an InvoiceNumber
@@ -392,7 +392,7 @@ namespace Subs.Business
                         localCustomerData = new CustomerData3(lRow.PayerId);
 
                         CurrentPayer = lRow.PayerId;
-                        CurrentLiability = localCustomerData.Liability;
+                        CurrentLiability = localCustomerData.DeliverableMinusDue;
                     }
 
                     // Check to see if there is an InvoiceNumber
@@ -611,7 +611,7 @@ namespace Subs.Business
                     return "OK";
                 }
 
-                decimal lRemainingLiability = lCustomer.Liability;
+                decimal lRemainingLiability = lCustomer.DeliverableMinusDue;
   
                 foreach (var lItem in lData)
                 {

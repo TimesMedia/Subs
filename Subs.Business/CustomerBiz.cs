@@ -512,12 +512,12 @@ namespace Subs.Business
 
             try
             {
-                if (pCustomerData.Liability > 1)
+                if (pCustomerData.DeliverableMinusDue > 1)
                 {
                     return "You cannot cancel a customer while we owe him money!";
                 }
 
-                if (pCustomerData.Liability < -1)
+                if (pCustomerData.DeliverableMinusDue < -1)
                 {
                     return "You cannot cancel a customer while he owes us money!";
                 }

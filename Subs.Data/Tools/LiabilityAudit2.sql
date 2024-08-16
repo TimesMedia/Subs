@@ -30,11 +30,40 @@ into #Revertable
 from  #Dangers as a left outer join Transactions as b on a.CustomerId = b.PayerId
 where operation = 26
 
-update Customer
+select distinct PayerId, b.Due
+from Transactions as a inner join Customer as b on a.PayerId = b.CustomerId
+where operation = 2
+and a.datefrom > '2024/08/01'
+and b.BalanceInvoiceId is null
+
+-- Customer with potentially wrong deliveries
+Update Customer
 set BalanceInvoiceId = 0
-from Customer as a inner join #Dangers as b on a.CustomerId = b.CustomerId
+where CustomerId in (
+5499,
+116682,
+118690,
+5874,
+8980,
+121086)
+
+
+    select *
+	from Customer
+	where (due > 1000
+	or Liable > 1000)
+	and BalanceInvoiceId is not null
+	order by CustomerId
 
 
 
 
+exec [dbo].[MIMS.CustomerData.GetDiscrepancy] 1000
+
+select CustomerId, isnull(FirstName, 'NoName'), 
+	                   isnull(Surname, 'NoSurname'), Due, Liable
+	from Customer
+	where due < - @AbsoluteValue
+	or Liable < - @AbsoluteValue
+	order by CustomerId
 

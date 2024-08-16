@@ -116,8 +116,6 @@ namespace Subs.Presentation
         //private List<Subs.Data.InvoicesAndPayments> gInvoice = new List<InvoicesAndPayments>();
         //private List<Subs.Data.InvoicesAndPayments> gPayment = new List<InvoicesAndPayments>();
 
-
-
         private List<Discrepancy> gDiscrepancy = new List<Discrepancy>();  
         private List<Subs.Data.InvoiceAndPayment> gInvoiceAndPaymentCopy = new List<InvoiceAndPayment>();
         private List<Subs.Data.InvoiceAndPayment> gInvoiceAndPayment2 = new List<InvoiceAndPayment>();
@@ -2392,6 +2390,7 @@ namespace Subs.Presentation
        
         private void buttonDiscrepancy_Click(object sender, RoutedEventArgs e)
         {
+            this.Cursor = Cursors.Wait;
             try
             {
                 if (!Functions.IsInteger(this.textAbsoluteValue.Text))
@@ -2408,8 +2407,9 @@ namespace Subs.Presentation
                     return;
                 }
         
-
-               gDiscrepancyViewSource.Source = CustomerData3.GetDiscrepancy(lAbsoluteValue);
+               gDiscrepancy = CustomerData3.GetDiscrepancy(lAbsoluteValue);
+               
+               MessageBox.Show("I found " + gDiscrepancy.Count.ToString() + " discrepancies"); 
 
             }
             catch (Exception ex)
@@ -2427,8 +2427,93 @@ namespace Subs.Presentation
 
                 MessageBox.Show(ex.Message);
             }
+            finally 
+            {
+                this.Cursor = Cursors.Arrow;
+            }
+
+        }
 
 
+
+        private void buttonOverPayments_Click(object sender, RoutedEventArgs e)
+        {
+            this.Cursor = Cursors.Wait;
+            try 
+            { 
+                List<Discrepancy> lDiscrepancySelection = new List<Discrepancy>();
+
+                lDiscrepancySelection = gDiscrepancy.Where(p => p.Due < -1).ToList();
+
+                foreach (Discrepancy item in lDiscrepancySelection)
+                {
+                    item.Due = -item.Due;
+                    item.DeliverableMinusDue = 0.0M;
+                }
+
+                gDiscrepancyViewSource.Source = lDiscrepancySelection;
+
+                MessageBox.Show("I found " + lDiscrepancySelection.Count.ToString() + " over payments");
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonOverpayments_Click", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Arrow;
+            }
+        }
+
+        private void buttonOverDeliveries_Click(object sender, RoutedEventArgs e)
+        {
+            this.Cursor = Cursors.Wait;
+            try
+            {
+                List<Discrepancy> lDiscrepancySelection = new List<Discrepancy>();
+
+                lDiscrepancySelection = gDiscrepancy.Where(p => p.DeliverableMinusDue < -1).ToList();
+
+                foreach (Discrepancy item in lDiscrepancySelection)
+                {
+                    item.DeliverableMinusDue = -item.DeliverableMinusDue;
+                    item.Due = 0.0M;
+                }
+
+                gDiscrepancyViewSource.Source = lDiscrepancySelection;
+
+                MessageBox.Show("I found " + lDiscrepancySelection.Count.ToString() + " over deliveries");
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonOverDeliveries_Click", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Arrow;
+            }
         }
 
         //private void buttonOverDelivered_Click(object sender, RoutedEventArgs e)
@@ -2673,7 +2758,7 @@ namespace Subs.Presentation
 
                 decimal lOriginalBalance = gCurrentCustomer.Balance;
                 decimal lOriginalDue = gCurrentCustomer.Due;
-                decimal lOriginalLiability = gCurrentCustomer.Liability;
+                decimal lOriginalLiability = gCurrentCustomer.DeliverableMinusDue;
 
                 try
                 {
@@ -2771,7 +2856,7 @@ namespace Subs.Presentation
 
                 decimal lOriginalBalance = gCurrentCustomer.Balance;
                 decimal lOriginalDue = gCurrentCustomer.Due;
-                decimal lOriginalLiability = gCurrentCustomer.Liability;
+                decimal lOriginalLiability = gCurrentCustomer.DeliverableMinusDue;
 
                 try
                 {
@@ -2817,12 +2902,8 @@ namespace Subs.Presentation
 
         }
 
-
-
-
         #endregion
 
-     
     }
 }
 

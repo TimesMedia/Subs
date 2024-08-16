@@ -1325,93 +1325,93 @@ namespace Subs.Presentation
         #endregion
 
         #region Miscellaneous
-        private void buttonLiabilities_Click(object sender, RoutedEventArgs e)
-        {
-            CustomerDoc2.LiabilityDataTable lLiabilityTable = new CustomerDoc2.LiabilityDataTable();
-            Subs.Data.CustomerDoc2TableAdapters.LiabilityTableAdapter lLiabilityAdapter = new Subs.Data.CustomerDoc2TableAdapters.LiabilityTableAdapter();
-            int lCurrentPayer = 0;
-            int lCounter = 0;
-            try
-            {
-                this.Cursor = Cursors.Wait;
+        //private void buttonLiabilities_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CustomerDoc2.LiabilityDataTable lLiabilityTable = new CustomerDoc2.LiabilityDataTable();
+        //    Subs.Data.CustomerDoc2TableAdapters.LiabilityTableAdapter lLiabilityAdapter = new Subs.Data.CustomerDoc2TableAdapters.LiabilityTableAdapter();
+        //    int lCurrentPayer = 0;
+        //    int lCounter = 0;
+        //    try
+        //    {
+        //        this.Cursor = Cursors.Wait;
 
-                ExceptionData.WriteException(5, "Liability job started on  " + DateTime.Now.ToString(), this.ToString(), "buttonLiabilities_Click", "");
+        //        ExceptionData.WriteException(5, "Liability job started on  " + DateTime.Now.ToString(), this.ToString(), "buttonLiabilities_Click", "");
 
-                lLiabilityAdapter.AttachConnection();
-                lLiabilityAdapter.Fill(lLiabilityTable);
-
-
-                foreach (CustomerDoc2.LiabilityRow lRow in lLiabilityTable)
-                {
-                    lCounter++;
-                    lCurrentPayer = lRow.PayerId;
-
-                    List<LiabilityRecord> lLiabilityRecords = new List<LiabilityRecord>();
-                    decimal lJournalLiability = 0;
-                    CustomerData3 lCustomerData = new CustomerData3(lRow.PayerId);
+        //        lLiabilityAdapter.AttachConnection();
+        //        lLiabilityAdapter.Fill(lLiabilityTable);
 
 
+        //        foreach (CustomerDoc2.LiabilityRow lRow in lLiabilityTable)
+        //        {
+        //            lCounter++;
+        //            lCurrentPayer = lRow.PayerId;
+
+        //            List<LiabilityRecord> lLiabilityRecords = new List<LiabilityRecord>();
+        //            decimal lJournalLiability = 0;
+        //            CustomerData3 lCustomerData = new CustomerData3(lRow.PayerId);
 
 
-                    {
-                        string lResult;
+
+
+        //            {
+        //                string lResult;
 
   
 
-                        if ((lResult = lCustomerData.CalculateLiability2(ref lLiabilityRecords, ref lJournalLiability)) != "OK")
-                        {
-                            if (lResult.Contains("Nothing"))
-                            {
-                                lRow.JournalLiability = 0M;
-                                lRow.Datum = DateTime.Now;
-                                goto Record;
-                            }
-                            else
-                            {
-                                MessageBox.Show(lResult);
-                                return;
-                            }
-                        }
-                    }
+        //                if ((lResult = lCustomerData.CalculateLiability2(ref lLiabilityRecords, ref lJournalLiability)) != "OK")
+        //                {
+        //                    if (lResult.Contains("Nothing"))
+        //                    {
+        //                        lRow.JournalLiability = 0M;
+        //                        lRow.Datum = DateTime.Now;
+        //                        goto Record;
+        //                    }
+        //                    else
+        //                    {
+        //                        MessageBox.Show(lResult);
+        //                        return;
+        //                    }
+        //                }
+        //            }
 
-                    lRow.CustomerLiability = lCustomerData.Liability;
-                    lRow.JournalLiability = lJournalLiability;
-                    lRow.Datum = DateTime.Now;
+        //            lRow.CustomerLiability = lCustomerData.DeliverableMinusDue;
+        //            lRow.JournalLiability = lJournalLiability;
+        //            lRow.Datum = DateTime.Now;
 
-                    Record:
-                    lLiabilityAdapter.Update(lRow);
+        //            Record:
+        //            lLiabilityAdapter.Update(lRow);
 
-                    if (lCounter % 100 == 0)
-                    {
-                        ExceptionData.WriteException(5, "Liability job progressed on  " + DateTime.Now.ToString(), this.ToString(), "buttonLiabilities_Click", "Counter= " + lCounter.ToString());
-                    }
-                }
+        //            if (lCounter % 100 == 0)
+        //            {
+        //                ExceptionData.WriteException(5, "Liability job progressed on  " + DateTime.Now.ToString(), this.ToString(), "buttonLiabilities_Click", "Counter= " + lCounter.ToString());
+        //            }
+        //        }
 
-                ExceptionData.WriteException(5, "Liability job finished on  " + DateTime.Now.ToString(), this.ToString(), "buttonLiabilities_Click", "Counter= " + lCounter.ToString());
-                MessageBox.Show("Done!");
-            }
+        //        ExceptionData.WriteException(5, "Liability job finished on  " + DateTime.Now.ToString(), this.ToString(), "buttonLiabilities_Click", "Counter= " + lCounter.ToString());
+        //        MessageBox.Show("Done!");
+        //    }
 
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonLiabilities_Click",
-                        "PayerId = " + lCurrentPayer.ToString());
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonLiabilities_Click",
+        //                "PayerId = " + lCurrentPayer.ToString());
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
 
-            }
-            finally
-            {
-                this.Cursor = Cursors.Arrow;
-            }
-        }
+        //    }
+        //    finally
+        //    {
+        //        this.Cursor = Cursors.Arrow;
+        //    }
+        //}
 
 
         //private void buttonFindInvalidCheckpoints(object sender, RoutedEventArgs e)

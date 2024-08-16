@@ -18,89 +18,89 @@ namespace Subs.Data
 
 namespace Subs.Data.CustomerDoc2TableAdapters
 {
-    public partial class DiscrepanciesTableAdapter
-    {
-        private readonly SqlConnection lConnection = new SqlConnection();
+    //public partial class DiscrepanciesTableAdapter
+    //{
+    //    private readonly SqlConnection lConnection = new SqlConnection();
 
-        public bool AttachConnection()
-        {
-            try
-            {
-                // Set the connectionString for this object
+    //    public bool AttachConnection()
+    //    {
+    //        try
+    //        {
+    //            // Set the connectionString for this object
 
-                lConnection.ConnectionString = Settings.ConnectionString;
+    //            lConnection.ConnectionString = Settings.ConnectionString;
 
 
-                // Replace the designer's connection with yor own one.
-                foreach (SqlCommand myCommand in CommandCollection)
-                {
-                    myCommand.Connection = lConnection;
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+    //            // Replace the designer's connection with yor own one.
+    //            foreach (SqlCommand myCommand in CommandCollection)
+    //            {
+    //                myCommand.Connection = lConnection;
+    //            }
+    //            return true;
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "AttachConnection", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+    //            Exception CurrentException = ex;
+    //            int ExceptionLevel = 0;
+    //            do
+    //            {
+    //                ExceptionLevel++;
+    //                ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "AttachConnection", "");
+    //                CurrentException = CurrentException.InnerException;
+    //            } while (CurrentException != null);
 
-                return false;
-            }
-        }
-    }
+    //            return false;
+    //        }
+    //    }
+    //}
 
   
 
 
-    public partial class LiabilityTableAdapter
-    {
-        private readonly SqlConnection lConnection = new SqlConnection();
+    //public partial class LiabilityTableAdapter
+    //{
+    //    private readonly SqlConnection lConnection = new SqlConnection();
 
-        public bool AttachConnection()
-        {
-            try
-            {
-                // Set the connectionString for this object
+    //    public bool AttachConnection()
+    //    {
+    //        try
+    //        {
+    //            // Set the connectionString for this object
 
-                lConnection.ConnectionString = Settings.ConnectionString;
+    //            lConnection.ConnectionString = Settings.ConnectionString;
 
 
-                // Replace the designer's connection with yor own one.
-                foreach (SqlCommand myCommand in CommandCollection)
-                {
-                    myCommand.Connection = lConnection;
-                }
+    //            // Replace the designer's connection with yor own one.
+    //            foreach (SqlCommand myCommand in CommandCollection)
+    //            {
+    //                myCommand.Connection = lConnection;
+    //            }
 
-                this.Adapter.UpdateCommand.Connection = lConnection;
-                this.Adapter.InsertCommand.Connection = lConnection;
-                this.Adapter.DeleteCommand.Connection = lConnection;
+    //            this.Adapter.UpdateCommand.Connection = lConnection;
+    //            this.Adapter.InsertCommand.Connection = lConnection;
+    //            this.Adapter.DeleteCommand.Connection = lConnection;
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+    //            return true;
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "AttachConnection", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+    //            Exception CurrentException = ex;
+    //            int ExceptionLevel = 0;
+    //            do
+    //            {
+    //                ExceptionLevel++;
+    //                ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "AttachConnection", "");
+    //                CurrentException = CurrentException.InnerException;
+    //            } while (CurrentException != null);
 
-                return false;
-            }
-        }
-    }
+    //            return false;
+    //        }
+    //    }
+    //}
 
     public partial class Comment2TableAdapter
     {
