@@ -209,6 +209,7 @@ namespace Subs.Data
         AllocatePaymentToInvoice = 32,
         Statement = 33, 
         PayU = 34
+
     }
 
     public enum ReturnAction

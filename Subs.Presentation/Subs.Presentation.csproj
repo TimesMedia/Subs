@@ -31,7 +31,7 @@
     <ProductName>Mims subscription</ProductName>
     <PublisherName>ARENA</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>567</ApplicationRevision>
+    <ApplicationRevision>570</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

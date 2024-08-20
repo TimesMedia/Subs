@@ -378,6 +378,8 @@ namespace Subs.Business
 
         public static bool ReverseDelivery(ref SqlTransaction myTransaction, int SubscriptionId, int IssueId, int UnitsReturned, int MaxUnits)
         {
+            // This function updates the SubscriptionIssueTable
+
             try
             {
                 SubscriptionDoc3.SubscriptionIssueDataTable lTable = new SubscriptionDoc3.SubscriptionIssueDataTable();

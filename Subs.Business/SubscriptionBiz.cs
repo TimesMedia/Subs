@@ -1138,14 +1138,7 @@ namespace Subs.Business
 
             try
             {
-                //// Update the Liability
-                //decimal Money = UnitsToReturn * pSubscriptionData.UnitPrice;
-                //if (!CustomerData3.AddToLiability(ref lTransaction, pSubscriptionData.PayerId, Money))
-                //{
-                //    throw new WarningException("CustomerData.UpdateLiability failed.");
-                //}
-
-                // Update the subscriptionissue
+                 // Update the subscriptionissue
 
                 if (pSubscriptionData.Status != SubStatus.Cancelled)
                 {
@@ -1155,7 +1148,7 @@ namespace Subs.Business
                     }
 
                 }
-
+             
                 // Resume if expired
 
                 if (pSubscriptionData.Status == SubStatus.Expired)

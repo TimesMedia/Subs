@@ -60,9 +60,9 @@
                     			Click="buttonSearchEmail_Click"/>
                         <Button Grid.Column="1" Content="Search by Invoice" Height="22" x:Name="buttonSearchInvoice" Width="147" Canvas.Left="197" Canvas.Top="112"
                     			Click="buttonSearchInvoice_Click"/>
-                        <Button Grid.Column="1" Content="Search by dormant" Height="22" x:Name="SearchByDormant" Width="163" Canvas.Left="376" 
+                        <!--<Button Grid.Column="1" Content="Search by fossils" Height="22" x:Name="SearchByDormant" Width="163" Canvas.Left="376" 
                                     Canvas.Top="63"
-                    			    Click="buttonSearchByDormant"/>
+                    			    Click="buttonSearchByDormant"/>-->
                         <Button Grid.Column="1" Content="Load from existing list" Height="22" x:Name="buttonLoad" Width="163" Canvas.Left="376" 
                                     Canvas.Top="112"
                     			Click="buttonLoad_Click"/>
@@ -364,14 +364,15 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="65*"/>
-                    <ColumnDefinition Width="1251*"/>
+                    <ColumnDefinition Width="353*"/>
+                    <ColumnDefinition Width="898*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3">
                     <Button Content="Calculate discrepancies"  Click="buttonDiscrepancy_Click"  Height="40" VerticalAlignment="Center" Margin="5" Padding="5"/>
                     <Label  Content="In excess of" Height="28" x:Name="label2"  Margin="10" />
                     <TextBox x:Name="textAbsoluteValue"  Height="23" Width="120" TextAlignment="Right" HorizontalAlignment="Left" Margin="0,9,0,8" Text="10000"/>
@@ -380,7 +381,7 @@
 
                 </StackPanel>
                 <DataGrid x:Name="DiscrepancyDataGrid" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False" RowHeight="30" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch"
-                          ItemsSource="{Binding Source={StaticResource DiscrepancyViewSource}}" MouseDoubleClick="Discrepancy_MouseDoubleClick" Grid.ColumnSpan="2">
+                          ItemsSource="{Binding Source={StaticResource DiscrepancyViewSource}}" MouseDoubleClick="Discrepancy_MouseDoubleClick" Grid.ColumnSpan="3">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding CustomerId}" Header="Customer"  Width="Auto"/>
                         <DataGridTextColumn Binding="{Binding FirstName}" Header="FirstName"  Width="Auto" />
@@ -409,7 +410,8 @@
         <TabItem Header="Due calculation" x:Name="tabDue"  TabIndex="4">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="6*"/>
                     <ColumnDefinition Width="129*"/>
                     <ColumnDefinition Width="519*"/>
                 </Grid.ColumnDefinitions>
@@ -418,12 +420,12 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Button Click="ButtonResetCheckpoint_Click" Margin="180,10,0,10" HorizontalAlignment="Left"   Width="150" Tag="AuthorityHigh" Loaded="SetVisibility" Grid.Column="1" Grid.ColumnSpan="2">Reset Checkpoint</Button>
-                <Button Click="ButtonShowInExcel" Margin="10,10,0,10" HorizontalAlignment="Left"   Width="100" Tag="AuthorityHigh" Loaded="SetVisibility" Grid.ColumnSpan="2">Show in Excel</Button>
+                <Button Click="ButtonResetCheckpoint_Click" Margin="180,10,0,10" HorizontalAlignment="Left"   Width="150" Tag="AuthorityHigh" Loaded="SetVisibility" Grid.Column="2" Grid.ColumnSpan="2">Reset Checkpoint</Button>
+                <Button Click="ButtonShowInExcel" Margin="2,10,0,10" HorizontalAlignment="Left"   Width="100" Tag="AuthorityHigh" Loaded="SetVisibility" Grid.ColumnSpan="2" Grid.Column="1">Show in Excel</Button>
 
                 <DataGrid x:Name="DueDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch" Grid.Row="1"
                                   Margin="0,0,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Left" RowHeight="30"
-                                  MouseDoubleClick="DisplayStatusAndHistory" SelectionUnit="CellOrRowHeader"  SelectionMode="Single" CanUserSortColumns="False" Grid.ColumnSpan="3">
+                                  SelectionUnit="CellOrRowHeader"  SelectionMode="Single" CanUserSortColumns="False" Grid.ColumnSpan="4">
                     <DataGrid.RowHeaderStyle>
                         <Style TargetType="{x:Type DataGridRowHeader}">
                             <Setter Property="Background"  Value="Yellow"/>
@@ -443,12 +445,14 @@
 
                     </DataGrid.Columns>
 
-                    <DataGrid.ContextMenu>
+                    <!--<DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Use this as a new checkpoint" Click="Click_Checkpoint" />
-                            <!--<MenuItem Header="Archive" Click="Click_Archive" />-->
+                            -->
+                    <!--<MenuItem Header="Archive" Click="Click_Archive" />-->
+                    <!--
                         </ContextMenu>
-                    </DataGrid.ContextMenu>
+                    </DataGrid.ContextMenu>-->
 
                 </DataGrid>
             </Grid>

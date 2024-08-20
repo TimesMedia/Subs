@@ -648,49 +648,49 @@ namespace Subs.Presentation
             }
         }
 
-        private void buttonSearchByDormant(object sender, RoutedEventArgs e)
-        {
-            this.Cursor = Cursors.Wait;
+        //private void buttonSearchByDormant(object sender, RoutedEventArgs e)
+        //{
+        //    this.Cursor = Cursors.Wait;
 
-            try
-            {
-                IEnumerable<Customer> lSelectedCustomers = gDataContext.MIMS_DataContext_Customer_Select("DormantCustomer", 0, "").ToList();
+        //    try
+        //    {
+        //        IEnumerable<Customer> lSelectedCustomers = gDataContext.MIMS_DataContext_Customer_Select("DormantCustomer", 0, "").ToList();
 
-                if (lSelectedCustomers.Count() == 0)
-                {
-                    MessageBox.Show("No customer found");
-                    return;
-                }
+        //        if (lSelectedCustomers.Count() == 0)
+        //        {
+        //            MessageBox.Show("No customer found");
+        //            return;
+        //        }
 
-                gCustomers.Clear();
-                foreach (Customer lSelection in lSelectedCustomers)
-                {
-                    CustomerData3 lCustomer = new CustomerData3(lSelection.CustomerId);
-                    gCustomers.Add(lCustomer);
-                }
+        //        gCustomers.Clear();
+        //        foreach (Customer lSelection in lSelectedCustomers)
+        //        {
+        //            CustomerData3 lCustomer = new CustomerData3(lSelection.CustomerId);
+        //            gCustomers.Add(lCustomer);
+        //        }
 
-                MessageBox.Show(lSelectedCustomers.Count() + " customers found");
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //        MessageBox.Show(lSelectedCustomers.Count() + " customers found");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonSearchByDormant", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonSearchByDormant", "");
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-                return;
-            }
-            finally
-            {
-                this.Cursor = Cursors.Arrow;
-            }
-        }
+        //        return;
+        //    }
+        //    finally
+        //    {
+        //        this.Cursor = Cursors.Arrow;
+        //    }
+        //}
 
         private void buttonLoad_Click(object sender, RoutedEventArgs e)
         {
