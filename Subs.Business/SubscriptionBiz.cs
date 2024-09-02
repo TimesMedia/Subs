@@ -378,7 +378,7 @@ namespace Subs.Business
                     return "Failed to update subscription";
                 }
 
-                //Phase 2 or persistence  Write this to the transaction log
+                //Phase 2 of persistence  Write this to the transaction log
                 // If it fails, it will throw an exception.
                 LedgerData.CancelSubscription(ref lTransaction, pSubscriptionData.SubscriptionId, pReason);
 

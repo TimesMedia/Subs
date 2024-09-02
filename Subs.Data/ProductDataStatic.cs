@@ -669,7 +669,7 @@ namespace Subs.Data
             }
         }
 
-        public static int GetSubscriptionMedium(int pIssueId)
+        public static int GetSubscriptionMedium(int pProductId)
         {
             try
             {
@@ -678,7 +678,7 @@ namespace Subs.Data
                     Refresh();
                 }
 
-                ProductDoc.Product2Row lRow = gDoc.Product2.FindByProductId(GetProductId(pIssueId));
+                ProductDoc.Product2Row lRow = gDoc.Product2.FindByProductId(pProductId);
 
                 if (lRow == null)
                 {
@@ -693,7 +693,7 @@ namespace Subs.Data
             {
                 if (ex.InnerException == null)
                 {
-                    ExceptionData.WriteException(1, ex.Message, "static ProductData", "GetSubscriptionMedium", "IssueId = " + pIssueId.ToString());
+                    ExceptionData.WriteException(1, ex.Message, "static ProductData", "GetSubscriptionMedium", "ProductId = " + pProductId.ToString());
                     throw new Exception("static ProductData" + " : " + "GetSubscriptionMedium" + " : ", ex);
                 }
                 else

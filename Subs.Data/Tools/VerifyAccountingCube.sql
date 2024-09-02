@@ -1,5 +1,5 @@
 delete from FactAgeAnalysis
-where Rundate = '2024/08/20'
+where Rundate = '2024/08/21'
 
 select * -- max(AgeAnalysisId)
 from FactAgeAnalysis
@@ -10,6 +10,8 @@ from FactAgeAnalysis
 
 
 exec [dbo].[SUBSDW.EOM]
+
+select *
 
 
 
@@ -28,48 +30,33 @@ order by INvoiceId
 -- Check Debtors
 
 
-drop table #Due
 
-select PayerId, 'Due' = sum(Inc), 'DueStatement' = Max(DueOnRundate)
-into #Due
-from FactAgeAnalysis
-where operationId in (1, 4, 19,22, 23, 24,25)
-and Rundate = '2024/08/20'
-group by PayerId
-order by PayerId
+Select *
+from Transactions
+where operation = 12
+and payerId = 608
+and datefrom between '2022/0301' and '2022/03/01'
+
+
+exec [dbo].[MIMS.CustomerDoc.Due3] 121513
+
+
 
 select *
-from #Due
-where Abs(Due-DueStatement) > 1
-order by PayerId
+from subscription
+where subscriptionId = 236891
+
+select *
+from Transactions
+where operation = 19
+and invoiceid = 84009
 
 
--- Check liability
 
 
-drop table #Liability
-
-select PayerId, 'Liability' = sum(Inc), 'LiabilityStatement' = Max(LiableOnRundate)
-into #Liability
-from FactAgeAnalysis
-where operationId in (2, 12, 27, 19, 22)
-and Rundate = '2024/08/20'
-group by PayerId
-order by PayerId
-
-
-select PayerId, operationId, Inc, LiableOnRundate
-from FactAgeAnalysis
-where operationId in (2, 12, 27, 19, 22)
-and Rundate = '2024/08/20'
-
-
-select *, 'Difference' = Liability-LiabilityStatement
---into #Trouble
-from #Liability
-where Abs(Liability-LiabilityStatement) > 1
-order by PayerId   -- 113
-
+--delete from Transactions
+where transactionid in (2339812,
+2339813)
 
 select *
 from #Trouble
@@ -173,22 +160,70 @@ order by DateFrom
 
 -- INvoices without Subscriptions pointing to them 
 
+drop table #Invoices
+drop table #Subs
+
 select InvoiceId
 into #Invoices
 from Transactions
 where operation = 19
-and datefrom > '2024/01/01'
+
 
 
 select distinct b.InvoiceId
 into #Subs
 from Transactions as a inner join Subscription as b on a.Subscriptionid = b.SubscriptionId
 where operation = 16
+
+
+select *
+from #Invoices
+where InvoiceId not in (select distinct InvoiceId from #Subs)
+order by InvoiceId    ---   thsi does not work
+
+select a.InvoiceId
+into #Phantom
+from #Invoices as a left outer join #Subs as b on a.InvoiceId = b.InvoiceId 
+where b.InvoiceId is null
+order by a.InvoiceId
+
+delete from Transactions
+where operation = 19
+and invoiceid in (Select InvoiceId from #Phantom)
+
+
+select distinct InvoiceId 
+from #Subs
+where invoiceid = 87270
+order by InvoiceId
+
+
+select distinct b.InvoiceId
+from Transactions as a left outer join Subscription as b on a.Subscriptionid = b.SubscriptionId
+where operation = 16
 and datefrom > '2024/01/01'
+and b.SubscriptionId is null
+
+select *
+from Subscription
+where invoiceid = 87270
+
+
+
+
+
+
+
+
+
 
 select *
 from #INvoices
 where InvoiceId not in (select InvoiceId from #Subs)
+
+
+
+
 
 
 

@@ -448,16 +448,15 @@
                     <!--<DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Use this as a new checkpoint" Click="Click_Checkpoint" />
-                            -->
-                    <!--<MenuItem Header="Archive" Click="Click_Archive" />-->
-                    <!--
+                            
+                    <MenuItem Header="Archive" Click="Click_Archive" />
+                    
                         </ContextMenu>
                     </DataGrid.ContextMenu>-->
 
                 </DataGrid>
             </Grid>
         </TabItem>
-
 
         <TabItem Header="XPSViewer" x:Name="tabXps" TabIndex="6" Visibility="Hidden">
             <DocumentViewer x:Name ="DocumentViewer1" Height="Auto" Width="Auto"/>

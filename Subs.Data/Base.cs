@@ -57,16 +57,7 @@ namespace Subs.Data
         BrowserApplication = 6
     }
 
-    //public enum ProductCategory
-    //{
-    //    Prescription = 4,
-    //    Over_the_counter = 7,
-    //    Competitive_sport = 5,
-    //    Treatment_approaches = 2,
-    //    Veterinary_medicines = 3,
-    //    All = 6
-    //}
-
+  
     public enum WebProductClassifications
     {
         All = 1,
@@ -106,15 +97,7 @@ namespace Subs.Data
         UnAssigned = 4
 
     }
-
-    //public enum CustomerStatus
-    //{
-    //    Active = 1,
-    //    Cancelled = 2,
-    //    Dormant = 3, // Not a receiver or payer of any subscriptions
-    //    Unknown = 4
-    //}
-
+    
 
     public enum Title
     {

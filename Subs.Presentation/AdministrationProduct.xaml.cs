@@ -640,17 +640,17 @@ namespace Subs.Presentation
                 {
                     if (lRow.RowState == DataRowState.Added | lRow.RowState == DataRowState.Modified)
                     {
-                        int lSubscriptionMedium = ProductDataStatic.GetSubscriptionMedium(lRow.IssueId);
+                        //int lSubscriptionMedium = ProductDataStatic.GetSubscriptionMedium(lRow.ProductId);
 
-                        if (  lSubscriptionMedium == (int)SubscriptionMedium.Browser ||
-                              lSubscriptionMedium == (int)SubscriptionMedium.PrintAndBrowser)
-                        {
-                            if (lRow.IsEBookURLNull())
-                            {
-                                MessageBox.Show("You need to supply me with an EBookURL");
-                                return false;
-                            }
-                        }       
+                        //if (  lSubscriptionMedium == (int)SubscriptionMedium.Browser ||
+                        //      lSubscriptionMedium == (int)SubscriptionMedium.PrintAndBrowser)
+                        //{
+                        //    if (lRow.IsEBookURLNull())
+                        //    {
+                        //        MessageBox.Show("You need to supply me with an EBookURL");
+                        //        return false;
+                        //    }
+                        //}       This should refer to an ebook, if it is relevant.
 
                         // Enddate should include the hours of the last day.
                         if (lRow.EndDate.Hour == 0)
