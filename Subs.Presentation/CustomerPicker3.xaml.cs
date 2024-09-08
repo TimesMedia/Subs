@@ -454,7 +454,9 @@ namespace Subs.Presentation
 
                 this.Cursor = Cursors.Wait;
 
-                // Select the parameter to search on, and then load that data
+                //create an alternate datagrid for the customers.
+                //Once selected, revert back to normal customer objects used in SearchById.
+
 
                 IEnumerable<int> lSelectedCustomers = CustomerData3.GetCustomerIds("Surname", 0, "%" + lElicit.Answer + "%");
 
@@ -469,7 +471,6 @@ namespace Subs.Presentation
                 {
                     CustomerData3 lCustomer = new CustomerData3(lSelection);
                     gCustomers.Add(lCustomer);
-                   
                 }
 
               }

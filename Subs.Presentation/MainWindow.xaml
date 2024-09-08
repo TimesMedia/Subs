@@ -37,7 +37,7 @@
 
             </MenuItem>
             <MenuItem Header="             Product" Tag="AuthorityHigh" Loaded="SetVisibility">
-                <MenuItem Header="Deliver Media" Click="Click_DeliverMedia"/>
+
                 <MenuItem Header="Deliver" Click="Click_Deliver"/>
                 <MenuItem Header="Delivery reversal" Click="DeliveryReversal"/>
             </MenuItem>

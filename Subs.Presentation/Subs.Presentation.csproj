@@ -31,7 +31,7 @@
     <ProductName>Mims subscription</ProductName>
     <PublisherName>ARENA</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>571</ApplicationRevision>
+    <ApplicationRevision>573</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -174,9 +174,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Deliver.xaml.cs" />
-    <Compile Include="Deliver2.xaml.cs">
-      <DependentUpon>Deliver2.xaml</DependentUpon>
-    </Compile>
     <Compile Include="IssuePickerOld.xaml.cs">
       <DependentUpon>IssuePickerOld.xaml</DependentUpon>
     </Compile>
@@ -403,10 +400,6 @@
     <Page Include="Deliver.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Deliver2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DeliveryAddress2.xaml">
       <Generator>MSBuild:Compile</Generator>

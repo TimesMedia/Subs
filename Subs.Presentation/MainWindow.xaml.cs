@@ -366,14 +366,6 @@ namespace Subs.Presentation
             frmDeliver.ShowDialog();
         }
 
-        private void Click_DeliverMedia(object sender, RoutedEventArgs e)
-        {
-            Subs.Presentation.Deliver2 frmDeliver = new Deliver2();
-            frmDeliver.ShowDialog();
-
-        }
-
-
         private void DeliveryReversal(object sender, RoutedEventArgs e)
         {
             Subs.Presentation.Maintenance lMaintenance = new Subs.Presentation.Maintenance();

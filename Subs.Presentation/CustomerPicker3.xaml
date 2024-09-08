@@ -316,11 +316,9 @@
         </TabItem>
 
         <TabItem x:Name="tabSubscription" Header="Subscription" TabIndex="2" Visibility="Visible" LostFocus="TabSubscription_LostFocus">
-            <Grid DataContext="{StaticResource InvoiceAndPaymentViewSource}">
+            <Grid DataContext="{StaticResource InvoiceAndPaymentViewSource}" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="16"/>
-                    <ColumnDefinition Width="57"/>
-                    <ColumnDefinition Width="394"/>
+                    <ColumnDefinition Width="500"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -328,15 +326,15 @@
                 </Grid.RowDefinitions>
 
 
-                <StackPanel Grid.Column="0" Grid.ColumnSpan="3">
+                <StackPanel Grid.Column="0" >
                     <Label HorizontalAlignment="Center">INVOICES AND PAYMENTS</Label>
                     <DataGrid x:Name="SubscriptionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource SubscriptionsViewSource}}" 
                                   Margin="0,0,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Left" RowHeight="30" CanUserAddRows="False" CanUserDeleteRows="False"
-                                  MouseDoubleClick="DisplayStatusAndHistory" Width="Auto" Height="auto" VerticalAlignment="Stretch">
+                                  MouseDoubleClick="DisplayStatusAndHistory" Width="Auto" Height="800" VerticalScrollBarVisibility="Visible">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding SubscriptionId}" Header="SubscriptionId" Width="100" 
+                            <DataGridTextColumn Binding="{Binding SubscriptionId}" Header="SubscriptionId" Width="85" 
                                                     CellStyle="{StaticResource AlignRight}"/>
-                            <DataGridTextColumn Binding="{Binding Status}" Header="Status" Width="100"/>
+                            <DataGridTextColumn Binding="{Binding Status}" Header="Status" Width="80"/>
                             <DataGridTextColumn Binding="{Binding ProductName}" Header="Product" Width="150"/>
                             <DataGridTextColumn Binding="{Binding Value, Converter={StaticResource lRandConverter}}" 
                                                     Header="Value" Width="90" CellStyle="{StaticResource AlignRight}"/>
@@ -355,7 +353,7 @@
                 <!--<GridSplitter Background="Black" ResizeBehavior="BasedOnAlignment" HorizontalAlignment="Stretch" Width="5" 
                                   ShowsPreview="True" Grid.Column="1" Margin="0,0,0,0" />-->
 
-                <local:SubscriptionStatusDisplayControl2 x:Name="gSubscriptionStatusDisplayControl" Grid.Column="3" Margin="12,0,0,0"/>
+                <local:SubscriptionStatusDisplayControl2 x:Name="gSubscriptionStatusDisplayControl" Grid.Column="1" Margin="12,0,0,0"/>
 
             </Grid>
         </TabItem>
@@ -412,7 +410,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="6*"/>
-                    <ColumnDefinition Width="129*"/>
+                    <ColumnDefinition Width="54*"/>
+                    <ColumnDefinition Width="75*"/>
                     <ColumnDefinition Width="519*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -420,12 +419,12 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Button Click="ButtonResetCheckpoint_Click" Margin="180,10,0,10" HorizontalAlignment="Left"   Width="150" Tag="AuthorityHigh" Loaded="SetVisibility" Grid.Column="2" Grid.ColumnSpan="2">Reset Checkpoint</Button>
+                <Button Click="ButtonResetCheckpoint_Click" Margin="72,10,0,10" HorizontalAlignment="Left"   Width="150" Tag="AuthorityHigh" Loaded="SetVisibility" Grid.Column="3" Grid.ColumnSpan="2">Reset Checkpoint</Button>
                 <Button Click="ButtonShowInExcel" Margin="2,10,0,10" HorizontalAlignment="Left"   Width="100" Tag="AuthorityHigh" Loaded="SetVisibility" Grid.ColumnSpan="2" Grid.Column="1">Show in Excel</Button>
 
                 <DataGrid x:Name="DueDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch" Grid.Row="1"
                                   Margin="0,0,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Left" RowHeight="30"
-                                  SelectionUnit="CellOrRowHeader"  SelectionMode="Single" CanUserSortColumns="False" Grid.ColumnSpan="4">
+                                  SelectionUnit="CellOrRowHeader"  SelectionMode="Single" CanUserSortColumns="False" Grid.ColumnSpan="5">
                     <DataGrid.RowHeaderStyle>
                         <Style TargetType="{x:Type DataGridRowHeader}">
                             <Setter Property="Background"  Value="Yellow"/>
@@ -445,14 +444,11 @@
 
                     </DataGrid.Columns>
 
-                    <!--<DataGrid.ContextMenu>
+                    <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Use this as a new checkpoint" Click="Click_Checkpoint" />
-                            
-                    <MenuItem Header="Archive" Click="Click_Archive" />
-                    
                         </ContextMenu>
-                    </DataGrid.ContextMenu>-->
+                    </DataGrid.ContextMenu>
 
                 </DataGrid>
             </Grid>
