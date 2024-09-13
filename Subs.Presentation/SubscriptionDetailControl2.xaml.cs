@@ -81,9 +81,13 @@ namespace Subs.Presentation
             subscriptionDetailDataGrid.ItemsSource = gSubscriptionViewSource.View;
 
         }
-     
 
-        public int GetCurrentSubscriptionId()
+        public int GetCurrentCustomerId()
+        {
+            // Dummy implementation
+            return 0;
+        }
+            public int GetCurrentSubscriptionId()
         {
             try
             {

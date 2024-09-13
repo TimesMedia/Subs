@@ -31,7 +31,7 @@
     <ProductName>Mims subscription</ProductName>
     <PublisherName>ARENA</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>573</ApplicationRevision>
+    <ApplicationRevision>575</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -58,11 +58,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>9902C78E7E1185EB68BC6256D5EB7779F74347CA</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>4E46674A457F82716A5233D9BCBE528E04D836CF</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>
-    </ManifestKeyFile>
+    <ManifestKeyFile>Subs.Presentation_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -323,6 +322,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Subs.Presentation_1_TemporaryKey.pfx" />
+    <None Include="Subs.Presentation_2_TemporaryKey.pfx" />
     <None Include="Subs.Presentation_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

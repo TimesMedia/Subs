@@ -25,6 +25,7 @@
             <MenuItem Header="Deliver on credit" Click="Click_DeliverOnCredit" Tag="AuthorityMedium" Loaded="SetVisibility"/>
             <!--<MenuItem Header="Enforce delivery" Click="Click_EnforceDelivery" Tag="AuthorityMedium" Loaded="SetVisibility"/>-->
             <MenuItem Header="Generate invoice directive" Click="Click_GenerateInvoiceDirective"  Tag="AuthorityMedium" Loaded="SetVisibility"/>
+            <MenuItem Header="Goto statement" Click="Click_GoToStatement" />
             <MenuItem Header="Report" Click="Click_SubscriptionReport" />
             <MenuItem Header="Renew" Click="Click_Renew" />
             <MenuItem Header="Resume" Click="Click_Resume" />

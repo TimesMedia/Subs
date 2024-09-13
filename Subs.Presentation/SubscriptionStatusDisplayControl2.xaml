@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Subs.Presentation"
-             mc:Ignorable="d" Width="800"
+             mc:Ignorable="d" Width="1050"
              d:DesignHeight="1122" d:DesignWidth="793">
     <UserControl.Resources>
         <local:RandConverter x:Key="lRandConverter"/>
@@ -271,7 +271,21 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                                
+
+                        <DataGridTemplateColumn Header="Explanation" Width="300" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Height="Auto" Margin="3" TextWrapping="Wrap" Foreground="Blue">
+                                        <TextBox.Text>
+                                            <Binding Path="Explanation">
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+
                         <DataGridTextColumn x:Name="debitValueColumn" Binding="{Binding DebitValue, Converter={StaticResource lRandConverter}}" 
                                             Header="Debit" CellStyle="{StaticResource AlignRight}"
                                             Foreground="Blue" Width="80"/>

@@ -14,6 +14,8 @@ namespace Subs.Presentation
     public interface ISubscriptionPicker
     {
         int GetCurrentSubscriptionId();
+
+        int GetCurrentCustomerId();
     }
 
     public enum NonDeliveryOptions
@@ -1246,6 +1248,20 @@ namespace Subs.Presentation
             SelectTab(SubscriptionTabs.Report);
         }
 
+
+        private void Click_GoToStatement(object sender, RoutedEventArgs e)
+        {
+            ISubscriptionPicker lSubscriptionGrid = (ISubscriptionPicker)SubscriptionGrid.Content;
+            int lCurrentCustomerId = lSubscriptionGrid.GetCurrentCustomerId();
+
+            CustomerPicker3 lCustomerPicker = new CustomerPicker3();
+            lCustomerPicker.SetCurrentCustomer(lCurrentCustomerId);
+            lCustomerPicker.GoToStatement();
+            lCustomerPicker.ShowDialog();
+        }
+
+
+
         private void Click_Renew(object sender, RoutedEventArgs e)
         {
             try
@@ -1890,6 +1906,6 @@ namespace Subs.Presentation
         }
 
         #endregion
-    
+     
     }
 }

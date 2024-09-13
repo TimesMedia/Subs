@@ -13,8 +13,8 @@ namespace DW
         static DWDataset.FactLiabilityDataTable gLiability = new DWDataset.FactLiabilityDataTable();
         static DWDatasetTableAdapters.FactLiabilityTableAdapter gLiabilityAdapter = new DWDatasetTableAdapters.FactLiabilityTableAdapter();
 
-        static DWDataset.FactDebtorDataTable gDebtor = new DWDataset.FactDebtorDataTable();
-        static DWDatasetTableAdapters.FactDebtorTableAdapter gDebtorAdapter = new DWDatasetTableAdapters.FactDebtorTableAdapter();
+        //static DWDataset.FactDebtorDataTable gDebtor = new DWDataset.FactDebtorDataTable();
+        //static DWDatasetTableAdapters.FactDebtorTableAdapter gDebtorAdapter = new DWDatasetTableAdapters.FactDebtorTableAdapter();
 
         static void Main(string[] args)
         {

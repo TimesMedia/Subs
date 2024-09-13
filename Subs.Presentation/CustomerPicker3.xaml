@@ -444,11 +444,11 @@
 
                     </DataGrid.Columns>
 
-                    <DataGrid.ContextMenu>
+                    <!--<DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Use this as a new checkpoint" Click="Click_Checkpoint" />
                         </ContextMenu>
-                    </DataGrid.ContextMenu>
+                    </DataGrid.ContextMenu>-->
 
                 </DataGrid>
             </Grid>
