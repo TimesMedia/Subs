@@ -721,6 +721,13 @@ namespace Subs.MimsWeb.Controllers
                 lWorkerThread.Start(pState);
                 lWorkerThread.Join();
   
+                // Mark the BalanceInvoiceId if appropriate
+                CustomerData3 lCustomer = new CustomerData3((int)lLoginRequest.CustomerId);
+                if (lCustomer.BalanceInvoiceId == null || lCustomer.BalanceInvoiceId == 0)
+                {
+                    lCustomer.BalanceInvoiceId = lInvoiceId;
+                    lCustomer.Update();
+                }
 
                 // Email the invoice
 

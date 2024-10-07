@@ -419,7 +419,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Button Click="ButtonResetCheckpoint_Click" Margin="72,10,0,10" HorizontalAlignment="Left"   Width="150" Tag="AuthorityHigh" Loaded="SetVisibility" Grid.Column="3" Grid.ColumnSpan="2">Reset Checkpoint</Button>
+                <Button Click="ButtonResetCheckpoint_Click" Margin="72,10,0,10" HorizontalAlignment="Left"   Width="150" Tag="AuthorityHighest" Loaded="SetVisibility" Grid.Column="3" Grid.ColumnSpan="2">Reset Checkpoint</Button>
                 <Button Click="ButtonShowInExcel" Margin="2,10,0,10" HorizontalAlignment="Left"   Width="100" Tag="AuthorityHigh" Loaded="SetVisibility" Grid.ColumnSpan="2" Grid.Column="1">Show in Excel</Button>
 
                 <DataGrid x:Name="DueDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto" VerticalAlignment="Stretch" Grid.Row="1"
@@ -444,11 +444,11 @@
 
                     </DataGrid.Columns>
 
-                    <!--<DataGrid.ContextMenu>
+                    <DataGrid.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Use this as a new checkpoint" Click="Click_Checkpoint" />
+                            <MenuItem Header="Use this as a new checkpoint" Click="Click_Checkpoint" Tag="AuthorityHighest" Loaded="SetVisibility"/>
                         </ContextMenu>
-                    </DataGrid.ContextMenu>-->
+                    </DataGrid.ContextMenu>
 
                 </DataGrid>
             </Grid>

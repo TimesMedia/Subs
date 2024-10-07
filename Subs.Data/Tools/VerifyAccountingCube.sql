@@ -1,5 +1,5 @@
-delete from FactAgeAnalysis
-where Rundate = '2024/09/07'
+delete from FactAccounting
+where Rundate = '2024/10/03'
 
 
 select *
@@ -9,12 +9,12 @@ from SubscriptionIssue
 
 exec [dbo].[SUBSDW.EOM]
 
-exec [dbo].[SUBSDW.EOMCheck] '2024/09/08'
+exec [dbo].[SUBSDW.EOMCheck] '2024/10/03'
 
 
 
 select distinct Rundate
-from [dbo].[FactAgeAnalysis]
+from [dbo].[FactAccounting]
 
 select *
 from Transactions
