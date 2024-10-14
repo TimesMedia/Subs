@@ -1,15 +1,16 @@
 delete from FactAccounting
-where Rundate = '2024/10/03'
+where Rundate = '2024/10/13'
 
 
-select *
-from SubscriptionIssue
+select distinct Rundate
+from FactAccounting
+
 
 -- DBCC CHECKIDENT ('FactAgeAnalysis', RESEED, 1);
 
 exec [dbo].[SUBSDW.EOM]
 
-exec [dbo].[SUBSDW.EOMCheck] '2024/10/03'
+exec [dbo].[SUBSDW.EOMCheck] '2024/10/13'
 
 
 
@@ -17,9 +18,57 @@ select distinct Rundate
 from [dbo].[FactAccounting]
 
 select *
-from Transactions
-where PayerId = 93745
+from Transactions as a left outer join subscription as b on a.Invoiceid = b.Invoiceid
+where operation = 19
+and Reference3 = 0
+and datefrom > '2024/01/01'
+and b.SubscriptionId is null
 order by datefrom 
+
+
+delete from Transactions
+where transactionid in (2623712,
+2629449,
+2632446)
+
+
+select *
+from Transactions
+where PayerId = 121715
+and Datefrom > '2024/01/01'
+
+
+update transactions
+set value = 1350
+where transactionid = 2632635
+
+
+
+
+
+select *
+from subscription as a left outer join transactions as b on a.Subscriptionid = b.subscriptionid
+where b.operation = 16
+and datefrom > '2024/08/01'and b.Subscriptionid is null
+
+
+
+select *
+from exception
+where modifiedon  between '2024/08/26' and '2024/08/27'
+and severity = 5
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 exec [dbo].[MIMS.CustomerDoc.Due3] 93745
@@ -29,21 +78,9 @@ from Subscription
 where invoiceid in (60547)
 
 select *
-delete from Transactions
-where operation = 2
-and SubscriptionId in (232044)
-
-
-
-select *
-from SubscriptionIssue 
-where SubscriptionId in (186492, 186493)
-
-
-, 63217, 65315)
-
-
-
+from Exception
+where modifiedon between '2024/08/26' and '2024/08/27'
+and severity = 1
 
 
 --delete from transactions

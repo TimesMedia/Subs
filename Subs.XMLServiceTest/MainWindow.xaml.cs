@@ -617,6 +617,54 @@ namespace Subs.XMLServiceTest
             }
 
         }
+
+        private void ButtonAuthorisationToken_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ServiceSoapClient lClient = new ServiceSoapClient();
+                AuthorizationHeader lHeader = new AuthorizationHeader
+                {
+                    Source = "NJA",
+                    Type = "MOBIMims"
+                };
+
+                ServiceReference1.AuthorizeTokenRequest lRequest = new AuthorizeTokenRequest();
+                lRequest.AuthorizationHeader = lHeader;
+                lRequest.pProductId = 88;
+                lRequest.pTokenId = 9525472; // 108244 - Riette;
+               
+
+                AuthorizeTokenResponse lResponse = new AuthorizeTokenResponse();
+
+                lResponse = lClient.AuthorizeToken(lRequest);
+
+                MessageBox.Show(lResponse.AuthorizeTokenResult.ExpirationDate.ToString() + " Seats "
+                    + lResponse.AuthorizeTokenResult.Seats.ToString() + " "
+                    + lResponse.AuthorizeTokenResult.Reason.ToString() + " "
+                    + lResponse.AuthorizeTokenResult.Title.ToString() + " "
+                    + lResponse.AuthorizeTokenResult.FirstName.ToString() + " "
+                    + lResponse.AuthorizeTokenResult.Surname.ToString());
+
+
+            }
+
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "ButtonAuthorizeToken_Click", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
     
 }

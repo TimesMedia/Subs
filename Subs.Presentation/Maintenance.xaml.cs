@@ -998,7 +998,7 @@ namespace Subs.Presentation
                     
                     int lCustomerId = lInvoiceList[0].PayerId;
                     CustomerData3 lCustomerData = new CustomerData3(lCustomerId);
-                    if (lCustomerData.BalanceInvoiceId == null)
+                    if (lCustomerData.BalanceInvoiceId == null || lCustomerData.BalanceInvoiceId == 0)
                     {
                         // This is a dormant customer - so start from scratch
                         lCustomerData.BalanceInvoiceId = lInvoiceList[0].InvoiceId;

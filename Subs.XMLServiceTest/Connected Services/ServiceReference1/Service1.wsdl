@@ -73,6 +73,21 @@
           <s:element minOccurs="0" maxOccurs="1" name="Surname" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="AuthorizeToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="pTokenId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pProductId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthorizeTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AuthorizeTokenResult" type="tns:MICResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="Authorizations">
         <s:complexType />
       </s:element>
@@ -172,6 +187,15 @@
   <wsdl:message name="AuthorizeMICAuthorizationHeader">
     <wsdl:part name="AuthorizationHeader" element="tns:AuthorizationHeader" />
   </wsdl:message>
+  <wsdl:message name="AuthorizeTokenSoapIn">
+    <wsdl:part name="parameters" element="tns:AuthorizeToken" />
+  </wsdl:message>
+  <wsdl:message name="AuthorizeTokenSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthorizeTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthorizeTokenAuthorizationHeader">
+    <wsdl:part name="AuthorizationHeader" element="tns:AuthorizationHeader" />
+  </wsdl:message>
   <wsdl:message name="AuthorizationsSoapIn">
     <wsdl:part name="parameters" element="tns:Authorizations" />
   </wsdl:message>
@@ -221,6 +245,10 @@
       <wsdl:input message="tns:AuthorizeMICSoapIn" />
       <wsdl:output message="tns:AuthorizeMICSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="AuthorizeToken">
+      <wsdl:input message="tns:AuthorizeTokenSoapIn" />
+      <wsdl:output message="tns:AuthorizeTokenSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="Authorizations">
       <wsdl:input message="tns:AuthorizationsSoapIn" />
       <wsdl:output message="tns:AuthorizationsSoapOut" />
@@ -265,6 +293,16 @@
       <wsdl:input>
         <soap:body use="literal" />
         <soap:header message="tns:AuthorizeMICAuthorizationHeader" part="AuthorizationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthorizeToken">
+      <soap:operation soapAction="http://tempuri.org/AuthorizeToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AuthorizeTokenAuthorizationHeader" part="AuthorizationHeader" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
@@ -338,6 +376,16 @@
       <wsdl:input>
         <soap12:body use="literal" />
         <soap12:header message="tns:AuthorizeMICAuthorizationHeader" part="AuthorizationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthorizeToken">
+      <soap12:operation soapAction="http://tempuri.org/AuthorizeToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AuthorizeTokenAuthorizationHeader" part="AuthorizationHeader" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />

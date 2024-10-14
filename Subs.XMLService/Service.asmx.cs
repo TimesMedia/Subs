@@ -184,6 +184,70 @@ namespace Subs.XMLService
             }
         }
 
+
+        [SoapHeader("Authentication")]
+        [WebMethod]
+        public MICResult AuthorizeToken(int pTokenId, int pProductId)
+        {
+            try
+            {
+                MICResult lMICResult = new MICResult();
+
+                int lReceiverId = pTokenId / pProductId;
+
+                if (Authentication.Source == "NJA" &&
+                Authentication.Type == "MOBIMims")
+                {
+                    if (!CustomerData3.Exists((int)lReceiverId))
+                    {
+                        lMICResult.Reason = "There is no such CustomerId";
+                        lMICResult.Title = "NoTitle";
+                        lMICResult.FirstName = "NoFirstName";
+                        lMICResult.Surname = "NoSurname";
+                        return lMICResult;
+                    }
+
+                    CustomerData3 lCustomerData = new CustomerData3(lReceiverId);
+
+                    SeatResult lSeatResult = SubscriptionBiz.Authorize(pProductId, lReceiverId);
+                    lMICResult.ExpirationDate = lSeatResult.ExpirationDate;
+                    lMICResult.Seats = lSeatResult.Seats;
+                    lMICResult.Reason = lSeatResult.Reason;
+                    lMICResult.Title = lCustomerData.Title;
+                    lMICResult.FirstName = lCustomerData.FirstName;
+                    lMICResult.Surname = lCustomerData.Surname;
+                    return lMICResult;
+                }
+                else
+                {
+                    throw new Exception("Invalid Source and/or Type");
+                }
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "AuthorizeToken", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MICResult lMICResult = new MICResult();
+                lMICResult.Seats = 0;
+                lMICResult.Reason = "Failed due to technical error";
+
+                return lMICResult;
+            }
+        }
+
+
+
+
+
         [SoapHeader("Authentication")]
         [WebMethod]
         public List<AuthorizationResult> Authorizations()

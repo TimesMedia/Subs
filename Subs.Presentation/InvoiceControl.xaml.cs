@@ -238,18 +238,31 @@ namespace Subs.Presentation
                 // Calculate the credit
 
                 decimal lDue = gCustomerData.Due;
+                decimal lOverPayment = 0;
 
                 lPayable = lTotalExc + lTotalVat;
                 if (lDue < 0)
                 {
-                    // cateer for over payment
+                    // Cater for over payment
+
+                    lOverPayment = lDue;  // Will be a negative number
                     lPayable = lPayable + lDue;
+
+                }
+                else
+                { 
+                    if (lDue < lPayable)
+                    {
+                        lOverPayment = lDue - lPayable;  // Will be a negative number
+                        lPayable = lDue;  // Will be a positive number 
+                    }
+                    else lOverPayment = 0;
                 }
 
 
                 TotalExc.Content = lTotalExc.ToString("R ######0.00");
                 Vat.Content = lTotalVat.ToString("R ######0.00");
-                OverPayment.Content = lDue < 0 ? lDue.ToString("R ######0.00") : "0.00";
+                OverPayment.Content = lOverPayment < 0 ? lOverPayment.ToString("R ######0.00") : "0.00";
                 Payable.Content = lPayable.ToString("R ######0.00");
 
                 // Save to disk

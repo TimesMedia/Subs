@@ -36,6 +36,13 @@ namespace Subs.XMLServiceTest.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/AuthorizeMIC", ReplyAction="*")]
         System.Threading.Tasks.Task<Subs.XMLServiceTest.ServiceReference1.AuthorizeMICResponse> AuthorizeMICAsync(Subs.XMLServiceTest.ServiceReference1.AuthorizeMICRequest request);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/AuthorizeToken", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        Subs.XMLServiceTest.ServiceReference1.AuthorizeTokenResponse AuthorizeToken(Subs.XMLServiceTest.ServiceReference1.AuthorizeTokenRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/AuthorizeToken", ReplyAction="*")]
+        System.Threading.Tasks.Task<Subs.XMLServiceTest.ServiceReference1.AuthorizeTokenResponse> AuthorizeTokenAsync(Subs.XMLServiceTest.ServiceReference1.AuthorizeTokenRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Authorizations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         Subs.XMLServiceTest.ServiceReference1.AuthorizationsResponse Authorizations(Subs.XMLServiceTest.ServiceReference1.AuthorizationsRequest request);
@@ -66,7 +73,7 @@ namespace Subs.XMLServiceTest.ServiceReference1 {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -126,7 +133,7 @@ namespace Subs.XMLServiceTest.ServiceReference1 {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -228,7 +235,7 @@ namespace Subs.XMLServiceTest.ServiceReference1 {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -330,7 +337,7 @@ namespace Subs.XMLServiceTest.ServiceReference1 {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -510,6 +517,46 @@ namespace Subs.XMLServiceTest.ServiceReference1 {
         
         public AuthorizeMICResponse(Subs.XMLServiceTest.ServiceReference1.MICResult AuthorizeMICResult) {
             this.AuthorizeMICResult = AuthorizeMICResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="AuthorizeToken", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class AuthorizeTokenRequest {
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://tempuri.org/")]
+        public Subs.XMLServiceTest.ServiceReference1.AuthorizationHeader AuthorizationHeader;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public int pTokenId;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public int pProductId;
+        
+        public AuthorizeTokenRequest() {
+        }
+        
+        public AuthorizeTokenRequest(Subs.XMLServiceTest.ServiceReference1.AuthorizationHeader AuthorizationHeader, int pTokenId, int pProductId) {
+            this.AuthorizationHeader = AuthorizationHeader;
+            this.pTokenId = pTokenId;
+            this.pProductId = pProductId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="AuthorizeTokenResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class AuthorizeTokenResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public Subs.XMLServiceTest.ServiceReference1.MICResult AuthorizeTokenResult;
+        
+        public AuthorizeTokenResponse() {
+        }
+        
+        public AuthorizeTokenResponse(Subs.XMLServiceTest.ServiceReference1.MICResult AuthorizeTokenResult) {
+            this.AuthorizeTokenResult = AuthorizeTokenResult;
         }
     }
     
@@ -714,6 +761,14 @@ namespace Subs.XMLServiceTest.ServiceReference1 {
         
         public System.Threading.Tasks.Task<Subs.XMLServiceTest.ServiceReference1.AuthorizeMICResponse> AuthorizeMICAsync(Subs.XMLServiceTest.ServiceReference1.AuthorizeMICRequest request) {
             return base.Channel.AuthorizeMICAsync(request);
+        }
+        
+        public Subs.XMLServiceTest.ServiceReference1.AuthorizeTokenResponse AuthorizeToken(Subs.XMLServiceTest.ServiceReference1.AuthorizeTokenRequest request) {
+            return base.Channel.AuthorizeToken(request);
+        }
+        
+        public System.Threading.Tasks.Task<Subs.XMLServiceTest.ServiceReference1.AuthorizeTokenResponse> AuthorizeTokenAsync(Subs.XMLServiceTest.ServiceReference1.AuthorizeTokenRequest request) {
+            return base.Channel.AuthorizeTokenAsync(request);
         }
         
         public Subs.XMLServiceTest.ServiceReference1.AuthorizationsResponse Authorizations(Subs.XMLServiceTest.ServiceReference1.AuthorizationsRequest request) {

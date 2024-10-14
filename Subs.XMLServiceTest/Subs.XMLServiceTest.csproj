@@ -102,6 +102,9 @@
     <None Include="Connected Services\ServiceReference1\Subs.XMLServiceTest.ServiceReference1.AuthorizeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\ServiceReference1\Subs.XMLServiceTest.ServiceReference1.AuthorizeTokenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\ServiceReference1\Subs.XMLServiceTest.ServiceReference1.FindCustomerIdByEmailResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

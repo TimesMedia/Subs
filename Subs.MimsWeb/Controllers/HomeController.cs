@@ -213,12 +213,14 @@ namespace Subs.MimsWeb.Controllers
             }
         }
 
-
-        public ActionResult Test()
+        [HttpGet]
+        public ActionResult Test(int Id)
         {
-            LoginRequest lLoginRequest = new LoginRequest() { Email = "heinreitmann@gmail.com" };
-            SessionHelper.Set(Session, SessionKey.LoginRequest, lLoginRequest);
-            return RedirectToAction("Account");
+            //LoginRequest lLoginRequest = new LoginRequest() { Email = "heinreitmann@gmail.com" };
+            //SessionHelper.Set(Session, SessionKey.LoginRequest, lLoginRequest);
+            //return RedirectToAction("Account");
+            return View("Test", Id);
+
         }
 
 
@@ -1204,8 +1206,9 @@ namespace Subs.MimsWeb.Controllers
                     return View("Empty");
                 }
 
+                int lToken = (int)lLoginRequest.CustomerId * 88;
 
-                return Redirect("https://www.mimscpd.co.za");
+                return Redirect("https://www.mimscpd.co.za?Token=" + lToken.ToString());
 
                 //return View("Empty");
             }

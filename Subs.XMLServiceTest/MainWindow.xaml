@@ -21,5 +21,7 @@
 
         <Button Name="buttonAuthorisationMIC" Content="Medicine Interaction Checker" HorizontalAlignment="Left" Margin="300,259,0,0" VerticalAlignment="Top" Width="228" Click="ButtonAuthorisationMIC_Click"/>
 
+        <Button Name="buttonAuthorisetoken" Content="AuthoriseToken" HorizontalAlignment="Left" Margin="300,259,0,0" VerticalAlignment="Top" Width="228" Click="ButtonAuthorisationToken_Click"/>
+
     </Grid>
 </Window>

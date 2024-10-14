@@ -357,7 +357,7 @@ namespace Subs.Presentation
 
 
 
-                gBasketItem.Subscription.gReadyToSubmit = true;
+                //gBasketItem.Subscription.gReadyToSubmit = true;
 
                 // Note that this subscription will be perservered only once you call SubscriptionBiz.Initialise. 
 
