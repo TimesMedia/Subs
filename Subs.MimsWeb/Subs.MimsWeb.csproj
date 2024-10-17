@@ -428,12 +428,12 @@
     <Content Include="Views\CPD\History.cshtml" />
     <Content Include="Views\CPD\Privacy.cshtml" />
     <Content Include="Views\Test\EnrolModule.cshtml" />
-    <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\CPD\_CPDLayout.cshtml" />
     <Content Include="Views\CPD\Read.cshtml" />
     <Content Include="Views\Home\DisplayActiveSubscription.cshtml" />
     <Content Include="Views\Home\SelectReadingMaterial.cshtml" />
     <Content Include="Views\Promotion\Promotions.cshtml" />
+    <Content Include="Views\Test\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,14 +16,14 @@ namespace MimsWeb.Controllers
             return View(lModules);
         }
 
-        public ActionResult Test(int Id)
+        public ActionResult Test(int id)
         {
-            ViewBag.ModuleId = Id;
+            ViewBag.TokenId = id;
 
             return View();
         }
 
-            public ActionResult Continue()
+        public ActionResult Continue()
         {
             return View();
         }

@@ -187,49 +187,50 @@
     </div>
 
     <div class="col-md">
-    <div id="MenuDiv" class="MenuContainer">
+        <div id="MenuDiv" class="MenuContainer">
 
 
 
-        <div>@Html.ActionLink("Home", "Index", "Home")<i class="fa fa-home" aria-hidden="true"></i></div>
+            <div>@Html.ActionLink("Home", "Index", "Home")<i class="fa fa-home" aria-hidden="true"></i></div>
 
-        <div>@Html.ActionLink("About Us", "About", "Home")</div>
+            <div>@Html.ActionLink("About Us", "About", "Home")</div>
 
-        <div>@Html.ActionLink("Shop", "GetProducts", "Promotion")</div>
+            <div>@Html.ActionLink("Shop", "GetProducts", "Promotion")</div>
 
-        <div>@Html.ActionLink("Promotions", "Promotions", "Promotion")</div>
+            <div>@Html.ActionLink("Promotions", "Promotions", "Promotion")</div>
 
-        <div>@Html.ActionLink("CPD", "CPD", "Home")</div>
+            <div>@Html.ActionLink("CPD", "CPD", "Home")</div>
 
-        <div><a href="https://drugchecker.mims.co.za/login">Interaction-Checker</a></div>
+            <div><a href="https://drugchecker.mims.co.za/login">Interaction-Checker</a></div>
 
-        <div><a href="http://www.generic.co.za/">Generics</a></div>
+            <div><a href="http://www.generic.co.za/">Generics</a></div>
 
-        @*<div>@Html.ActionLink("CONTACT", "Contact", "Home", new { target = "Contacts" })</div>*@
+            @*<div>@Html.ActionLink("CONTACT", "Contact", "Home", new { target = "Contacts" })</div>*@
 
-        @{ LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
-            if (lLoginRequest.CustomerId == null)
-            {
-                <div>@Html.ActionLink("Login", "Login", "Home")</div>
-
-                <div>@Html.ActionLink("Register", "RegisterEmail", "Home")</div>
-            }
-            else
-            {
-                @*<div title="All electrionically readable material that you have purchased over the years.">@Html.ActionLink("Reading", "SelectReadingMaterial", "Home")</div>*@
-                <div>@Html.ActionLink("Active_Subs", "DisplayActiveSubscription", "Home")</div>
-                <div>@Html.ActionLink("Pay", "Pay", "Promotion")</div>
-                <div>@Html.ActionLink("Logout", "Thanks", "Home")</div>
-                <div>@Html.ActionLink("Profile", "Account", "Home")</div>
-
-                if (lLoginRequest.CustomerId == 120072 || lLoginRequest.CustomerId == 120311)
+            @{ LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+                if (lLoginRequest.CustomerId == null)
                 {
-                    <div>@Html.ActionLink("NewCPD", "Index", "CPD")</div>
+                    <div>@Html.ActionLink("Login", "Login", "Home")</div>
+
+                    <div>@Html.ActionLink("Register", "RegisterEmail", "Home")</div>
                 }
+                else
+                {
+                    @*<div title="All electrionically readable material that you have purchased over the years.">@Html.ActionLink("Reading", "SelectReadingMaterial", "Home")</div>*@
+                    <div>@Html.ActionLink("Active_Subs", "DisplayActiveSubscription", "Home")</div>
+                    <div>@Html.ActionLink("Pay", "Pay", "Promotion")</div>
+                    <div>@Html.ActionLink("Logout", "Thanks", "Home")</div>
+                    <div>@Html.ActionLink("Profile", "Account", "Home")</div>
+
+                    if (lLoginRequest.CustomerId == 120072 || lLoginRequest.CustomerId == 120311)
+                    {
+                        @*<div>@Html.ActionLink("NewCPD", "Index", "CPD")</div>*@
+                        <div>@Html.ActionLink("Test", "Test", "Test", new {id = 123}) </div>
+                    }
 
 
+                }
             }
-        }
 
         </div>
     </div>
