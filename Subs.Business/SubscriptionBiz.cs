@@ -27,7 +27,17 @@ namespace Subs.Business
         public string Surname;
     }
 
-
+    public class TokenResult
+    {
+        public int Seats;
+        public string Reason;
+        public DateTime ExpirationDate;
+        public string Title;
+        public string FirstName;
+        public string Surname;
+        public string CustomerId;
+        public string Password;
+    }
 
     public class AuthorizationResult
     {

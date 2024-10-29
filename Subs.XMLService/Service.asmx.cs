@@ -187,12 +187,11 @@ namespace Subs.XMLService
 
         [SoapHeader("Authentication")]
         [WebMethod]
-        public MICResult AuthorizeToken(int pTokenId, int pProductId)
+        public TokenResult AuthorizeToken(int pTokenId, int pProductId)
         {
+            TokenResult lTokenResult = new TokenResult();
             try
             {
-                MICResult lMICResult = new MICResult();
-
                 int lReceiverId = pTokenId / pProductId;
 
                 if (Authentication.Source == "NJA" &&
@@ -200,23 +199,27 @@ namespace Subs.XMLService
                 {
                     if (!CustomerData3.Exists((int)lReceiverId))
                     {
-                        lMICResult.Reason = "There is no such CustomerId";
-                        lMICResult.Title = "NoTitle";
-                        lMICResult.FirstName = "NoFirstName";
-                        lMICResult.Surname = "NoSurname";
-                        return lMICResult;
+                        lTokenResult.Reason = "There is no such CustomerId";
+                        lTokenResult.Title = "NoTitle";
+                        lTokenResult.FirstName = "NoFirstName";
+                        lTokenResult.Surname = "NoSurname";
+                        lTokenResult.CustomerId = "NoCustomerId";
+                        lTokenResult.Password = "No Password Issued";
+                        return lTokenResult;
                     }
 
                     CustomerData3 lCustomerData = new CustomerData3(lReceiverId);
 
                     SeatResult lSeatResult = SubscriptionBiz.Authorize(pProductId, lReceiverId);
-                    lMICResult.ExpirationDate = lSeatResult.ExpirationDate;
-                    lMICResult.Seats = lSeatResult.Seats;
-                    lMICResult.Reason = lSeatResult.Reason;
-                    lMICResult.Title = lCustomerData.Title;
-                    lMICResult.FirstName = lCustomerData.FirstName;
-                    lMICResult.Surname = lCustomerData.Surname;
-                    return lMICResult;
+                    lTokenResult.ExpirationDate = lSeatResult.ExpirationDate;
+                    lTokenResult.Seats = lSeatResult.Seats;
+                    lTokenResult.Reason = lSeatResult.Reason;
+                    lTokenResult.Title = lCustomerData.Title;
+                    lTokenResult.FirstName = lCustomerData.FirstName;
+                    lTokenResult.Surname = lCustomerData.Surname;
+                    lTokenResult.Password = lCustomerData.Password1;
+                    lTokenResult.CustomerId = lCustomerData.CustomerId.ToString();
+                    return lTokenResult;
                 }
                 else
                 {
@@ -240,7 +243,7 @@ namespace Subs.XMLService
                 lMICResult.Seats = 0;
                 lMICResult.Reason = "Failed due to technical error";
 
-                return lMICResult;
+                return lTokenResult;
             }
         }
 

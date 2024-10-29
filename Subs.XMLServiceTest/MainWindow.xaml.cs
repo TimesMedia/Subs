@@ -644,7 +644,10 @@ namespace Subs.XMLServiceTest
                     + lResponse.AuthorizeTokenResult.Reason.ToString() + " "
                     + lResponse.AuthorizeTokenResult.Title.ToString() + " "
                     + lResponse.AuthorizeTokenResult.FirstName.ToString() + " "
-                    + lResponse.AuthorizeTokenResult.Surname.ToString());
+                    + lResponse.AuthorizeTokenResult.Surname.ToString() + " "
+                    + lResponse.AuthorizeTokenResult.CustomerId.ToString() + " "
+                    + lResponse.AuthorizeTokenResult.Password.ToString()
+                    );
 
 
             }
