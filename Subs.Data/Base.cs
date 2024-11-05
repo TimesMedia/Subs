@@ -82,7 +82,7 @@ namespace Subs.Data
     {
         Deliverable = 1,
         Suspended = 2,
-        Hold = 3,
+        //Hold = 3,
         Cancelled = 4,
         Expired = 5,
         Proposed = 6
@@ -162,7 +162,7 @@ namespace Subs.Data
         Deliver = 2,
         Extend = 3,
         Refund = 4,
-        Hold = 5,
+        //Hold = 5,
         Suspend = 6,
         Resume = 7,
         //UpdateCreditLimit = 8,

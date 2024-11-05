@@ -10,7 +10,7 @@ from FactAccounting
 
 exec [dbo].[SUBSDW.EOM]
 
-exec [dbo].[SUBSDW.EOMCheck] '2024/10/13'
+exec [dbo].[SUBSDW.EOMCheck] '2024/11/04'
 
 
 

@@ -24,7 +24,7 @@ namespace Subs.Presentation
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            gCollectionViewSource.Source = DeliveryDataStatic.Dormants();
+            gCollectionViewSource.Source = DeliveryDataStatic.GetDormants();
         }
 
         public int GetCurrentSubscriptionId()

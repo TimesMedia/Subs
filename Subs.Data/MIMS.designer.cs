@@ -33,9 +33,6 @@ namespace Subs.Data
     partial void InsertCustomerInvoice(CustomerInvoice instance);
     partial void UpdateCustomerInvoice(CustomerInvoice instance);
     partial void DeleteCustomerInvoice(CustomerInvoice instance);
-    partial void InsertDormant(Dormant instance);
-    partial void UpdateDormant(Dormant instance);
-    partial void DeleteDormant(Dormant instance);
     partial void InsertInvoiceRaw(InvoiceRaw instance);
     partial void UpdateInvoiceRaw(InvoiceRaw instance);
     partial void DeleteInvoiceRaw(InvoiceRaw instance);
@@ -57,7 +54,7 @@ namespace Subs.Data
     #endregion
 		
 		public MIMSDataContext() : 
-				base(global::Subs.Data.Properties.Settings.Default.MIMS3ConnectionString, mappingSource)
+				base(global::Subs.Data.Properties.Settings.Default.MIMS3ConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -147,14 +144,6 @@ namespace Subs.Data
 			get
 			{
 				return this.GetTable<DebitOrderProposal>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Dormant> Dormants
-		{
-			get
-			{
-				return this.GetTable<Dormant>();
 			}
 		}
 		
@@ -336,13 +325,6 @@ namespace Subs.Data
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), issueId);
 			return ((ISingleResult<MIMS_SubscriptionData_NextIssueResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.[MIMS.DeliveryDataStatic.Dormants]")]
-		public ISingleResult<Dormant> MIMS_DeliveryDataStatic_Dormants()
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
-			return ((ISingleResult<Dormant>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.[MIMS.SubscriptionBiz.Authorize]")]
@@ -1560,284 +1542,6 @@ namespace Subs.Data
 				{
 					this._Subtract = value;
 				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
-	public partial class Dormant : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _SubscriptionId;
-		
-		private System.DateTime _LastDeliveryDate;
-		
-		private string _ProductName;
-		
-		private int _Payer;
-		
-		private decimal _Liability;
-		
-		private int _LastSequenceByProduct;
-		
-		private int _LastSequencebySubscription;
-		
-		private int _LagByIssues;
-		
-		private int _DeliverableIssueId;
-		
-		private string _DeliverableIssueName;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnSubscriptionIdChanging(int value);
-    partial void OnSubscriptionIdChanged();
-    partial void OnLastDeliveryDateChanging(System.DateTime value);
-    partial void OnLastDeliveryDateChanged();
-    partial void OnProductNameChanging(string value);
-    partial void OnProductNameChanged();
-    partial void OnPayerIdChanging(int value);
-    partial void OnPayerIdChanged();
-    partial void OnLiabilityChanging(decimal value);
-    partial void OnLiabilityChanged();
-    partial void OnLastSequenceByProductChanging(int value);
-    partial void OnLastSequenceByProductChanged();
-    partial void OnLastSequenceBySubscriptionChanging(int value);
-    partial void OnLastSequenceBySubscriptionChanged();
-    partial void OnLagByIssuesChanging(int value);
-    partial void OnLagByIssuesChanged();
-    partial void OnDeliverableIssueIdChanging(int value);
-    partial void OnDeliverableIssueIdChanged();
-    partial void OnDeliverableIssueNameChanging(string value);
-    partial void OnDeliverableIssueNameChanged();
-    #endregion
-		
-		public Dormant()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubscriptionId", IsPrimaryKey=true)]
-		public int SubscriptionId
-		{
-			get
-			{
-				return this._SubscriptionId;
-			}
-			set
-			{
-				if ((this._SubscriptionId != value))
-				{
-					this.OnSubscriptionIdChanging(value);
-					this.SendPropertyChanging();
-					this._SubscriptionId = value;
-					this.SendPropertyChanged("SubscriptionId");
-					this.OnSubscriptionIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastDeliveryDate")]
-		public System.DateTime LastDeliveryDate
-		{
-			get
-			{
-				return this._LastDeliveryDate;
-			}
-			set
-			{
-				if ((this._LastDeliveryDate != value))
-				{
-					this.OnLastDeliveryDateChanging(value);
-					this.SendPropertyChanging();
-					this._LastDeliveryDate = value;
-					this.SendPropertyChanged("LastDeliveryDate");
-					this.OnLastDeliveryDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductName", CanBeNull=false)]
-		public string ProductName
-		{
-			get
-			{
-				return this._ProductName;
-			}
-			set
-			{
-				if ((this._ProductName != value))
-				{
-					this.OnProductNameChanging(value);
-					this.SendPropertyChanging();
-					this._ProductName = value;
-					this.SendPropertyChanged("ProductName");
-					this.OnProductNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Payer")]
-		public int PayerId
-		{
-			get
-			{
-				return this._Payer;
-			}
-			set
-			{
-				if ((this._Payer != value))
-				{
-					this.OnPayerIdChanging(value);
-					this.SendPropertyChanging();
-					this._Payer = value;
-					this.SendPropertyChanged("PayerId");
-					this.OnPayerIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Liability")]
-		public decimal Liability
-		{
-			get
-			{
-				return this._Liability;
-			}
-			set
-			{
-				if ((this._Liability != value))
-				{
-					this.OnLiabilityChanging(value);
-					this.SendPropertyChanging();
-					this._Liability = value;
-					this.SendPropertyChanged("Liability");
-					this.OnLiabilityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastSequenceByProduct")]
-		public int LastSequenceByProduct
-		{
-			get
-			{
-				return this._LastSequenceByProduct;
-			}
-			set
-			{
-				if ((this._LastSequenceByProduct != value))
-				{
-					this.OnLastSequenceByProductChanging(value);
-					this.SendPropertyChanging();
-					this._LastSequenceByProduct = value;
-					this.SendPropertyChanged("LastSequenceByProduct");
-					this.OnLastSequenceByProductChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastSequencebySubscription")]
-		public int LastSequenceBySubscription
-		{
-			get
-			{
-				return this._LastSequencebySubscription;
-			}
-			set
-			{
-				if ((this._LastSequencebySubscription != value))
-				{
-					this.OnLastSequenceBySubscriptionChanging(value);
-					this.SendPropertyChanging();
-					this._LastSequencebySubscription = value;
-					this.SendPropertyChanged("LastSequenceBySubscription");
-					this.OnLastSequenceBySubscriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LagByIssues")]
-		public int LagByIssues
-		{
-			get
-			{
-				return this._LagByIssues;
-			}
-			set
-			{
-				if ((this._LagByIssues != value))
-				{
-					this.OnLagByIssuesChanging(value);
-					this.SendPropertyChanging();
-					this._LagByIssues = value;
-					this.SendPropertyChanged("LagByIssues");
-					this.OnLagByIssuesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeliverableIssueId")]
-		public int DeliverableIssueId
-		{
-			get
-			{
-				return this._DeliverableIssueId;
-			}
-			set
-			{
-				if ((this._DeliverableIssueId != value))
-				{
-					this.OnDeliverableIssueIdChanging(value);
-					this.SendPropertyChanging();
-					this._DeliverableIssueId = value;
-					this.SendPropertyChanged("DeliverableIssueId");
-					this.OnDeliverableIssueIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeliverableIssueName", CanBeNull=false)]
-		public string DeliverableIssueName
-		{
-			get
-			{
-				return this._DeliverableIssueName;
-			}
-			set
-			{
-				if ((this._DeliverableIssueName != value))
-				{
-					this.OnDeliverableIssueNameChanging(value);
-					this.SendPropertyChanging();
-					this._DeliverableIssueName = value;
-					this.SendPropertyChanged("DeliverableIssueName");
-					this.OnDeliverableIssueNameChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

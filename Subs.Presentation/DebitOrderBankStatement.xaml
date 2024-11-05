@@ -36,7 +36,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
-                <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Height="554" CanUserAddRows="False" Grid.ColumnSpan="4">
+                <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Height="554" CanUserAddRows="False" Grid.ColumnSpan="4" >
                     <DataGrid.Columns>
                         <DataGridTextColumn x:Name="customerIdColumn1" Binding="{Binding CustomerId}" Header="Customer Id" Width="Auto" IsReadOnly="True"/>
                         <DataGridCheckBoxColumn x:Name="suspendedColumn" Binding="{Binding Suspended}" Header="Suspended" Width="Auto"/>

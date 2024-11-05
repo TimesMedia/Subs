@@ -47,7 +47,7 @@
                 <DataGridTextColumn x:Name="subscriptionIdColumn"  CellStyle="{StaticResource AlignRight}" IsReadOnly="True"  Header="Subscription Id" Binding="{Binding SubscriptionId}"/>
                 <DataGridTextColumn x:Name="productNameColumn" Header="Product name" Binding="{Binding ProductName}"/>
                 <DataGridTextColumn x:Name="payerColumn" CellStyle="{StaticResource AlignRight}" Header="Payer" Binding="{Binding PayerId}"/>
-                <DataGridTextColumn x:Name="liabilityColumn" CellStyle="{StaticResource AlignRight}" Header="DeliverableMinusDue" Binding="{Binding DeliverableMinusDue, Converter={StaticResource lRandConverter}}" />
+                <DataGridTextColumn x:Name="liabilityColumn" CellStyle="{StaticResource AlignRight}" Header="Liability" Binding="{Binding Liability, Converter={StaticResource lRandConverter}}" />
                 <DataGridTextColumn x:Name="lastSequenceByProductColumn"  CellStyle="{StaticResource AlignRight}" Header="Last sequence by product" Binding="{Binding LastSequenceByProduct}"/>
                 <DataGridTextColumn x:Name="lastsequenceBySubscriptionColumn"   CellStyle="{StaticResource AlignRight}" Header="Last sequence by subscription" Binding="{Binding LastSequenceBySubscription}"/>
                 <DataGridTextColumn x:Name="lagByIssuesColumn" CellStyle="{StaticResource AlignRight}" Header="Lag by issues" Binding="{Binding LagByIssues}"/>

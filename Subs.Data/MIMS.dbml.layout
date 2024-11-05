@@ -50,12 +50,6 @@
         <elementListCompartment Id="dfcb8a66-7e0e-4ffb-9b4f-9d17e899ebee" absoluteBounds="10.64, 0.96, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="745227df-57cc-435f-8792-91133e8ff5ca" absoluteBounds="3, 0.5, 2.625, 2.7324039713541666">
-      <DataClassMoniker Name="/MIMSDataContext/Dormant" />
-      <nestedChildShapes>
-        <elementListCompartment Id="27efd1dd-05a0-4d8c-9d0e-dc4408f2d57b" absoluteBounds="3.015, 0.96, 2.5949999999999998, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="47e3a906-7c22-4505-b77d-7f3fc928aa81" absoluteBounds="8, 1.875, 2, 1.5785953776041666">
       <DataClassMoniker Name="/MIMSDataContext/InvoiceRaw" />
       <nestedChildShapes>

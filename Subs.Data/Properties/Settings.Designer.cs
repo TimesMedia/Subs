@@ -54,5 +54,16 @@ namespace Subs.Data.Properties {
                 return ((string)(this["SUBSDWConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PKLWEBDB01;Initial Catalog=MIMS3;Integrated Security=True;Connect Tim" +
+            "eout=30;Encrypt=False;TrustServerCertificate=False")]
+        public string MIMS3ConnectionString1 {
+            get {
+                return ((string)(this["MIMS3ConnectionString1"]));
+            }
+        }
     }
 }

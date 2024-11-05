@@ -6,6 +6,35 @@ using System.Linq;
 
 namespace Subs.Data
 {
+    public class Dormant
+    {
+        public int SubscriptionId { get; set; }
+
+        public DateTime LastDeliveryDate { get; set; }
+        public string ProductName { get; set; }
+
+        public int PayerId { get; set; }
+
+        public decimal Liability { get; set; }
+
+        public int LastSequenceByProduct { get; set; }
+
+        public int LastSequenceBySubscription { get; set; }
+
+        public int LagByIssues { get; set; }
+
+        public int DeliverableIssueId { get; set; }
+
+        public string DeliverableIssueName { get; set; }
+  
+       
+    }
+
+
+
+
+
+
     public static class DeliveryDataStatic
     {
         private static MIMSDataContext gMimsDataContext = new MIMSDataContext(Settings.ConnectionString);
@@ -255,14 +284,43 @@ namespace Subs.Data
         //    }
         //}
 
-        public static List<Dormant> Dormants()
+        public static List<Dormant> GetDormants()
         {
-            List<Dormant> lResult = new List<Dormant>();
-
+            int lCurrentSubscriptionId = 0;
+            SqlConnection lConnection = new SqlConnection();
             try
             {
-                MIMSDataContext lContext = new MIMSDataContext(Settings.ConnectionString);
-                return lContext.MIMS_DeliveryDataStatic_Dormants().ToList();
+                List<Dormant> lDormants = new List<Dormant>();
+                
+                SqlCommand Command = new SqlCommand();
+                SqlDataAdapter Adaptor = new SqlDataAdapter();
+                lConnection.ConnectionString = Settings.ConnectionString;
+                lConnection.Open();
+                Command.Connection = lConnection;
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = "[dbo].[MIMS.DeliveryDataStatic.Dormants]";
+
+                SqlDataReader lReader = Command.ExecuteReader();
+
+                while (lReader.Read())
+                {
+                    lCurrentSubscriptionId = lReader.GetInt32(3);
+
+                    Dormant lDormant = new Dormant();
+                    lDormant.LastDeliveryDate = lReader.GetDateTime(0);
+                    lDormant.DeliverableIssueName = lReader.GetString(1);
+                    lDormant.DeliverableIssueId = lReader.GetInt32(2);
+                    lDormant.SubscriptionId = lReader.GetInt32(3);
+                    lDormant.ProductName = lReader.GetString(4);
+                    lDormant.PayerId = (int)lReader.GetInt32(5);
+                    lDormant.Liability = (decimal)lReader.GetDecimal(6);
+                    lDormant.LastSequenceByProduct = lReader.GetInt32(7);
+                    lDormant.LastSequenceBySubscription = lReader.GetInt32(8);
+                    lDormant.LagByIssues = lReader.GetInt32(9);
+
+                    lDormants.Add(lDormant);
+                }
+                return lDormants;
             }
             catch (Exception ex)
             {
@@ -273,11 +331,18 @@ namespace Subs.Data
                 do
                 {
                     ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "static DeliveData", "Dormants", "");
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "DeliveryDataStatic", "GetDormants", "CurrentSubscriptionId = " + lCurrentSubscriptionId.ToString());
                     CurrentException = CurrentException.InnerException;
                 } while (CurrentException != null);
 
-                return lResult;
+                throw ex;
+            }
+            finally
+            {
+                if (lConnection.State != ConnectionState.Closed)
+                {
+                    lConnection.Close();
+                }
             }
         }
 
