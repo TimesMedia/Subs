@@ -1195,11 +1195,10 @@ namespace Subs.MimsWeb.Controllers
                     return View("Empty");
                 }
 
-                int lToken = (int)lLoginRequest.CustomerId;
+                int lToken = (int)lLoginRequest.CustomerId * 16 * (DateTime.Now.Hour + 1);
 
                 return Redirect("https://www.mimscpd.co.za?Id=" + lToken.ToString());
 
-                //return View("Empty");
             }
             catch (Exception ex)
             {

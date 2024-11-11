@@ -180,16 +180,14 @@ namespace Subs.Presentation
 
 
                 gPayment2.Clear();
-                gPayment2 = gInvoiceAndPayment2.Where(p => p.OperationId == (int)Operation.Balance
-                                                      || p.OperationId == (int)Operation.Pay
+                gPayment2 = gInvoiceAndPayment2.Where(p => p.OperationId == (int)Operation.Pay
                                                       || p.OperationId == (int)Operation.Refund
                                                       || p.OperationId == (int)Operation.ReversePayment).OrderBy(q => q.TransactionId).ThenBy(r => r.Date).ToList();
 
               
                 lStage = "Invoice";
 
-                gInvoice2 = gInvoiceAndPayment2.Where(p => !(p.OperationId == (int)Operation.Balance  // Take the rest, i.e. the compliment
-                                                        || p.OperationId == (int)Operation.Pay
+                gInvoice2 = gInvoiceAndPayment2.Where(p => !(p.OperationId == (int)Operation.Pay
                                                         || p.OperationId == (int)Operation.Refund
                                                         || p.OperationId == (int)Operation.ReversePayment)).OrderBy(q => q.InvoiceId).ThenBy(r => r.Date).ToList();
                

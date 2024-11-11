@@ -136,10 +136,9 @@
                             <Label x:Name="labelSelectedReversalIssue" DockPanel.Dock="Right"></Label>
                             <Button x:Name="buttonSelectReversalIssue" Content="Select issue" HorizontalAlignment="Left"  Padding="3" Margin="5" Click="buttonSelectReversalIssue_Click"/>
                         </DockPanel>
-
                         <DockPanel>
                             <Label Content="provide delivery start time"  Margin="5,0,0,0" DockPanel.Dock="Left"></Label>
-                            <TextBox x:Name="textDateTimePicker" DockPanel.Dock="Right" Margin="15" Width="306" SelectedDateFormat="Short" />
+                            <TextBox x:Name="textDateTimePicker" DockPanel.Dock="Right" Margin="15" Width="306"  />
                         </DockPanel>
                         <Button x:Name="buttonReverse" Content="Reverse" HorizontalAlignment="Left"  Padding="3" Margin="5,0,0,5"
                         Click="buttonReverse_Click" />  
@@ -149,10 +148,10 @@
 
                 <!--<GroupBox Header="Miscelaneous" Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Blue" BorderThickness="2">
                     <StackPanel Orientation="Horizontal">
-                        --><!--<Button x:Name="buttonLiability" Content="Liability audit" HorizontalAlignment="Left"  Padding="3" Margin="5"
-                        Click="buttonLiabilities_Click" Tag="AuthorityHighest" Loaded="SetVisibility"/>-->
-                        <!--<Button x:Name="buttonFindInNvalidCheckpoints" Content="FindInvalidCheckpoints" HorizontalAlignment="Left"  Padding="3" Margin="5"
-                        Click="buttonFindInvalidCheckpoints" Tag="AuthorityHighest" Loaded="SetVisibility"/>--><!--
+                        <Button x:Name="buttonLiability" Content="Liability audit" HorizontalAlignment="Left"  Padding="3" Margin="5"
+                        Click="buttonLiabilities_Click" Tag="AuthorityHighest" Loaded="SetVisibility"/>
+                        <Button x:Name="buttonFindInNvalidCheckpoints" Content="FindInvalidCheckpoints" HorizontalAlignment="Left"  Padding="3" Margin="5"
+                        Click="buttonFindInvalidCheckpoints" Tag="AuthorityHighest" Loaded="SetVisibility"/>
 
                     </StackPanel>
                 </GroupBox>-->

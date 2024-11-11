@@ -1282,8 +1282,7 @@ namespace Subs.Presentation
                 lStage = "Payment";
 
                 gPayment2.Clear();
-                gPayment2 = gInvoiceAndPayment2.Where(p => p.OperationId == (int)Operation.Balance
-                                                      || p.OperationId == (int)Operation.Pay
+                gPayment2 = gInvoiceAndPayment2.Where(p => p.OperationId == (int)Operation.Pay
                                                       || p.OperationId == (int)Operation.Refund
                                                       || p.OperationId == (int)Operation.ReversePayment).OrderBy(q => q.TransactionId).ThenBy(r => r.Date).ToList();
                 if (gPayment2 != null)
@@ -1296,8 +1295,7 @@ namespace Subs.Presentation
                 lStage = "Invoice";
 
                 gInvoice2.Clear();
-                gInvoice2 = gInvoiceAndPayment2.Where(p => !(p.OperationId == (int)Operation.Balance
-                                                        || p.OperationId == (int)Operation.Pay
+                gInvoice2 = gInvoiceAndPayment2.Where(p => !(p.OperationId == (int)Operation.Pay
                                                         || p.OperationId == (int)Operation.Refund
                                                         || p.OperationId == (int)Operation.ReversePayment)).OrderBy(q => q.InvoiceId).ThenBy(r => r.Date).ToList();
 
@@ -1351,8 +1349,7 @@ namespace Subs.Presentation
 
 
                 gPayment2.Clear();
-                gPayment2 = gInvoiceAndPayment2.Where(p => p.OperationId == (int)Operation.Balance
-                                                      || p.OperationId == (int)Operation.Pay
+                gPayment2 = gInvoiceAndPayment2.Where(p => p.OperationId == (int)Operation.Pay
                                                       || p.OperationId == (int)Operation.Refund
                                                       || p.OperationId == (int)Operation.ReversePayment).OrderBy(q => q.TransactionId).ThenBy(r => r.Date).ToList();
               
@@ -1363,8 +1360,7 @@ namespace Subs.Presentation
 
                 lStage = "Invoice";
 
-                gInvoice2 = gInvoiceAndPayment2.Where(p => !(p.OperationId == (int)Operation.Balance  // Take the rest, i.e. the compliment
-                                                        || p.OperationId == (int)Operation.Pay
+                gInvoice2 = gInvoiceAndPayment2.Where(p => !(p.OperationId == (int)Operation.Pay
                                                         || p.OperationId == (int)Operation.Refund
                                                         || p.OperationId == (int)Operation.ReversePayment)).OrderBy(q => q.InvoiceId).ThenBy(r => r.Date).ToList();
               
@@ -1732,7 +1728,7 @@ namespace Subs.Presentation
         private void Click_HighlightAllocations(object sender, RoutedEventArgs e)
         {
             InvoiceAndPayment lPayment = (InvoiceAndPayment)gPaymentViewSource.View.CurrentItem;
-            if (lPayment.OperationId != (int)Operation.Pay && lPayment.OperationId != (int)Operation.Balance)
+            if (lPayment.OperationId != (int)Operation.Pay )
             {
                 MessageBox.Show("Sorry, I respond only to payment lines.");
                 return;

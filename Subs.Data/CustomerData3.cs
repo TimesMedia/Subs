@@ -497,16 +497,15 @@ namespace Subs.Data
 
                 // Set Balance to LastRow **********************************************************************************************
 
-                IEnumerable<InvoiceAndPayment> lElement = gAllInvoiceAndPayment.Where(q => q.OperationId == (int)Operation.Balance).ToList();
-                if (lElement.Count() == 1)
-                {
-                    lElement.First().LastRow = true;
-                }
+                //IEnumerable<InvoiceAndPayment> lElement = gAllInvoiceAndPayment.Where(q => q.OperationId == (int)Operation.Balance).ToList();
+                //if (lElement.Count() == 1)
+                //{
+                //    lElement.First().LastRow = true;
+                //}
 
                 // Process the payments by grouping the relevant stuff together *********************************************************
 
-                lPayment = gAllInvoiceAndPayment.Where(p => p.OperationId == (int)Operation.Balance
-                                                       || p.OperationId == (int)Operation.Pay
+                lPayment = gAllInvoiceAndPayment.Where(p => p.OperationId == (int)Operation.Pay
                                                        || p.OperationId == (int)Operation.Refund
                                                        || p.OperationId == (int)Operation.ReversePayment).OrderBy(q => q.TransactionId).ThenBy(r => r.Date).ToList();
 
@@ -552,8 +551,7 @@ namespace Subs.Data
 
                 // Calculate the invoices ******************************************************************************************
 
-                lInvoice = gAllInvoiceAndPayment.Where(p => !(p.OperationId == (int)Operation.Balance
-                                                         || p.OperationId == (int)Operation.Pay
+                lInvoice = gAllInvoiceAndPayment.Where(p => !(p.OperationId == (int)Operation.Pay
                                                          || p.OperationId == (int)Operation.Refund
                                                          || p.OperationId == (int)Operation.ReversePayment)).OrderBy(q => q.InvoiceId).ThenBy(r => r.Date).ToList();
 
@@ -2600,10 +2598,7 @@ namespace Subs.Data
 
                 List<LiabilityRecord> lLiabilityList = gAllInvoiceAndPayment.Where(p => p.OperationId == (int)Operation.Pay
                                                                                       || p.OperationId == (int)Operation.ReversePayment
-                                                                                      || p.OperationId == (int)Operation.Refund
-                                                                                      || p.OperationId == (int)Operation.Balance)
-                                                                                     //|| p.OperationId == (int)Operation.WriteOffMoney
-                                                                                      //|| p.OperationId == (int)Operation.ReverseWriteOffMoney)
+                                                                                      || p.OperationId == (int)Operation.Refund)
                                                   .Select(v => new LiabilityRecord()
                                                   {
                                                       TransactionId = v.TransactionId,
@@ -2621,9 +2616,7 @@ namespace Subs.Data
 
                 List<LiabilityRecord> lPaymentList = lLiabilityList.Where(p => p.OperationId == (int)Operation.Pay
                                                                                       || p.OperationId == (int)Operation.ReversePayment
-                                                                                      || p.OperationId == (int)Operation.Refund
-                                                                                      || p.OperationId == (int)Operation.Balance
-                                                                                     ).ToList();
+                                                                                      || p.OperationId == (int)Operation.Refund).ToList();
 
                 //SumOfPayments = -lPaymentList.Sum(p => p.Value);
                 gCustomerAdapter.Update(gTable[0]);

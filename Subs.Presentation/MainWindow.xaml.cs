@@ -569,18 +569,17 @@ namespace Subs.Presentation
         {
             try
             {
-                (int, string, string, string,string) Result = DeliveryAddressStatic.AddressInStrings(396663);
-                var lAddress = DeliveryAddressStatic.AddressInStrings(396751);
+                int Content = 100;
 
-                // Get the verified data
-                string Street = lAddress.Street;
-                string Suburb = lAddress.Suburb;
-                string City = lAddress.City;
-                string Province = lAddress.Province;
-                int CountryId = lAddress.CountryId;
+                int Token = Content * DateTime.Now.Hour;
 
+                int Result = Token / DateTime.Now.Hour;
+            
 
-                MessageBox.Show(Result.ToString());
+                MessageBox.Show(Content.ToString() 
+                    + " " +Token.ToString()
+                    + " " + Result.ToString());
+                  
 
             }
             catch (Exception ex)
