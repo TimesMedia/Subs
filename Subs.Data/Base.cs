@@ -175,7 +175,7 @@ namespace Subs.Data
         CancelCustomer = 15,
         Init_Sub = 16,
         DeliverableUpTo = 17,
-        DueBalance = 18,
+        Balance = 18,  // Reserved for balance in statement
         VATInvoice = 19,
         UpdateCustomer = 20,
         LiabilityBalance = 21,
@@ -191,8 +191,8 @@ namespace Subs.Data
         ChangeAutomaticRenewal = 31,
         AllocatePaymentToInvoice = 32,
         Statement = 33, 
-        PayU = 34
-
+        PayU = 34, 
+        DueBalance = 35
     }
 
     public enum ReturnAction

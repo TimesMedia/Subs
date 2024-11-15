@@ -23,6 +23,18 @@ namespace Subs.Data
         public DateTime LastActivity { get; set; }
     }
 
+    public class DeliverableDetail
+    {
+        public string IssueDescription { get; set; }
+        public DateTime StartDate { get; set; }
+        public int Units { get; set; }
+        public decimal Amount  { get; set; }
+        public decimal Accumulated { get; set; }
+    }
+
+
+
+
 
 
     public class InvoiceAndPayment
@@ -1012,7 +1024,6 @@ namespace Subs.Data
 
         #region Properties - public machine readable
 
-
         public List<InvoiceAndPayment> InvoiceAndPayment
         {
             get
@@ -1020,7 +1031,6 @@ namespace Subs.Data
                 return (List<InvoiceAndPayment>)gAllInvoiceAndPayment;
             }
         }
-
 
         public int CustomerId
         {
@@ -2572,12 +2582,62 @@ namespace Subs.Data
             }
         }
 
+        public static List<DeliverableDetail> GetDeliverable(int pPayerId)
+        {
+            SqlConnection lConnection = new SqlConnection();
+            int lCurrentCustomerId = 0;
+            try
+            {
+                List<DeliverableDetail> lDeliverableDetails = new List<DeliverableDetail>();
 
+                SqlCommand Command = new SqlCommand();
+                SqlDataAdapter Adaptor = new SqlDataAdapter();
+                lConnection.ConnectionString = Settings.ConnectionString;
+                lConnection.Open();
+                Command.Connection = lConnection;
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = "[dbo].[MIMS.CustomerData.DeliverableDetail]";
 
+                Command.Parameters.Add("@PayerId", SqlDbType.Int);
+                Command.Parameters["@PayerId"].Value = pPayerId;
 
+                SqlDataReader lReader = Command.ExecuteReader();
 
+                while (lReader.Read())
+                {
+                    DeliverableDetail lDeliveryableDetail = new DeliverableDetail();
+                    lDeliveryableDetail.IssueDescription = lReader.GetString(0);
+                    lDeliveryableDetail.StartDate = lReader.GetDateTime(1);
+                    lDeliveryableDetail.Units = lReader.GetInt32(2);
+                    lDeliveryableDetail.Amount = lReader.GetDecimal(3);
+                    lDeliverableDetails.Add(lDeliveryableDetail);
+                }
 
+                return lDeliverableDetails;
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
 
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, "CustomersData", "GetDeliverable", "Customer = " + lCurrentCustomerId.ToString());
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                throw ex;
+            }
+            finally
+            {
+                if (lConnection.State != ConnectionState.Closed)
+                {
+                    lConnection.Close();
+                }
+            }
+        }
 
 
 
@@ -2935,8 +2995,7 @@ namespace Subs.Data
                 lConnection.Close();
             }
         }
-
-  
+          
         public static List<CustomerData3> CustomersWithUnverifiedCompany()
         {
             try
@@ -3066,8 +3125,6 @@ namespace Subs.Data
             }
         }
 
-
-
         public static int GetLastInvoiceId(int pPayerId)
         {
             try
@@ -3112,7 +3169,6 @@ namespace Subs.Data
                 throw ex;
             }
         }
-
 
         public static (DateTime CheckpointDatePayment, DateTime CheckpointDateInvoice) CalculateCheckpoint(int pInvoiceId)
         {

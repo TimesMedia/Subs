@@ -137,9 +137,9 @@ namespace Subs.Presentation
             Discrepancies = 3,
             //Liability = 4,
             Due = 4,
-            XPS = 5
- 
-        }
+            Deliverable = 5,
+            XPS = 6
+         }
 
         private Subs.Presentation.CustomerUpdateExists2 gCustomerExistsForm;
 
@@ -1022,10 +1022,54 @@ namespace Subs.Presentation
         }
 
 
+        private void Click_ShowDeliverable(object sender, RoutedEventArgs e)
+        {
+            this.Cursor = Cursors.Wait;
+            try
+            {
+                // Get the report data
+
+                SelectCurrentCustomer();
+
+                List<DeliverableDetail> lDeliverableDetails = CustomerData3.GetDeliverable(gCurrentCustomer.CustomerId);
+
+                if (lDeliverableDetails.Count >= 1)
+                {
+                    lDeliverableDetails[0].Accumulated = lDeliverableDetails[0].Amount;
+                }
 
 
-  
-        private void Click_Statement(object sender, RoutedEventArgs e)
+                for ( int i = 1; i <= (lDeliverableDetails.Count -1); i++)
+                {
+                        lDeliverableDetails[i].Accumulated = lDeliverableDetails[i].Amount + lDeliverableDetails[i-1].Accumulated;
+                }
+
+                DeliverableDataGrid.ItemsSource = lDeliverableDetails;
+                SelectTab(PickerTabs.Deliverable);
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "Click_ShowDeliverable", "CustomerId = " + gCurrentCustomer.CustomerId.ToString());
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Arrow;
+
+            }
+        }
+
+    private void Click_Statement(object sender, RoutedEventArgs e)
         {
             SelectCurrentCustomer();
             GoToStatement();
@@ -2442,11 +2486,17 @@ namespace Subs.Presentation
 
                 lDiscrepancySelection = gDiscrepancy.Where(p => p.Due < -1).ToList();
 
+                decimal lTotal = 0;
+
                 foreach (Discrepancy item in lDiscrepancySelection)
                 {
+                    lTotal = lTotal + item.Due;
                     item.Due = -item.Due;
                     item.DeliverableMinusDue = 0.0M;
                 }
+
+                lTotal = -lTotal;
+                textOverPayment.Text = lTotal.ToString("###,###,###,##0.00");
 
                 gDiscrepancyViewSource.Source = lDiscrepancySelection;
 
@@ -2482,11 +2532,16 @@ namespace Subs.Presentation
 
                 lDiscrepancySelection = gDiscrepancy.Where(p => p.DeliverableMinusDue < -1).ToList();
 
+                decimal lTotal = 0;
                 foreach (Discrepancy item in lDiscrepancySelection)
                 {
+                    lTotal = lTotal + item.DeliverableMinusDue;
                     item.DeliverableMinusDue = -item.DeliverableMinusDue;
                     item.Due = 0.0M;
                 }
+
+                lTotal = -lTotal;
+                textOverDelivery.Text = lTotal.ToString("###,###,###,##0.00"); 
 
                 gDiscrepancyViewSource.Source = lDiscrepancySelection;
 
@@ -2901,6 +2956,7 @@ namespace Subs.Presentation
 
         #endregion
 
+    
     }
 }
 

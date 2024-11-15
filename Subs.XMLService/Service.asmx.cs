@@ -192,11 +192,22 @@ namespace Subs.XMLService
             TokenResult lTokenResult = new TokenResult();
             try
             {
-                int lReceiverId = pTokenId / pProductId;
-
                 if (Authentication.Source == "NJA" &&
                 Authentication.Type == "MOBIMims")
                 {
+                    if (pTokenId % (pProductId * (DateTime.Now.Hour + 1)) != 0)
+                    {
+                        lTokenResult.Reason = "This is not a valid token";
+                        lTokenResult.Title = "NoTitle";
+                        lTokenResult.FirstName = "NoFirstName";
+                        lTokenResult.Surname = "NoSurname";
+                        lTokenResult.CustomerId = "NoCustomerId";
+                        lTokenResult.Password = "No Password Issued";
+                        return lTokenResult;
+                    }
+
+                    int lReceiverId = pTokenId / (pProductId * (DateTime.Now.Hour + 1));
+
                     if (!CustomerData3.Exists((int)lReceiverId))
                     {
                         lTokenResult.Reason = "There is no such CustomerId";

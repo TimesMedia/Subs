@@ -632,7 +632,7 @@ namespace Subs.XMLServiceTest
                 ServiceReference1.AuthorizeTokenRequest lRequest = new AuthorizeTokenRequest();
                 lRequest.AuthorizationHeader = lHeader;
                 lRequest.pProductId = 88;
-                lRequest.pTokenId = 9525472; // 108244 - Riette;
+                lRequest.pTokenId = 108244 * 88 * 17; // 108244 - Riette;
                
 
                 AuthorizeTokenResponse lResponse = new AuthorizeTokenResponse();

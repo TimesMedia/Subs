@@ -65,7 +65,7 @@ from #Due as a inner join #Liable as b on a.PayerId = b.PayerId and a.Rundate = 
 
 insert into FactAccounting([RunDate], [PayerId], [InvoiceId], DateFrom, [OperationId], [VatPercentage], [Exc], [Vat], [Inc], [DueOnRunDate],[LiableOnRundate])
 
-select a.RunDate, a.PayerId, 0, '2024/07/01', 18, 
+select a.RunDate, a.PayerId, 0, '2024/07/01', 35, 
        case when b.CountryId = 61 then 15 else 0 end, 
        case when b.CountryId = 61 then a.Due * 0.85 else a.Due end,
 	   case when b.CountryId = 61 then a.Due * 0.15 else 0 end,

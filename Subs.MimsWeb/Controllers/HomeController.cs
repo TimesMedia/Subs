@@ -1218,6 +1218,46 @@ namespace Subs.MimsWeb.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult DIC()
+        {
+            try
+            {
+                // Ensure that the person is logged in
+
+                LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+
+                if (lLoginRequest.CustomerId == null)
+                {
+                    ViewBag.Message = "Sorry, I cannot take you to DIC unless you are first logged in.";
+                    return View("Empty");
+                }
+
+                int lToken = (int)lLoginRequest.CustomerId * 88 * (DateTime.Now.Hour + 1);
+
+                return Redirect("https://drugchecker.mims.co.za/login?Id=" + lToken.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                //Display all the exceptions
+
+                Exception CurrentException = ex;
+                int ExceptionLevel = 0;
+                do
+                {
+                    ExceptionLevel++;
+                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "DIC", "");
+                    CurrentException = CurrentException.InnerException;
+                } while (CurrentException != null);
+
+                ViewBag.Message = ex.Message;
+                return new ViewResult();
+            }
+        }
+
+
+
 
         public ActionResult SelectMIC()
         {
