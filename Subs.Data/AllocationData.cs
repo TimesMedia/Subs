@@ -175,25 +175,27 @@ namespace Subs.Data
                     item.StatementBalance = 0;
                 }
 
-                // Create new LastRow flags
+                // Create new LastRow flags, but only if there are payments
 
-                int lCurrentPaymentId = gPaymentList[0].TransactionId;
-
-                for (int i = 1; i < gPaymentList.Count; i++)
+                if (gPaymentList.Count > 0)
                 {
-                    if (gPaymentList[i].TransactionId != lCurrentPaymentId)
+                    int lCurrentPaymentId = gPaymentList[0].TransactionId;
+
+                    for (int i = 1; i < gPaymentList.Count; i++)
                     {
-                        gPaymentList[i - 1].LastRow = true;
+                        if (gPaymentList[i].TransactionId != lCurrentPaymentId)
+                        {
+                            gPaymentList[i - 1].LastRow = true;
+                        }
+
+                        lCurrentPaymentId = gPaymentList[i].InvoiceId;
                     }
 
-                    lCurrentPaymentId = gPaymentList[i].InvoiceId;
+                    // The last one is true as well
+
+                    gPaymentList[gPaymentList.Count - 1].LastRow = true;
+
                 }
-
-                // The last one is true as well
-
-                gPaymentList[gPaymentList.Count - 1].LastRow = true;
-
-
 
                 /////////////////////////////////// Reset the LastRow flags for Invoices
 
