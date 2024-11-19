@@ -328,6 +328,9 @@
     <Content Include="Images\HamburgerOff.gif" />
     <Content Include="Images\HamburgerOn.gif" />
     <Content Include="Images\Medicine comparison.jpg" />
+    <Content Include="Images\MIMS-favicon-B.png" />
+    <Content Include="Images\MIMS-favicon-O.png" />
+    <Content Include="Images\MIMS-favicon-W.png" />
     <Content Include="Images\PEmims-mobimims.jpg" />
     <Content Include="Images\PharmaDynamics.png" />
     <Content Include="Images\PPrint-emims.jpg" />
