@@ -218,6 +218,8 @@ namespace Subs.MimsWeb.Controllers
                     else
                     {
                         ViewBag.Message = "There are " + lBasket.BasketItems.Count() + " products selected, resulting in a price of " + lBasket.TotalDiscountedPrice.ToString("R #####0.00");
+                        ViewBag.Message = "You are already subscribed to this product, please look under ACTIVE_SUBS tab to view your Active Subscriptions";
+
                     }
                 }
                 else

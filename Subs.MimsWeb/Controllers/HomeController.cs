@@ -1236,7 +1236,7 @@ namespace Subs.MimsWeb.Controllers
                 int lToken = (int)lLoginRequest.CustomerId * 88 * (DateTime.Now.Hour + 1);
 
                 return Redirect("https://drugchecker.mims.co.za/?token_id" + lToken.ToString());
-              
+                return Redirect("https://www.mimscpd.co.za?Id=" + lToken.ToString());
 
             }
             catch (Exception ex)
@@ -1419,7 +1419,8 @@ namespace Subs.MimsWeb.Controllers
                 } while (CurrentException != null);
 
 
-                return View();
+               
+                return Redirect("https://subs.mims.co.za/");
             }
         }
     }
