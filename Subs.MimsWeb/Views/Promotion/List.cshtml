@@ -1,6 +1,8 @@
 ﻿@using Subs.Data
 @using Subs.MimsWeb.Models;
 @model Subs.Data.WebProducts
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <style>
     .center {
         display: block;
@@ -15,8 +17,9 @@
     ViewBag.Title = "ProductCatalog";
     Html.EnableClientValidation(false);  // p619
 }
-<div class="badge">
-<img src="~/Images/BlackFridaySale.png"  alt="Black Friday" class="center"/>
+<div class="container text-center">
+    <img src="~/Images/BlackFridaySale.png" alt="Black Friday" class="center" />
+    <span class="center" style="font-weight: bold; color: red;">   &nbsp; &nbsp; &nbsp; &nbsp;   PLEASE NOTE: ALL PRICES EXCLUDE VAT AND DELIVERY FEES!! </span>
 </div>
 
 @helper ProductMenu()
@@ -276,54 +279,114 @@
                     </td>
 
                     <td>
-                        <div class="blokcontainer" style="padding-bottom:10vh">
+                        <div class="blokcontainer">
                             @{
                                 int i = 0;
                                 if (Model != null)
                                 {
-                                    foreach (WebProduct p in Model.ListOfWebProducts)
+                                    foreach (WebProduct p in Model.ListOfWebProducts) 
                                     {
-                                        <div class="insideblokcontainer">
-                                            <textarea rows="3" cols="23" readonly style="font-size:14px;font-weight:500;" onmouseover="Describe(@i)" onmouseout="Undescribe(@i)">@p.Heading</textarea>
+                                                        <div class="insideblokcontainer">
+                                                            <textarea rows="3" cols="23" readonly style="font-size:18px;font-weight:bold;" onmouseover="Describe(@i)" onmouseout="Undescribe(@i)">@p.Heading</textarea>
 
-                                            <div class="imageinblok" onmouseover="Describe(@i)" onmouseout="Undescribe(@i)" style="background: url(data:jpeg;base64,@p.PictureAsString);background-size:100% 100%;">
-                                            </div>
+                                                            <div class="imageinblok" onmouseover="Describe(@i)" onmouseout="Undescribe(@i)" style="background: url(data:jpeg;base64,@p.PictureAsString);background-size:100% 100%;">
+                                                            </div>
 
-                                            <div class="DescriptionStyle" name="lDescription">
-                                                @Html.Raw(p.ProductDescription)
-                                            </div>
+                                                            <div class="DescriptionStyle" name="lDescription">
+                                                                @Html.Raw(p.ProductDescription)
+                                                            </div>
 
 
-                                            @{
-                                                LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
-                                                if (lLoginRequest.CustomerId != null)
-                                                {
-                                                    <div>
-                                                        <span style="font-weight:bold">@p.Price.ToString("R #####0.00")</span>
-                                                        @if (p.CPDEnabled)
-                                                        {
-                                                            <label style="color:black; font-size:medium;font-weight:700; display:inline;margin-left:10px">with CPD</label>
-                                                        }
+                                                            @{
+                                                                LoginRequest lLoginRequest = SessionHelper.GetLoginRequest(Session);
+                                                                if (lLoginRequest.CustomerId != null)
+                                                                {
+                                                                    <div>
+                                                                        <span style="font-weight:bold"><s>@p.Price.ToString("R #####0.00")</s></span><br />
+                                                                        
+                                                                        @*<span style="font-weight:bold">@p.DiscountedPrice.ToString("R #####0.00")</span><br />*@
 
-                                                        <p> @Html.ActionLink("Add to cart", "AddMultipleToBasket", "Promotion", new { pProductId1 = p.ProductId, pProductId2 = 0 }, null)</p>
+                                                                        @*Added the Blackfriday prices and scrapped the normal but after Blackfriday we will revert back to the normal prices*@
+                                                                        @if(p.ProductId == 25)
+                                                                        {
+                                                                            <span style="font-weight: bold; color: red">@p.DiscountedPrice.ToString("R #####1152.00")</span><br />
+                                                                        } 
+                                                                        @if (p.ProductId == 53)
+                                                                        {
+                                                                            <span style="font-weight:bold; color:red">@p.DiscountedPrice.ToString("R #####194.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 8)
+                                                                        {
+                                                                            <span style="font-weight: bold; color: red">@p.DiscountedPrice.ToString("R #####592.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 84)
+                                                                        {
+                                                                            <span style="font-weight: bold; color: red">@p.DiscountedPrice.ToString("R #####154.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 43)
+                                                                        {
+                                                                            <span style="font-weight: bold; color: red">@p.DiscountedPrice.ToString("R #####270.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 41)
+                                                                        {
+                                                                            <span style="font-weight: bold; color: red">@p.DiscountedPrice.ToString("R #####363.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 10)
+                                                                        {
+                                                                            <span style="font-weight: bold; color: red">@p.DiscountedPrice.ToString("R #####224.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 32)
+                                                                        {
+                                                                            <span style="font-weight: bold; color: red">@p.DiscountedPrice.ToString("R #####1164.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 6)
+                                                                        {
+                                                                            <span style="font-weight: bold; color: red">@p.DiscountedPrice.ToString("R #####256.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 86)
+                                                                        {
+                                                                            <span style="font-weight: bold; color: red">@p.DiscountedPrice.ToString("R #####63.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 17)
+                                                                        {
+                                                                            <span style="font-weight: bold; color: red">@p.DiscountedPrice.ToString("R #####1134.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 1)
+                                                                        {
+                                                                            <span style="font-weight: bold; color: red">@p.DiscountedPrice.ToString("R #####1192.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 28)
+                                                                        {
+                                                                            <span style="font-weight: bold; color:red">@p.DiscountedPrice.ToString("R #####79.00")</span><br />
+                                                                        }
+                                                                        @if (p.ProductId == 88)
+                                                                        {
+                                                                            <span style="font-weight: bold; color:red">@p.DiscountedPrice.ToString("R #####795.00")</span><br />
+                                                                        }
+                                                                        @*@if (p.CPDEnabled)
+                                                                        {
+                                                                            <label style="color:black; font-size:small;font-weight:700; display:inline;margin-left:10px"></label>
+                                                                        }*@
 
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <p>
-                                                        <label class="DescriptionStyle" style="visibility:visible">
-                                                            To order, please register and/or login first.
-                                                        </label>
+                                                                        <p> @Html.ActionLink("Add to cart", "AddMultipleToBasket", "Promotion", new { pProductId1 = p.ProductId, pProductId2 = 0 }, null)</p>
 
-                                                    </p>
-                                                }
-                                            }
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>
+                                                                        <label class="DescriptionStyle" style="visibility:visible">
+                                                                            To order, please register and/or login first.
+                                                                        </label>
 
-                                            @Html.Hidden("[" + i + "].Heading", p.Heading)
-                                            @Html.Hidden("[" + i + "].ProductId", p.ProductId)
+                                                                    </p>
+                                                                }
+                                                            }
 
-                                        </div>
+                                                            @Html.Hidden("[" + i + "].Heading", p.Heading)
+                                                            @Html.Hidden("[" + i + "].ProductId", p.ProductId)
+
+                                                        </div>
                                         i++;
                                     }
                                 }

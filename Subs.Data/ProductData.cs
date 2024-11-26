@@ -21,7 +21,7 @@ namespace Subs.Data
         private decimal _FullPrice;
         private decimal _ExplicitDiscountPercentage = 0M;
         private decimal _FinalPriceOverride = 0M;
- 
+
         public string ProductName { get; set; }
         public SubscriptionData3 Subscription { get; set; }
         public string Warning { get; set; }
@@ -117,26 +117,36 @@ namespace Subs.Data
         public int ProductId { get; set; }
         public int Type { get; set; }
         public int Medium { get; set; }
-        public int Category {get; set; }
+        public int Category { get; set; }
         public SubscriptionData3 Subscription { get; set; }
         public int DisplaySequence { get; set; }
-         public bool CPDEnabled { get; set;} 
-        public string PictureAsString { get; set;}
+        public bool CPDEnabled { get; set; }
+        public string PictureAsString { get; set; }
         public string Heading { get; set; }
         public string ProductDescription { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal Price { get; set; }
+        public decimal DiscountedPrice { get; set; }
+
     }
 
     public class WebProducts
     {
-        public string Bulletin { get; set;}
-        public int ProductSelector { get; set;}
-        public List<WebProduct> ListOfWebProducts { get; set;}
+        public string Bulletin { get; set; }
+        public int ProductSelector { get; set; }
+        public List<WebProduct> ListOfWebProducts { get; set; }
     }
 
 
+   public class blackfriday
+    {
+        public decimal DiscountedPrice { get; set; }
+    }
 
+    public class blackfridayspecial
+    {
+        public List<blackfriday> listofSpecials { get; set; }
+    }
 
     public class DeskTopProduct
     {
