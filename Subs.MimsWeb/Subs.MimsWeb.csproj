@@ -317,6 +317,7 @@
     <Content Include="Images\1 week to go.png" />
     <Content Include="Images\1-5 March.png" />
     <Content Include="Images\arena.png" />
+    <Content Include="Images\BlackFridaySale.png" />
     <Content Include="Images\CPDLogo1.jpg" />
     <Content Include="Images\DIC Banner ad.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -328,6 +329,7 @@
     <Content Include="Images\HamburgerOff.gif" />
     <Content Include="Images\HamburgerOn.gif" />
     <Content Include="Images\Medicine comparison.jpg" />
+    <Content Include="Images\MIMS-favicon-B.png" />
     <Content Include="Images\PEmims-mobimims.jpg" />
     <Content Include="Images\PharmaDynamics.png" />
     <Content Include="Images\PPrint-emims.jpg" />
