@@ -1,5 +1,5 @@
 delete from FactAccounting
-where Rundate = '2024/11/18'
+where Rundate = '2024/11/19'
 
 
 select distinct Rundate
