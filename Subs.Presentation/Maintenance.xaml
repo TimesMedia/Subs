@@ -92,12 +92,12 @@
                         <Button x:Name="buttonInvoiceDirective" Content="Create directives" Padding="3" Margin="3"
                                     Click="buttonInvoiceDirective_Click"/>
                         <Label Grid.Column="1">from TransactionId:</Label>
-                        <TextBox x:Name="textFromTransactionId"  Grid.Column="2" TextAlignment="Right" IsReadOnly="True">0</TextBox>
+                        <TextBox x:Name="textFromTransactionId"  Grid.Column="2" TextAlignment="Right" IsReadOnly="False">0</TextBox>
 
                         <Button x:Name="buttonInvoiceForCustomer" Content="Create directives" Padding="3" Margin="3"  Grid.Row="1"
                                     Click="buttonInvoiceForPayerId_Click"/>
                         <Label Grid.Column="1"  Grid.Row="1">for PayerId:</Label>
-                        <TextBox x:Name="textForPayerId"  Grid.Column="2" TextAlignment="Right" Grid.Row="1">0</TextBox>
+                        <TextBox x:Name="textForPayerId"  Grid.Column="2" TextAlignment="Right" Grid.Row="1" IsReadOnly="False">0</TextBox>
 
                         
                         <Button x:Name="buttonInvoiceRender"  Grid.Row="3" Grid.Column="0" Content="Render"  Padding="3"
@@ -107,7 +107,7 @@
                         <Button x:Name="buttonInvoiceEmail" Content="Email"  Grid.Row="4" Grid.Column="0" Padding="3" Margin="3"
                         Click="buttonInvoiceEmail_Click"/>
                         <TextBox x:Name="textInvoiceCustomerId"   Grid.Row="4" Grid.Column="3"  TextAlignment="Right">0</TextBox>
-                        <Label   Grid.Row="4" Grid.Column="1">after CustomerId:</Label>
+                        <Label   Grid.Row="4" Grid.Column="1">From CustomerId:</Label>
 
                     </Grid>
                 </GroupBox>

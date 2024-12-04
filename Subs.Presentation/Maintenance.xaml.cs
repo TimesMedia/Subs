@@ -736,59 +736,58 @@ namespace Subs.Presentation
 
                 //Assign the invoice numbers
 
-                int InvoiceId = 0;
+                int lRowCounter = 0;
                 int lCurrentInvoiceId = 0;
                 int lCurrentPayerId = 0;
                 int lLargestTransactionId = 0;
                 decimal lCurrentInvoiceValue = 0;
 
+
                 foreach (LedgerDoc2.InvoiceBatchRow lRow in gLedgerDoc.InvoiceBatch)
                 {
+                    lRowCounter++;
+
                     //Keep track of the largest TransactionId
                     if (lRow.TransactionId > lLargestTransactionId) { lLargestTransactionId = lRow.TransactionId; }
 
-                    // Determine where a new invoice should start
+                    SubscriptionData3 lSubscriptionData = new SubscriptionData3(lRow.SubscriptionId); // Load current subscription
+
+
+                    // Determine where a new payer and invoice should start
                     if (lRow.PayerId != lCurrentPayerId)
                     {
-                        if (lCurrentPayerId != 0)
+                        //This is a new payer and a new Invoice
+
+                        if (lCurrentInvoiceId > 0)
                         {
-                            //Put an entry in the ledger for the PREVIOUS invoice
-
-                            LedgerData.Invoice(lCurrentPayerId, lCurrentInvoiceId, LastTransactionIdInvoice, lCurrentInvoiceValue);
-                            lCurrentInvoiceValue = 0;
+                            Cleanup();
                         }
+                        // Initialise for a new invoice
 
-                        // Start a new invoice
-
-                        InvoiceId = AdministrationData2.GetInvoiceId();
-                        lCurrentInvoiceId = InvoiceId;
+                        lCurrentInvoiceId = AdministrationData2.GetInvoiceId(); // Allocate a new invoice
+                        lCurrentInvoiceValue = 0;   // Reset for the new invoice
+                        lCurrentPayerId = lRow.PayerId;  // Show that you are working with a new user
                     }
 
-                    lRow.BeginEdit();
-                    lRow.InvoiceId = InvoiceId;
-                    lRow.EndEdit();
+                    // Processing common to both new and existing a invoices
 
-                    //Link the invoice to each subscription
-
-                    SubscriptionData3 lSubscriptionData = new SubscriptionData3(lRow.SubscriptionId);
-                    lSubscriptionData.InvoiceId = InvoiceId;
-
-                    if (!lSubscriptionData.Update()) { return; }
-
-                    lCurrentPayerId = lRow.PayerId;
                     lCurrentInvoiceValue = lCurrentInvoiceValue + lSubscriptionData.UnitPrice * lSubscriptionData.UnitsPerIssue * lSubscriptionData.NumberOfIssues;
 
+                    lRow.BeginEdit();
+                    lRow.InvoiceId = lCurrentInvoiceId;  // For each row, keep track of the current invoice
+                    lRow.EndEdit();
+
+                    lSubscriptionData.InvoiceId = lCurrentInvoiceId;
+                    if (!lSubscriptionData.Update()) { return; }
+
+                    if (lRowCounter == gLedgerDoc.InvoiceBatch.Count())
+                    {
+                        //This was the last row. You will have to persist the last invoice including its invoice value 
+                        Cleanup();
+                    }
+
                 } // End of foreach loop - one loop per transaction
-
-
-                if (lCurrentPayerId != 0)
-                {
-                    //Put an entry in the ledger for the PREVIOUS invoice
-
-                    LedgerData.Invoice(lCurrentPayerId, lCurrentInvoiceId, LastTransactionIdInvoice, lCurrentInvoiceValue);
-
-                    lCurrentInvoiceValue = 0;
-                }
+             
 
                 // Copy the results out to disk
 
@@ -804,6 +803,28 @@ namespace Subs.Presentation
                 // Generate a log entry to show what you did.
 
                 MessageBox.Show("The XML file for the INVOICE run was successfully generated");
+
+                //**********************************************************************************************************************************
+
+                void Cleanup()
+                {
+                    // Cleanup previous invoice
+
+                    // 1. Persist the previous invoice via transaction 19
+                    LedgerData.Invoice(lCurrentPayerId, lCurrentInvoiceId, LastTransactionIdInvoice, lCurrentInvoiceValue);
+
+                    // 2. Set the Customer checkpoint if it has not been set already.
+
+                    CustomerData3 lCustomer = new CustomerData3(lCurrentPayerId);
+                    if (!lCustomer.BalanceInvoiceId.HasValue || lCustomer.BalanceInvoiceId == 0)
+                    {
+                        lCustomer.BalanceInvoiceId = lCurrentInvoiceId;
+                        lCustomer.Update();
+                    }
+                }
+
+
+                // *****************************************************************************************************                                                                   
             }
 
             catch (Exception ex)
@@ -894,7 +915,7 @@ namespace Subs.Presentation
 
                 Cursor = Cursors.Wait;
 
-                lStage = "ForEach on StatementBatch";
+                lStage = "ForEach on InvoiceBatch";
 
                 List<Invoice> lInvoiceList = new List<Invoice>();
 
@@ -996,16 +1017,16 @@ namespace Subs.Presentation
 
                     //Update the Invoice balances if this is the first invoice for this payer.
                     
-                    int lCustomerId = lInvoiceList[0].PayerId;
-                    CustomerData3 lCustomerData = new CustomerData3(lCustomerId);
-                    if (lCustomerData.BalanceInvoiceId == null || lCustomerData.BalanceInvoiceId == 0)
-                    {
-                        // This is a dormant customer - so start from scratch
-                        lCustomerData.BalanceInvoiceId = lInvoiceList[0].InvoiceId;
-                        lCustomerData.Balance = 0.0M;
-                    }
+                    //int lCustomerId = lInvoiceList[0].PayerId;
+                    //CustomerData3 lCustomerData = new CustomerData3(lCustomerId);
+                    //if (lCustomerData.BalanceInvoiceId == null || lCustomerData.BalanceInvoiceId == 0)
+                    //{
+                    //    // This is a dormant customer - so start from scratch
+                    //    lCustomerData.BalanceInvoiceId = lInvoiceList[0].InvoiceId;
+                    //    lCustomerData.Balance = 0.0M;
+                    //}
                         
-                    lCustomerData.Update();
+                    //lCustomerData.Update();    2024/11/04
                 }
             }
             catch (Exception ex)
@@ -1059,7 +1080,7 @@ namespace Subs.Presentation
 
                 foreach (LedgerDoc2.InvoiceBatchRow lRow in gLedgerDoc.InvoiceBatch)
                 {
-                    if (lRow.PayerId <= Convert.ToInt32(textInvoiceCustomerId.Text))
+                    if (lRow.PayerId < Convert.ToInt32(textInvoiceCustomerId.Text))
                     {
                         continue;
                     }
