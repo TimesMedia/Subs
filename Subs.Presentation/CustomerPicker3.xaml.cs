@@ -108,13 +108,7 @@ namespace Subs.Presentation
         private readonly Subs.Data.LedgerDoc2 gLedgerDoc = new LedgerDoc2();
         private readonly ObservableCollection<CustomerData3> gCustomers = new ObservableCollection<CustomerData3>();
         private CustomerData3 gCurrentCustomer;
-        //private Subs.Data.InvoiceAndPayment gSelectedPayment = null; 
-        //private decimal gCalculatedLiability = 0M;
         private List<LiabilityRecord> gLiabilityRecords = new List<LiabilityRecord>();
-
-        //private List<Subs.Data.InvoicesAndPayments> gPaymentAndInvoice = new List<InvoicesAndPayments>();
-        //private List<Subs.Data.InvoicesAndPayments> gInvoice = new List<InvoicesAndPayments>();
-        //private List<Subs.Data.InvoicesAndPayments> gPayment = new List<InvoicesAndPayments>();
 
         private List<Discrepancy> gDiscrepancy = new List<Discrepancy>();  
         private List<Subs.Data.InvoiceAndPayment> gInvoiceAndPaymentCopy = new List<InvoiceAndPayment>();
@@ -135,7 +129,6 @@ namespace Subs.Presentation
             Invoice = 1,
             Subscription = 2,
             Discrepancies = 3,
-            //Liability = 4,
             Due = 4,
             Deliverable = 5,
             XPS = 6
@@ -151,13 +144,10 @@ namespace Subs.Presentation
 
             InitializeComponent();
             gCustomerAdapter.AttachConnection();
-            //gMIMSCustomerTableAdapter.AttachConnection();
             gCollectionViewSourceCustomer = (System.Windows.Data.CollectionViewSource)this.Resources["customerViewSource"];
             gCollectionViewSourceCustomer.Source = gCustomers;
             gInvoiceAndPaymentViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["InvoiceAndPaymentViewSource"];
-            //gPaymentViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["PaymentViewSource"];
-            //gInvoiceViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["InvoiceViewSource"];
-
+ 
             System.Windows.Data.CollectionViewSource gPaymentViewSource = new CollectionViewSource();
             System.Windows.Data.CollectionViewSource gInvoiceViewSource = new CollectionViewSource();   
 
@@ -272,7 +262,18 @@ namespace Subs.Presentation
                 {
                     if (gCollectionViewSourceCustomer.View.CurrentItem != null)
                     {
-                        gCurrentCustomer = (CustomerData3)gCollectionViewSourceCustomer.View.CurrentItem;
+                        if (gCollectionViewSourceCustomer.Source == gCustomer)
+                        {
+                            // You decided to use a dataset as an initial source for performance reasons
+                            DataRowView lView = (DataRowView)gCollectionViewSourceCustomer.View.CurrentItem;
+                            CustomerDoc2.CustomerRow lRow = (CustomerDoc2.CustomerRow)lView.Row;
+                            gCurrentCustomer = new CustomerData3(lRow.CustomerId);
+                        }
+                        else
+                        { 
+                            gCurrentCustomer = (CustomerData3)gCollectionViewSourceCustomer.View.CurrentItem; 
+                        }
+
                         Settings.CurrentCustomerId = gCurrentCustomer.CustomerId;
                     }
                 }
@@ -365,6 +366,8 @@ namespace Subs.Presentation
                     CustomerData3 lCustomer = new CustomerData3(lSelection.CustomerId);
                     gCustomers.Add(lCustomer);
                 }
+
+                gCollectionViewSourceCustomer.Source = gCustomers;
             }
             catch (Exception ex)
             {
@@ -456,22 +459,34 @@ namespace Subs.Presentation
 
                 //create an alternate datagrid for the customers.
                 //Once selected, revert back to normal customer objects used in SearchById.
+                gCustomer.Clear();
+                gCustomerAdapter.FillById(gCustomer,"Surname", 0, "%" + lElicit.Answer + "%");
+
+                //MessageBox.Show(gCustomer.Count() + " Found");
+
+               gCollectionViewSourceCustomer.Source = gCustomer;
 
 
-                IEnumerable<int> lSelectedCustomers = CustomerData3.GetCustomerIds("Surname", 0, "%" + lElicit.Answer + "%");
 
-                if (lSelectedCustomers.Count() == 0)
-                {
-                    MessageBox.Show("No customer found");
-                    return;
-                }
 
-                gCustomers.Clear();
-                foreach (int lSelection in lSelectedCustomers)
-                {
-                    CustomerData3 lCustomer = new CustomerData3(lSelection);
-                    gCustomers.Add(lCustomer);
-                }
+                //*************************************
+
+                //IEnumerable<int> lSelectedCustomers = CustomerData3.GetCustomerIds("Surname", 0, "%" + lElicit.Answer + "%");
+
+                //if (lSelectedCustomers.Count() == 0)
+                //{
+                //    MessageBox.Show("No customer found");
+                //    return;
+                //}
+
+                //gCustomers.Clear();
+                //foreach (int lSelection in lSelectedCustomers)
+                //{
+                //    CustomerData3 lCustomer = new CustomerData3(lSelection);
+                //    gCustomers.Add(lCustomer);
+                //}
+
+                //*********************************************************************************
 
               }
             catch (Exception ex)
@@ -524,6 +539,7 @@ namespace Subs.Presentation
                     CustomerData3 lCustomer = new CustomerData3(lSelection.CustomerId);
                     gCustomers.Add(lCustomer);
                 }
+                gCollectionViewSourceCustomer.Source = gCustomers;
             }
             catch (Exception ex)
             {
@@ -546,56 +562,56 @@ namespace Subs.Presentation
             }
         }
 
-        private void buttonSearchPostalCode_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                // Initialise
+        //private void buttonSearchPostalCode_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        // Initialise
 
-                ElicitString lElicit = new ElicitString("What is the postal code?");
-                lElicit.ShowDialog();
-                if (string.IsNullOrWhiteSpace(lElicit.Answer))
-                {
-                    return;
-                }
+        //        ElicitString lElicit = new ElicitString("What is the postal code?");
+        //        lElicit.ShowDialog();
+        //        if (string.IsNullOrWhiteSpace(lElicit.Answer))
+        //        {
+        //            return;
+        //        }
 
-                this.Cursor = Cursors.Wait;
+        //        this.Cursor = Cursors.Wait;
 
-                IEnumerable<Customer> lSelectedCustomers = gDataContext.MIMS_DataContext_Customer_Select("PostalCode", 0, "%" + lElicit.Answer + "%").ToList();
+        //        IEnumerable<Customer> lSelectedCustomers = gDataContext.MIMS_DataContext_Customer_Select("PostalCode", 0, "%" + lElicit.Answer + "%").ToList();
 
-                if (lSelectedCustomers.Count() == 0)
-                {
-                    MessageBox.Show("No customer found");
-                    return;
-                }
+        //        if (lSelectedCustomers.Count() == 0)
+        //        {
+        //            MessageBox.Show("No customer found");
+        //            return;
+        //        }
 
-                gCustomers.Clear();
-                foreach (Customer lSelection in lSelectedCustomers)
-                {
-                    CustomerData3 lCustomer = new CustomerData3(lSelection.CustomerId);
-                    gCustomers.Add(lCustomer);
-                }
-            }
-            catch (Exception ex)
-            {
-                //Display all the exceptions
+        //        gCustomers.Clear();
+        //        foreach (Customer lSelection in lSelectedCustomers)
+        //        {
+        //            CustomerData3 lCustomer = new CustomerData3(lSelection.CustomerId);
+        //            gCustomers.Add(lCustomer);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Display all the exceptions
 
-                Exception CurrentException = ex;
-                int ExceptionLevel = 0;
-                do
-                {
-                    ExceptionLevel++;
-                    ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonSearchPostalCode_Click", "");
-                    CurrentException = CurrentException.InnerException;
-                } while (CurrentException != null);
+        //        Exception CurrentException = ex;
+        //        int ExceptionLevel = 0;
+        //        do
+        //        {
+        //            ExceptionLevel++;
+        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonSearchPostalCode_Click", "");
+        //            CurrentException = CurrentException.InnerException;
+        //        } while (CurrentException != null);
 
-                return;
-            }
-            finally
-            {
-                this.Cursor = Cursors.Arrow;
-            }
-        }
+        //        return;
+        //    }
+        //    finally
+        //    {
+        //        this.Cursor = Cursors.Arrow;
+        //    }
+        //}
 
         private void buttonSearchInvoice_Click(object sender, RoutedEventArgs e)
         {
@@ -627,6 +643,7 @@ namespace Subs.Presentation
                     CustomerData3 lCustomer = new CustomerData3(lSelection.CustomerId);
                     gCustomers.Add(lCustomer);
                 }
+                gCollectionViewSourceCustomer.Source = gCustomers;
             }
             catch (Exception ex)
             {
@@ -648,50 +665,6 @@ namespace Subs.Presentation
                 this.Cursor = Cursors.Arrow;
             }
         }
-
-        //private void buttonSearchByDormant(object sender, RoutedEventArgs e)
-        //{
-        //    this.Cursor = Cursors.Wait;
-
-        //    try
-        //    {
-        //        IEnumerable<Customer> lSelectedCustomers = gDataContext.MIMS_DataContext_Customer_Select("DormantCustomer", 0, "").ToList();
-
-        //        if (lSelectedCustomers.Count() == 0)
-        //        {
-        //            MessageBox.Show("No customer found");
-        //            return;
-        //        }
-
-        //        gCustomers.Clear();
-        //        foreach (Customer lSelection in lSelectedCustomers)
-        //        {
-        //            CustomerData3 lCustomer = new CustomerData3(lSelection.CustomerId);
-        //            gCustomers.Add(lCustomer);
-        //        }
-
-        //        MessageBox.Show(lSelectedCustomers.Count() + " customers found");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonSearchByDormant", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        return;
-        //    }
-        //    finally
-        //    {
-        //        this.Cursor = Cursors.Arrow;
-        //    }
-        //}
 
         private void buttonLoad_Click(object sender, RoutedEventArgs e)
         {
@@ -733,9 +706,6 @@ namespace Subs.Presentation
             }
         }
 
-
-
-
         private void Click_NewCustomer(object sender, RoutedEventArgs e)
         {
             try
@@ -771,10 +741,10 @@ namespace Subs.Presentation
                     PostProcessCustomer();
                 }
 
-                if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-                {
-                    gCollectionViewSourceCustomer.Source = gCustomer;
-                }
+                //if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+                //{
+                //    gCollectionViewSourceCustomer.Source = gCustomer;
+                //}
 
                 // Make it possible to resume, once you have displayed other possibilities. 
                 buttonNewResume.IsEnabled = true;
@@ -803,7 +773,6 @@ namespace Subs.Presentation
                 }
             }
         }
-
         private void PostProcessCustomer()
         {
             try
@@ -869,7 +838,6 @@ namespace Subs.Presentation
             }
         }
 
-
         #endregion
 
         #region Select tab - context menu
@@ -916,16 +884,6 @@ namespace Subs.Presentation
         {
             try 
             {
-                // Original  ***
-                //CustomerId.Text = gCurrentCustomer.CustomerId.ToString();
-                //if (PopulatePaymentAndInvoice())
-                //{
-                //    Tab_Invoice.Visibility = Visibility.Visible;
-                //    SelectTab(PickerTabs.Invoice);
-                //}
-                // Original ***
-
-
                 CustomerId.Text = gCurrentCustomer.CustomerId.ToString();
 
                 this.Cursor = Cursors.Wait;
@@ -946,8 +904,7 @@ namespace Subs.Presentation
                 gInvoiceAndPayment2 = gCurrentCustomer.InvoiceAndPayment;
 
                 AssignStatementResources();
-
-                //***
+                                
                 AllocationData lAllocationData = new AllocationData(gPayment2, gInvoice2);
 
                 gInvoiceAndPaymentCopy = lAllocationData.AllocatePayments();
@@ -956,7 +913,7 @@ namespace Subs.Presentation
                 gInvoiceAndPayment2.AddRange(gInvoiceAndPaymentCopy);    // I do this to get a copy of the data, rather than a pointer to a foreign object.
 
                 AssignStatementResources();
-                //***
+                
                 Tab_Invoice.Visibility = Visibility.Visible;
                 SelectTab(PickerTabs.Invoice);
                 return;
@@ -1081,12 +1038,6 @@ namespace Subs.Presentation
             {
                 SelectCurrentCustomer();
 
-                //if (gCurrentCustomer.Status == CustomerStatus.Cancelled)
-                //{
-                //    MessageBox.Show("You cannot update a cancelled customer");
-                //    return;
-                //}
-
                 Subs.Presentation.CustomerUpdate2 lCustomerUpdate = new Subs.Presentation.CustomerUpdate2(gCurrentCustomer);
                 lCustomerUpdate.ShowDialog();
                 if (!lCustomerUpdate.Cancelled)
@@ -1123,8 +1074,6 @@ namespace Subs.Presentation
             }
 
             gCurrentCustomer.Password1 = lElicitString.Answer;
-
-
 
             string lResult;
             if ((lResult = gCurrentCustomer.Update()) != "OK")
@@ -1437,7 +1386,6 @@ namespace Subs.Presentation
             }
            
         }
-
         public static T GetVisualChild<T>(Visual parent) where T : Visual
         {
             try
@@ -1827,15 +1775,7 @@ namespace Subs.Presentation
                     }
                 }
 
-                //PopulatePaymentAndInvoice2(); // You also have to do the reallocation
-
                 GoToStatement();
-                //AutomaticAllocate();
-
-                // Propagate the new liability to the current view
-                //CustomerData3 lModifiedCustomer = new CustomerData3(gCurrentCustomer.CustomerId);
-                //gCurrentCustomer.Liability = lModifiedCustomer.Liability;
-
                 MessageBox.Show("Done");
 
                 return;
@@ -2276,15 +2216,7 @@ namespace Subs.Presentation
         {
             ViewSubscriptions();
         }
-
-        //private void InvoiceItem_LostFocus(object sender, RoutedEventArgs e)
-        //{
-        //    Tab_Invoice.Visibility = Visibility.Collapsed;
-        //    CustomerId.Text = "";
-        //    gPaymentViewSource.Source = null;
-        //    gInvoiceViewSource.Source = null;
-        //}
-
+        
         #endregion
 
         #region Subscriptions tab
@@ -2568,66 +2500,7 @@ namespace Subs.Presentation
             }
         }
 
-        //private void buttonOverDelivered_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //    try
-        //    {
-        //        if (!Functions.IsDecimal(this.textOverDelivered.Text))
-        //        {
-        //            MessageBox.Show("Sorry, this has to be a decimal number.");
-        //            return;
-        //        }
-
-        //        decimal lAbsoluteValue = Convert.ToDecimal(this.textOverDelivered.Text);
-
-        //        if (lAbsoluteValue < 0)
-        //        {
-        //            MessageBox.Show("Sorry, this has to be a positive number.");
-        //            return;
-        //        }
-
-        //        // OK do the job
-
-        //        CustomerDoc2 lCustomerDoc = new CustomerDoc2();
-
-        //        Subs.Data.CustomerDoc2TableAdapters.DiscrepanciesTableAdapter lDiscrepancyAdapter = new Subs.Data.CustomerDoc2TableAdapters.DiscrepanciesTableAdapter();
-        //        lDiscrepancyAdapter.AttachConnection();
-
-        //        lDiscrepancyAdapter.FillBy(lCustomerDoc.Discrepancies, lAbsoluteValue, "Debtor");
-
-        //        PaidTooMuchDataGrid.Visibility = Visibility.Hidden;
-        //        OverDeliveredDataGrid.Visibility = Visibility.Visible;
-
-
-        //        foreach (CustomerDoc2.DiscrepanciesRow lRow in lCustomerDoc.Discrepancies)
-        //        {
-        //            lRow.Liability = -lRow.Liability;
-        //        }
-
-
-        //        gTooMuchTooLittleViewSource.Source = lCustomerDoc.Discrepancies;
-        //        // MessageBox.Show("Written to " + FileName.ToString());
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Display all the exceptions
-
-        //        Exception CurrentException = ex;
-        //        int ExceptionLevel = 0;
-        //        do
-        //        {
-        //            ExceptionLevel++;
-        //            ExceptionData.WriteException(1, ExceptionLevel.ToString() + " " + CurrentException.Message, this.ToString(), "buttonOverDelivered_Click", "");
-        //            CurrentException = CurrentException.InnerException;
-        //        } while (CurrentException != null);
-
-        //        MessageBox.Show(ex.Message);
-        //    }
-
-
-        //}
+     
 
         private void Discrepancy_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -2647,8 +2520,6 @@ namespace Subs.Presentation
             //SelectCurrentCustomer();
             //GoToStatement();
         }
-
-
 
         private void DiscrepancySelect()
         {
@@ -2715,9 +2586,6 @@ namespace Subs.Presentation
                 lExcel.Save();
                 //lExcel.Close();
             }
-
-
-
         }
 
 
@@ -2774,7 +2642,6 @@ namespace Subs.Presentation
             }
 
         }
-
         private void Click_Checkpoint(object sender, RoutedEventArgs e)
         {
             int lOriginalBalanceInvoiceId;
@@ -2819,33 +2686,10 @@ namespace Subs.Presentation
                     gCurrentCustomer.BalanceInvoiceId = lInvoice.InvoiceId;  // The sequence is important
                     gCurrentCustomer.Update(); // Assuming that this will include acceptchanges.
 
-
-                    //if (Math.Abs(gCurrentCustomer.Due - lOriginalDue) < 1M && Math.Abs(gCurrentCustomer.Liability - lOriginalLiability) < 1M)
-                    //{
-                        LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lOriginalBalance);
-                        GoToStatement();  //Refresh the displayed statement
-                        MessageBox.Show("Checkpoints successfully changed changed to " + gCurrentCustomer.BalanceInvoiceId.ToString());
-                    //}
-                    //else
-                    //{
-                    //    // Restore to the previous BalanceInvoiceId
-                    //    gCurrentCustomer.BalanceInvoiceId = lOriginalBalanceInvoiceId;
-                    //    gCurrentCustomer.Balance = lOriginalBalance;
-                    //    gCurrentCustomer.Update();
-                    //    string lComment = "Checkpoint change proposal failed. No changes made to database. First do some writeoffs or refunds. \r\n"
-                    //        + "Proposed due= " + gCurrentCustomer.Due.ToString("#0.000000")
-                    //        + " Original due= " + lOriginalDue.ToString("#0.000000") + "\r\n"
-                    //        + "Proposed liability = " + gCurrentCustomer.Liability.ToString("#0.000000")
-                    //        + " Original liability= " + lOriginalLiability.ToString("#0.000000");
-
-                    //    MessageBox.Show(lComment);
-
-                    //    ExceptionData.WriteException(1, "Difference in final values, this.ToString()", this.ToString(), "ClickCheckpoint", "CustomerId = " + gCurrentCustomer.CustomerId.ToString() + " "
-                    //        + lComment
-                    //        );
-
-                    //    return;
-                    //}
+                    LedgerData.ChangeCheckpoint(gCurrentCustomer.CustomerId, lInvoice.InvoiceId, lOriginalBalanceInvoiceId, lOriginalBalance);
+                    GoToStatement();  //Refresh the displayed statement
+                    MessageBox.Show("Checkpoints successfully changed changed to " + gCurrentCustomer.BalanceInvoiceId.ToString());
+     
                 }
                 catch (Exception InnerException)
                 {
@@ -2955,8 +2799,7 @@ namespace Subs.Presentation
         }
 
         #endregion
-
-    
+   
     }
 }
 

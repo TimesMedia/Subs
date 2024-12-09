@@ -1197,7 +1197,7 @@ namespace Subs.MimsWeb.Controllers
 
                 int lToken = (int)lLoginRequest.CustomerId * 16 * (DateTime.Now.Hour + 1);
 
-                return Redirect("https://www.mimscpd.co.za?Id=" + lToken.ToString());
+                return Redirect("https://www.mimscpd.co.za/Begin.aspx?Id=" + lToken.ToString());
 
             }
             catch (Exception ex)
