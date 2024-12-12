@@ -107,7 +107,7 @@
         <div class="myButtons" margin-left="0.5em">
             @Html.ActionLink("Finalise Your Order", "Submit", "Promotion",
                     new { onclick = "return window.confirm('Are you sure that you want to submit these subscriptions ?')" })
-            @Html.ActionLink("Continue shopping", "List", "Promotion", new { display = "inline" })
+            @Html.ActionLink("Add more items to your basket", "List", "Promotion", new { display = "inline" })
 
         </div>
 
@@ -175,6 +175,11 @@
         <script>
             function ModificationHandler() {
                 document.forms["SubmitForm"].submit();
+            }
+
+            function CloseBasket()
+            {
+                return window.confirm('Do you want to exit without submitting your order?');
             }
 
             function ShowMessage(m) {
