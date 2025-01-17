@@ -528,14 +528,15 @@ namespace Subs.Presentation
 
                     lExcelIO.PutCellString("Items", i + 1, 1, lProposal.RecipientName);
                     lExcelIO.PutCellString("Items", i + 1, 2, lProposal.RecipientAccount);
-                    lExcelIO.PutCellString("Items", i + 1, 3, lProposal.RecipientAccountType);
-                    lExcelIO.PutCellString("Items", i + 1, 4, lProposal.BranchCode.PadLeft(6, '0'));
-                    lExcelIO.PutCellString("Items", i + 1, 5, lProposal.Amount.ToString("#######0.00"));
-                    lExcelIO.PutCellString("Items", i + 1, 6, lProposal.OwnReference.ToString());
-                    lExcelIO.PutCellString("Items", i + 1, 7, lProposal.RecipientReference.ToString());
-                    lExcelIO.PutCellString("Items", i + 1, 8, lProposal.EmailNotify);
-                    lExcelIO.PutCellString("Items", i + 1, 9, lProposal.EmailAddress);
-                    lExcelIO.PutCellString("Items", i + 1, 10, lProposal.EmailSubject);
+                    lExcelIO.PutCellString("Items", i + 1, 3, lProposal.Bank);
+                    lExcelIO.PutCellString("Items", i + 1, 4, lProposal.RecipientAccountType);
+                    lExcelIO.PutCellString("Items", i + 1, 5, lProposal.BranchCode.PadLeft(6, '0'));
+                    lExcelIO.PutCellString("Items", i + 1, 6, lProposal.Amount.ToString("#######0.00"));
+                    lExcelIO.PutCellString("Items", i + 1, 7, lProposal.OwnReference.ToString());
+                    lExcelIO.PutCellString("Items", i + 1, 8, lProposal.RecipientReference.ToString());
+                    lExcelIO.PutCellString("Items", i + 1, 9, lProposal.EmailNotify);
+                    lExcelIO.PutCellString("Items", i + 1, 10, lProposal.EmailAddress);
+                    lExcelIO.PutCellString("Items", i + 1, 11, lProposal.EmailSubject);
                     i++;
                 }
 
