@@ -61,6 +61,7 @@ namespace Subs.Data
         {
             public string RecipientName { get; set; }
             public string RecipientAccount { get; set; }
+            public string Bank { get; set; }
 
             public string RecipientAccountType { get; set;}
 
@@ -294,14 +295,15 @@ namespace Subs.Data
                         DebitOrderByPayer lDebitOrder = new DebitOrderByPayer();
                         lDebitOrder.RecipientName = (string)lReader[0];
                         lDebitOrder.RecipientAccount = (string)lReader[1];
-                        lDebitOrder.RecipientAccountType = (string)lReader[2];
-                        lDebitOrder.BranchCode = (string)lReader[3];
-                        lDebitOrder.Amount = (decimal)lReader[4];
-                        lDebitOrder.OwnReference = (string)lReader[5];
-                        lDebitOrder.RecipientReference = (string)lReader[6];
-                        lDebitOrder.EmailNotify = (string)lReader[7];
-                        lDebitOrder.EmailAddress = (string)lReader[8];
-                        lDebitOrder.EmailSubject= (string)lReader[9];
+                        lDebitOrder.Bank = (string)lReader[2];
+                        lDebitOrder.RecipientAccountType = (string)lReader[3];
+                        lDebitOrder.BranchCode = (string)lReader[4];
+                        lDebitOrder.Amount = (decimal)lReader[5];
+                        lDebitOrder.OwnReference = (string)lReader[6];
+                        lDebitOrder.RecipientReference = (string)lReader[7];
+                        lDebitOrder.EmailNotify = (string)lReader[8];
+                        lDebitOrder.EmailAddress = (string)lReader[9];
+                        lDebitOrder.EmailSubject= (string)lReader[10];
                         lDebitOrders.Add(lDebitOrder);
                     }
                 }
