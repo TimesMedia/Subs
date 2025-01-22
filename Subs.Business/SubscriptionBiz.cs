@@ -833,7 +833,7 @@ namespace Subs.Business
                 int lDiscountFactor = 0;
                 decimal lInternallyCalculatedDiscountFraction = 0;
 
-                List<int> lMimsProducts = new List<int>() { 1, 8, 17, 32, 47, 49 };
+                List<int> lMimsProducts = new List<int>() { 1, 17, 32, 47, 49 };
                 int lNumberOfMimsProducts = pBasket.Where(p => lMimsProducts.Contains(p.Subscription.ProductId)).Count();
 
 
