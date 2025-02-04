@@ -6,7 +6,8 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=yes">
+    @*<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=yes">*@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Content/Normalize.css">
     <link rel="stylesheet" href="/Content/Styles.css">
     <link rel="stylesheet" href="~/Content/navbar.css" />
@@ -100,11 +101,14 @@
         <img id="narrow" src="~/Images/WelcomeNarrow.gif" />
     </div>
     <br />
-    
-<div class="container" title="This promotion is not valid if you are already subscribed to the products.">
-    <a href="~/Home/SelectMIC"><img src="~/Images/DIC Banner ad.jpg" width="1000" height="300"></a>
-</div>
-    
+
+    @*<div class="container" title="This promotion is not valid if you are already subscribed to the products.">
+            <a href="~/Home/SelectMIC"><img src="~/Images/DIC Banner ad.jpg" width="1000" height="300"></a>
+        </div>*@
+    <div class="container" title=" Come see us at stand f2 in Sandton Convention Center , Johannesburg | 5-6 March 2025." style="padding-bottom:16px">
+           @*//still waiting for a link to redirect to*@ <img src="~/Images/ad2025.jpg" width="1000" height="200">
+        </div>
+
 
     <section id="contact" class="section pt-0" style="background-color:dodgerblue;color:#fff;">
         <div class="container">
@@ -114,14 +118,16 @@
                     <h1 style=" font-family:'Segoe Print'">Sean Samson </h1>
 
                     @*<p class="mb-4" style="color:#fff">Tel: <a href="tel:0112805856" style="color:black">011 280 5856/9 / 011 280 5533 / 068 022 7581</a><br />*@
-                    <b class="mb-4" style="color:#fff">Tel: 011 280 5856/7/9/ 011 280 5533 / 073 116 4028<br />
-                    @*<b>Email: </b><a href="mailto:vandermerwer@mims.co.za" method="post" style="color:black">vandermerwer@mims.co.za</a>&nbsp;</b>*@
-                    <b>Email: </b><a href="mailto:samsons@mims.co.za" method="post" style="color:black">samsons@mims.co.za</a>&nbsp;</b><br /><br />
+                    <b class="mb-4" style="color:#fff">
+                        Tel: 011 280 5856/7/9/ 011 280 5533 / 073 116 4028<br />
+                        @*<b>Email: </b><a href="mailto:vandermerwer@mims.co.za" method="post" style="color:black">vandermerwer@mims.co.za</a>&nbsp;</b>*@
+                        <b>Email: </b><a href="mailto:samsons@mims.co.za" method="post" style="color:black">samsons@mims.co.za</a>&nbsp;
+                    </b><br /><br />
 
                     <b class="mb-4" style="font-family:'Segoe Print'"><b>Address</b></b><br />
                     <b class="mb-4"><span style="color:#fff; font-family:'Segoe Print'"><b>Mims</b></span>, a division of Arena Holdings (Pty) Ltd<br />16 Empire Road <br />Parktown <br />Johannesburg <br />2193</b>
                 </div>
-               
+
 
                 <div class="col-md-6">
                     <form action="https://formspree.io/f/mrbbnvgy" method="post">
@@ -161,13 +167,13 @@
     <footer style=" background-color: dodgerblue; text-align:center; align-content:center;">
         <h6 style="font-size: 0.9em; ">
 
-           <b> <a href="https://sacoronavirus.co.za/" target="_blank">Online Coronavirus Portal.</a></b>
+            <b> <a href="https://sacoronavirus.co.za/" target="_blank">Online Coronavirus Portal.</a></b>
 
         </h6>
 
         <h6 style="text-align:center; font-size:0.9em; color:#fff;"><b>Copyright &copy; @DateTime.Now.Year  MIMS. All Rights Reserved.</b></h6>
         <h6><b><a href="~/Content/TermsConditions.html" target="_blank" style="font-size:0.9em; ">Terms and conditions</a></b></h6>
-        
+
     </footer>
 </body>
 </html>
