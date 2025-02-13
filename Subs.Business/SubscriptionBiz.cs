@@ -684,10 +684,23 @@ namespace Subs.Business
 
         public static decimal DiscountedPrice(Data.SubscriptionData3 pSubscriptionData)
         {
+            
             try
-            {
-                return (pSubscriptionData.UnitPrice * pSubscriptionData.UnitsPerIssue * pSubscriptionData.NumberOfIssues);
+            { 
+                // catering for the New DIC when added with another products as it reduces the Unit per Issue if its added with other products
+               if (pSubscriptionData.ProductId != 88)
+                {
+                    
+                    return (pSubscriptionData.UnitPrice * pSubscriptionData.UnitsPerIssue * pSubscriptionData.NumberOfIssues);
 
+                }
+                else
+                {
+                    return (345.00M * pSubscriptionData.UnitsPerIssue);
+                }
+                
+
+               
             }
             catch (Exception ex)
             {
@@ -834,7 +847,7 @@ namespace Subs.Business
                 decimal lInternallyCalculatedDiscountFraction = 0;
 
                 // to Add or remove a product from the 30% Discount
-                List<int> lMimsProducts = new List<int>() { 1, 17, 32, 47, 49 };
+                List<int> lMimsProducts = new List<int>() { 1, 17, 32, 47, 49,88 };
                 int lNumberOfMimsProducts = pBasket.Where(p => lMimsProducts.Contains(p.Subscription.ProductId)).Count();
 
 
@@ -871,8 +884,10 @@ namespace Subs.Business
                     lBasketItem.DiscountPercentage = (1 - lBasketItem.Subscription.DiscountMultiplier) * 100;
                     lBasketItem.Price = SubscriptionBiz.FullPrice(lBasketItem.Subscription);
                     lBasketItem.DiscountedPrice = SubscriptionBiz.DiscountedPrice(lBasketItem.Subscription);
+                    
 
-  
+
+
                 }   // End of for loop
 
                 return true;
@@ -953,8 +968,8 @@ namespace Subs.Business
 
                 bool HardCodedMICDiscount(BasketItem lBasketItem)
                 {
-                    // Cater for Medicine interaction checker
-                    lBasketItem.Subscription.DiscountMultiplier = GetDiscountMultipier(lBasketItem.Subscription, 345.00M);
+                    // Cater for Medicine interaction checker discounted price
+                    lBasketItem.Subscription.DiscountMultiplier = GetDiscountMultipier(lBasketItem.Subscription, 345.00M );
                     return true;
                  }
 

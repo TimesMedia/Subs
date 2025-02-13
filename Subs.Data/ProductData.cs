@@ -16,7 +16,7 @@ namespace Subs.Data
 
     public class BasketItem : BaseModel
     {
-        private decimal _DiscountedPrice;
+        private decimal _DiscountedPrice ;
         private decimal _DiscountPercentage;
         private decimal _FullPrice;
         private decimal _ExplicitDiscountPercentage = 0M;
