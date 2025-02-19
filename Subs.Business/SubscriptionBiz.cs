@@ -688,7 +688,7 @@ namespace Subs.Business
             try
             { 
                 // catering for the New DIC when added with another products as it reduces the Unit per Issue if its added with other products
-               if (pSubscriptionData.ProductId != 88)
+               if (pSubscriptionData.ProductId != 88 )
                 {
                     
                     return (pSubscriptionData.UnitPrice * pSubscriptionData.UnitsPerIssue * pSubscriptionData.NumberOfIssues);
@@ -698,9 +698,7 @@ namespace Subs.Business
                 {
                     return (345.00M * pSubscriptionData.UnitsPerIssue);
                 }
-                
-
-               
+                 
             }
             catch (Exception ex)
             {
@@ -847,7 +845,7 @@ namespace Subs.Business
                 decimal lInternallyCalculatedDiscountFraction = 0;
 
                 // to Add or remove a product from the 30% Discount
-                List<int> lMimsProducts = new List<int>() { 1, 17, 32, 47, 49,88 };
+                List<int> lMimsProducts = new List<int>() { 1,  47, 49 };// I removed 17 and 32 from 30% Discount
                 int lNumberOfMimsProducts = pBasket.Where(p => lMimsProducts.Contains(p.Subscription.ProductId)).Count();
 
 
