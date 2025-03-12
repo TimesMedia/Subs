@@ -23,7 +23,7 @@
 
 
     <style>
-   
+
 /* Make the container fit the full screen */
 .fullscreen {
     width: 100vw; /* Full viewport width */
@@ -75,7 +75,7 @@ p {
             justify-content: center;
             align-items: center;
             background-color: white;
-            padding: 1;
+            padding: 14px;
             color: white;
         }
 
@@ -102,7 +102,7 @@ p {
                 }
 
                     .nav-links li a:hover {
-                        background-color:blue;
+                        background-color:Highlight;
                         color:white;
                     }
 
@@ -175,6 +175,85 @@ p {
                 position: relative;
                 width: 100%;
             }
+
+            /* Reset Defaults */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Form Container */
+.form-container {
+    width: 50%;
+    margin: 5% auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Labels */
+label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
+
+/* Input Fields */
+input, textarea {
+    width: 100%;  /* Full width */
+    padding: 12px;  /* Enough space for text */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    line-height: 1.5;  /* Ensures no text overlap */
+    background-color: white;
+}
+
+/* Prevent Text Overlap */
+input::placeholder, textarea::placeholder {
+    color: #aaa; /* Light gray placeholder */
+    font-size: 1rem;
+}
+
+/* Prevent long text from breaking layout */
+textarea {
+    resize: vertical; /* Allows vertical resizing */
+    overflow: hidden; /* Prevents scrollbars from appearing */
+    word-wrap: break-word; /* Ensures long words break */
+}
+
+/* Submit Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Responsive Design */
+@@media (max-width: 768px) {
+    .form-container {
+        width: 90%;
+    }
+
+    input, textarea, button {
+        font-size: 1rem;
+    }
+}
+
         }
     </style>
 
@@ -236,6 +315,7 @@ p {
 
 
                 }
+                <div class="logo" style="float:right"> <img src="~/Images/arena.png" style="width:150px; height:40px" /></div>
             }
 
 

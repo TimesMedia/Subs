@@ -84,6 +84,84 @@
             .Welcome img {
                 max-width: 100%;
             }
+            /* Reset Defaults */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Form Container */
+.form-container {
+    width: 50%;
+    margin: 5% auto;
+    padding: 20px;
+    background-color: dodgerblue;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Labels */
+label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
+
+/* Input Fields */
+input, textarea {
+    width: 100%;  /* Full width */
+    padding: 12px;  /* Enough space for text */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    line-height: 1.5;  /* Ensures no text overlap */
+    background-color: white;
+}
+
+/* Prevent Text Overlap */
+input::placeholder, textarea::placeholder {
+    color: #aaa; /* Light gray placeholder */
+    font-size: 1rem;
+}
+
+/* Prevent long text from breaking layout */
+textarea {
+    resize: vertical; /* Allows vertical resizing */
+    overflow: hidden; /* Prevents scrollbars from appearing */
+    word-wrap: break-word; /* Ensures long words break */
+}
+
+/* Submit Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Responsive Design */
+@@media (max-width: 768px) {
+    .form-container {
+        width: 90%;
+    }
+
+    input, textarea, button {
+        font-size: 1rem;
+    }
+}
+
     </style>
 
     <title>@ViewBag.Title</title>
@@ -111,7 +189,7 @@
 
 
     <section id="contact" class="section pt-0" style="background-color:dodgerblue;color:#fff;">
-        <div class="container">
+        <div class="form-container">
             <h6 class="section-title text-center" style="color:dodgerblue">Contact Us</h6>
             <div class="row align-content-center">
                 <div class="col-md-4 my-auto">
@@ -129,7 +207,7 @@
                 </div>
 
 
-                <div class="col-md-6">
+                <div class="form-container">
                     <form action="https://formspree.io/f/mrbbnvgy" method="post">
                         @*<h4 class="mb-4" style="font-family:'Segoe Print'">Drop a Mail</h4>*@
                         <div class="form-row">
@@ -202,7 +280,7 @@
                             <br />
                             <div class="form-group col-12">
                                 <br />
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d4257.766458597883!2d28.038820165392952!3d-26.18559793766059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x93d86db2d672d7c9!2sTiso+Blackstar!5e0!3m2!1sen!2sza!4v1526976275994" frameborder="0" , style="border-style: none; border-color: inherit; border-width: 0; width: 540px; float: right; height: 280px;margin"></iframe>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d4257.766458597883!2d28.038820165392952!3d-26.18559793766059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x93d86db2d672d7c9!2sTiso+Blackstar!5e0!3m2!1sen!2sza!4v1526976275994" frameborder="0" , style="border-style: none; border-color: inherit; border-width: 0; width: 430px; float: right; height: 280px;"></iframe>
 
                             </div>
                         </div>
