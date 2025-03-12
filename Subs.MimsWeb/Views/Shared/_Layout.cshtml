@@ -69,15 +69,8 @@ p {
             display: block;
         }
 
-        /* Navbar Styling */
-        .navbar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: white;
-            padding: 14px;
-            color: white;
-        }
+       
+
 
         .logo {
             font-size: 1.5rem;
@@ -87,7 +80,8 @@ p {
 
         .nav-links {
             list-style: none;
-            display: flex;
+            display:flex ;
+            align-content:center;
         }
 
             .nav-links li {
@@ -99,6 +93,9 @@ p {
                     color: black;
                     padding: 10px 20px;
                     display: block;
+                    font-size:16px;
+                    align-content:center;
+                  
                 }
 
                     .nav-links li a:hover {
@@ -106,36 +103,7 @@ p {
                         color:white;
                     }
 
-        /* Dropdown Menu Styling */
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            background-color: blue;
-            top: 100%;
-            left: 0;
-            min-width: 150px;
-            z-index: 10;
-        }
-
-            .dropdown-menu li {
-                width: 100%;
-            }
-
-                .dropdown-menu li a {
-                    padding: 10px;
-                    display: block;
-                }
-
-                    .dropdown-menu li a:hover {
-                        background-color: blue;
-                    }
-
-        /* Show dropdown on hover for desktop */
-        @@media (min-width: 768px) {
-            .dropdown:hover .dropdown-menu {
-                display: block;
-            }
-        }
+       
 
         /* Hamburger Menu for Mobile */
         .hamburger {
@@ -269,7 +237,7 @@ button:hover {
     <!-- End Google Tag Manager (noscript) -->
 
     <nav class="navbar">
-        <div >
+        <div>
             <img src="~/Content/img/logos/mims-small.png" style="width:150px; height:40px" />
         </div>
 
@@ -315,12 +283,13 @@ button:hover {
 
 
                 }
-                <div class="logo" style="float:right"> <img src="~/Images/arena.png" style="width:150px; height:40px" /></div>
+
             }
 
 
 
         </ul>
+        <div > <img src="~/Images/arena.png" style="width:150px; height:40px" /></div>
     </nav>
 
 
