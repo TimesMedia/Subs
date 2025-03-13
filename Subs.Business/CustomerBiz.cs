@@ -683,7 +683,8 @@ namespace Subs.Business
 
                 var lClient = new SmtpClient("smtp.everlytic.net", 25);
                 lClient.UseDefaultCredentials = false;
-                lClient.Credentials = new System.Net.NetworkCredential("8.vanderMerw67353", "VTzyC0BG7PXZLB2mROmdQ1y27jTM9cdM_8");
+                lClient.Credentials = new System.Net.NetworkCredential("8.vanderMerw67353", "lkasTcrR4fRCRyKg3cPEuXUBk2KCTQ9x_8");
+                //lClient.Credentials = new System.Net.NetworkCredential("8.vanderMerw67353", "VTzyC0BG7PXZLB2mROmdQ1y27jTM9cdM_8");// old Key
 
                 MailAddress lFrom = new MailAddress("vanderMerweR@mims.co.za", "Mims");
                 MailAddress lTo = new MailAddress(pDestination);
