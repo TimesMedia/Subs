@@ -65,7 +65,8 @@ namespace CPD.Business
 
                 // Setting content type.                   
                 lClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var byteArray = Encoding.ASCII.GetBytes("vanderMerweR@mims.co.za:VTzyC0BG7PXZLB2mROmdQ1y27jTM9cdM_8");
+                var byteArray = Encoding.ASCII.GetBytes("vanderMerweR@mims.co.za:lkasTcrR4fRCRyKg3cPEuXUBk2KCTQ9x_8");
+                //var byteArray = Encoding.ASCII.GetBytes("vanderMerweR@mims.co.za:VTzyC0BG7PXZLB2mROmdQ1y27jTM9cdM_8");// old Key
 
                 // Setting Authorization.  
                 lClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
